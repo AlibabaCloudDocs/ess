@@ -4,18 +4,18 @@ This topic introduces the cool-down time in Auto Scaling.
 
 Cool-down time refers to a period during which Auto Scaling cannot execute any new scaling activity after another scaling activity is executed successfully in a scaling group. Cool-down time is described as follows:
 
--   During cool-down time, the scaling activity requests from CloudMonitor alarm tasks are rejected. Other tasks, such as manually executed scaling rules and scheduled tasks, can immediately trigger scaling activities without waiting for the cool-down time to expire. See [create a scaling group](reseller.en-US/User Guide/Scaling groups/Realize Auto Scaling/Create a scaling group.md#).
--   During cool-down time, only the corresponding scaling group is locked. Scaling activities set for other scaling groups can be executed. See [create a scaling rule](reseller.en-US/User Guide/Scaling groups/Realize Auto Scaling/Create a scaling rule.md#).
+-   During cool-down time, the scaling activity requests from CloudMonitor alarm tasks are rejected. Other tasks, such as manually executed scaling rules and scheduled tasks, can immediately trigger scaling activities without waiting for the cool-down time to expire. See [Create a scaling group](reseller.en-US/User Guide/Scaling configurations/Create a scaling group.md#).
+-   During cool-down time, only the corresponding scaling group is locked. Scaling activities set for other scaling groups can be executed. See [Create a scaling rule](reseller.en-US/User Guide/Scaling groups/Realize Auto Scaling/Create a scaling rule.md#).
 
 **Note:** After a scaling group is re-enabled after being disabled, the cool-down time is no longer in effect. For example, if a scaling activity is completed at 12:00 PM and the cool-down time is 15 minutes, the scaling group is then disabled and re-enabled, and the cool-down time is no longer in effect. If a request for triggering a scaling activity is sent at 12:03 PM from the CloudMonitor, the requested scaling activity is executed immediately.
 
 ## Cool-down time rules {#section_l14_3bn_qfb .section}
 
-After the scaling group successfully performs the scaling activity, Auto Scaling starts to calculate the cool-down time. If multiple ECS instances are added to or removed from the scaling group in a scaling activity, the cool-down time is calculated since the last instance is added to or removed from the scaling group. See [examples](#). If no ECS instance is successfully added to or removed from the scaling group during the scaling activity, the cool-down time is not calculated.
+After the scaling group successfully performs the scaling activity, Auto Scaling starts to calculate the cool-down time. If multiple ECS instances are added to or removed from the scaling group in a scaling activity, the cool-down time is calculated since the last instance is added to or removed from the scaling group. See [Examples](#). If no ECS instance is successfully added to or removed from the scaling group during the scaling activity, the cool-down time is not calculated.
 
 Within the cool-down time, the scaling group rejects the scaling activity request triggered by the CloudMonitor alarm tasks. However, the scaling activity triggered by other types of tasks \(manually executing tasks, scheduled tasks\) can be performed immediately, bypass cooling time.
 
-If you disable a scaling group and then enable the scaling group again, the cool-down time becomes invalid. See [example 1](#1114).
+If you disable a scaling group and then enable the scaling group again, the cool-down time becomes invalid. See [Example 2](#).
 
 **Note:** The cool-down time only locks the scaling activities in the same scaling group. It does not affect the scaling activities in other scaling groups.
 

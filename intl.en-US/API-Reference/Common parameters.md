@@ -11,7 +11,7 @@ The following table describes the common parameters that comprise of a URL for a
 |Name|Type|Required|Description|
 |:---|:---|:-------|:----------|
 |Action|String|Yes|The target API.|
-|AccessKeyId|String|Yes|Equivalent to a logon password. However, an AccessKey is used to call APIs, while logon password is used to log on to the [console](https://partners-intl.console.aliyun.com/#/ess). For more information, see [create an AccessKey](http://help.aliyun-inc.com/dochelp/~~53045~~).|
+|AccessKeyId|String|Yes|Equivalent to a logon password. However, an AccessKey is used to call APIs, while logon password is used to log on to the [console](https://partners-intl.console.aliyun.com/#/ess). For more information, see [Create an AccessKey](../../../../reseller.en-US/General Reference/Create an AccessKey.md#).|
 |Signature|String|Yes|Your signature. For more information, see [signatures](reseller.en-US/API-Reference/Signatures.md#).|
 |SignatureMethod|String|Yes|Signature method. Value: HMAC-SHA1.|
 |SignatureVersion|String|Yes|Signature algorithm version. Value: 1.0.|

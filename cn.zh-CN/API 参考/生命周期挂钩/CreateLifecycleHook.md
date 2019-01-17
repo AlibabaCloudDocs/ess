@@ -10,11 +10,11 @@
 
 -   弹性扩张活动：
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40660/154770836730621_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40660/154770855830621_zh-CN.png)
 
 -   弹性收缩活动：
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40660/154770836730622_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40660/154770855830622_zh-CN.png)
 
 
 推荐您利用消息服务 MNS 的主题或者队列创建消息通知，掌握伸缩组内正在启动或者即将释放的 ECS 实例的动态。

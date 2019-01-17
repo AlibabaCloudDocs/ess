@@ -2,9 +2,9 @@
 
 除通过AttachLoadBalancers添加负载均衡实例外，您还可以通过AttachVServerGroups添加负载均衡实例下的一个或者多个虚拟服务器组。
 
-## 限制条件 {#section_hdj_zgz_zfb .section}
+## 描述 {#section_hdj_zgz_zfb .section}
 
-由于负载均衡存在 [使用限制](../../../../cn.zh-CN/产品限制/使用限制.md#)，向伸缩组添加虚拟服务器组时需要满足以下条件：
+由于负载均衡存在 [使用限制](../../../../../cn.zh-CN/产品限制/使用限制.md#)，向伸缩组添加虚拟服务器组时需要满足以下条件：
 
 -   负载均衡实例与伸缩组必须属于同一账号。
 -   负载均衡实例与伸缩组必须处于同一地域。
@@ -20,10 +20,10 @@
 
 ## 请求参数 {#section_xqd_fhz_zfb .section}
 
-|名称|类型|是否必需|描述|
+|名称|类型|是否必选|描述|
 |--|--|----|--|
 |Action|String|是|操作接口名，系统规定参数，取值： AttachVServerGroups。|
-|RegionId|String|是|伸缩组所属的地域ID，如cn-hangzhou、cn-shanghai。更多详情，请参阅 [地域和可用区](../../../../cn.zh-CN/通用参考/地域和可用区.md#)。|
+|RegionId|String|是|伸缩组所属的地域ID，如cn-hangzhou、cn-shanghai。更多详情，请参阅 [地域和可用区](../../../../../cn.zh-CN/通用参考/地域和可用区.md#)。|
 |ScalingGroupId|String|是|伸缩组ID。|
 |VServerGroup.N.LoadBalancerId|String|是|虚拟服务器组所属负载均衡实例的ID。N 为负载均衡实例编号，取值范围：1-5。|
 |VServerGroup.N.VServerGroupAttribute.M.VServerGroupId|String|是|虚拟服务器组ID。N 为负载均衡实例编号，取值范围：1-5。M 为负载均衡实例下虚拟服务器组的编号，取值范围：1-5。|
@@ -50,7 +50,7 @@ N 为负载均衡实例编号，取值范围：1-5。M 为负载均衡实例下�
 
 ## 示例 {#section_lm4_j3z_zfb .section}
 
-**请求示例**
+请求示例
 
 ```
 http://ess.aliyuncs.com/?Action=AttachVServerGroups
@@ -63,9 +63,9 @@ http://ess.aliyuncs.com/?Action=AttachVServerGroups
 &<公共请求参数>
 ```
 
-**返回示例**
+正常返回示例
 
- XML 格式
+ `XML` 格式
 
 ```
 <AttachVServerGroupsResponse>
@@ -73,7 +73,7 @@ http://ess.aliyuncs.com/?Action=AttachVServerGroups
 </AttachVServerGroupsResponse>
 ```
 
- JSON 格式
+ `JSON` 格式
 
 ```
 {
@@ -83,15 +83,15 @@ http://ess.aliyuncs.com/?Action=AttachVServerGroups
 
 ## 错误码 {#section_jh2_v3z_zfb .section}
 
-|错误代码|错误信息|HTTP 状态码|说明|
-|----|----|--------|--|
-|Forbidden.Unauthorized|A required authorization for the specified action is not supplied.|403|您未授予弹性伸缩完整的Open API调用权限。|
-|InvalidScalingGroupId.NotFound|The specified scaling group does not exist.|404|账号下不存在指定的伸缩组。|
-|InvalidLoadBalancerId.NotFound|The load balancer "%s" does not exist.|404|账号下不存在指定的负载均衡实例。|
-|InvalidLoadBalancerId.RegionMismatch|The load balancer "%s" and the specified scaling group are not in the same Region.|400|负载均衡实例与伸缩组不在同一地域。|
-|IncorrectLoadBalancerStatus|The current status of the load balancer "%s" does not support this action.|400|当前负载均衡实例状态不支持此操作。|
-|IncorrectLoadBalancerHealthCheck|The current health check type of the load balancer "%s" does not support this action.|400|当前负载均衡实例未开启健康检查。|
-|InvalidLoadBalancerId.VPCMismatch|The specified virtual switch and the instance in the load balancer "%s" are not in the same VPC.|400|负载均衡实例与伸缩组不在同一VPC下。|
-|InvalidVServerGroupId.ForLoadBalancer|Invalid VServerGroupId For LoadBalancer "%s".|400|VServerGroupId对应的虚拟服务器组不属于指定的负载均衡实例。|
-|QuotaExceeded.VServerGroup|VServerGroup quota exceeded in the specified scaling group.|400|当前伸缩组内可配置的虚拟服务器组个数达到上限。|
+|HttpCode|错误码|错误信息|描述|
+|--------|---|----|--|
+|403|Forbidden.Unauthorized|A required authorization for the specified action is not supplied.|您未授予弹性伸缩完整的Open API调用权限。|
+|404|InvalidScalingGroupId.NotFound|The specified scaling group does not exist.|账号下不存在指定的伸缩组。|
+|404|InvalidLoadBalancerId.NotFound|The load balancer "%s" does not exist.|账号下不存在指定的负载均衡实例。|
+|400|InvalidLoadBalancerId.RegionMismatch|The load balancer "%s" and the specified scaling group are not in the same Region.|负载均衡实例与伸缩组不在同一地域。|
+|400|IncorrectLoadBalancerStatus|The current status of the load balancer "%s" does not support this action.|当前负载均衡实例状态不支持此操作。|
+|400|IncorrectLoadBalancerHealthCheck|The current health check type of the load balancer "%s" does not support this action.|当前负载均衡实例未开启健康检查。|
+|400|InvalidLoadBalancerId.VPCMismatch|The specified virtual switch and the instance in the load balancer "%s" are not in the same VPC.|负载均衡实例与伸缩组不在同一VPC下。|
+|400|InvalidVServerGroupId.ForLoadBalancer|Invalid VServerGroupId For LoadBalancer "%s".|VServerGroupId对应的虚拟服务器组不属于指定的负载均衡实例。|
+|400|QuotaExceeded.VServerGroup|VServerGroup quota exceeded in the specified scaling group.|当前伸缩组内可配置的虚拟服务器组个数达到上限。|
 

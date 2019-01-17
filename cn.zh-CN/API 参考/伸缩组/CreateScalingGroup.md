@@ -4,7 +4,7 @@
 
 ## 描述 {#section_ayt_bdb_kgb .section}
 
--   伸缩组、关联的负载均衡实例和关联的 RDS 实例必须在同一个地域。更多详情，请参阅 [地域与可用区](../../../../../intl.zh-CN/通用参考/地域和可用区.md#)。
+-   伸缩组、关联的负载均衡实例和关联的 RDS 实例必须在同一个地域。更多详情，请参阅 [地域与可用区](../../../../../cn.zh-CN/通用参考/地域和可用区.md#)。
 
 -   您最多能创建 20 个伸缩组。
 
@@ -20,14 +20,14 @@
 
     -   指定的 RDS 实例必须是 **运行中**（**running**）状态。
     -   伸缩组自动将加入伸缩组的 ECS 实例的内网 IP 添加到指定的 RDS 实例的访问白名单当中。
-    -   指定的 RDS 实例访问白名单的 IP 数不能超过上限值。更多详情，请参阅 *RDS* [设置白名单](../../../../../intl.zh-CN/用户指南/数据安全性/设置白名单.md#)。
+    -   指定的 RDS 实例访问白名单的 IP 数不能超过上限值。更多详情，请参阅 *RDS* [设置白名单](../../../../../cn.zh-CN/用户指南/数据安全性/设置白名单.md#)。
 
 ## 请求参数 {#section_lt4_vd2_sfb .section}
 
 |名称|类型|是否必选|描述|
 |--|--|----|--|
-|Action|String|是|系统规定参数。取值：CreateScalingGroup|
-|RegionId|String|是|伸缩组所属的地域 ID。更多详情，请参阅 [地域与可用区](../../../../../intl.zh-CN/通用参考/地域和可用区.md#)。|
+|Action|String|是|系统规定参数。取值：CreateScalingGroup。|
+|RegionId|String|是|伸缩组所属的地域 ID。更多详情，请参阅 [地域与可用区](../../../../../cn.zh-CN/通用参考/地域和可用区.md#)。|
 |MaxSize|Integer|是|伸缩组内 ECS 实例台数的最大值，取值范围：\[0, 1000\]。 当伸缩组内 ECS 实例数大于 MaxSize 时，弹性伸缩会自动移出 ECS 实例。|
 |MinSize|Integer|是|伸缩组内 ECS 实例台数的最小值，取值范围：\[0, 1000\] 。当伸缩组内 ECS 实例数小于 MinSize 时，弹性伸缩会自动创建 ECS 实例。|
 |ScalingGroupName|String|否| 伸缩组的显示名称，不能与您当前地域下的伸缩组重名。长度为 \[2, 40\] 个英文或中文字符，以数字、大小字母或中文开头，可包含数字、下划线（\_）、连字符（-）和小数点（.）。
@@ -39,10 +39,10 @@
 
  默认值：300
 
- 冷却时间内，该伸缩组不执行其它的伸缩活动。目前，仅针对 [云监控](../../../../../intl.zh-CN/产品简介/产品概述.md#) 报警任务触发的伸缩活动有效。
+ 冷却时间内，该伸缩组不执行其它的伸缩活动。目前，仅针对 [云监控](../../../../../cn.zh-CN/产品简介/产品概述.md#) 报警任务触发的伸缩活动有效。
 
  |
-|RemovalPolicy.N|String|否| 移出 ECS 实例的伸缩组策略，更多详情，请参阅 [移出策略](../../../../../intl.zh-CN/用户指南/管理伸缩组的伸缩活动/实现自动伸缩/移出策略.md#)。N的取值范围 \[1,2\]。取值范围：
+|RemovalPolicy.N|String|否| 移出 ECS 实例的伸缩组策略，更多详情，请参阅 [移出策略](../../../../../cn.zh-CN/用户指南/管理伸缩组的伸缩活动/实现自动伸缩/移出策略.md#)。N的取值范围 \[1,2\]。取值范围：
 
  -   OldestInstance：移出最早加入伸缩组的 ECS 实例
 -   NewestInstance：移出最新加入伸缩组的 ECS 实例
@@ -52,10 +52,18 @@
 
  |
 |LoadBalancerIds|String|否|负载均衡实例 ID。取值可以由多台负载均衡实例 ID 组成一个 JSON 数组，格式为 \["lb-idx", "lb-idy", … "lb-idz"\]，最多支持 5 个 ID，ID 之间用半角逗号（,）隔开。|
-|VServerGroup.N.LoadBalancerId|String|否|虚拟服务器组所属负载均衡实例的ID。|
-|VServerGroup.N.VServerGroupAttribute.M.VServerGroupId|String|否|虚拟服务器组ID。|
-|VServerGroup.N.VServerGroupAttribute.M.Port|Integer|否|弹性伸缩将ECS实例添加到虚拟服务器组时使用的端口号，取值范围：1-65535。|
+|VServerGroup.N.LoadBalancerId|String|否|虚拟服务器组所属负载均衡实例的ID。更多信息，请参考 [AttachVServerGroups](cn.zh-CN/API 参考/伸缩组/AttachVServerGroups.md#)。
+
+|
+|VServerGroup.N.VServerGroupAttribute.M.VServerGroupId|String|否|虚拟服务器组ID。更多信息，请参考 [AttachVServerGroups](cn.zh-CN/API 参考/伸缩组/AttachVServerGroups.md#)。
+
+|
+|VServerGroup.N.VServerGroupAttribute.M.Port|Integer|否|弹性伸缩将ECS实例添加到虚拟服务器组时使用的端口号，取值范围：1-65535。更多信息，请参考 [AttachVServerGroups](cn.zh-CN/API 参考/伸缩组/AttachVServerGroups.md#)。
+
+|
 |VServerGroup.N.VServerGroupAttribute.M.Weight|Integer|否|弹性伸缩将ECS实例添加到虚拟服务器组时设置的权重，取值范围：0-100。默认值：50。
+
+更多信息，请参考 [AttachVServerGroups](cn.zh-CN/API 参考/伸缩组/AttachVServerGroups.md#)。
 
 |
 |DBInstanceIds|String|否|RDS 实例 ID。取值可以由多台 RDS 实例 ID 组成一个 JSON 数组，格式为 \["rm-idx", "rm-idy", … "rm-idz"\]，最多支持 8 个 ID，ID 之间用半角逗号（,）隔开。|
@@ -69,7 +77,7 @@
 |ScalingPolicy|String|否|指定伸缩组的回收模式，可选值：-   recycle：伸缩组的回收模式为停机回收模式
 -   release：伸缩组的回收模式为释放模式
 
-关于被移出实例的动作，请参阅 [RemoveInstances](intl.zh-CN/API 参考/触发任务/移出ECS实例.md#)。
+关于被移出实例的动作，请参阅 [RemoveInstances](cn.zh-CN/API 参考/触发任务/RemoveInstances.md#)。
 
 |
 |MultiAZPolicy|String|否| 多可用区伸缩组 ECS 实例扩缩容策略。取值范围：
@@ -95,7 +103,7 @@
 
 |名称|类型|描述|
 |--|--|--|
-|ScalingGroupId|String|伸缩组 ID|
+|ScalingGroupId|String|伸缩组 ID。|
 
 ## 示例 {#section_b54_vd2_sfb .section}
 
@@ -138,36 +146,36 @@ http://ess.aliyuncs.com/?Action=CreateScalingGroup
 
 ## 错误码 {#section_f54_vd2_sfb .section}
 
-以下为 CreatScalingGroup 接口的特有错误码。对于所有接口的通用性错误，请参考 [客户端错误](intl.zh-CN/API 参考/错误代码/客户端错误.md#) 或 [服务器端错误](intl.zh-CN/API 参考/错误代码/服务器端错误.md#)。
+以下为 CreatScalingGroup 接口的特有错误码。对于所有接口的通用性错误，请参考 [客户端错误](cn.zh-CN/API 参考/错误代码/客户端错误.md#) 或 [服务器端错误](cn.zh-CN/API 参考/错误代码/服务器端错误.md#)。
 
  
 
-|错误码|错误信息|HttpCode|描述|
-|---|----|--------|--|
-|IncorrectDBInstanceStatus|The current status of DB instance “XXX” does not support this action.|400|指定的 RDS 实例必须是 **运行中** 状态。|
-|IncorrectLoadBalancerHealthCheck|The current health check type of specified load balancer does not support this action.|400|指定的负载均衡实例必须开启健康检查。|
-|IncorrectLoadBalancerStatus|The current status of the specified load balancer does not support this action.|400|指定的负载均衡实例必须是启用状态。|
-|IncorrectVSwitchStatus|The current status of virtual switch does not support this operation.|400|虚拟交换机不可用，无法创建 ECS 实例。|
-|InvalidDBInstanceId. RegionMismatch|DB instance “XXX” and the specified scaling group are not in the same Region.|400|指定的 RDS 实例与伸缩组必须在同一地域。|
-|InvalidLoadBalancerId.IncorrectAddressType|The current address type of specified load balancer does not support this action.|400|指定虚拟交换机后，负载均衡实例为私网类型。更多详情，请参阅 [负载均衡实例](../../../../../intl.zh-CN/产品简介/什么是负载均衡.md#)。|
-|InvalidLoadBalancerId.IncorrectInstanceNetworkType|The network type of the instance in specified Load Balancer does not support this action.|400|指定的负载均衡实例内搭载的 ECS 实例的网络类型与伸缩组的网络类型必须一致。|
-|InvalidLoadBalancerId.RegionMismatch|The specified Load Balancer and the specified scaling group are not in the same Region.|400|指定的负载均衡实例与伸缩组必须在同一地域。|
-|InvalidLoadBalancerId.VPCMismatch|The specified virtual switch and the instance in specified Load Balancer are not in the same VPC.|400|伸缩组内的负载均衡实例搭载的 ECS 实例与虚拟交换机应该在同一个 VPC 中。|
-|InvalidParameter|The specified value of parameter "ScalingPolicy" is not valid.|400|指定的回收模式参数不存在。|
-|InvalidParameter.Conflict|The value of parameter <parameter name" and parameter <parameter name" are conflict.|400|指定的 MinSize 不能大于 MaxSize。|
-|InvalidScalingGroupName.Duplicate|The specified value of parameter <parameter name" is duplicated.|400|伸缩组名已存在。|
-|QuotaExceeded.DBInstanceSecurityIP|Security IP quota exceeded in DB instance “XXX”.|400|指定的 RDS 实例访问白名单的 IP 个数达到上限。|
-|QuotaExceeded.PrivateIpAddress|Private IP address quota exceeded in the specified virtual switch.|400|虚拟交换机无法再分配多余的私有 IP 地址。|
-|QuotaExceeded.ScalingGroup|Scaling group quota exceeded.|400|用户的伸缩组使用个数达到上限。|
-|QuotaExceeded.VPCInstance|Instance quota exceeded in the specified VPC.|400|该 VPC 内的实例数超过数量限制。|
-|InvalidDBInstanceId.NotFound|DB instance “XXX” does not exist.|404|指定的 RDS 实例不存在。|
-|InvalidLoadBalancerId.NotFound|The specified Load Balancer does not exist.|404|指定的负载均衡实例不存在。|
-|InvalidRegionId.NotFound|The specified region does not exist.|404|指定的地域不存在。|
-|InvalidVSwitchId.NotFound|The specified virtual switch does not exist.|404|指定的虚拟交换机不存在。|
-|LaunchTemplateVersionSet.NotFound|The specific version of launch template is not exist.|400|实例启动模板指定版本不存在。|
-|LaunchTemplateSet.NotFound|The specified launch template set is not found.|400|指定实例启动模板不存在。|
-|TemplateMissingParameter.ImageId|The input parameter "ImageId" that is mandatory for processing this request is not supplied.|400|实例启动模板指定版本缺少镜像信息。|
-|TemplateMissingParameter.InstanceTypes|The input parameter "InstanceTypes" that is mandatory for processing this request is not supplied.|400|实例启动模板指定版本缺少实例规格信息。|
-|TemplateMissingParameter.SecurityGroup|The input parameter "SecurityGroup" that is mandatory for processing this request is not supplied.|400|实例启动模板指定版本缺少安全组信息。|
-| TemplateVersion.NotNumber|The input parameter "LaunchTemplateVersion" is supposed to be a string representing the version number.|400|指定实例启动模板固定版本号为非数字。|
+|HttpCode|错误码|错误信息|描述|
+|--------|---|----|--|
+|400|IncorrectDBInstanceStatus|The current status of DB instance “XXX” does not support this action.|指定的 RDS 实例必须是 **运行中** 状态。|
+|400|IncorrectLoadBalancerHealthCheck|The current health check type of specified load balancer does not support this action.|指定的负载均衡实例必须开启健康检查。|
+|400|IncorrectLoadBalancerStatus|The current status of the specified load balancer does not support this action.|指定的负载均衡实例必须是启用状态。|
+|400|IncorrectVSwitchStatus|The current status of virtual switch does not support this operation.|虚拟交换机不可用，无法创建 ECS 实例。|
+|400|InvalidDBInstanceId. RegionMismatch|DB instance “XXX” and the specified scaling group are not in the same Region.|指定的 RDS 实例与伸缩组必须在同一地域。|
+|400|InvalidLoadBalancerId.IncorrectAddressType|The current address type of specified load balancer does not support this action.|指定虚拟交换机后，负载均衡实例为私网类型。更多详情，请参阅 [负载均衡实例](../../../../../cn.zh-CN/产品简介/什么是负载均衡.md#)。|
+|400|InvalidLoadBalancerId.IncorrectInstanceNetworkType|The network type of the instance in specified Load Balancer does not support this action.|指定的负载均衡实例内搭载的 ECS 实例的网络类型与伸缩组的网络类型必须一致。|
+|400|InvalidLoadBalancerId.RegionMismatch|The specified Load Balancer and the specified scaling group are not in the same Region.|指定的负载均衡实例与伸缩组必须在同一地域。|
+|400|InvalidLoadBalancerId.VPCMismatch|The specified virtual switch and the instance in specified Load Balancer are not in the same VPC.|伸缩组内的负载均衡实例搭载的 ECS 实例与虚拟交换机应该在同一个 VPC 中。|
+|400|InvalidParameter|The specified value of parameter "ScalingPolicy" is not valid.|指定的回收模式参数不存在。|
+|400|InvalidParameter.Conflict|The value of parameter <parameter name" and parameter <parameter name" are conflict.|指定的 MinSize 不能大于 MaxSize。|
+|400|InvalidScalingGroupName.Duplicate|The specified value of parameter <parameter name" is duplicated.|伸缩组名已存在。|
+|400|QuotaExceeded.DBInstanceSecurityIP|Security IP quota exceeded in DB instance “XXX”.|指定的 RDS 实例访问白名单的 IP 个数达到上限。|
+|400|QuotaExceeded.PrivateIpAddress|Private IP address quota exceeded in the specified virtual switch.|虚拟交换机无法再分配多余的私有 IP 地址。|
+|400|QuotaExceeded.ScalingGroup|Scaling group quota exceeded.|用户的伸缩组使用个数达到上限。|
+|400|QuotaExceeded.VPCInstance|Instance quota exceeded in the specified VPC.|该 VPC 内的实例数超过数量限制。|
+|404|InvalidDBInstanceId.NotFound|DB instance “XXX” does not exist.|指定的 RDS 实例不存在。|
+|404|InvalidLoadBalancerId.NotFound|The specified Load Balancer does not exist.|指定的负载均衡实例不存在。|
+|404|InvalidRegionId.NotFound|The specified region does not exist.|指定的地域不存在。|
+|404|InvalidVSwitchId.NotFound|The specified virtual switch does not exist.|指定的虚拟交换机不存在。|
+|400|LaunchTemplateVersionSet.NotFound|The specific version of launch template is not exist.|实例启动模板指定版本不存在。|
+|400|LaunchTemplateSet.NotFound|The specified launch template set is not found.|指定实例启动模板不存在。|
+|400|TemplateMissingParameter.ImageId|The input parameter "ImageId" that is mandatory for processing this request is not supplied.|实例启动模板指定版本缺少镜像信息。|
+|400|TemplateMissingParameter.InstanceTypes|The input parameter "InstanceTypes" that is mandatory for processing this request is not supplied.|实例启动模板指定版本缺少实例规格信息。|
+|400|TemplateMissingParameter.SecurityGroup|The input parameter "SecurityGroup" that is mandatory for processing this request is not supplied.|实例启动模板指定版本缺少安全组信息。|
+|400| TemplateVersion.NotNumber|The input parameter "LaunchTemplateVersion" is supposed to be a string representing the version number.|指定实例启动模板固定版本号为非数字。|
 

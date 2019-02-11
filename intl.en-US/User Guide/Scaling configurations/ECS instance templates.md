@@ -12,10 +12,7 @@ Currently, you can perform the following operations on a scaling configuration:
 
 -    [Create a scaling configuration](reseller.en-US/User Guide/Scaling configurations/Create a scaling configuration.md#) 
 -    [View a scaling configuration](reseller.en-US/User Guide/Scaling configurations/View a scaling configuration.md#) 
--    [修改伸缩配置](reseller.en-US/User Guide/Scaling configurations/修改伸缩配置.md#) 
 -    [Delete scaling configuration](reseller.en-US/User Guide/Scaling configurations/Delete scaling configuration.md#)
--    [导出伸缩配置](reseller.en-US/User Guide/Scaling configurations/导出伸缩配置.md#)
--   [导入伸缩配置](reseller.en-US/User Guide/Scaling configurations/导入伸缩配置.md#)
 
 ## Launch templates {#section_ucn_s14_1gb .section}
 
@@ -34,5 +31,5 @@ Launch templates are a tested feature of ECS. You can use existing launch templa
 |Modification|You must manually modify scaling configurations. All modifications are irreversible. However, you can create multiple scaling configurations based on different needs.|Cannot be modified. You can create templates based on your needs.|
 |Multiple instance types|Supported. Applied in scenarios where performance rather than a specified instance type is required, with a bigger chance of successfully scaling out.|Unsupported.|
 
-For more information, see [Use custom scaling configurations to create scaling groups](reseller.en-US/User Guide/Scaling groups/Use custom scaling configurations to create scaling groups.md#) and [Use launch templates to create scaling groups](reseller.en-US/User Guide/Scaling groups/Use launch templates to create scaling groups.md#).
+For more information, see [Use custom scaling configurations to create scaling groups](reseller.en-US/User Guide/Use custom scaling configurations to create scaling groups.md#) and [Use launch templates to create scaling groups](reseller.en-US/User Guide/Use launch templates to create scaling groups.md#).
 

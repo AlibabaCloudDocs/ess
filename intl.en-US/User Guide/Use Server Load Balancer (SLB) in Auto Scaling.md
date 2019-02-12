@@ -37,7 +37,7 @@ Make sure that the following requirements are met before you attach SLB instance
 
     **Note:** You can also select the [default server group](../../../../../reseller.en-US/User Guide/后端服务器/Backend server overview.md#section_fzb_g5n_n2b) or [VServer group\(s\)](../../../../../reseller.en-US/User Guide/后端服务器/Backend server overview.md#section_xqs_h2v_vdb) for each SLB instance in the scaling group. You can select up to five VServer groups for a scaling group at the same time.
 
-    ![Associate the scaling group with an SLB instance](images/35588_en-US.png)
+    ![Associate the scaling group with an SLB instance](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/83706/154996210335588_en-US.png)
 
 6.  Configure the remaining settings as needed.
 

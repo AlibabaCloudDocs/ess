@@ -2,7 +2,7 @@
 
 Creates a scaling group \(CreateScalingGroup\). A scaling group is a collection of ECS instances with the same application scenarios. It defines the maximum and minimum numbers of ECS instances in the group, and their associated Server Load Balancer instances, RDS instances, and other attributes.
 
--   The scaling group, Server Load Balancer instance, and RDS instance must be in the same region. For more information, see [regions and zones](../../../../../reseller.en-US/General Reference/Regions and zones.md#).
+-   The scaling group, Server Load Balancer instance, and RDS instance must be in the same region. For more information, see [regions and zones](../../../../../reseller.en-US/General Reference/Regions and Zones.md#).
 
 -   You can create up to 20 scaling groups.
 
@@ -18,14 +18,14 @@ Creates a scaling group \(CreateScalingGroup\). A scaling group is a collection 
 
     -   The specified RDS instance must be in the **Running** \(**running**\) status.
     -   the scaling group automatically attaches the intranet IP addresses of its ECS instances to the RDS access whitelist.
-    -   The number of IPs in the RDS instance whitelist cannot exceed the upper limit. For more information, see [whitelist](../../../../../reseller.en-US/User Guide/Security/Set a whitelist.md#) in *RDS*.
+    -   The number of IPs in the RDS instance whitelist cannot exceed the upper limit. For more information, see [whitelist](../../../../../reseller.en-US/User Guide/Security/Set the whitelist.md#) in *RDS*.
 
 ## Request parameters {#section_lt4_vd2_sfb .section}
 
 |Name|Type|Required|Description|
 |----|----|--------|-----------|
 |Action|String|Yes|Operation interface name, required parameter. Value: CreateScalingGroup|
-|RegionId|String|Yes|ID of the region where a scaling group is located. For more information, see [regions and zones](../../../../../reseller.en-US/General Reference/Regions and zones.md#).|
+|RegionId|String|Yes|ID of the region where a scaling group is located. For more information, see [regions and zones](../../../../../reseller.en-US/General Reference/Regions and Zones.md#).|
 |MaxSize|Integer|Yes|Maximum number of ECS instances in the scaling group. Value range: \[0, 100\]. If the number ECS instances in the scaling group exceeds the MaxSize, Auto Scaling automatically removes the ECS instances.|
 |MinSize|Integer|Yes|Minimum number of ECS instances in the scaling group. Value range: \[0, 100\]. If the number ECS instances in the scaling group is less than the MinSize, Auto Scaling automatically creates ECS instances.|
 |Scalinggroupname|String|No| Name shown for the scaling group, which must contain 2-40 characters \(English or Chinese\). The name must begin with a number, an upper/lower-case letter or a Chinese character and may contain numbers, “\_“, “-“ or “.”. The account name is unique in the same region.
@@ -40,7 +40,7 @@ Creates a scaling group \(CreateScalingGroup\). A scaling group is a collection 
  During the cool-down time, this scaling group cannot perform any new scaling activities. Currently, this only applies to scaling activities triggered by [CloudMonitor](../../../../../reseller.en-US/Product Introduction/What is CloudMonitor.md#) alarm tasks.
 
  |
-|RemovalPolicy.N|String|No| Policy for removing ECS instances from the scaling group. For more information, see [removal policy](../../../../../reseller.en-US/User Guide/Scaling groups/Realize Auto Scaling/Removal policies.md#). Value range of N: \[1,2\] Optional values:
+|RemovalPolicy.N|String|No| Policy for removing ECS instances from the scaling group. For more information, see [removal policy](../../../../../reseller.en-US/User Guide/Realize Auto Scaling/Removal policies.md#). Value range of N: \[1,2\] Optional values:
 
  -   OldestInstance: removes the first ECS instance attached to the scaling group.
 -   NewestInstance: removes the first ECS instance attached to the scaling group.
@@ -70,14 +70,16 @@ Creates a scaling group \(CreateScalingGroup\). A scaling group is a collection 
 For more information about instance status, see [RemoveInstances](reseller.en-US/API-Reference/Trigger task/Remove an ECS instance.md#).
 
 |
-|MultiAZPolicy|String|No| The ECS instance scale up/down policy for a multi-zone scaling group. Optional values:
+|MultiAZPolicy|String|No|The ECS instance scale up/down policy for a multi-zone scaling group. Optional values:-   PRIORITY: Scale up/down according to the user-defined VSwitches \(VSwitchIds.N\). When the VSwitch with the highest priority cannot create an ECS instance in its zone, the system automatically uses the VSwitch with the next highest priority to create the ECS instance.
+-   COST\_OPTIMIZED: Available instance type with the lowest vCPU rate is given priority. Preemptible instances are created first when preemptible instance types are specified for the scaling configuration. Pay-As-You-Go instances are created automatically when all types of preemptible instances are unavailable.
 
- -   PRIORITY: Scale up/down according to the user-defined VSwitches \(VSwitchIds.N\). When the VSwitch with the highest priority cannot create an ECS instance in its zone, the system automatically uses the VSwitch with the next highest priority to create the ECS instance.
+**Note:** COST\_OPTIMIZED is available only when multiple instance types are specified or at least one preemptible instance type is specified.
+
 -   BALANCE: ECS instances are allocated evenly to the multiple zones specified in the scaling group. If instances are not balanced among the zones due to an inventory shortage or other cause, you can re-balance the resources by calling the RebalanceInstance API.
 
- Default value: PRIORITY
+Default value: PRIORITY
 
- |
+|
 |LaunchTemplateId|String|No|ID of the launch template. For the specified scaling group to obtain the startup configuration information from the template.|
 |LaunchTemplateVersion|String|No|Version of the launch template. Optional values:-   Fixed template version number
 -   Default: The default template version is always used.

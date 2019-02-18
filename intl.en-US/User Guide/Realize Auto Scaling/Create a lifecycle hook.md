@@ -25,7 +25,7 @@ The scaling group has the following features while its ECS instance is put into 
 -   The scaling group does not perform other scaling activities.
 -   You can perform custom actions during the lifecycle hook timeout period. For example, you can initialize the configuration of the ECS instance or obtain the ECS instance data.
 -   You can delete the corresponding lifecycle hook to resume the scaling activity.
--   You can also call the [CompleteLifecycleAction](../../../../../reseller.en-US/API-Reference/Lifecycle Hook/CompleteLifecycleAction.md#) or [DeleteLifecycleHook](../../../../../reseller.en-US/API-Reference/Lifecycle Hook/DeleteLifecycleHook.md#) interface.
+-   You can also call the [CompleteLifecycleAction](../../../../../reseller.en-US/API-Reference/Lifecycle Hook/CompleteLifecycleAction.md#) or [DeleteLifecycleHook](../../../../../reseller.en-US/API-Reference/Lifecycle Hook/DeleteLifecycleHook.md#) interface to resume the scaling activity.
 
 ## Procedure {#section_lw3_d2x_rfb .section}
 
@@ -36,7 +36,7 @@ Follow these steps to create a lifecycle hook:
 3.  Go to the Lifecycle Hooks page, click **Create Lifecycle Hook**.
 4.  In the Create Lifecycle Hook dialog box, set the Name, Applicable Scaling Activity Type, Timeout, Policy, Notification Method, MNS Topic/Queue, and Notification ID then click **Create Lifecycle Hook**.
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40580/155046720421713_en-US.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40580/155046736221713_en-US.png)
 
     **Note:** For more information about lifecycle hook properties, see the following table.
 

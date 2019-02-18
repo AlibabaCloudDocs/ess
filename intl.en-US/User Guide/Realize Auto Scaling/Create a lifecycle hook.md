@@ -36,9 +36,7 @@ Follow these steps to create a lifecycle hook:
 3.  Go to the Lifecycle Hooks page, click **Create Lifecycle Hook**.
 4.  In the Create Lifecycle Hook dialog box, set the Name, Applicable Scaling Activity Type, Timeout, Policy, Notification Method, MNS Topic/Queue, and Notification ID then click **Create Lifecycle Hook**.
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40580/155046736221713_en-US.png)
-
-    **Note:** For more information about lifecycle hook properties, see the following table.
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40580/155050008921713_en-US.png)
 
 
 ## Lifecycle hook properties { .section}
@@ -50,8 +48,8 @@ The following table describes the lifecycle hook properties and examples.
 |Name|The lifecycle hook name must be 2 to 40 characters in length. It must start with an English letter, number, or Chinese character. The name can contain periods \(.\), underscores \(\_\), and hyphens \(-\). After you have set the lifecycle name, you can no longer change it.|hz\_yk0626|
 |Applicable Scaling Activity Type|The type of scaling activities.|Scale-In|
 |Timeout|The lifecycle hook timeout period. During this period, the instances remain in the Wait status. The value must be an integer from 30 to 21,600 seconds.|600|
-|Policy|Available policies include **Continue** and **Abandon**. -    **Continue**: Allows other scaling activities when the current lifecycle action ends.
--    **Abandon**: Releases the created ECS instances if the scaling activity type is scale-out. This policy does not take effect if the scaling activity type is scale-in.
+|Policy|Available policies include **Continue** and **Abandon**. -    **Continue**: Continues the scaling activity when the current lifecycle action ends.
+-    **Abandon**: Releases the created ECS instances if the scaling activity type is scale-out. Removes the ECS instances if scaling activity type is scale-in.
 
  |Continue|
 |Notification Method|The available notification methods include **MNS Topic** and **MNS Queue**. After you select a notification method, you must select the specific MNS topic or queue.|MNS Topic|

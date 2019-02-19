@@ -10,11 +10,11 @@ A default period of time is specified before a scaling group scales in or out th
 
 -   A scale-out event:
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40660/154227706132073_en-US.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40660/155055387232073_en-US.png)
 
 -   A scale-in event:
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40660/154227706232072_en-US.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40660/155055387232072_en-US.png)
 
 
 We recommend that you use an Alibaba Cloud Message Service \(MNS\) queue or topic to receive notifications about when ECS instances are launched or terminated.
@@ -33,8 +33,8 @@ We recommend that you use an Alibaba Cloud Message Service \(MNS\) queue or topi
 
 |
 |HeartbeatTimeout|Integer|No|The time, in seconds, that can elapse before the lifecycle hook times out. If the lifecycle hook times out, the scaling group performs the default action \(DefaultResult\). The range is from 30 to 21,600 seconds. The default value is 600 seconds. You can prevent the lifecycle hook from timing out by calling the [RecordLifecycleActionHeartbeat](reseller.en-US/API-Reference/Lifecycle Hook/RecordLifecycleActionHeartbeat.md#) API. You can also terminate the lifecycle action by calling the [CompleteLifecycleAction](reseller.en-US/API-Reference/Lifecycle Hook/CompleteLifecycleAction.md#) API.|
-|DefaultResult|String|No|The action that the scaling group takes when the lifecycle hook times out. Value range:-   CONTINUE: the scaling group continues with the scale-in or scale-out process.
--   ABANDON: the scaling group stops any remaining action of the scale-in or scale-out event.
+|DefaultResult|String|No|The action that the scaling group takes when the lifecycle hook times out. Value range:-   CONTINUE: Continues the scaling activity when the current lifecycle action ends.
+-   ABANDON: Releases the created ECS instances if the scaling activity type is scale-out. Removes the ECS instances if scaling activity type is scale-in.
 
 Default value: CONTINUE
 

@@ -23,7 +23,7 @@ The scaling configuration creation process is similar to that of an ECS instance
 
 3.  On the Basic Configurations page, configure the billing method, instance, image, storage, public network bandwidth, and security group. Click **Next: System Configurations**.
 
-    ![Complete basic configurations for a scaling configuration](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40568/155326123021311_en-US.png)
+    ![Complete basic configurations for a scaling configuration](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40568/155326149621311_en-US.png)
 
     **Note:** In the basic configurations:
 

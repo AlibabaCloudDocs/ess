@@ -28,9 +28,6 @@ The scaling configuration creation process is similar to that of an ECS instance
 5.  On thePreview page, check your configurations, enter the scaling configuration name, and click**Create**.
 6.  In theActivated dialog box that appears, you can click Enable Configuration, click Create More to[create another scaling configuration](reseller.en-US/User Guide/Scaling configurations/Create a scaling configuration.md#image_xnb_stn_qfb), or close the dialog box.
 
-    ![Successful creation of a scaling configuration](images/21314_en-US.png)
-
-
 ## API example {#section_zd1_prd_2gb .section}
 
 A scaling configuration is a template used by a scaling group to elastically create ECS instances. Before you use an API to create a scaling configuration, make sure that the request contains the ID of a scaling group, the ID of a security group to which ECS instances will belong, the ID of an ECS instance image, and the type of the ECS instances to be used.

@@ -19,11 +19,11 @@ Following these steps to create a scheduled task:
 1.  Log on to the [Auto Scaling console](https://partners-intl.console.aliyun.com/#/ess).
 2.  Select **Auto-Trigger Tasks**, go to the Scheduled Tasks page, and click **Create Scheduled Task**.
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40597/154227333932049_en-US.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40597/155425356132049_en-US.png)
 
 3.  In the Create Scheduled Task dialog box, specify the task name, time to perform, scaling rule, retry expiration time \(optional\), and repetition cycle \(optional\). You can also add a description for later viewing. Click **Submit**.
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40597/154227333932050_en-US.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40597/155425356132050_en-US.png)
 
     **Note:** For the attributes of scheduled tasks, see [scheduled task attributes](#section_jqh_zyc_sfb).
 
@@ -32,7 +32,7 @@ Following these steps to create a scheduled task:
 
 |Name|Description|Example|
 |:---|:----------|:------|
-|Task name|The name must consist of 2-40 characters. It must begin with a lower-case letter, number, or a Chinese character. It can contain ".", "\_", or "-".|st-yk201808301442|
+|Task name|The name must consist of 2-64 characters. It must begin with a lower-case letter, number, or a Chinese character. It can contain ".", "\_", or "-".|st-yk20180830\*\*\*\*|
 |Description|Describes the purpose, function, and other information of the scheduled task.|The PV is large at the beginning of a month. Add three instances.|
 |Time to perform|Time to trigger the scheduled task|00:00, September 2, 2018|
 |Scaling rule|The name of the scaling rule, which specifies the scaling action to perform when the task is triggered.|add3|

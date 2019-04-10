@@ -9,7 +9,7 @@ Due to restrictions, the following conditions must be met when you add RDS insta
 -   The SLB instance and the scaling group must be in the same account.
 -   The status of the RDS instance must be **Unlocked**. For more information, see [RDS usage instructions](../../../../../reseller.en-US/Product Introduction/RDS usage instructions.md#).
 -   The status of the RDS instance must be **Running**.
--   After you add an RDS instance, the number of IP addresses included in the default group of the IP whitelist for an RDS instance cannot exceed 1,000. For more information about an IP whitelist, see[Set the whitelist](../../../../../reseller.en-US/User Guide/Security/Set the whitelist.md#).
+-   After you add an RDS instance, the number of IP addresses included in the default group of the IP whitelist for an RDS instance cannot exceed 1,000. For more information about an IP whitelist, see [Set the whitelist](../../../../../reseller.en-US/User Guide/Security/Set the whitelist.md#).
 
 ## Request parameters { .section}
 

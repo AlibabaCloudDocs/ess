@@ -10,7 +10,7 @@ After you detach an ECS instance, the ECS instance can exist independently witho
 
 -   The status of the target scaling group must be **Enable** \(`Enable`\).
 -   Ensure that no in-progress scaling activity exists in the target scaling group.
--   When no in-progress scaling activity exists in the target scaling group, you can immediately perform the operation without following the [Cool-down time](../../../../../reseller.en-US/User Guide/Usage notes/Cool-down time.md#).
+-   When no in-progress scaling activity exists in the target scaling group, you can immediately perform the operation without following the [cool-down time](../../../../../reseller.en-US/User Guide/Usage notes/Cool-down time.md#).
 -   Successfully calling an operation only means the calling request of the operation is received. You can trigger a scaling activity as usual, but you cannot ensure that the scaling activity is executed. You must view the status of the scaling activity based on the returned result of `ScalingActivityId`.
 -   The remaining number of ECS instances cannot be less than the minimum number of the scaling group \(`MinSize`\). The remaining number of ECS instances is the total number of ECS instances of the target scaling group minus the number of detached ECS instances.
 

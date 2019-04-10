@@ -8,7 +8,7 @@ After you detach an ECS instance, the ECS instance can exist independently witho
 
 **Note:** 
 
--   The status of the target scaling group must be **Enabled** \(`Enable`\).
+-   The status of the target scaling group must be **Enable** \(`Enable`\).
 -   Ensure that no in-progress scaling activity exists in the target scaling group.
 -   When no in-progress scaling activity exists in the target scaling group, you can immediately perform the operation without following the [Cool-down time](../../../../../reseller.en-US/User Guide/Usage notes/Cool-down time.md#).
 -   Successfully calling an operation only means the calling request of the operation is received. You can trigger a scaling activity as usual, but you cannot ensure that the scaling activity is executed. You must view the status of the scaling activity based on the returned result of `ScalingActivityId`.
@@ -64,10 +64,10 @@ Successful response examples
 
 |HttpCode|Error code|Error message|Description|
 |--------|:---------|:------------|:----------|
-|400|IncorrectScalingGroupStatus|The current status of the specified scaling group does not support this action.|The status of the target scaling group must be **Enabled** `Enable`.|
+|400|IncorrectScalingGroupStatus|The current status of the specified scaling group does not support this action.|The status of the target scaling group must be **Enable** `Enable`.|
 |400|ScalingActivityInProgress|You cannot delete a scaling group or launch a new scaling activity while there is a scaling activity in progress.|The error message returned when the specified scaling group is currently undergoing a scaling activity.|
-|400|IncorrectLoadBalancerStatus|The current status of the specified load balancer does not support this action.|The status of SLB instances in the target scaling group must be **Active**`Running`.|
-|400|IncorrectDBInstanceStatus|The current status of DB instance “XXX” does not support this action.|The status of RDS instances in the target scaling group must be **Active**`Running`.|
+|400|IncorrectLoadBalancerStatus|The current status of the specified load balancer does not support this action.|The status of SLB instances in the target scaling group must be **Running**`Running`.|
+|400|IncorrectDBInstanceStatus|The current status of DB instance “XXX” does not support this action.|The status of RDS instances in the target scaling group must be **Running**`Running`.|
 |400|IncorrectCapacity.MinSize|To remove the instances, the total capacity will be lesser than the MinSize.|The remaining number of ECS instances cannot be less than the minimum number of the scaling group \(`MinSize`\). The remaining number of ECS instances is the total number of ECS instances of the target scaling group minus the number of detached ECS instances.|
 |403|Forbidden.Unauthorized|A required authorization for the specified action is not supplied.|The error message returned when you have not been authorized to use the `DetachInstances` operation.|
 |404|InvalidScalingGroupId.NotFound|The specified scaling group does not exist.|The error message returned when the specified scaling group does not exist.|

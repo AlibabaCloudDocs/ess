@@ -7,7 +7,7 @@ You can call this operation to enable or disable the protection for one or more 
 After the protection is enabled for an ECS instance:
 
 -   The instance keeps running in the protected state until you disable the protection.
--   The changes in the number of instances in a scaling group and scale-in activities triggered by monitoring tasks will not remove protected ECS instances. You must manually [Remove an ECS instance](reseller.en-US/API-Reference/Trigger task/Remove an ECS instance.md#) to release the instance.
+-   The changes in the number of instances in a scaling group and scale-in activities triggered by monitoring tasks will not remove protected ECS instances. You must manually [remove an ECS instance](reseller.en-US/API-Reference/Trigger task/Remove an ECS instance.md#) to release the instance.
 -   When an ECS instance is stopped or restarted, the health check status of the ECS instance is not updated.
 
 ## Request parameters { .section}
@@ -65,7 +65,7 @@ The following table lists the error codes that the `SetInstancesProtection` oper
 
 |HttpCode|Error code|Error message|Description|
 |--------|:---------|:------------|:----------|
-|400|IncorrectScalingGroupStatus|The current status of the specified scaling group does not support this action.|The error message returned when you have not [Enable a scaling group](reseller.en-US/API-Reference/Scaling group/Enable a scaling group.md#).|
+|400|IncorrectScalingGroupStatus|The current status of the specified scaling group does not support this action.|The error message returned when you have not [enabled a scaling group](reseller.en-US/API-Reference/Scaling group/Enable a scaling group.md#).|
 |403|Forbidden.Unauthorized|A required authorization for the specified action is not supplied.|The error message returned when you are not authorized to use the `SetInstancesProtection` operation.|
 |404|InvalidInstanceId.NotFound|Instance “XXX” does not exist.|The error message returned when the specified ECS instance does not exist.|
 |404|InvalidScalingGroupId.NotFound|The specified scaling group does not exist.|The error message returned when the specified scaling group does not exist.|

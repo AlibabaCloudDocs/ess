@@ -61,7 +61,7 @@ The following table lists the error codes that the `RebalanceInstances` operatio
 
 |HttpCode|Error code|Error message|Description|
 |--------|:---------|:------------|:----------|
-|400|IncorrectScalingGroupStatus|The current status of the specified scaling group does not support this action.|The error message returned when you have not [Enable a scaling group](reseller.en-US/API-Reference/Scaling group/Enable a scaling group.md#).。|
+|400|IncorrectScalingGroupStatus|The current status of the specified scaling group does not support this action.|The error message returned when you have not [enabled a scaling group](reseller.en-US/API-Reference/Scaling group/Enable a scaling group.md#).|
 |400|OperationDenied|This operation is denied because the specified scaling group does not support this action.|The error message returned when you have not set the `MultiAZPolic=Balance` policy in the specified scaling group or the great imbalance issue of the distribution of ECS instances does not occur.|
 |403|Forbidden.Unauthorized|A required authorization for the specified action is not supplied.|The error message returned when you have not been authorized to use the `RebalanceInstances` operation.|
 |404|InvalidScalingGroupId.NotFound|The specified scaling group does not exist.|The error message returned when the specified scaling group does not exist in this account.|

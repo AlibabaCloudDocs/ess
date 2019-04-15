@@ -37,7 +37,19 @@
  默认值：true，该参数只可对独立云盘（**DataDisk.n.Category** 为 cloud、cloud\_efficiency 或 cloud\_ssd）设置，否则会出现报错。
 
  |
+|DataDisk.N.Description|String|否|FinanceDept|数据盘的描述。长度为 2~256 个英文或中文字符，不能以 http:// 和 https:// 开头。
+
+ |
 |DataDisk.N.Device|String|否|/dev/xvdb|数据盘挂载点，N 取值：1~4。如果您没有指定该参数，则默认在自动创建 ECS 实例时由 ECS 系统分配，从 /dev/xvdb 开始到 /dev/xvdz。
+
+ |
+|DataDisk.N.DiskName|String|否|cloud\_ssdData|数据盘名称。长度为 2~128 个英文或中文字符。必须以大小字母或中文开头，不能以 http:// 和 https:// 开头。可以包含数字、半角冒号（:）、下划线（\_）或者连字符（-）。默认值：空。
+
+ |
+|DataDisk.N.Encrypted|String|否|false|数据盘n是否加密。默认值：false。
+
+ |
+|DataDisk.N.KMSKeyId|String|否|0e478b7a-4262-4802-b8cb-00d3fb40826X|数据盘对应的KMS密钥ID。
 
  |
 |DataDisk.N.Size|Integer|否|100|数据盘 N 的磁盘大小，单位：GB。N 从 1 开始编号，最多 16 块。取值范围：
@@ -158,6 +170,12 @@
  如果 **InstanceType** 为系列 I 的规格且实例属于非 I/O 优化实例，默认值：cloud。否则，默认值：cloud\_efficiency。
 
  |
+|SystemDisk.Description|String|否|FinanceDept|系统盘的描述。长度为 2~256 个英文或中文字符，不能以 http:// 和 https:// 开头。
+
+ |
+|SystemDisk.DiskName|String|否|cloud\_ssdSystem|系统盘名称。长度为 2~128 个英文或中文字符。必须以大小字母或中文开头，不能以 http:// 和 https:// 开头。可以包含数字、半角冒号（:）、下划线（\_）或者连字符（-）。默认值：空。
+
+ |
 |SystemDisk.Size|Integer|否|50|系统盘大小，单位：GB。取值范围：
 
  -   cloud：40~500
@@ -192,10 +210,8 @@
 
 ``` {#request_demo}
 
-http://ess.aliyuncs.com/?Action=ModifyScalingConfiguration
+http(s)://[Endpoint]/?Action=ModifyScalingConfiguration
 &ScalingConfigurationId=asc-****
-&ScalingConfigurationName=test-modify
-&ImageId=centos6u5_64_20G_aliaegis_20140703.vhd
 &<公共请求参数>
 
 ```

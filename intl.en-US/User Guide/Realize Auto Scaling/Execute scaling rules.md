@@ -14,7 +14,7 @@ Before you execute a scaling rule, the following prerequisites must be met:
 
 If you must temporarily scale the resources of an ECS instance, you can manually execute a scaling rule.
 
-**Note:** When no in-progress scaling activity exists in a scaling group, scaling activities that are triggered by manually executed scaling rules can be immediately run without following the specified [Cool-down time](reseller.en-US/User Guide/Usage notes/Cool-down time.md#).
+**Note:** When no in-progress scaling activity exists in a scaling group, scaling activities that are triggered by manually executed scaling rules can be immediately run without following the specified [cool-down time](reseller.en-US/User Guide/Usage notes/Cool-down time.md#).
 
 1.  On the Scaling Rules page, click**Execute** in the **Actions**column.
 2.  In the Run Scaling Rule dialog box, click **Confirm**.

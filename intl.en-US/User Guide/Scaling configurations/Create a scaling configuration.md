@@ -4,7 +4,7 @@ This topic describes how to create a scaling configuration for a scaling group a
 
 ## Background information {#section_tjl_mb5_cgb .section}
 
-The scaling configuration creation process is similar to that of an ECS instance. However, as a scaling configuration is a template for ECS instance to be used during automatic scaling, it has several key differences such as supporting different instance types and not allowing you to configure certain parameters \(such as region or resource group\). See the actual interface of the Auto Scaling console when using this document. Brief descriptions of each parameter are also displayed on the interface. For more information about parameter descriptions, see[Create an instance by using the wizard](../../../../../reseller.en-US/Instances/ECS instance life cycle/Create an instance/Create an instance by using the wizard.md#) .
+The scaling configuration creation process is similar to that of an ECS instance. However, as a scaling configuration is a template for ECS instance to be used during automatic scaling, it has several key differences such as supporting different instance types and not allowing you to configure certain parameters \(such as region or resource group\). See the actual interface of the Auto Scaling console when using this document. Brief descriptions of each parameter are also displayed on the interface. For more information about parameter descriptions, see[Create an instance by using the wizard](../../../../../reseller.en-US/Instances/Create an instance/Create an instance by using the wizard.md#) .
 
 ## Preparations {#section_t12_2rd_2gb .section}
 

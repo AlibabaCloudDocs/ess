@@ -96,5 +96,5 @@ In the request,
 -    sg-280ih3w indicates the ID of the scaling group to which the ECS instances will belong.
 -    2014-08-28 indicates the version of the API.
 
-You can also customize attributes such as different instance types and ECS instance disks. For more information about the API, see[CreateScalingConfiguration](../../../../../reseller.en-US/API-Reference/Scaling configuration/CreateScalingConfiguration.md#).
+You can also customize attributes such as different instance types and ECS instance disks. For more information about the API, see [CreateScalingConfiguration](../../../../../reseller.en-US/API-Reference/Scaling configuration/CreateScalingConfiguration.md#).
 

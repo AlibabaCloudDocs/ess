@@ -1,4 +1,4 @@
-# CreateScalingConfiguration {#doc_api_1163418 .reference}
+# CreateScalingConfiguration {#doc_api_Ess_CreateScalingConfiguration .reference}
 
 创建一个伸缩配置。
 
@@ -40,7 +40,19 @@
  默认值：true，该参数只可对独立云盘设置（DataDisk.n.Category 为 cloud、cloud\_efficiency 或 cloud\_ssd），否则会出现报错。
 
  |
+|DataDisk.N.Description|String|否|FinanceDept|数据盘的描述。长度为 2~256 个英文或中文字符，不能以 http:// 和 https:// 开头。
+
+ |
 |DataDisk.N.Device|String|否|/dev/xvdb|数据盘挂载点，N 取值：1~4。如果您没有指定该参数，则默认在自动创建 ECS 实例时由 ECS 系统分配，从 /dev/xvdb 开始到 /dev/xvdz。
+
+ |
+|DataDisk.N.DiskName|String|否|cloud\_ssdData|数据盘名称。长度为 2~128 个英文或中文字符。必须以大小字母或中文开头，不能以 http:// 和 https:// 开头。可以包含数字、半角冒号（:）、下划线（\_）或者连字符（-）。默认值：空。
+
+ |
+|DataDisk.N.Encrypted|String|否|false|数据盘n是否加密。默认值：false。
+
+ |
+|DataDisk.N.KMSKeyId|String|否|0e478b7a-4262-4802-b8cb-00d3fb40826X|数据盘对应的KMS密钥ID。
 
  |
 |DataDisk.N.Size|Integer|否|100|数据盘 N 的磁盘大小，内存单位为 GiB。取值范围：
@@ -117,9 +129,17 @@
 |Memory|Integer|否|48|内存大小。
 
  |
-|Password|String|否|123-abcABC|实例的密码。长度为 8 至 30 个字符，必须同时包含大小写英文字母、数字和特殊符号。特殊符号可以是：
+|Password|String|否|123-abcABC|实例的密码。长度为 8 至 30 个字符，必须同时包含大小写英文字母、数字和特殊符号中的三类字符。特殊符号可以是：
 
-\(\)`~!@#$%^&*-_+=\|{}[]:;‘<>,.?/ .其中，Windows 实例不能以斜线号（/）为密码首字符。`|
+ ```
+()` ~!@#$%^&*-_+=\|{}[]:;'<>,.?/
+```
+
+ 其中，Windows 实例不能以斜线号（/）为密码首字符。
+
+ **说明：** 如果传入 Password 参数，建议您使用 HTTPS 协议发送请求，避免密码泄露。
+
+ |
 |PasswordInherit|Boolean|否|false|是否使用镜像预设的密码。使用该参数时，您需要所用镜像已经预设了密码。
 
  |
@@ -163,6 +183,12 @@
  InstanceType 为系列 I 的规格且实例属于非 I/O 优化实例时，默认值：cloud。否则，默认值：cloud\_efficiency。
 
  |
+|SystemDisk.Description|String|否|FinanceDept|系统盘的描述。长度为 2~256 个英文或中文字符，不能以 http:// 和 https:// 开头。
+
+ |
+|SystemDisk.DiskName|String|否|cloud\_ssdSystem|系统盘名称。长度为 2~128 个英文或中文字符。必须以大小字母或中文开头，不能以 http:// 和 https:// 开头。可以包含数字、半角冒号（:）、下划线（\_）或者连字符（-）。默认值：空。
+
+ |
 |SystemDisk.Size|Integer|否|100|系统盘大小，单位：GiB。取值范围：
 
  -   cloud：40~500
@@ -200,11 +226,9 @@
 
 ``` {#request_demo}
 
-http://ess.aliyuncs.com/?Action=CreateScalingConfiguration
+http(s)://[Endpoint]/?Action=CreateScalingConfiguration
 &ScalingGroupId=AG6CQdPU8OKdwLjgZcJ****
 &SecurityGroupId=sg-280ih****
-&ImageId=centos6u5_64_20G_aliaegis_20140703.vhd
-&InstanceType=ecs.t1.xsmall
 &<公共请求参数>
 
 ```
@@ -396,7 +420,7 @@ http://ess.aliyuncs.com/?Action=CreateScalingConfiguration
 
 |This operation is denied because the specified snapshot is created before 2013-07-15.
 
-|This operation is denied because the specified snapshot is created before 2013-07-15.
+|该快照创建于 2013 年 7 月 15 日或之前，调用被拒绝。
 
 |
 |403
@@ -405,7 +429,7 @@ http://ess.aliyuncs.com/?Action=CreateScalingConfiguration
 
 |The system disk category is not authorized.
 
-|没有创建临时磁盘系统盘的权限
+|没有创建临时磁盘系统盘的权限。
 
 |
 |400

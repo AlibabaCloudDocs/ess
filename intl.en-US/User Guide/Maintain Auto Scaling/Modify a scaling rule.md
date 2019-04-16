@@ -9,8 +9,6 @@ After you [create a scaling rule](reseller.en-US/User Guide/Realize Auto Scaling
 3.  Navigate to the Scaling Rules page. In the **Actions** column corresponding to the scaling rule to be modified, click **Edit**. 
 4.  In the Edit Scaling Rule dialog box that appears, modify attributes as necessary and click **Edit Scaling Rule**. 
 
-    ![](images/21731_en-US.png)
-
     **Note:** For more information about scaling rule attributes, see [What is a scaling rule](reseller.en-US/User Guide/Realize Auto Scaling/Create a scaling rule.md#section_x1c_ppw_rfb).
 
 

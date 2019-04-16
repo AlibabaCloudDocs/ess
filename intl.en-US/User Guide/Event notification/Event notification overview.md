@@ -6,7 +6,7 @@ The event notification feature is a monitoring method that can automatically sen
 
 Event notification methods include sending messages to CloudMonitor system events, MNS topics, and MNS queues.
 
-In CloudMonitor, you can query and view statistics on system events of various cloud services, such as Auto Scaling. You can also obtain up-to-date information about scaling groups For more information about the event monitoring feature of CloudMonitor, see [Cloud service system event monitoring](../../../../../reseller.en-US/User Guide/Event monitoring/Cloud product events/Cloud product system event monitoring.md#).
+In CloudMonitor, you can query and view statistics on system events of various cloud services, such as Auto Scaling. You can also obtain up-to-date information about scaling groups For more information about the event monitoring feature of CloudMonitor, see [Cloud service system event monitoring](../../../../reseller.en-US/User Guide/Event monitoring/Cloud product events/Cloud product system event monitoring.md#).
 
 There are two service models in Message Service: MNS topic and MNS queue. Message Service is a distributed message service that helps you easily transfer data and notification messages among distributed components, and build loosely coupled systems. For more information about the functions of MNS topics and MNS queues, see [Message Service overview](https://partners-intl.aliyun.com/help/doc-detail/34061.htm).
 
@@ -19,9 +19,7 @@ The following section provides examples of each event notification method. For m
 
 You have created an event notification in which Notification Method is set to **CloudMonitor** and Event Types to **Successful Scale-Outs** and **The scale-out activities for the specified scaling group are running**. After a scale-out activity of a scaling group succeeds, CloudMonitor receives an event notification and displays the event. The following figure shows the notification result after the scale-out activity succeeds. Two events are displayed in the results, including **The scale-out activities for the specified scaling group are running** and **The scale-out activities for the specified scaling group are completed**.
 
-![Event notification overview: example of an event notification through CloudMonitor](images/37549_en-US.png)
-
-In the [CloudMonitor console](https://partners-intl.console.aliyun.com/#/cms), you can view the status of scaling groups and [create an alarm rule](../../../../../reseller.en-US/User Guide/Alarm service/Alarm rules/Manage alarm rules.md#) to notify multiple alarm contacts through SMS messages and emails, improving operation and maintenance efficiency.
+In the [CloudMonitor console](https://partners-intl.console.aliyun.com/#/cms), you can view the status of scaling groups and [create an alarm rule](../../../../reseller.en-US/User Guide/Alarm service/Alarm rules/Manage alarm rules.md#) to notify multiple alarm contacts through SMS messages and emails, improving operation and maintenance efficiency.
 
 ## Example: event notifications through an MNS topic {#section_rrv_tjv_lgb .section}
 
@@ -29,13 +27,9 @@ You have created an event notification in which Notification Method is set to **
 
 The MNS topic does not allow direct consumption of messages. You must subscribe to the MNS topic through an MNS queue, HTTP request, or email. When the MNS topic receives a message, it pushes the message to subscribers. In this way, multiple subscribers separately consume messages from the same publisher, achieving efficient automated management.
 
-![Event notification overview: example of an event notification through an MNS topic](images/37551_en-US.png)
-
 ## Example: event notifications through an MNS queue {#section_ecw_tjv_lgb .section}
 
 You have created an event notification in which Notification Method is set to **MNS Queue**, and Event Types to **Failed Scale-Outs** and **The scale-out activities for the specified scaling group are running**. After a scale-out activity for a scaling group fails, the MNS queue receives an event notification and allows you to configure the messages for consumption. The following figure shows the notification result after the scale-out activity fails. The number displayed in the **Active Message** column corresponding to the MNS topic has increased.
 
 You can consume, delay, activate or delete the messages as needed, achieving automated management through event notifications.
-
-![Event notification overview: example of an event notification through an MNS queue](images/37552_en-US.png)
 

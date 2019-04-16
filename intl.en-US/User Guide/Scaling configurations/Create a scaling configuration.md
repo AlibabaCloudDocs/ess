@@ -13,20 +13,20 @@ The scaling configuration creation process is similar to that of an ECS instance
 
 ## Procedure in the Auto Scaling console {#section_vgq_nb5_cgb .section}
 
-1.  Log on to the [Auto Scaling console](https://partners-intl.console.aliyun.com/#/ess). In the**Actions** column corresponding to a scaling group, click**Manage**.
-2.  In the left-side navigation pane, clickInstance Configuration Source. On the tab page that appears, click**Create Scaling Configuration**.
-3.  On theBasic Configurations page, configure the billing method, instance, image, storage, public network bandwidth, and security group. Click**Next: System Configurations**.
+1.  Log on to the [Auto Scaling console](https://partners-intl.console.aliyun.com/#/ess). In the **Actions** column corresponding to a scaling group, click **Manage**.
+2.  In the left-side navigation pane, click Instance Configuration Source. On the tab page that appears, click **Create Scaling Configuration**.
+3.  On the Basic Configurations page, configure the billing method, instance, image, storage, public network bandwidth, and security group. Click **Next: System Configurations**.
 
     **Note:** In the basic configurations:
 
     -   Billing method: Only the [Pay-As-You-Go](../../../../reseller.en-US/Pricing/Pay-As-You-Go.md#) and [Preemptible instances](../../../../reseller.en-US/Instances/Instance purchasing options/Preemptible instances/Preemptible instances.md#) methods are supported.
     -   Instance: Multiple instance types are supported. When the instance inventory of a specific type is insufficient, the instances of the alternate types will be used to improve the scaling success rate.
-4.  On theSystem Configurations page, configure the logon credential, tag \(optional\), instance name \(optional\), and advanced options \(optional\). Click**Next: Preview**.
+4.  On the System Configurations page, configure the logon credential, tag \(optional\), instance name \(optional\), and advanced options \(optional\). Click **Next: Preview**.
 
     **Note:** Advanced options are available only for scaling configurations in a VPC-type scaling group. The options include RAM role and custom data of instances.
 
-5.  On thePreview page, check your configurations, enter the scaling configuration name, and click**Create**.
-6.  In theActivated dialog box that appears, you can click Enable Configuration, click Create More to [create another scaling configuration](reseller.en-US/User Guide/Scaling configurations/Create a scaling configuration.md#image_xnb_stn_qfb), or close the dialog box.
+5.  On the Preview page, check your configurations, enter the scaling configuration name, and click **Create**.
+6.  In the Activated dialog box that appears, you can click Enable Configuration, click Create More to [create another scaling configuration](reseller.en-US/User Guide/Scaling configurations/Create a scaling configuration.md#image_xnb_stn_qfb), or close the dialog box.
 
 ## API example {#section_zd1_prd_2gb .section}
 

@@ -32,13 +32,13 @@ Follow these steps to modify the attributes of a scale group:
     6.  Select an **Instance Configuration Source**.
     7.  \(Optional\) Once selected, you cannot modify the **Network Type** of the scaling group. If the **Network Type** of the scaling group that you need to modify is **VPC**, then you can change the **VSwitch**. However, you cannot change the **Multi-Zone Scaling Policy** or the **Reclaim Mode**.
 
-        ![Modify a scaling group - Change the VSwitch](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40591/154989905021739_en-US.png)
+        ![Modify a scaling group - Change the VSwitch](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40591/155703473821739_en-US.png)
 
     8.  \(Optional\) Select **SLB Instances**.
 
-        **Note:** A scaling group can be associated with up to five SLB instances at the same time. You can also select the [default server group](../../../../../reseller.en-US/User Guide/后端服务器/Backend server overview.md#section_fzb_g5n_n2b) or [VServer group\(s\)](../../../../../reseller.en-US/User Guide/后端服务器/Backend server overview.md#section_xqs_h2v_vdb) of a SLB instance for the scaling group. You can select up to five VServer groups for a scaling group at the same time. For more information, see [Use Server Load Balancer \(SLB\) in Auto Scaling](reseller.en-US/User Guide/Use Server Load Balancer (SLB) in Auto Scaling.md#).
+        **Note:** A scaling group can be associated with up to five SLB instances at the same time. You can also select the [default server group](../../../../reseller.en-US/User Guide/Backend servers/Backend server overview.md#section_fzb_g5n_n2b) or [VServer group\(s\)](../../../../reseller.en-US/User Guide/Backend servers/Backend server overview.md#section_xqs_h2v_vdb) of a SLB instance for the scaling group. You can select up to five VServer groups for a scaling group at the same time. For more information, see [Use Server Load Balancer \(SLB\) in Auto Scaling](reseller.en-US/User Guide/Related services/Use Server Load Balancer (SLB) in Auto Scaling.md#).
 
-        ![Modify a scaling group - Modify an SLB instance](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40591/154989905021740_en-US.png)
+        ![Modify a scaling group - Modify an SLB instance](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40591/155703473821740_en-US.png)
 
     9.  \(Optional\) Select **RDS Instances**. Currently, only RDS databases are supported.
 

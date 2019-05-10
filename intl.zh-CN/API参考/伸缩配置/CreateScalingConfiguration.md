@@ -19,7 +19,11 @@
 |Action|String|否|CreateScalingConfiguration|操作接口名，取值： CreateScalingConfiguration。
 
  |
-|Cpu|Integer|否|12|vCPU 个数。
+|Cpu|Integer|否|2|vCPU 个数。
+
+ 同时指定CPU和Memory可以定义实例规格范围，例如，CPU=2且Memory=16可以定义配置为2 vCPU 16 GiB的所有实例规格。弹性伸缩会结合IO优化、可用区等因素确定可用实例规格集合，并根据价格排序为您创建价格最低的实例。
+
+ **说明：** 该区间配置效果仅在成本优化模式下且伸缩配置未设置实例规格时生效。
 
  |
 |DataDisk.N.Category|String|否|cloud\_ssd|数据盘 N 的磁盘种类，N 的取值范围为 1~16。取值范围：
@@ -57,7 +61,7 @@
  |
 |DataDisk.N.Size|Integer|否|100|数据盘 N 的磁盘大小，内存单位为 GiB。取值范围：
 
- -   loud：5~2000
+ -   cloud：5~2000
 -   cloud\_efficiency：20~32768
 -   cloud\_ssd：20~32768
 -   ephemeral\_ssd：5~800
@@ -126,7 +130,11 @@
 |LoadBalancerWeight|Integer|否|50|后端服务器的权重，取值范围：0~100，默认值：50。
 
  |
-|Memory|Integer|否|48|内存大小。
+|Memory|Integer|否|16|内存大小。
+
+ 同时指定CPU和Memory可以定义实例规格范围，例如，CPU=2且Memory=16可以定义配置为2 vCPU 16 GiB的所有实例规格。弹性伸缩会结合IO优化、可用区等因素确定可用实例规格集合，并根据价格排序为您创建价格最低的实例。
+
+ **说明：** 该区间配置效果仅在成本优化模式下且伸缩配置未设置实例规格时生效。
 
  |
 |Password|String|否|123-abcABC|实例的密码。长度为 8 至 30 个字符，必须同时包含大小写英文字母、数字和特殊符号中的三类字符。特殊符号可以是：

@@ -61,7 +61,7 @@
  |
 |DataDisk.N.Size|Integer|否|100|数据盘 N 的磁盘大小，内存单位为 GiB。取值范围：
 
- -   loud：5~2000
+ -   cloud：5~2000
 -   cloud\_efficiency：20~32768
 -   cloud\_ssd：20~32768
 -   ephemeral\_ssd：5~800

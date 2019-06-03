@@ -1,109 +1,177 @@
-# CreateScheduledTask {#concept_25957_zh .concept}
+# CreateScheduledTask {#doc_api_Ess_CreateScheduledTask .reference}
 
-This operation creates a scheduled task according to input parameters.
-
-## Description {#section_qck_hgl_sfb .section}
+You can call this operation to create scheduled tasks based on specified input parameters.
 
 -   You can create up to 20 scheduled tasks.
--   When the trigger of a scheduled task fails because a scaling activity in a scaling group is in progress or the scaling group is disabled, the scheduled task is automatically retried within the `LaunchExpirationTime`; otherwise, the scheduled trigger task is abandoned.
--   If multiple tasks are scheduled at similar times to execute the rule of the same group, the earliest task triggers the scaling activity first, and other tasks make attempts to execute the rule within their `LaunchExpirationTime` because a scaling group executes only one scaling activity at a time. If another scheduled task is still making triggering attempts within its `LaunchExpirationTime` after the scaling activity is finished, the scaling rule is executed and the corresponding scaling activity is triggered.
+-   If a scaling group is disabled or executing a scaling activity, a scheduled task fails to execute a scaling rule. The scheduled task is automatically retried within the period of time specified by `LaunchExpirationTime`. After the period of time specified by LaunchExpirationTime expires, the task is abandoned.
+-   If multiple tasks in the same group are scheduled at similar points in time, the earliest task executes its scaling activity first. A scaling group can execute only one scaling activity at a time. Other tasks attempt to execute the rule within the period of time specified by `LaunchExpirationTime`. If a scaling activity is completed within the period of time specified by `LaunchExpirationTime`, the completed activity will trigger the next scheduled scaling rule and execute the scaling activity.
 
-## Request parameters { .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|Operation interface name, required parameter. Value: CreateScheduledTask.|
-|RegionId|String|Yes|ID of the region in which the scheduled task is located.|
-|ScheduledAction|String|Yes|Operations performed when the scheduled task is triggered. Fill in the unique identifier of the scaling rule.|
-|LaunchTime|String|Yes|Time point at which the scheduled task is triggered. The date format follows the ISO8601 standard and uses UTC time. It is in the format of YYYY-MM-DDThh:mmZ.
+[OpenAPI Explorer](https://api.aliyun.com/#product=Ess&api=CreateScheduledTask) simplifies API usage. You can use OpenAPI Explorer to perform debugging operations, such as retrieve APIs, call APIs, and dynamically generate SDK example code.
 
- If RecurrenceType is specified, the time point specified by this attribute is the default time point at which the circle is executed. If RecurrenceType is not specified, the task is executed once on the designated date and time.
+## Request parameters {#parameters .section}
 
- A time point 90 days after creation or modification cannot be entered.
+|Parameter|Type|Required|Example|Description|
+|---------|----|--------|-------|-----------|
+|RegionId|String|Yes|cn-qingdao|The ID of the region where the scheduled task is located.
 
  |
-|ScheduledTaskName|String|No|Display name of the scheduled task, which must be 2-40 characters \(English or Chinese\) long. It must begin with a number, an upper/lower-case letter or a Chinese character and may contain numbers, “\_”, “-“ or “.”. The account name is unique in the same region. If this parameter is not specified, the default value ScheduledScalingTaskId is used.
+|ScheduledAction|String|Yes|ari:acs:ess:cn-qingdao:1344371:scalingRule/cCBpdYdQuBe2cUxOdu6piOk|The operations performed when the scheduled task is triggered. When you set this parameter, you must also enter the unique identifier of the scaling rule.
 
  |
-|Description|String|No|Description of the scheduled task, which is 2-200 characters \(English or Chinese\) long.|
-|LaunchExpirationTime|Integer|No|Time period within which the failed scheduled task is retried. The default value is 600s. Value range: \[0, 21600\]|
-|RecurrenceType|String|No|Type of the scheduled task to be repeated. Optional values: -   Daily: Recurrence interval by day for a scheduled task
--   Weekly: Recurrence interval by week for a scheduled task
--   Monthly: Recurrence interval by month for a scheduled task
--   Cron: Execute a scheduled task according to the specified Cron expression.
-
- RecurrenceType, RecurrenceValue and RecurrenceEndTime must be specified.
+|Action|String|No|CreateScheduledTask|The operation that you want to perform. Set the value to CreateScheduledTask.
 
  |
-|RecurrenceValue|String|No|Value of the scheduled task to be repeated. -   Daily: Only one value in the range \[1,31\] can be filled.
--   Weekly: Multiple values can be filled. The values of Sunday to Saturday are 0 to 6 in sequence. Multiple values shall be separated by commas \(,\).
--   Monthly: In the format of A-B. The value range of A and B is 1 to 31, and the B value must be greater than the A value.
--   - Cron: An UTC time comprises of minute, hour, day, month and week. And the expression can include wildcard characters including comma \(,\), question mark \(?\), hyphen \(-\), asterisk \(\*\), hash \(\#\), slash \(/\), L and W.
-
- RecurrenceType, RecurrenceValue and RecurrenceEndTime must be specified.
+|Description|String|No|fortest|The description of the scheduled task. The description must be 2 to 200 characters in length.
 
  |
-|RecurrenceEndTime|String|No|End time of the scheduled task to be repeated. The date format follows the ISO8601 standard and uses UTC time. It is in the format of YYYY-MM-DDThh:mmZ.
-
- A time point 90 days after creation or modification cannot be entered.
-
- RecurrenceType, RecurrenceValue and RecurrenceEndTime must be specified.
+|LaunchExpirationTime|Integer|No|600|The period of time for which the scheduled task is retried if it fails. Default value: 600. Unit: seconds. Valid values: 0 to 21600.
 
  |
-|TaskEnabled|Bool|No|Whether to enable the scheduled task. -   When the parameter is set to true, the task is enabled.
+|LaunchTime|String|No|2014-08-17T16:52Z|The time at which the scheduled task is triggered. The time follows the ISO 8601 standard and uses UTC time. The format is YYYY-MM-DDThh:mmZ.
+
+ If the RecurrenceType parameter is specified, the task is executed each day at the time specified by LaunchTime. If the RecurrenceType parameter is not specified, the task is only executed once at the time specified by LaunchTime.
+
+ You cannot enter a point in time later than 90 days from the date of scheduled task creation or modification.
+
+ |
+|RecurrenceEndTime|String|No|2014-08-17T16:55Z|The end time after which the scheduled task is no longer repeated. The time follows the ISO 8601 standard and uses UTC time.
+
+ The format is YYYY-MM-DDThh:mmZ. You cannot enter a point in time later than 90 days from the date of scheduled task creation or modification.
+
+ If you set RecurrenceEndTime, you must also set both RecurrenceType and RecurrenceValue.
+
+ |
+|RecurrenceType|String|No|Daily|Indicates the interval for which the scheduled task is repeated. Valid values:
+
+ -   Daily: The scheduled task is executed recurrently after the specified number of days.
+-   Weekly: The scheduled task is executed on each specified day of a week.
+-   Monthly: The scheduled task is executed on each specified day of a month.
+-   Cron: The scheduled task is executed recurrently based on the specified Cron expression.
+
+ If you set RecurrenceType, you must also set both RecurrenceValue and RecurrenceEndTime.
+
+ |
+|RecurrenceValue|String|No|1|Indicates how often the scheduled task recurs.
+
+ -   Daily: indicates the interval of days at which the scheduled task is repeated. You can enter a single value ranging from 1 to 31.
+-   Weekly: indicates which days of the week that the scheduled task is repeated on. The values 0 to 6 correspond to the days of the week in sequence from Sunday to Saturday. Multiple values must be separated by commas \(,\).
+-   Monthly: indicates which days of the month that the scheduled task is repeated on. You can enter two values ranging from 1 to 31. The format is A-B. B must be greater than or equal to A.
+-   Cron: indicates a user-defined Cron expression that determines when the scheduled task is repeated. A Cron expression is written in UTC time and consists of five fields: minute, hour, day of month \(date\), month, and day of week. The expression can contain wildcard characters including commas \(,\), question marks \(?\), hyphens \(-\), asterisks \(\*\), number signs \(\#\), forward slashes \(/\), and the L and W characters.
+
+ If you set RecurrenceValue, you must also set both RecurrenceType and RecurrenceEndTime.
+
+ |
+|ScheduledTaskName|String|No|test|The display name of the scheduled task. The name must be 2 to 64 characters in length and can contain letters, digits, underscores \(\_\), hyphens \(-\), and periods \(.\). It must start with a letter or digit. The name of the scheduled task must be unique to an Alibaba Cloud account in a region. The default name is the ID of the scheduled scaling task.
+
+ |
+|TaskEnabled|Boolean|No|true|Indicates whether to enable the scheduled task.
+
+ -   When the parameter is set to true, the task is enabled.
 -   When the parameter is set to false, the task is disabled.
 
- The default value is true.
+ Default value: true.
 
  |
 
-## Response parameters { .section}
+## Response parameters {#resultMapping .section}
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|ScheduledTaskId|String|ID of the scheduled task, which is generated by the system and globally unique.|
+|Parameter|Type|Example|Description|
+|---------|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|The ID of the request. This parameter is returned regardless of whether the operation is successful.
 
-## Request example { .section}
+ |
+|ScheduledTaskId|String|edRtShc57WGXdt8TlPbr\*\*\*\*|The ID of the scheduled task. It is a globally unique identifier \(GUID\) generated by the system.
 
-```
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
+
 http://ess.aliyuncs.com/?Action=CreateScheduledTask
 &RegionId=cn-qingdao
 &LaunchTime=2014-08-17T16:52Z
 &RecurrenceType=Daily
-&RecurrenceValue=1
-&RecurrenceEndTime=2014-08-17T16:55Z
-&ScheduledAction=ari:acs:ess:cn-qingdao:1344371:scalingRule/cCBpdYdQuBe2cUxOdu6piOk
-&<Public Request Parameters>
-```
-
-## Response example { .section}
-
-XML format:
+&RecurrenceValue=1 
+&RecurrenceEndTime=2014-08-17T16:55Z 
+&ScheduledAction=ari:acs:ess:cn-qingdao:1344371:scalingRule/cCBpdYdQuBe2cUxOdu6piOk 
+&<Common request parameters>
 
 ```
+
+Successful response examples
+
+`XML` format
+
+``` {#xml_return_success_demo}
 <CreateScheduledTaskResponse>
-    <ScheduledTaskId>edRtShc57WGXdt8TlPbrjsnV</ScheduledTaskId>
-    <RequestId>0F02D931-2B12-44D7-A0E9-39925C13D15E</RequestId>
-</CreateScheduledTaskResponse>
-```
-
-JSON format:
+  <ScheduledTaskId>edRtShc57WGXdt8TlPbr****</ScheduledTaskId>
+  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId> 
+</CreateScheduledTaskResponse> 
 
 ```
+
+`JSON` format
+
+``` {#json_return_success_demo}
 {
-    "RequestId": "04F0F334-1335-436C-A1D7-6C044FE73368",
-    "ScheduledTaskId": "edRtShc57WGXdt8TlPbrjsnV"
+	"RequestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E",
+	"ScheduledTaskId":"edRtShc57WGXdt8TlPbr****"
 }
 ```
 
-## Error code { .section}
+## Error codes { .section}
 
-For common errors, see [client errors](reseller.en-US/API-Reference/Error codes/Client errors.md#) or [server errors](reseller.en-US/API-Reference/Error codes/Server errors.md#).
+[View error codes](https://error-center.aliyun.com/status/product/Ess)
 
-|Error code|Error message|HTTP status code|Description|
-|:---------|:------------|:---------------|:----------|
-|InvalidRegionId.NotFound|The specified region does not exist.|404|The specified region does not exist.|
-|InvalidScheduledTaskName.Duplicate|The specified value of parameter `ScheduledTaskName` is duplicated.|400|The scheduled task name already exists.|
-|QuotaExceeded.ScheduledTask|Scheduled task quota exceeded.|400|The specified ScheduledAction and the specified scheduled task are not in the same region.|
-|ScheduledAction.RegionMismatch|The specified scheduled task and the specified scheduled action are not in the same Region.|400|Your scheduled task quota is exceeded.|
+|HTTP status code
+
+|Error code
+
+|Error message
+
+|Description
+
+|
+|------------------|------------|---------------|-------------|
+|404
+
+|InvalidRegionId.NotFound
+
+|The specified region does not exist.
+
+|The error message returned when the specified region does not exist.
+
+|
+|400
+
+|InvalidScheduledTaskName.Duplicate
+
+|The specified value of parameter ScheduledTaskName is duplicated.
+
+|The error message returned when the specified name of the scheduled task already exists.
+
+|
+|400
+
+|QuotaExceeded.ScheduledTask
+
+|Scheduled task quota exceeded.
+
+|The error message returned when the number of scheduled tasks that can be created by a user reaches the upper limit.
+
+|
+|400
+
+|ScheduledAction.RegionMismatch
+
+|The specified scheduled task and the specified scheduled action are not in the same Region.
+
+|The error message returned when the specified value of the ScheduledAction parameter and the specified scheduled task are not in the same region.
+
+|
 

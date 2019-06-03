@@ -1,56 +1,89 @@
-# DisableScalingGroup {#concept_25940_zh .concept}
+# DisableScalingGroup {#doc_api_1163778 .reference}
 
-This topic introduces how to disable a scaling group using the API.
+You can call this operation to disable a scaling group.
 
-## Description {#section_qtb_jy2_sfb .section}
+## Description {#description .section}
 
 This operation disables a specified scaling group.
 
--   The scaling activities in progress before the scaling group is disabled are continued until completion, whereas scaling activities triggered after the scaling group is disabled are rejected.
--   The interface can be called only when the scaling group is active.
+-   Scaling activities that are currently being executed by the specified scaling group before this operation is called will continue until they are completed. Scaling activity requests that are made to the target scaling group after this operation has been called will be rejected.
+-   When you call this operation, note that the scaling group must be **active**.
 
-## Request parameters { .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|Operation interface name, required parameter. Value: DisableScalingGroup|
-|ScalingGroupId|String|Yes|Scaling group ID|
+[OpenAPI Explorer](https://api.aliyun.com/#product=Ess&api=DisableScalingGroup) simplifies API usage. You can use OpenAPI Explorer to perform operations such as retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-## Response parameters { .section}
+## Request parameters {#parameters .section}
 
-Public parameters.
+|Parameter|Type|Required|Example|Description|
+|---------|----|--------|-------|-----------|
+|ScalingGroupId|String|Yes|dmIDKNcyWfzncX9MWX1\*\*\*\*|The ID of the scaling group.
 
-## Error code { .section}
+ |
+|Action|String|No|DisableScalingGroup|The operation that you want to perform. Set the value to DisableScalingGroup.
 
-For common errors, see [client errors](reseller.en-US/API-Reference/Error codes/Client errors.md#) or [server errors](reseller.en-US/API-Reference/Error codes/Server errors.md#).
+ |
 
-|Error message|Error code|Description|HTTP status code|
-|:------------|:---------|:----------|:---------------|
-|The specified scaling group does not exist in this account.|InvalidScalingGroupId.NotFound|The specified scaling group does not exist.|404|
+## Response parameters {#resultMapping .section}
 
-## Request example { .section}
+|Parameter|Type|Example|Description |
+|---------|----|-------|------------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|The ID of the request. This parameter is returned regardless of whether the operation is successful.
 
-```
-http://ess.aliyuncs.com/?Action=DisableScalingGroup 
-&ScalingGroupId=dmIDKNcyWfzncX9MWX1bwFV
-&<Public Request Parameters>
-```
+ |
 
-## Response example { .section}
+## Examples {#demo .section}
 
-XML format:
+Sample requests
 
-```
-< DisableScalingGroupResponse>
-    <RequestId>6469DCD0-13AC-487E-85A0-CE4922908FDE</RequestId>
-</ DisableScalingGroupResponse>
-```
+``` {#request_demo}
 
-JSON format:
+http://ess.aliyuncs.com/?Action=DisableScalingGroup
+&ScalingGroupId=dmIDKNcyWfzncX9MWX1****
+&<Common request parameters>
 
 ```
+
+Successful response examples
+
+`XML` format
+
+``` {#xml_return_success_demo}
+<DisableScalingGroupResponse>
+  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId> 
+</DisableScalingGroupResponse>
+
+```
+
+`JSON` format
+
+``` {#json_return_success_demo}
 {
-"RequestId": "6469DCD0-13AC-487E-85A0-CE4922908FDE"
+	"RequestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E"
 }
 ```
+
+## Error codes { .section}
+
+[View error codes](https://error-center.aliyun.com/status/product/Ess)
+
+|HTTP status code
+
+|Error code
+
+|Error message
+
+|Description
+
+|
+|------------------|------------|---------------|-------------|
+|404
+
+|InvalidScalingGroupId.NotFound
+
+|The specified scaling group does not exist.
+
+|The error message returned when the specified scaling group does not exist in the current account.
+
+|
 

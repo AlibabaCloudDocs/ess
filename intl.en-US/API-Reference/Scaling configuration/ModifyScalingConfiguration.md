@@ -1,180 +1,386 @@
-# ModifyScalingConfiguration {#concept_ohp_tc2_sfb .concept}
+# ModifyScalingConfiguration {#doc_api_Ess_ModifyScalingConfiguration .reference}
 
-You can call this operation to modify a specified scaling configuration. When you modify the name of a scaling configuration, ensure that the name is different from the existing names of scaling configurations in a scaling group.
+You can call this operation to modify a scaling configuration. If you are modifying the name of a scaling configuration, ensure that the new name is unique within the scaling group.
 
-## Request parameters {#section_a2k_dp2_sfb .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|----|----|--------|-----------|
-|Action|String|Yes|The operation that you want to perform. Set the value to ModifyScalingConfiguration.|
-|ScalingConfigurationName|String|No|The name of the scaling configuration. The name is a combination of 2 to 40 characters including Chinese characters, numbers, uppercase letters, lowercase letters, underscores \(\_\), hyphens \(-\), and periods \(.\). Additionally, the name must start with a number, letter, or Chinese character. The name must be unique in a scaling group that is located in a region of an account. If you do not specify the parameter, the ID of the scaling configuration is specified as the name by default.|
-|InstanceName|String|No|The name of the ECS instance that is created based on the current scaling configuration.|
-|HostName|String|No| The hostname of the ECS instance. The name cannot start or end with a period \(.\) or hyphen \(-\). Additionally, a period cannot be next another period and a hyphen cannot be next to another hyphen. The naming rules for various types of instances are described as follows:
+[OpenAPI Explorer](https://api.aliyun.com/#product=Ess&api=ModifyScalingConfiguration) simplifies API usage. You can use OpenAPI Explorer to perform operations such as retrieve APIs, call APIs, and dynamically generate SDK example code.
 
- -   For Windows instances: The length of a hostname ranges from 2 to 15 characters. The hostname is a combination of characters including uppercase and lowercase letters, numbers, and hyphens \(-\), excluding periods \(.\). Additionally, the hostname cannot consist of all numbers.
--   For other instances, such as Linux instances: The length of a hostname ranges from 2 to 128 characters. Separate the hostname with periods \(.\). Characters between two periods \(.\) form a segment. Each segment is a combination of characters including uppercase and lowercase letters, numbers, and hyphens \(-\).
+## Request parameters {#parameters .section}
+
+|Parameter|Type|Required|Example|Description|
+|---------|----|--------|-------|-----------|
+|ScalingConfigurationId|String|Yes|asc-\*\*\*\*|The ID of the scaling configuration to be modified.
 
  |
-|ImageId|String|No|The ID of the image file. Specifies the image resource for an instance when you start the instance.|
-|ImageName|String|No|The name of the image file. The name must be unique in a region. If you specify the ImageId, the ImageName is not used. If you specify the ImageName rather than the ImageId, the ImageName is used by the current scaling configuration to identify an image file.|
-|ScalingConfigurationId|String|Yes|The ID of the scaling configuration. Specifies the scaling configuration to be modified.|
-|InternetChargeType|String|No| The billing method. Valid values:
-
- -   PayByBandwidth: indicates that you pay by bandwidth. In this case, the InternetMaxBandwidthOut is the specified bandwidth.
--   PayByTraffic: indicates that you pay by traffic. In this case, the InternetMaxBandwidthOut is the upper limit of the bandwidth. You pay for the amount of data that you use.
-
- If you do not specify the parameter, the default value is PayByBandwidth in a classic network, while the default value is PayByTraffic in a VPC network.
+|Action|String|No|ModifyScalingConfiguration|The operation that you want to perform. Set the value to ModifyScalingConfiguration.
 
  |
-|InternetMaxBandwidthOut|Integer|No| The maximum outgoing bandwidth for the public network. Unit: Mbit/s. Valid values:
+|Cpu|Integer|No|2|The number of vCPUs.
 
- -   PayByBandwidth: 1 to 100. If you do not specify the parameter, the outgoing bandwidth is set to 0 Mbit/s
--   PayByTraffic: 1 to 100. If you do not specify the parameter, an error occurs.
+ You can specify the number of CPU cores and the amount of memory to define the range of instance types. For example, instance types with a specified value of CPU as 2 and Memory as 16 can be defined as 2 vCPU 16 GiB. Auto Scaling uses factors such as I/O optimization and zone to determine a set of available instance types. Auto Scaling then creates instances of the type that is most cost-effective out of the available types.
 
- |
-|SystemDisk.Category|String|No| The types of the system disk. Valid values:
-
- -   cloud: basic disks.
--   cloud\_efficiency: ultra disks.
--   cloud\_ssd: SSDs.
--   ephemeral\_ssd: local SSDs.
-
- If the specification of the InstanceType is series I and the instance is not I/O optimized, the default value is cloud. Otherwise, the default value is cloud\_efficiency.
+ **Note:** This instance type range takes effect only when cost optimization is enabled and the scaling configuration does not have a specified instance type.
 
  |
-|SystemDisk.Size|Integer|No| The size of the system disk. Unit: GB. Valid values:
+|DataDisk.N.Category|String|No|cloud\_ssd|The category of data disk N. Valid values:
+
+ -   cloud: indicates a basic disk. The DeleteWithInstance property of a basic disk created along with the instance is true.
+-   cloud\_efficiency: indicates an ultra disk.
+-   cloud\_ssd: indicates an SSD disk.
+-   ephemeral\_ssd: indicates a local SSD disk.
+
+ Default value: cloud.
+
+ |
+|DataDisk.N.DeleteWithInstance|Boolean|No|true|Indicates whether data disk N is to be released with its attached instance. Valid values:
+
+ -   true: Release the data disk with its attached instance.
+-   false: Retain the data disk when the attached instance is released.
+
+ Default value: true. This parameter is valid only for independent disks, for which the **DataDisk.N.Category** parameter is set to cloud, cloud\_efficiency, or cloud\_ssd. An error will be returned if you set this parameter for other disks.
+
+ |
+|DataDisk.N.Description|String|No|FinanceDept|The description of data disk N. It must be 2 to 256 characters in length and cannot start with "http://" or "https://."
+
+ |
+|DataDisk.N.Device|String|No|/dev/xvdb|The mount point of data disk N. Valid values of N: 1 to 4. If this parameter is not specified, ECS automatically allocates a mount point to created ECS instances. The name of the mount point ranges from /dev/xvdb to /dev/xvdz in an alphabetical order.
+
+ |
+|DataDisk.N.DiskName|String|No|cloud\_ssdData|The name of data disk N. It must be 2 to 128 characters in length. It must start with a letter and cannot start with "http://" or "https://." It can contain letters, digits, colons \(:\), underscores \(\_\), and hyphens \(-\). Default value: empty.
+
+ |
+|DataDisk.N.Encrypted|String|No|false|Indicates whether data disk N is to be encrypted. Default value: false.
+
+ |
+|DataDisk.N.KMSKeyId|String|No|0e478b7a-4262-4802-b8cb-00d3fb40826X|The KMS key ID corresponding to the data disk.
+
+ |
+|DataDisk.N.Size|Integer|No|100|The size of data disk N. Unit: GB. Valid values of N: 1 to 16. Valid values:
+
+ -   cloud: 5 to 2000.
+-   cloud\_efficiency: 20 to 32768.
+-   cloud\_ssd: 20 to 32768.
+-   ephemeral\_ssd: 5 to 800.
+
+ If this parameter is specified, the data disk size must be greater than or equal to the size of the snapshot specified by **SnapshotId**.
+
+ |
+|DataDisk.N.SnapshotId|String|No|s-snapshot\*\*\*\*|The ID of the snapshot used to create data disk N. Valid values of N: 1 to 4. If this parameter is specified, **DataDisk.N.Size** is ignored and the size of the created disk is the size of the specified snapshot. You cannot specify a snapshot that was created on or before July 15, 2013****.
+
+ |
+|DeploymentSetId|String|No|ds-bp13v7bjnj9gis\*\*\*\*|The ID of the deployment set.
+
+ |
+|HostName|String|No|Joshu\*\*\*\*|The name of the host server where created ECS instances reside. It cannot start or end with a period \(.\) or hyphen \(-\). It cannot contain consecutive periods \(.\) or hyphens \(-\). Naming rules:
+
+ -   Windows-based instances: It must be 2 to 15 characters in length. It can contain uppercase or lowercase letters, digits, and hyphens \(-\). It cannot contain periods \(.\) or be entirely composed of digits.
+-   Other instances such as Linux-based instances: It must be 2 to 128 characters in length. It can be segments separated by periods \(.\). Each segment can contain uppercase or lowercase letters, digits, and hyphens \(-\).
+
+ |
+|ImageId|String|No|centos6u5\_64\_20G\_aliaegis\_20140703.vhd|The ID of the image file to be specified when created instances are started.
+
+ |
+|ImageName|String|No|suse11sp3\_64\_20G\_aliaegis\_20150428.vhd|The name of the image file. Image names must be unique within a region. This parameter is ignored if **ImageId****** is specified. If you specify this parameter instead of **ImageId******, the image with the specified name is used for the scaling configuration****.
+
+ |
+|InstanceName|String|No|Joshu\*\*\*\*|The name of the instance created based on the current scaling configuration.
+
+ |
+|InstanceTypes.N|RepeatList|No|ecs.t1.xsmall|The multiple instance types from which ECS instances are to be created. **InstanceType****** is ignored if this parameter is specified. Valid values of N: 1 to 10. Up to 10 instance types can be configured for a scaling configuration. N represents the priority of the instance type in the scaling configuration. A lower value of N indicates a higher priority for the instance type. If an instance of the highest priority type cannot be created, Auto Scaling will create an instance of the next highest priority type.
+
+ |
+|InternetChargeType|String|No|PayByBandwidth|The bandwidth billing type of created instances. Valid values:
+
+ -   PayByBandwidth:**** Users pay for the maximum available bandwidth.
+-   PayByTraffic: ****Users pay for the actual traffic used. The InternetMaxBandwidthOut parameter only specifies the upper limit of available bandwidth when this parameter is specified.
+
+ Default value: PayByBandwidth for classic networks or PayByTraffic for VPCs.
+
+ |
+|InternetMaxBandwidthOut|Integer|No|50|The maximum outbound bandwidth to the public network. Unit: Mbit/s. Valid values: 1 to 100.
+
+ -   If InternetChargeType is set to PayByBandwidth and this parameter is not specified, this parameter is automatically set to 0.
+-   If InternetChargeType is set to PayByTraffic and this parameter is not specified, an error is returned.
+
+ |
+|IoOptimized|String|No|none|Indicates whether created instances are I/O optimized. Valid values:
+
+ -   none
+-   optimized
+
+ The value of this parameter is none if **InstanceType** is set to an instance type which has been phased out.
+
+ The value of this parameter is optimized if **InstanceType** is set to an instance types later than Generation I.
+
+ |
+|KeyPairName|String|No|null|The name of the key pair.
+
+ -   Ignore this parameter if you are creating a Windows-based ECS instance. This parameter is null by default.
+-   Password logon is disabled for Linux-based ECS instances by default.
+
+ |
+|LoadBalancerWeight|Integer|No|50|The weight of the back-end server. Valid values: 0 to 100. Default value: 50.
+
+ |
+|Memory|Integer|No|16|The size of memory.
+
+ You can specify the number of CPU cores and the amount of memory to define the range of instance types. For example, instance types with a specified value of CPU as 2 and Memory as 16 can be defined as 2 vCPU 16 GiB. Auto Scaling uses factors such as I/O optimization and zone to determine a set of available instance types. Auto Scaling then creates instances of the type that is most cost-effective out of the available types.
+
+ **Note:** This instance type range takes effect only when cost optimization is enabled and the scaling configuration does not have a specified instance type.
+
+ |
+|Override|Boolean|No|true|Indicates whether to overwrite the existing data. Valid values:
+
+ -   true
+-   false
+
+ |
+|PasswordInherit|Boolean|No|false|Indicates whether to use the preconfigured password of the specified image. To use this parameter, ensure that a password is configured for the specified image.
+
+ |
+|RamRoleName|String|No|RamRoleTest|The name of the instance RAM role. This name is provided and maintained by RAM. Call [ListRoles](~~28713~~) to query the list of RAM role names. For more information, see [CreateRole](~~28710~~).
+
+ |
+|ResourceGroupId|String|No|abcd1234abcd\*\*\*\*|The ID of the resource group.
+
+ |
+|ScalingConfigurationName|String|No|test-modify|The new name of the scaling configuration. It must be 2 to 40 characters in length. It must start with a digit, uppercase letter, or lowercase letter. It can contain letters, digits, underscores \(\_\), hyphens \(-\), and periods \(.\). Scaling configuration names must be unique within a scaling group. If this parameter is not specified, the value of ScalingConfigurationId is used.
+
+ |
+|SecurityGroupId|String|No|sg-F876F\*\*\*\*|The ID of the security group.
+
+ |
+|SpotPriceLimit.N.InstanceType|String|No|ecs.t1.small|The instance type of preemptible instance N. Valid values of N: 1 to 10.
+
+ This parameter takes effect only when the SpotStrategy parameter is set to SpotWithPriceLimit.
+
+ |
+|SpotPriceLimit.N.PriceLimit|Float|No|0.125|The price limit of preemptible instance N. Valid values of N: 1 to 10. This parameter takes effect only when the **SpotStrategy** parameter is set to SpotWithPriceLimit.
+
+ |
+|SpotStrategy|String|No|NoSpot|The preemption policy to be used for pay-as-you-go instances. It takes effect only when the **InstanceChargeType** parameter is set to PostPaid. Valid values:
+
+ -   NoSpot: indicates a pay-as-you-go instance.
+-   SpotWithPriceLimit: indicates a preemptible instance with a maximum price.
+-   SpotAsPriceGo: indicates an instance with its price based on the market price at the time of purchase.
+
+ Default value: NoSpot.
+
+ |
+|SystemDisk.Category|String|No|cloud\_efficiency|The type of the system disk. Valid values:
+
+ -   cloud: indicates a basic disk.
+-   cloud\_efficiency: indicates an ultra disk.
+-   cloud\_ssd: indicates an SSD disk.
+-   ephemeral\_ssd: indicates a local SSD disk.
+
+ ****Default value: cloud for Generation I type instances that are not I/O optimized, and cloud\_efficiency for other types.
+
+ |
+|SystemDisk.Description|String|No|FinanceDept|The description of the system disk. It must be 2 to 256 characters in length and cannot start with "http://" or "https://."
+
+ |
+|SystemDisk.DiskName|String|No|cloud\_ssdSystem|The name of the system disk. It must be 2 to 128 characters in length. It must start with a letter and cannot start with "http://" or "https://." It can contain letters, digits, colons \(:\), underscores \(\_\), and hyphens \(-\). Default value: null.
+
+ |
+|SystemDisk.Size|Integer|No|50|The size of the system disk. Unit: GB. Valid values:
 
  -   cloud: 40 to 500.
 -   cloud\_efficiency: 40 to 500.
 -   cloud\_ssd: 40 to 500.
 -   ephemeral\_ssd: 40 to 500.
 
- Default value: max\{40, ImageSize\}. After you specify the parameter, the size of the system disk must be equal to or greater than max\{40, ImageSize\}.
+ Default value: the greater value out of ImageSize and 40. The specified value must be greater than or equal to the default value.
 
  |
-|LoadBalancerWeight|Integer|No|The weight of the backend server. Valid values: 0 to 100. Default value: 50.|
-|UserData|String|No|The custom data of the instance. The data is encoded by Base64. The size of the initial data is 16 KB.|
-|KeyPairName|String|No| The name of the key pair.
+|Tags|String|No|“key1”:”value1”|The tags of the instance. Tags must be specified as key-value pairs. Up to five tags in the \{“key1”:”value1”,”key2”:”value2”, … “key5”:”value5”\} format can be specified. Requirements for keys and values:
 
- -   For Windows ECS instances, the parameter is empty by default and is not used.
--   For Linux ECS instances, the logon method with a password is disabled by the initialization process.
+ -   A key can be up to 64 characters in length. It cannot start with "aliyun", "http://", or "https://." It cannot be left empty.
+-   A value can be up to 128 characters in length. It cannot start with "aliyun", "http://", or "https://." It can be left empty.
 
  |
-|RamRoleName|String|No|The RAM role of the instance. The role is provided and maintained by RAM. You can call the [ListRoles](../../../../../reseller.en-US/API Reference/Role management APIs/ListRoles.md#) operation to query roles. For more information, see [CreateRole](../../../../../reseller.en-US/API Reference/Role management APIs/CreateRole.md#).|
-|InstanceTypes.N|String|No|Includes one or more types of instances specifications. If you specify the InstanceTypes.N, the InstanceType is not used. Valid values of N: 1 to 10. Namely, you can specify up to 10 instance specifications in a scaling configuration. N is a number that represents the priority of an instance specification in the current scaling configuration. The instance specification with the number 1 indicates the highest priority. The priority decreases along with the increasing number. When an instance cannot be created based on an instance specification with a high priority, Auto Scaling creates the instance using an instance specification with the next highest level of priority.|
-|Tags|String|No| The tags of the instance. A tag is a key-value pair. You can specify up to five sets of tags. The format is: \{“key1”:”value1”,”key2”:”value2”, … “key5”:”value5”\}. Keys and values are required to follow these rules:
-
- -   The length of a key is up to 64 characters. A key cannot start with a string including aliyun, http://, and https://. You cannot specify an empty string for a key.
--   The length of a value is up to 128 characters. A value cannot start with a string including aliyun, http://, and https://. You can specify an empty string for a value.
-
- |
-|PasswordInherit|Boolean|No|Indicates whether you can use a password pre-defined by an image. When you specify the parameter, ensure that the selected image has a pre-defined password.|
-|IoOptimized|String|No| Indicates whether the instance is I/O optimized. Valid values:
-
- -   none: not I/O optimized.
--   optimized: I/O optimized.
-
- When the instance specification defined by the InstanceType parameter is in out-of-sale, the default value is none.
-
- When the instance specification specified by InstanceType is not series I, the default value is optimized.
-
- |
-|SpotStrategy|String|No| The preemptible type of postpaid instances. When the value of InstanceChargeType is PostPaid, the parameter is valid. Valid values:
-
- -   NoSpot: normal Pay-As-You-Go instances.
--   SpotWithPriceLimit: preemptible instances that are specified with the maximum price.
--   SpotAsPriceGo: the price is automatically set based on the current market price.
-
- Default value: NoSpot.
-
- |
-|SpotPriceLimit.N.InstanceType|String|No|The instance specification of the preemptible instance. Valid values of N: 1 to 10. When the value of SpotStrategy is SpotWithPriceLimit, the parameter is valid.|
-|SpotPriceLimit.N.PriceLimit|Float|No|The corresponding price of the preemptible instance. Valid values of N: 1 to 10. When the value of SpotStrategy is SpotWithPriceLimit, the parameter is valid.|
-|DataDisk.N.Category|String|No| The disk type of the data disk N. Valid values:
-
- -   cloud: basic disks. For a basic disk that is created along with the creation of an instance, the value of the disk's DeleteWithInstance property is true.
--   cloud\_efficiency: ultra disks.
--   cloud\_ssd: SSDs.
--   ephemeral\_ssd: local SSDs.
-
- Default value: cloud.
-
- |
-|DataDisk.N.Size|Integer|No| The size of the data disk N. Unit: GB. Valid values of N: 1 to 16. Valid values:
-
- -   cloud: 5 to 2000.
--   cloud\_efficiency: 20 to 32768.
--   cloud\_ssd: 20 to 32768.
--   ephemeral\_ssd: 50 to 800.
-
- After you specify the parameter, the size of the disk must be equal to or greater than the size of the snapshot. The snapshot is specified by the SnapshotId parameter.
-
- |
-|DataDisk.N.SnapshotId|String|No|The snapshot that is used to create the data disk. Valid values of N: 1 to 4. After you specify the parameter, the DataDisk.N.Size parameter is not used. The actual size of the created disk is equal to the size of the specified snapshot. If the snapshot was created on or before Jul 15, 2013, this call will be rejected. Up to four pieces of InvalidSnapshot.TooOld can be included in a response parameter.|
-|DataDisk.N.Device|String|No|The mount point of the data disk. Valid values of N: 1 to 4. If you do not specify the parameter, ECS allocates a mount point to an automatically created ECS instance by default. The name of the mount point ranges from /dev/xvdb to /dev/xvdz in alphabetical order.|
-|DataDisk.n.DeleteWithInstance|Boolean|No| Indicates whether the data disk is released along with the instance. Valid values:
-
- -   true: When you release the instance, the data disk will also be released.
--   false: When you release the instance, the data disk will not be released.
-
- Default value: true. You can only specify the parameter for independent disks, which means that the value of the DataDisk.n.Category parameter is cloud, cloud\_efficiency, or cloud\_ssd. Otherwise, an error occurs.
+|UserData|String|No|echo hello ecs!|The custom data of the instance. It must be encoded in the Base64 format. The maximum size of the raw data is 16 KB.
 
  |
 
-## Response parameters {#section_jzw_252_sfb .section}
+## Response parameters {#resultMapping .section}
 
-|Name|Type|Description|
-|----|----|-----------|
-|RequestId|String|The GUID generated by Alibaba Cloud for the request.|
+|Parameter|Type|Example|Description |
+|---------|----|-------|------------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|The ID of the request. This parameter is returned regardless of whether the operation is successful.
 
-## Examples {#section_oyq_352_sfb .section}
+ |
+
+## Examples {#demo .section}
 
 Sample requests
 
-```
-http://ess.aliyuncs.com/?Action=ModifyScalingConfiguration
-&ScalingConfigurationId=asc-xxxxxxxxxxxxxx
-&ScalingConfigurationName=test-modify
-&ImageId=centos6u5_64_20G_aliaegis_20140703.vhd 
-& <Common request parameters>
+``` {#request_demo}
+
+http(s)://[Endpoint]/? Action=ModifyScalingConfiguration
+&ScalingConfigurationId=asc-****
+&<Common request parameters>
+
 ```
 
 Successful response examples
 
 `XML` format
 
-```
-<ModifyScalingConfigurationResponse> 
-  <RequestId>04F0F334-1335-436C-A1D7-6C044FE73368</RequestId>
+``` {#xml_return_success_demo}
+<ModifyScalingConfigurationResponse>
+  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId> 
 </ModifyScalingConfigurationResponse>
+
 ```
 
 `JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-    "requestId": "04F0F334-1335-436C-A1D7-6C044FE73368"
+	"requestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E"
 }
 ```
 
-## Error codes {#section_kkw_s52_sfb .section}
+## Error codes { .section}
 
-For more information about common errors, see [Client errors](reseller.en-US/API-Reference/Error codes/Client errors.md#) or [Server errors](reseller.en-US/API-Reference/Error codes/Server errors.md#).
+[View error codes](https://error-center.aliyun.com/status/product/Ess)
 
-|HttpCode|Error code|Error message|Description|
-|--------|----------|-------------|-----------|
-|403|Forbidden.Unauthorized|A required authorization for the specified action is not supplied.|The error message returned when you have not been authorized to perform the Action.|
-|404|InvalidDataDiskSnapshotId.NotFound|Snapshot “XXX” does not exist.|The error message returned when the specified snapshot does not exist.|
-|400|InvalidDataDiskSnapshotId.SizeNotSupported|The capacity of snapshot “XXX” exceeds the size limit of the specified disk category.|The error message returned when the size of the snapshot exceeds the maximum size of the disk.|
-|404|InvalidImageId.NotFound|The specified image does not exist.|The error message returned when the specified ImageId does not exist.|
-|400t|InvalidKeyPairName.NotFound|The specified KeyPairName does not exist in our records.|The error message returned when the specified KeyPairName does not exist.|
-|400|InvalidNetworkType.ForRAMRole|RAMRole can’t be used For classic instance.|The error message returned when you specify theRamRoleName parameter for an instance in a classic network.|
-|400|InvalidParamter|The specified value of parameter is not valid.|The error message returned when the value of the specified parameter is invalid.|
-|400|InvalidScalingConfigurationName.Duplicate|The specified value of parameter is not valid.|The error message returned when the name of the scaling configuration exists.|
-|400|InvalidSecurityGroupId.IncorrectNetworkType|The network type of specified Security Group does not support this action.|The error message returned when the network type of the specified security group is different from that of the specified scaling group.|
-|400|InvalidSecurityGroupId.VPCMismatch|The specified security group and the specified virtual switch are not in the same VPC.|The error message returned when the specified security group and the VSwitch are not in the same VPC.|
-|400|InvalidTags.KeyValue|The specified tags key/value cannot be empty.|The error message returned when the Tags parameter is empty.|
-|400|InvalidTags.ListSize|The specified tags list size cannot be more than “5”.|The error message returned when the length of the Tags list exceeds the specified length.|
-|400|InvalidUserData.Base64FormatInvalid|The specified parameter UserData must be base64 encoded.|The error message returned when the UserData does not conform to Base64 encoding.|
-|400|InvalidUserData.SizeExceeded|The specified parameter UserData exceeds the size.|The error message returned when the length of the UserData exceeds the specified size.|
+|HTTP status code
+
+|Error code
+
+|Error message
+
+|Description
+
+|
+|------------------|------------|---------------|-------------|
+|403
+
+|Forbidden.Unauthorized
+
+|A required authorization for the specified action is not supplied.
+
+|The error message returned when you are not authorized to perform the specified operation.
+
+|
+|404
+
+|InvalidDataDiskSnapshotId.NotFound
+
+|Snapshot “XXX” does not exist.
+
+|The error message returned when the specified snapshot does not exist.
+
+|
+|400
+
+|InvalidDataDiskSnapshotId.SizeNotSupported
+
+|The capacity of snapshot “XXX” exceeds the size limit of the specified disk category.
+
+|The error message returned when the size of the specified snapshot exceeds the maximum size of the specified disk category.
+
+|
+|404
+
+|InvalidImageId.NotFound
+
+|The specified image does not exist.
+
+|The error message returned when the specified image does not exist.
+
+|
+|400
+
+|InvalidKeyPairName.NotFound
+
+|The specified KeyPairName does not exist in our records.
+
+|The error message returned when the specified key pair name does not exist.
+
+|
+|400
+
+|InvalidNetworkType.ForRAMRole
+
+|RAMRole can’t be used For classic instance.
+
+|The error message returned when the network type of the instance is classic network and does not support the RamRoleName parameter.
+
+|
+|400
+
+|InvalidParamter
+
+|The specified value of parameter is not valid.
+
+|The error message returned when the specified parameter value is invalid.
+
+|
+|400
+
+|InvalidScalingConfigurationName.Duplicate
+
+|The specified value of parameter is duplicated.
+
+|The error message returned when the specified scaling configuration name already exists.
+
+|
+|400
+
+|InvalidSecurityGroupId.IncorrectNetworkType
+
+|The network type of specified Security Group does not support this action.
+
+|The error message returned when the network types of the specified security group and scaling group are different.
+
+|
+|400
+
+|InvalidSecurityGroupId.VPCMismatch
+
+|The specified security group and the specified virtual switch are not in the same VPC.
+
+|The error message returned when the specified security group and VSwitch are not in the same VPC.
+
+|
+|400
+
+|InvalidTags.KeyValue
+
+|The specified tags key/value cannot be empty.
+
+|The error message returned when the Tags parameter is not specified.
+
+|
+|400
+
+|InvalidTags.ListSize
+
+|The specified tags list size cannot be more than “5”.
+
+|The error message returned when the length of the Tags list exceeds the limit.
+
+|
+|400
+
+|InvalidUserData.Base64FormatInvalid
+
+|The specified parameter UserData must be base64 encoded.
+
+|The error message returned when the specified user data is not encoded in the Base64 format.
+
+|
+|400
+
+|InvalidUserData.SizeExceeded
+
+|The specified parameter UserData exceeds the size.
+
+|The error message returned when the specified user data exceeds 16 KB.
+
+|
 

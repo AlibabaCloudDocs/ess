@@ -1,75 +1,166 @@
-# DetachInstances {#concept_72453_zh .concept}
+# DetachInstances {#doc_api_Ess_DetachInstances .reference}
 
 You can call this operation to detach one or more ECS instances from a scaling group.
 
-## Description {#section_qq4_5bl_sfb .section}
+## Description {#description .section}
 
-After you detach an ECS instance, the ECS instance can exist independently without attaching a scaling group. You can attach the ECS instance to another scaling group \([AttachInstances](reseller.en-US/API-Reference/Trigger task/Attach an ECS instance.md#)\). Detaching an ECS instance will not stop or release the ECS instance. If applicable, you can manually [stop](../../../../../reseller.en-US/API Reference/Instances/StopInstance.md#) or [release](../../../../../reseller.en-US/API Reference/Instances/DeleteInstance.md#) an ECS instance.
+After an ECS instance is detached, it can either exist independent of any scaling group or be attached to another scaling group. For more information, see [AttachInstances](~~25954~~). Detaching an ECS instance does not stop or release it. You can manually [stop](~~25501~~) or [release](~~25507~~) an ECS instance as needed.
 
-**Note:** 
+**Note:** Note:
 
--   The status of the target scaling group must be **Enable** \(`Enable`\).
--   Ensure that no in-progress scaling activity exists in the target scaling group.
--   When no in-progress scaling activity exists in the target scaling group, you can immediately perform the operation without following the [cool-down time](../../../../../reseller.en-US/User Guide/Usage notes/Cool-down time.md#).
--   Successfully calling an operation only means the calling request of the operation is received. You can trigger a scaling activity as usual, but you cannot ensure that the scaling activity is executed. You must view the status of the scaling activity based on the returned result of `ScalingActivityId`.
--   The remaining number of ECS instances cannot be less than the minimum number of the scaling group \(`MinSize`\). The remaining number of ECS instances is the total number of ECS instances of the target scaling group minus the number of detached ECS instances.
+-   The status of the specified scaling group must be **Enable** \(`Enable`\).
+-   Ensure that the specified scaling group does not have any scaling activities in progress.
+-   If the specified scaling group does not have any scaling activities in progress, the operation can be immediately executed without the need to wait for the [cooldown period](~~25912~~) to expire.
+-   If this operation is called, Auto Scaling has received the request. However, it is not guaranteed that the scaling activity can be executed as intended. You can determine the status of the scaling activity based on the returned `ScalingActivityId` parameter value.
+-   The difference between the number of ECS instances currently in the specified scaling group and the number of ECS instances to be detached must not be smaller than `MinSize`.
 
-## Request parameters { .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The operation that you want to perform. Set the value to DetachInstances.|
-|ScalingGroupId|String|Yes|The ID of the scaling group.|
-|InstanceId.N|String|Yes|The ID of the ECS instance. Valid values of `N`: 1 to 20.|
+[OpenAPI Explorer](https://api.aliyun.com/#product=Ess&api=DetachInstances) simplifies API usage. You can use OpenAPI Explorer to perform debugging operations, such as retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-## Response parameters { .section}
+## Request parameters {#parameters .section}
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|RequestId|String|The request ID.|
-|ScalingActivityId|String|The ID of the scaling activity.|
+|Parameter|Type|Required|Example|Description|
+|---------|----|--------|-------|-----------|
+|InstanceId.N|RepeatList|Yes|i-28wt4\*\*\*\*|The IDs of ECS instances. Valid values of N: 1 to 20.
 
-## Examples { .section}
+ |
+|ScalingGroupId|String|Yes|AG6CQdPU8OKdwLjgZcJ\*\*\*\*|The ID of the scaling group.
+
+ |
+|Action|String|No|DetachInstances|The operation that you want to perform. Set the value to DetachInstances.
+
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Parameter|Type|Example|Description|
+|---------|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|The ID of the request. This parameter is returned regardless of whether the operation is successful.
+
+ |
+|ScalingActivityId|String|asa-\*\*\*\*|The ID of the scaling activity.
+
+ |
+
+## Examples {#demo .section}
 
 Sample requests
 
-```
+``` {#request_demo}
+
 http://ess.aliyuncs.com/?Action=DetachInstances
-&ScalingGroupId=AG6CQdPU8OKdwLjgZcJXXXXX
-&InstanceId. 1=i-28wt48iaa
+&ScalingGroupId=AG6CQdPU8OKdwLjgZcJ****
+&InstanceId. 1=i-28wt4****
 &<Common request parameters>
+
 ```
 
 Successful response examples
 
 `XML` format
 
-```
-<DetachInstancesResponse>
-    <RequestId>04F0F334-1335-436C-A1D7-6C044FE73368</RequestId> 
-    <ScalingActivityId>asa-xxxxxxxxx</ScalingActivityId>
+``` {#xml_return_success_demo}
+<DetachInstancesResponse> 
+  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId> 
+  <ScalingActivityId>asa-xxxxxxxxx</ScalingActivityId> 
 </DetachInstancesResponse> 
+
 ```
 
 `JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-    "RequestId": "04F0F334-1335-436C-A1D7-6C044FE73368",
-    "ScalingActivityId": "asa-xxxxxxxxx"
+	"RequestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E",
+	"ScalingActivityId":"asa-****"
 }
 ```
 
 ## Error codes { .section}
 
-|HttpCode|Error code|Error message|Description|
-|--------|:---------|:------------|:----------|
-|400|IncorrectScalingGroupStatus|The current status of the specified scaling group does not support this action.|The status of the target scaling group must be **Enable** `Enable`.|
-|400|ScalingActivityInProgress|You cannot delete a scaling group or launch a new scaling activity while there is a scaling activity in progress.|The error message returned when the specified scaling group is currently undergoing a scaling activity.|
-|400|IncorrectLoadBalancerStatus|The current status of the specified load balancer does not support this action.|The status of SLB instances in the target scaling group must be **Running**`Running`.|
-|400|IncorrectDBInstanceStatus|The current status of DB instance “XXX” does not support this action.|The status of RDS instances in the target scaling group must be **Running**`Running`.|
-|400|IncorrectCapacity.MinSize|To remove the instances, the total capacity will be lesser than the MinSize.|The remaining number of ECS instances cannot be less than the minimum number of the scaling group \(`MinSize`\). The remaining number of ECS instances is the total number of ECS instances of the target scaling group minus the number of detached ECS instances.|
-|403|Forbidden.Unauthorized|A required authorization for the specified action is not supplied.|The error message returned when you have not been authorized to use the `DetachInstances` operation.|
-|404|InvalidScalingGroupId.NotFound|The specified scaling group does not exist.|The error message returned when the specified scaling group does not exist.|
-|404|InvalidInstanceId.NotFound|Instance “XXX” does not exist.|The error message returned when the specified ECS instance does not exist.|
+[View error codes](https://error-center.aliyun.com/status/product/Ess)
+
+|HTTP status code
+
+|Error code
+
+|Error message
+
+|Description
+
+|
+|------------------|------------|---------------|-------------|
+|400
+
+|IncorrectScalingGroupStatus
+
+|The current status of the specified scaling group does not support this action.
+
+|The error message returned when the specified scaling group is not enabled.
+
+|
+|400
+
+|ScalingActivityInProgress
+
+|You cannot delete a scaling group or launch a new scaling activity while there is a scaling activity in progress for the specified scaling group.
+
+|The error message returned when the specified scaling group currently has a scaling activity in progress.
+
+|
+|400
+
+|IncorrectLoadBalancerStatus
+
+|The current status of the specified load balancer does not support this action.
+
+|The error message returned when an SLB instance for the specified scaling group is not active.
+
+|
+|400
+
+|IncorrectDBInstanceStatus
+
+|The current status of DB instance "XXX" does not support this action.
+
+|The error message returned when an ApsaraDB for RDS instance for the specified scaling group is not running.
+
+|
+|400
+
+|IncorrectCapacity.MinSize
+
+|To remove the instances, the total capacity will be lesser than the MinSize.
+
+|The error message returned when the number of ECS instances to be detached would leave the number of ECS instances in the specified scaling group smaller than MinSize.
+
+|
+|403
+
+|Forbidden.Unauthorized
+
+|A required authorization for the specified action is not supplied.
+
+|The error message returned when you are not authorized to use the DetachInstances operation.
+
+|
+|404
+
+|InvalidScalingGroupId.NotFound
+
+|The specified scaling group does not exist.
+
+|The error message returned when the specified scaling group does not exist.
+
+|
+|404
+
+|InvalidInstanceId.NotFound
+
+|Instance "XXX" does not exist.
+
+|The error message returned when the specified ECS instance does not exist.
+
+|
 

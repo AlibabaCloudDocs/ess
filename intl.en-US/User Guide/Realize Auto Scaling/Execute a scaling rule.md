@@ -21,11 +21,11 @@ If you need to scale ECS instances temporarily, you can manually execute a scali
 2.  In the Run Scaling Rule message that appears, click **OK**.
 3.  If the scaling rule is executed, a prompt appears in the upper-right corner of the page.
 
-    ![](images/21704_en-US.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40579/155952467221704_en-US.png)
 
     If the scaling rule fails to be executed, an error message appears in the center of the page.
 
-    ![](images/21705_en-US.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40579/155952467221705_en-US.png)
 
 4.  You can go to the Scaling Activities page to view the results of the scaling rule execution.
 
@@ -33,7 +33,7 @@ If you need to scale ECS instances temporarily, you can manually execute a scali
 
 There are services that use ECS instances on a regular basis. For these services, you can specify a scaling rule when you [create a scheduled task](reseller.en-US/User Guide/Realize Auto Scaling/Scheduled tasks/Create a scheduled task.md#). Then, Auto Scaling executes this scaling rule at the scheduled points in time.
 
-![](images/21700_en-US.png)
+![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40579/155952467221700_en-US.png)
 
 ## Execute a scaling rule by using an alert task {#section_rgw_fcx_rfb .section}
 
@@ -41,7 +41,7 @@ There are services that do not use ECS instances on a regular basis. For these s
 
 Alert tasks include system monitoring alert tasks and custom monitoring alert tasks, which meet monitoring requirements in different scenarios. For more information, see [Auto Scaling alert tasks](reseller.en-US/User Guide/Realize Auto Scaling/Alarm tasks/Auto Scaling alarm tasks.md#).
 
-![Set a system monitoring alert task](images/21701_en-US.png)
+![Set a system monitoring alert task](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40579/155952467221701_en-US.png)
 
-![Set a custom monitoring alert task](images/21702_en-US.png)
+![Set a custom monitoring alert task](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40579/155952467221702_en-US.png)
 

@@ -1,64 +1,117 @@
-# DeleteScalingGroup {#concept_25941_zh .concept}
+# DeleteScalingGroup {#doc_api_1163781 .reference}
 
-This topic introduces how to delete a scaling group using the API.
+You can call this operation to delete a scaling group.
 
-## Description {#section_u1x_tz2_sfb .section}
+## Description {#description .section}
 
 This operation deletes a specified scaling group.
 
--   ForceDelete indicates whether to forcibly delete a scaling group and remove and release ECS instances if the scaling group has ECS instances or scaling activities are in progress.
+-   ForceDelete indicates whether to forcibly delete a scaling group and remove or release its associated ECS instances regardless of whether it is undergoing a scaling activity.
 -   If ForceDelete is set to false, the scaling group can be deleted only when the following conditions are met:
-    -   Condition 1: No scaling activities are in progress in the scaling group.
-    -   Condition 2: The current number \(total capacity\) of ECS instances in the scaling group is 0.\\
-    -   When the two conditions are met, the scaling group is disabled and then deleted.
--   When ForceDelete is set to true:
-    -   The scaling group is disabled to reject new scaling activity requests. When the existing scaling activity is completed, all ECS instances are removed from the scaling group and the group is then deleted \(manually attached ECS instances are removed from the scaling group, whereas ECS instances automatically created by the Auto Scaling service are deleted\).
--   Deleting a scaling group also deletes scaling configurations, rules, activities, and requests.
--   The following tasks or instances are not deleted: scheduled tasks, Cloud Monitor alarm tasks, Server Load Balancer instances, and RDS instances.
+    -   Condition 1: The scaling group is not currently undergoing a scaling activity.
+    -   Condition 2: The number of ECS instances currently in the scaling group \(Total Capacity\) is 0.
+    -   If both of these conditions are met, the scaling group can be disabled and deleted.
+-   If ForceDelete is set to true, we recommend that you perform the following procedure:
+    -   Disable the scaling group to reject new scaling activity requests. Remove all ECS instances from the scaling group after the ongoing scaling activities are completed and then delete the scaling group. Manually added ECS instances are only removed from the scaling group, whereas automatically created instances are deleted.
+-   Note that deleting a scaling group also deletes its scaling configurations, rules, activities, and requests.
+-   The following tasks and instances are not deleted when a scaling group is deleted: scheduled tasks, CloudMonitor alert tasks, SLB instances, and RDS instances.
 
-## Request parameters {#section_jrn_11f_sfb .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|Operation interface name, required parameter. Value: DeleteScalingGroup|
-|ScalingGroupId|String|Yes|Scaling group ID|
-|ForceDelete|Bool|No|Indicates whether to forcibly delete a scaling group and remove and release ECS instances if the scaling group has ECS instances or scaling activities are in progress. The default value is false, indicating that the scaling group is not forcibly deleted.|
+[OpenAPI Explorer](https://api.aliyun.com/#product=Ess&api=DeleteScalingGroup) simplifies API usage. You can use OpenAPI Explorer to perform operations such as retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-## Response parameters {#section_et5_g1f_sfb .section}
+## Request parameters {#parameters .section}
 
-Public parameters.
+|Parameter|Type|Required|Example|Description |
+|---------|----|--------|-------|------------|
+|ScalingGroupId|String|Yes|dmIDKNcyWfzncX9MWX1\*\*\*\*|The ID of the scaling group.
 
-## Error codes {#section_n4d_n1f_sfb .section}
+ |
+|Action|String|No|DeleteScalingGroup|The operation that you want to perform. Set the value to DeleteScalingGroup.
 
-|Error message|Error code|Description|HTTP status code|
-|:------------|:---------|:----------|:---------------|
-|The specified scaling group does not exist in this account.|InvalidScalingGroupId.NotFound|The specified scaling group does not exist.|404|
-|API is not fully authorized to the Auto Scaling service.|Forbidden.Unauthorized|A required authorization for the specified action is not supplied.|403|
-|The specified scaling group still has ECS instances.|InstanceInUse|You cannot delete a scaling configuration or scaling group while there is an instance associated with it.|400|
+ |
+|ForceDelete|Boolean|No|false|Indicates whether to forcibly delete the scaling group and remove or release its associated ECS instances regardless of whether it is undergoing a scaling activity. Default value: false, indicating that the scaling group is not to be forcibly deleted.
 
-## Request example {#section_pvz_51f_sfb .section}
+ |
 
-```
+## Response parameters {#resultMapping .section}
+
+|Parameter|Type|Example|Description |
+|---------|----|-------|------------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|The ID of the request. This parameter is returned regardless of whether the operation is successful.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
+
 http://ess.aliyuncs.com/?Action=DeleteScalingGroup
-&ScalingGroupId=dmIDKNcyWfzncX9MWX1bwFV
-&<Public Request Parameters>
-```
-
-## Response example {#section_gm4_w1f_sfb .section}
-
-XML format:
+&ScalingGroupId=dmIDKNcyWfzncX9MWX1****
+&<Common request parameters>
 
 ```
-<DeleteScalingGroupResponse>
-    <RequestId>6469DCD0-13AC-487E-85A0-CE4922908FDE</RequestId>
-</DeleteScalingGroupResponse>
+
+Successful response examples
+
+`XML` format
+
+``` {#xml_return_success_demo}
+<DeleteScalingGroupResponse> 
+  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId> 
+</DeleteScalingGroupResponse> 
+
 ```
 
-JSON format:
+`JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-"RequestId": "6469DCD0-13AC-487E-85A0-CE4922908FDE"
+	"RequestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E"
 }
 ```
+
+## Error codes { .section}
+
+[View error codes](https://error-center.aliyun.com/status/product/Ess)
+
+|HTTP status code
+
+|Error code
+
+|Error message
+
+|Description
+
+|
+|------------------|------------|---------------|-------------|
+|404
+
+|InvalidScalingGroupId.NotFound
+
+|The specified scaling group does not exist.
+
+|The error message returned when the specified scaling group does not exist in the current account.
+
+|
+|403
+
+|Forbidden.Unauthorized
+
+|A required authorization for the specified action is not supplied.
+
+|The error message returned when Auto Scaling is not authorized to call the specified operation.
+
+|
+|400
+
+|InstanceInUse
+
+|You cannot delete a scaling configuration or scaling group while there is an instance associated with it.
+
+|The error message returned when the specified scaling group still contains ECS instances and cannot be deleted.
+
+|
 

@@ -1,80 +1,183 @@
-# RemoveInstances {#concept_25955_zh .concept}
+# RemoveInstances {#doc_api_Ess_RemoveInstances .reference}
 
-Removes an ECS instance from a specified scaling group.
+You can call this operation to remove an ECS instance from a specified scaling group.
 
-## Description {#section_pdw_1bl_sfb .section}
+## Description {#description .section}
 
--   When the ECS instance automatically created by the Auto Scaling service is removed from the scaling group, the ECS instance is disabled and released.
--   When the manually attached ECS instance is removed from the scaling group, the ECS instance is neither disabled nor released.
--   The interface can be called only when the scaling group is active.
--   The interface can be called only when no scaling activity in the scaling group is in progress.
--   When no scaling activity in the scaling group is in progress, the interface can be directly executed without cooldown.
--   Successfully calling this interface only means that the Auto Scaling service has accepted the call request, and the scaling activity can be executed, but does not necessarily mean that the scaling activity can be successfully executed. You can use the returned ScalingActivityId to check the status of the scaling activity.
--   When the total capacity of instances of the scaling group minus instances specified by this interface is smaller than than MinSize, the call fails.
+-   When an automatically created ECS instance is removed from a scaling group, the instance is stopped and released.
+-   When a manually attached ECS instance is removed from a scaling group, the instance is not stopped or released.
+-   The operation can be called only when the scaling group is in the **Active** state.
+-   The operation can be called only when the scaling group does not have any scaling activities in progress.
+-   If the scaling group does not have any scaling activities in progress, the operation can be immediately executed without the need to wait for the cooldown period to expire.
+-   When this operation is called, Auto Scaling has received the request. However, it is not guaranteed that the scaling activity can be executed as intended. You can determine the status of the scaling activity based on the returned ScalingActivityId parameter value.
+-   When the number of ECS instances to be removed would leave the number of ECS instances in the specified scaling group smaller than MinSize, the operation fails.
 
-## Request parameters { .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|Operation interface name, required parameter. Value: RemoveInstances.|
-|ScalingGroupId|String|Yes|Scaling group ID.|
-|InstanceId.N|String|Yes|ECS instance ID. You can input up to 20 IDs.|
-|RemovePolicy|String|No|Specify the status of instances that are removed from scaling group. Optional values: -   recycle: The instance enters **No fees for stopped instances \(VPC-Connected\)** status.
+[OpenAPI Explorer](https://api.aliyun.com/#product=Ess&api=RemoveInstances) simplifies API usage. You can use OpenAPI Explorer to perform debugging operations, such as retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-**Note:** Only takes effect whenScalingPolicy is recycle.
+## Request parameters {#parameters .section}
 
--   release: The instance is released.
+|Parameter|Type|Required|Example|Description|
+|---------|----|--------|-------|-----------|
+|InstanceId.N|RepeatList|Yes|i-28wt4\*\*\*\*|The IDs of ECS instances. You can enter a maximum of 20 IDs.
 
- By default, the value is release.
+ |
+|ScalingGroupId|String|Yes|AG6CQdPU8OKdwLjgZcJ\*\*\*\*|The ID of the scaling group.
+
+ |
+|Action|String|No|RemoveInstances|The operation that you want to perform. Set the value to RemoveInstances.
+
+ |
+|RemovePolicy|String|No|release|Indicates the policy used to remove an instance. Valid values:
+
+ -   recycle: indicates that the instance is stopped and then removed.
+
+**Note:** This value can be used only when the **ScalingPolicy** parameter is set to recycle.
+
+-   release: indicates that the instance is released and then removed.
+
+ Default value: release.
 
  |
 
-## Response parameters { .section}
+## Response parameters {#resultMapping .section}
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|ScalingActivityId|String|Scaling activity ID|
+|Parameter|Type|Example|Description|
+|---------|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|The ID of the request. This parameter is returned regardless of whether the operation is successful.
+
+ |
+|ScalingActivityId|String|bybj9OcaOT4ucPMbFhcq\*\*\*\*|The ID of the scaling activity.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
+
+http://ess.aliyuncs.com/?Action=RemoveInstances
+&ScalingGroupId=AG6CQdPU8OKdwLjgZcJ**** 
+&InstanceId. 1=i-28wt4****
+&<Common request parameters>
+
+```
+
+Successful response examples
+
+`XML` format
+
+``` {#xml_return_success_demo}
+<RemoveInstancesResponse> 
+  <ScalingActivityId>bybj9OcaOT4ucPMbFhcqHfA3</ScalingActivityId> 
+  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId> 
+</RemoveInstancesResponse> 
+
+```
+
+`JSON` format
+
+``` {#json_return_success_demo}
+{
+	"RequestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E"
+}
+```
 
 ## Error codes { .section}
 
-For common errors, see [client errors](reseller.en-US/API-Reference/Error codes/Client errors.md#) or [server errors](reseller.en-US/API-Reference/Error codes/Server errors.md#).
+[View error codes](https://error-center.aliyun.com/status/product/Ess)
 
-|Error message|Error code|Description|HTTP status code|
-|:------------|:---------|:----------|:---------------|
-|The specified scaling group does not exist in this account.|InvalidScalingGroupId.NotFound|The specified scaling group does not exist.|404|
-|The specified ECS instance does not exist in the scaling group.|InvalidInstanceId.NotFound|Instance "XXX" does not exist.|404|
-|The specified group does not support the specified RemovePolicy.|InvalidParameter|The scaling group does not support the reclaim mode.|400|
-|API is not fully authorized to the Auto Scaling service.|Forbidden.Unauthorized|A required authorization for the specified action is not supplied.|403|
-|The specified scaling group is not active.|IncorrectScalingGroupStatus|The current status of the specified scaling group does not support this action.|400|
-|The specified scaling group has an in-progress scaling activity.|ScalingActivityInProgress|You cannot delete a scaling group or launch a new scaling activity while there is a scaling activity in progress for the specified scaling group.|400|
-|The Server Load Balancer instance in the scaling group to which the scaling rule belongs is not active.|IncorrectLoadBalancerStatus|The current status of the specified load balancer does not support this action.|400|
-|The RDS instance in the scaling group to which the specified scaling rule belongs is not running.|IncorrectDBInstanceStatus|The current status of DB instance "XXX" does not support this action.|400|
-|After instance removal, the total capacity is lower than MinSize.|IncorrectCapacity.MinSize|To remove the instances, the total capacity will be lesser than the MinSize.|400|
+|HTTP status code
 
-## Request example { .section}
+|Error code
 
-```
-http://ess.aliyuncs.com/?Action=RemoveInstances
-&ScalingGroupId=AG6CQdPU8OKdwLjgZcJ2eaQ
-&InstanceId. 1=i-28wt48iaa
-&<Public Request Parameters>
-```
+|Error message
 
-## Response example { .section}
+|Description
 
-XML format:
+|
+|------------------|------------|---------------|-------------|
+|404
 
-```
-<RemoveInstancesResponse>
-    <ScalingActivityId>bybj9OcaOT4ucPMbFhcqHfA3</ScalingActivityId>
-    <RequestId>DD0309B7-2613-4792-9B86-275906695253</RequestId>
-</RemoveInstancesResponse>
-```
+|InvalidScalingGroupId.NotFound
 
-JSON format:
+|The specified scaling group does not exist.
 
-```
-"RequestId": "6469DCD0-13AC-487E-85A0-CE4922908FDE",
-"ScalingActivityId": "ebta5WbUzC8gcwUWvfchyT4U"
-```
+|The error message returned when the specified scaling group does not exist in the current account.
+
+|
+|404
+
+|InvalidInstanceId.NotFound
+
+|Instance "XXX" does not exist.
+
+|The error message returned when the specified ECS instance does not exist in the scaling group.
+
+|
+|400
+
+|InvalidParameter
+
+|The specified group does not support the specified RemovePolicy.
+
+|The error message returned when the specified scaling group does not support the specified value of the RemovePolicy parameter.
+
+|
+|403
+
+|Forbidden.Unauthorized
+
+|A required authorization for the specified action is not supplied.
+
+|The error message returned when Auto Scaling is not authorized to call the specified operation.
+
+|
+|400
+
+|IncorrectScalingGroupStatus
+
+|The current status of the specified scaling group does not support this action.
+
+|The error message returned when the specified scaling group is not active.
+
+|
+|400
+
+|ScalingActivityInProgress
+
+|You cannot delete a scaling group or launch a new scaling activity while there is a scaling activity in progress for the specified scaling group.
+
+|The error message returned when the specified scaling group currently has a scaling activity in progress.
+
+|
+|400
+
+|IncorrectLoadBalancerStatus
+
+|The current status of the specified load balancer does not support this action.
+
+|The error message returned when an SLB instance for the scaling group to which the specified scaling rule belongs is not active.
+
+|
+|400
+
+|IncorrectDBInstanceStatus
+
+|The current status of DB instance "XXX" does not support this action.
+
+|The error message returned when an ApsaraDB for RDS instance for the scaling group to which the specified scaling rule belongs is not running.
+
+|
+|400
+
+|IncorrectCapacity.MinSize
+
+|To remove the instances, the total capacity will be lesser than the MinSize.
+
+|The error message when the number of ECS instances to be removed would leave the number of ECS instances in the specified scaling group smaller than MinSize.
+
+|
 

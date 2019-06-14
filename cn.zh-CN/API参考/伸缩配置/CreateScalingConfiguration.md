@@ -1,6 +1,6 @@
 # CreateScalingConfiguration {#doc_api_Ess_CreateScalingConfiguration .reference}
 
-创建一个伸缩配置。
+调用CreateScalingConfiguration创建伸缩配置。
 
 ## 调试 {#apiExplorer .section}
 
@@ -11,9 +11,6 @@
 |名称|类型|是否必选|示例值|描述|
 |--|--|----|---|--|
 |ScalingGroupId|String|是|AG6CQdPU8OKdwLjgZcJ\*\*\*\*|伸缩配置所属的伸缩组 ID。
-
- |
-|SecurityGroupId|String|是|sg-280ih\*\*\*\*|安全组 ID，指定新创建实例所属于的安全组，同一个安全组内的实例可以互相访问。
 
  |
 |Action|String|否|CreateScalingConfiguration|操作接口名，取值： CreateScalingConfiguration。
@@ -32,6 +29,7 @@
 -   cloud\_efficiency：高效云盘
 -   cloud\_ssd：SSD 云盘
 -   ephemeral\_ssd：本地 SSD 盘
+-   cloud\_essd：ESSD 云盘
 
  默认值：cloud。
 
@@ -166,6 +164,12 @@
 -   Deactive：不启用安全加固，对所有镜像类型生效。
 
  |
+|SecurityGroupId|String|否|sg-280ih\*\*\*\*|安全组 ID，指定新创建实例所属于的安全组，同一个安全组内的实例可以互相访问。
+
+ |
+|SecurityGroupIds.N|RepeatList|否|sg-bp18kz60mefs\*\*\*\*|自动创建的实例将加入的安全组。
+
+ |
 |SpotPriceLimit.N.InstanceType|String|否|ecs.t1.xsmall|抢占式实例的实例规格，其中 N 的取值范围：1~10。SpotStrategy 取值为 SpotWithPriceLimit 时生效。
 
  |
@@ -187,6 +191,7 @@
 -   cloud\_efficiency：高效云盘
 -   cloud\_ssd：SSD 云盘
 -   ephemeral\_ssd：本地 SSD 盘
+-   cloud\_essd：ESSD 云盘
 
  InstanceType 为系列 I 的规格且实例属于非 I/O 优化实例时，默认值：cloud。否则，默认值：cloud\_efficiency。
 

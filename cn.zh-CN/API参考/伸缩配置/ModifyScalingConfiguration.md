@@ -1,6 +1,10 @@
 # ModifyScalingConfiguration {#doc_api_Ess_ModifyScalingConfiguration .reference}
 
-修改一个指定的伸缩配置。如果修改伸缩配置名称，请注意同一伸缩组下不能存在名称相同的伸缩配置。
+调用ModifyScalingConfiguration修改指定的伸缩配置。
+
+## 描述 {#description .section}
+
+如果修改伸缩配置名称，请注意同一伸缩组下不能存在名称相同的伸缩配置。
 
 ## 调试 {#apiExplorer .section}
 
@@ -29,6 +33,7 @@
 -   cloud\_efficiency：高效云盘
 -   cloud\_ssd：SSD 云盘
 -   ephemeral\_ssd：本地 SSD 盘
+-   cloud\_essd：ESSD 云盘
 
  默认值：cloud
 
@@ -151,6 +156,9 @@
 |SecurityGroupId|String|否|sg-F876F\*\*\*\*|安全组 ID。
 
  |
+|SecurityGroupIds.N|RepeatList|否|sg-bp18kz60mefs\*\*\*\*|自动创建的实例将加入的安全组。
+
+ |
 |SpotPriceLimit.N.InstanceType|String|否|ecs.t1.small|抢占式实例的实例规格，其中 N 的取值范围：1~10。
 
  SpotStrategy 取值为 SpotWithPriceLimit 时生效。
@@ -174,6 +182,7 @@
 -   cloud\_efficiency：高效云盘
 -   cloud\_ssd：SSD 云盘
 -   ephemeral\_ssd：本地 SSD 盘
+-   cloud\_essd：ESSD 云盘
 
  如果 **InstanceType** 为系列 I 的规格且实例属于非 I/O 优化实例，默认值：cloud。否则，默认值：cloud\_efficiency。
 

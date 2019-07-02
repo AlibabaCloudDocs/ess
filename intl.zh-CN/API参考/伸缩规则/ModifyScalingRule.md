@@ -1,6 +1,6 @@
 # ModifyScalingRule {#doc_api_Ess_ModifyScalingRule .reference}
 
-修改一条已有的伸缩规则，重新定义伸缩动作。
+调用ModifyScalingRule修改一条已有的伸缩规则，重新定义伸缩动作。
 
 ## 描述 {#description .section}
 
@@ -36,7 +36,7 @@
  |
 |Cooldown|Integer|否|60|伸缩规则的冷却时间，仅适用于简单伸缩规则。
 
- 取值范围：0~86400，单位：秒，默认值：空。
+ 取值范围：0~86400，单位：秒。
 
  |
 |DisableScaleIn|Boolean|否|true|是否禁用缩容，仅适用于目标追踪伸缩规则。
@@ -49,13 +49,24 @@
  取值范围：0~86400，单位：秒。
 
  |
-|MetricName|String|否|CpuUtilization|预定义监控项，仅适用于目标追踪伸缩规则。可选值：
+|InitialMaxSize|Integer|否|100|伸缩组实例数上限，和PredictiveValueBehavior式结合使用。
 
- -   CpuUtilization：平均 CPU 使用率
+ |
+|MetricName|String|否|CpuUtilization|预定义监控项，适用于目标追踪伸缩规则和预测规则，且此时该项必选。
+
+ 目标追踪伸缩规则可选值：
+
+ -   CpuUtilization：平均CPU使用率
 -   ClassicInternetRx：经典网络公网入流量平均值
 -   ClassicInternetTx：经典网络公网出流量平均值
--   VpcInternetRx：VPC 网络公网入流量平均值
--   VpcInternetTx：VPC 网络公网出流量平均值
+-   VpcInternetRx：VPC网络公网入流量平均值
+-   VpcInternetTx：VPC网络公网出流量平均值
+-   IntranetRx：内网入流量平均值
+-   IntranetTx ：内网出流量平均值
+
+ 预测规则可选值：
+
+ -   CpuUtilization：平均CPU使用率
 -   IntranetRx：内网入流量平均值
 -   IntranetTx ：内网出流量平均值
 
@@ -63,7 +74,26 @@
 |MinAdjustmentMagnitude|Integer|否|1|伸缩规则最小调整实例数，仅当伸缩规则类型为SimpleScalingRule或StepScalingRule，且AdjustmentType为PercentChangeInCapacity时生效。
 
  |
-|ScalingRuleName|String|否|测试sr|伸缩规则的显示名称，2~40 个英文或中文字符，以数字、大小字母或中文开头，可包含数字，"\_"、"-" 或 ”.”。同一用户账号同一地域同一伸缩组内唯一。如果没有指定该参数，默认值为 ScalingRuleId。
+|PredictiveScalingMode|String|否|PredictAndScale|预测规则的模式，取值范围：
+
+ -   PredictAndScale：产生预测结果并创建预测任务。
+-   PredictOnly：产生预测结果，但不会创建预测任务。
+
+ |
+|PredictiveTaskBufferTime|Integer|否|30|预测规则自动创建的预测任务默认均在整点执行，您可以设置预启动时间提前执行预测任务，预先准备资源。取值范围：0~60。
+
+ |
+|PredictiveValueBehavior|String|否|MaxOverridePredictiveValue|预测规则最大值处理方式，取值范围：
+
+ -   MaxOverridePredictiveValue：初始最大值会覆盖预测值。预测值大于初始最大值时，预测任务的最大值采用初始最大值。
+-   PredictiveValueOverrideMax：预测值会覆盖初始最大值。预测值大于初始最大值时， 预测任务的最大值采用预测值。
+-   PredictiveValueOverrideMaxWithBuffer：预测值会附加一定比例。预测值会按照PredictiveValueBuffer比例增加，当增加后的值大于初始最大值时，会采用增加后的值。
+
+ |
+|PredictiveValueBuffer|Integer|否|50|PredictiveValueBehavior为PredictiveValueOverrideMaxWithBuffer时生效，预测值会按照该比例增加，当增加后的值大于初始最大值时，会采用增加后的值。取值范围：0~100。
+
+ |
+|ScalingRuleName|String|否|测试sr|伸缩规则的显示名称，2~40 个英文或中文字符，以数字、大小字母或中文开头，可包含数字，"\_"、"-" 或 ”.”。同一用户账号同一地域同一伸缩组内唯一。
 
  |
 |StepAdjustment.N.MetricIntervalLowerBound|Float|否|1.0|分步步骤的下边界，取值范围-9.999999E18~9.999999E18。
@@ -75,7 +105,7 @@
 |StepAdjustment.N.ScalingAdjustment|Integer|否|1|分步步骤对应的实例扩展数量。
 
  |
-|TargetValue|Float|否|0.125|目标值，仅适用于目标追踪伸缩规则。TargetValue 最多保留小数点后三位，且必须大于 0。
+|TargetValue|Float|否|0.125|目标值，适用于目标追踪伸缩规则和预测规则。TargetValue 最多保留小数点后三位，且必须大于 0。
 
  |
 

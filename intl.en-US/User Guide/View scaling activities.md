@@ -12,9 +12,7 @@ You can view scaling activities in Auto Scaling, to understand the results of th
 
 4.  Click **View Details** in the **Actions** column corresponding to a scaling activity to view more information.
 
-    **Note:** To troubleshoot a scaling activity in the **Failed** or **Rejected** state, see [Troubleshoot scaling activity exceptions](reseller.en-US/.md#).
-
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40605/155815337121824_en-US.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40605/156324025021824_en-US.png)
 
 
 You can also call [DescribeScalingActivities](../../../../reseller.en-US/API-Reference/Scaling group/DescribeScalingActivities.md#) to view scaling activities.

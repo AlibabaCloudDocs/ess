@@ -1,53 +1,106 @@
-# DeleteScalingConfiguration {#concept_25946_zh .concept}
+# DeleteScalingConfiguration {#doc_api_1163510 .reference}
 
-Deletes a specified scaling configuration.
+You can call this operation to delete a scaling configuration.
 
-An active scaling configuration in a scaling group cannot be deleted.
+## Description {#description .section}
 
-If any ECS instance created according to a scaling configuration is still in the scaling group, the scaling configuration cannot be deleted.
+Active scaling configurations in a scaling group cannot be deleted.
 
-## Request parameters {#section_hwn_ghk_sfb .section}
+If any ECS instances created based on a scaling configuration are still in the scaling group, the scaling configuration cannot be deleted.
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|Operation interface, required. The parameter value is DeleteScalingConfiguration.|
-|ScalingConfigurationId|String|Yes|ID of a scaling configuration.|
+## Debugging {#apiExplorer .section}
 
-## Response parameters {#section_pr1_jhk_sfb .section}
+[OpenAPI Explorer](https://api.aliyun.com/#product=Ess&api=DeleteScalingConfiguration) simplifies API usage. You can use OpenAPI Explorer to perform operations such as retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-Public parameters.
+## Request parameters {#parameters .section}
 
-## Error codes {#section_ic1_khk_sfb .section}
+|Parameter|Type|Required|Example|Description|
+|---------|----|--------|-------|-----------|
+|ScalingConfigurationId|String|Yes|eOs27Kb0oXvQcUYjEGel\*\*\*\*| The ID of the scaling configuration.
 
-For common errors, see [client errors](reseller.en-US/API-Reference/Error codes/Client errors.md#) or [server errors](reseller.en-US/API-Reference/Error codes/Server errors.md#).
+ |
+|Action|String|No|DeleteScalingConfiguration| The operation that you want to perform. Set the value to DeleteScalingConfiguration.
 
-|Error message|Error code|Description|HTTP status code|
-|:------------|:---------|:----------|:---------------|
-|The specified scaling configuration does not exist in this account.|InvalidScalingConfigurationId.NotFound|The specified scaling configuration does not exist.|404|
-|The specified scaling configuration is not in inactive state.|IncorrectScalingConfigurationLifecycleState|The current lifecycle state of specified scaling configuration does not support this action.|400|
-|The scaling configuration has an associated ECS instance not deleted yet.|InstanceInUse|You cannot delete a scaling configuration or scaling group while there is an instance associated with it.|400|
+ |
 
-## Request example {#section_gxn_phk_sfb .section}
+## Response parameters {#resultMapping .section}
 
-```
+|Parameter|Type|Example|Description|
+|---------|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request. This parameter is returned regardless of whether the operation is successful.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
+
 http://ess.aliyuncs.com/?Action=DeleteScalingConfiguration
-&ScalingConfigurationId=eOs27Kb0oXvQcUYjEGelJqUy
-&<Public Request Parameters>
-```
-
-## Response example { .section}
-
-XML format:
+&ScalingConfigurationId=eOs27Kb0oXvQcUYjEGel****
+&<Common request parameters>
 
 ```
-<DeleteScalingConfigurationResponse>
-    <RequestId>61D30272-7111-44D9-BB45-FCB55E4A1410</RequestId>
-</DeleteScalingConfigurationResponse>
+
+Successful response examples
+
+`XML` format
+
+``` {#xml_return_success_demo}
+<DeleteScalingConfigurationResponse> 
+  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId> 
+</DeleteScalingConfigurationResponse> 
+
 ```
 
-JSON format:
+`JSON` format
 
+``` {#json_return_success_demo}
+{
+	"RequestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E"
+}
 ```
-"RequestId": "61D30272-7111-44D9-BB45-FCB55E4A1410"
-```
+
+## Error codes {#section_ie3_882_5y8 .section}
+
+[View error codes](https://error-center.aliyun.com/status/product/Ess)
+
+| HTTP status code
+
+ | Error code
+
+ | Error message
+
+ | Description
+
+ |
+|--------------------|--------------|-----------------|---------------|
+| 404
+
+ | InvalidScalingConfigurationId.NotFound
+
+ | The specified scaling configuration does not exist.
+
+ | The error message returned when the specified scaling configuration does not exist in the current account.
+
+ |
+| 400
+
+ | IncorrectScalingConfigurationLifecycleState
+
+ | The current lifecycle state of specified scaling configuration does not support this action.
+
+ | The error message returned when the specified scaling configuration is in a state other than inactive.
+
+ |
+| 400
+
+ | InstanceInUse
+
+ | You cannot delete a scaling configuration or scaling group while there is an instance associated with it.
+
+ | The error message returned when the specified scaling configuration still has associated ECS instances.
+
+ |
 

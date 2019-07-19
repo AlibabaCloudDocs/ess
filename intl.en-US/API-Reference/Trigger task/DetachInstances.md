@@ -6,8 +6,6 @@ You can call this operation to detach one or more ECS instances from a scaling g
 
 After an ECS instance is detached, it can either exist independent of any scaling group or be attached to another scaling group. For more information, see [AttachInstances](~~25954~~). Detaching an ECS instance does not stop or release it. You can manually [stop](~~25501~~) or [release](~~25507~~) an ECS instance as needed.
 
-**Note:** Note:
-
 -   The status of the specified scaling group must be **Enable** \(`Enable`\).
 -   Ensure that the specified scaling group does not have any scaling activities in progress.
 -   If the specified scaling group does not have any scaling activities in progress, the operation can be immediately executed without the need to wait for the [cooldown period](~~25912~~) to expire.
@@ -22,13 +20,13 @@ After an ECS instance is detached, it can either exist independent of any scalin
 
 |Parameter|Type|Required|Example|Description|
 |---------|----|--------|-------|-----------|
-|InstanceId.N|RepeatList|Yes|i-28wt4\*\*\*\*|The IDs of ECS instances. Valid values of N: 1 to 20.
+|InstanceId.N|RepeatList|Yes|i-28wt4\*\*\*\*| The IDs of ECS instances. Valid values of N: 1 to 20.
 
  |
-|ScalingGroupId|String|Yes|AG6CQdPU8OKdwLjgZcJ\*\*\*\*|The ID of the scaling group.
+|ScalingGroupId|String|Yes|AG6CQdPU8OKdwLjgZcJ\*\*\*\*| The ID of the scaling group.
 
  |
-|Action|String|No|DetachInstances|The operation that you want to perform. Set the value to DetachInstances.
+|Action|String|No|DetachInstances| The operation that you want to perform. Set the value to DetachInstances.
 
  |
 
@@ -36,10 +34,10 @@ After an ECS instance is detached, it can either exist independent of any scalin
 
 |Parameter|Type|Example|Description|
 |---------|----|-------|-----------|
-|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|The ID of the request. This parameter is returned regardless of whether the operation is successful.
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request. This parameter is returned regardless of whether the operation is successful.
 
  |
-|ScalingActivityId|String|asa-\*\*\*\*|The ID of the scaling activity.
+|ScalingActivityId|String|asa-\*\*\*\*| The ID of the scaling activity.
 
  |
 
@@ -77,90 +75,90 @@ Successful response examples
 }
 ```
 
-## Error codes { .section}
+## Error codes {#section_fbv_1z7_40h .section}
 
 [View error codes](https://error-center.aliyun.com/status/product/Ess)
 
-|HTTP status code
+| HTTP status code
 
-|Error code
+ | Error code
 
-|Error message
+ | Error message
 
-|Description
+ | Description
 
-|
-|------------------|------------|---------------|-------------|
-|400
+ |
+|--------------------|--------------|-----------------|---------------|
+| 400
 
-|IncorrectScalingGroupStatus
+ | IncorrectScalingGroupStatus
 
-|The current status of the specified scaling group does not support this action.
+ | The current status of the specified scaling group does not support this action.
 
-|The error message returned when the specified scaling group is not enabled.
+ | The error message returned when the specified scaling group is not enabled.
 
-|
-|400
+ |
+| 400
 
-|ScalingActivityInProgress
+ | ScalingActivityInProgress
 
-|You cannot delete a scaling group or launch a new scaling activity while there is a scaling activity in progress for the specified scaling group.
+ | You cannot delete a scaling group or launch a new scaling activity while there is a scaling activity in progress for the specified scaling group.
 
-|The error message returned when the specified scaling group currently has a scaling activity in progress.
+ | The error message returned when the specified scaling group currently has a scaling activity in progress.
 
-|
-|400
+ |
+| 400
 
-|IncorrectLoadBalancerStatus
+ | IncorrectLoadBalancerStatus
 
-|The current status of the specified load balancer does not support this action.
+ | The current status of the specified load balancer does not support this action.
 
-|The error message returned when an SLB instance for the specified scaling group is not active.
+ | The error message returned when an SLB instance for the specified scaling group is not active.
 
-|
-|400
+ |
+| 400
 
-|IncorrectDBInstanceStatus
+ | IncorrectDBInstanceStatus
 
-|The current status of DB instance "XXX" does not support this action.
+ | The current status of DB instance “XXX” does not support this action.
 
-|The error message returned when an ApsaraDB for RDS instance for the specified scaling group is not running.
+ | The error message returned when an ApsaraDB for RDS instance for the specified scaling group is not running.
 
-|
-|400
+ |
+| 400
 
-|IncorrectCapacity.MinSize
+ | IncorrectCapacity.MinSize
 
-|To remove the instances, the total capacity will be lesser than the MinSize.
+ | To remove the instances, the total capacity will be lesser than the MinSize.
 
-|The error message returned when the number of ECS instances to be detached would leave the number of ECS instances in the specified scaling group smaller than MinSize.
+ | The error message returned when the number of ECS instances to be detached would leave the number of ECS instances in the specified scaling group smaller than MinSize.
 
-|
-|403
+ |
+| 403
 
-|Forbidden.Unauthorized
+ | Forbidden.Unauthorized
 
-|A required authorization for the specified action is not supplied.
+ | A required authorization for the specified action is not supplied.
 
-|The error message returned when you are not authorized to use the DetachInstances operation.
+ | The error message returned when you are not authorized to use the DetachInstances operation.
 
-|
-|404
+ |
+| 404
 
-|InvalidScalingGroupId.NotFound
+ | InvalidScalingGroupId.NotFound
 
-|The specified scaling group does not exist.
+ | The specified scaling group does not exist.
 
-|The error message returned when the specified scaling group does not exist.
+ | The error message returned when the specified scaling group does not exist.
 
-|
-|404
+ |
+| 404
 
-|InvalidInstanceId.NotFound
+ | InvalidInstanceId.NotFound
 
-|Instance "XXX" does not exist.
+ | Instance “XXX” does not exist.
 
-|The error message returned when the specified ECS instance does not exist.
+ | The error message returned when the specified ECS instance does not exist.
 
-|
+ |
 

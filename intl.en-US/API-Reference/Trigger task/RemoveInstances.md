@@ -20,16 +20,16 @@ You can call this operation to remove an ECS instance from a specified scaling g
 
 |Parameter|Type|Required|Example|Description|
 |---------|----|--------|-------|-----------|
-|InstanceId.N|RepeatList|Yes|i-28wt4\*\*\*\*|The IDs of ECS instances. You can enter a maximum of 20 IDs.
+|InstanceId.N|RepeatList|Yes|i-28wt4\*\*\*\*| The IDs of ECS instances. You can enter a maximum of 20 IDs.
 
  |
-|ScalingGroupId|String|Yes|AG6CQdPU8OKdwLjgZcJ\*\*\*\*|The ID of the scaling group.
+|ScalingGroupId|String|Yes|AG6CQdPU8OKdwLjgZcJ\*\*\*\*| The ID of the scaling group.
 
  |
-|Action|String|No|RemoveInstances|The operation that you want to perform. Set the value to RemoveInstances.
+|Action|String|No|RemoveInstances| The operation that you want to perform. Set the value to RemoveInstances.
 
  |
-|RemovePolicy|String|No|release|Indicates the policy used to remove an instance. Valid values:
+|RemovePolicy|String|No|release| Indicates the policy used to remove an instance. Valid values:
 
  -   recycle: indicates that the instance is stopped and then removed.
 
@@ -45,10 +45,10 @@ You can call this operation to remove an ECS instance from a specified scaling g
 
 |Parameter|Type|Example|Description|
 |---------|----|-------|-----------|
-|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|The ID of the request. This parameter is returned regardless of whether the operation is successful.
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request. This parameter is returned regardless of whether the operation is successful.
 
  |
-|ScalingActivityId|String|bybj9OcaOT4ucPMbFhcq\*\*\*\*|The ID of the scaling activity.
+|ScalingActivityId|String|bybj9OcaOT4ucPMbFhcq\*\*\*\*| The ID of the scaling activity.
 
  |
 
@@ -85,99 +85,99 @@ Successful response examples
 }
 ```
 
-## Error codes { .section}
+## Error codes {#section_anp_lud_4pm .section}
 
 [View error codes](https://error-center.aliyun.com/status/product/Ess)
 
-|HTTP status code
+| HTTP status code
 
-|Error code
+ | Error code
 
-|Error message
+ | Error message
 
-|Description
+ | Description
 
-|
-|------------------|------------|---------------|-------------|
-|404
+ |
+|--------------------|--------------|-----------------|---------------|
+| 404
 
-|InvalidScalingGroupId.NotFound
+ | InvalidScalingGroupId.NotFound
 
-|The specified scaling group does not exist.
+ | The specified scaling group does not exist.
 
-|The error message returned when the specified scaling group does not exist in the current account.
+ | The error message returned when the specified scaling group does not exist in the current account.
 
-|
-|404
+ |
+| 404
 
-|InvalidInstanceId.NotFound
+ | InvalidInstanceId.NotFound
 
-|Instance "XXX" does not exist.
+ | Instance "XXX" does not exist.
 
-|The error message returned when the specified ECS instance does not exist in the scaling group.
+ | The error message returned when the specified ECS instance does not exist in the scaling group.
 
-|
-|400
+ |
+| 400
 
-|InvalidParameter
+ | InvalidParameter
 
-|The specified group does not support the specified RemovePolicy.
+ | The specified group does not support the specified RemovePolicy.
 
-|The error message returned when the specified scaling group does not support the specified value of the RemovePolicy parameter.
+ | The error message returned when the specified scaling group does not support the specified value of the RemovePolicy parameter.
 
-|
-|403
+ |
+| 403
 
-|Forbidden.Unauthorized
+ | Forbidden.Unauthorized
 
-|A required authorization for the specified action is not supplied.
+ | A required authorization for the specified action is not supplied.
 
-|The error message returned when Auto Scaling is not authorized to call the specified operation.
+ | The error message returned when Auto Scaling is not authorized to call the specified operation.
 
-|
-|400
+ |
+| 400
 
-|IncorrectScalingGroupStatus
+ | IncorrectScalingGroupStatus
 
-|The current status of the specified scaling group does not support this action.
+ | The current status of the specified scaling group does not support this action.
 
-|The error message returned when the specified scaling group is not active.
+ | The error message returned when the specified scaling group is not active.
 
-|
-|400
+ |
+| 400
 
-|ScalingActivityInProgress
+ | ScalingActivityInProgress
 
-|You cannot delete a scaling group or launch a new scaling activity while there is a scaling activity in progress for the specified scaling group.
+ | You cannot delete a scaling group or launch a new scaling activity while there is a scaling activity in progress for the specified scaling group.
 
-|The error message returned when the specified scaling group currently has a scaling activity in progress.
+ | The error message returned when the specified scaling group currently has a scaling activity in progress.
 
-|
-|400
+ |
+| 400
 
-|IncorrectLoadBalancerStatus
+ | IncorrectLoadBalancerStatus
 
-|The current status of the specified load balancer does not support this action.
+ | The current status of the specified load balancer does not support this action.
 
-|The error message returned when an SLB instance for the scaling group to which the specified scaling rule belongs is not active.
+ | The error message returned when an SLB instance for the scaling group to which the specified scaling rule belongs is not active.
 
-|
-|400
+ |
+| 400
 
-|IncorrectDBInstanceStatus
+ | IncorrectDBInstanceStatus
 
-|The current status of DB instance "XXX" does not support this action.
+ | The current status of DB instance "XXX" does not support this action.
 
-|The error message returned when an ApsaraDB for RDS instance for the scaling group to which the specified scaling rule belongs is not running.
+ | The error message returned when an ApsaraDB for RDS instance for the scaling group to which the specified scaling rule belongs is not running.
 
-|
-|400
+ |
+| 400
 
-|IncorrectCapacity.MinSize
+ | IncorrectCapacity.MinSize
 
-|To remove the instances, the total capacity will be lesser than the MinSize.
+ | To remove the instances, the total capacity will be lesser than the MinSize.
 
-|The error message when the number of ECS instances to be removed would leave the number of ECS instances in the specified scaling group smaller than MinSize.
+ | The error message when the number of ECS instances to be removed would leave the number of ECS instances in the specified scaling group smaller than MinSize.
 
-|
+ |
 

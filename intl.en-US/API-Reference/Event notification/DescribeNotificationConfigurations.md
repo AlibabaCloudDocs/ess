@@ -1,108 +1,136 @@
-# DescribeNotificationConfigurations {#concept_71116_zh .concept}
+# DescribeNotificationConfigurations {#doc_api_1163768 .reference}
 
-You can call this operation to query newly created scaling events and resource change notifications \(`DescribeNotificationConfigurations`\).
+You can call this operation to query notification configurations for scaling events and resource changes.
 
-## Request parameters { .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The operation that you want to perform. Set the value to DescribeNotificationConfigurations.|
-|ScalingGroupId|String|Yes|The ID of the scaling group.|
+[OpenAPI Explorer](https://api.aliyun.com/#product=Ess&api=DescribeNotificationConfigurations) simplifies API usage. You can use OpenAPI Explorer to perform debugging operations, such as retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-## Response parameters { .section}
+## Request parameters {#parameters .section}
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|RequestId|String|The request ID|
-|NotificationConfigurationModels|Array of [NotificationConfigurationModelSet](#hxtwo)|The list of scaling events and resource change notifications.|
+|Parameter|Type|Required|Example|Description|
+|---------|----|--------|-------|-----------|
+|ScalingGroupId|String|Yes|AG6CQdPU8OKdwLjgZcJ\*\*\*\*|The ID of the scaling group.
 
-## NotificationConfigurationModelSet {#hxtwo .section}
+ |
+|Action|String|No|DescribeNotificationConfigurations|The operation that you want to perform. Set the value to DescribeNotificationConfigurations.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|ScalingGroupId|String|The request ID|
-|NotificationArn|String|The list of scaling events and resource change notifications.|
-|NotificationTypes|Array of [NotificationTypeSet](#hxthree)|The list of scaling events and notification types of resource changes.|
+ |
 
-## NotificationTypeSet {#hxthree .section}
+## Response parameters {#resultMapping .section}
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|NotificationType|String|Scaling events and notification types of resource changes. You can call the [DescribeNotificationTypes](reseller.en-US/API-Reference/Event notification/DescribeNotificationTypes.md#) operation to query parameter values.|
+|Parameter|Type|Example|Description|
+|---------|----|-------|-----------|
+|NotificationConfigurationModels| | |The list of notifications for scaling events and resource changes.
 
-## Examples { .section}
+ |
+|└NotificationArn|String|acs:ess:cn-hangzhou:1111111111:queue/queue1|The list of notifications for scaling events and resource changes.
+
+ |
+|└NotificationTypes| |AUTOSCALING:SCALE\_IN\_SUCCESS|The list of different types of notifications for scaling events and resource changes.
+
+ |
+|└ScalingGroupId|String|asg-\*\*\*\*|The ID of the scaling group.
+
+ |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|The ID of the request. This parameter is returned regardless of whether the operation is successful.
+
+ |
+
+## Examples {#demo .section}
 
 Sample requests
 
-```
+``` {#request_demo}
+
 http://ess.aliyuncs.com/?Action=DescribeNotificationConfigurations
-&ScalingGroupId=AG6CQdPU8OKdwLjgZcJ2eaQ 
+&ScalingGroupId=AG6CQdPU8OKdwLjgZcJ****
 &<Common request parameters>
+
 ```
 
 Successful response examples
 
 `XML` format
 
-```
-<DescribeNotificationConfigurationsResponse> 
-    <RequestId>04F0F334-1335-436C-A1D7-6C044FE73368</RequestId> 
-    <NotificationConfigurationModels>
-        <NotificationConfigurationModel>
-            <NotificationArn>xxxxxxxxx</NotificationArn> 
-            <ScalingGroupId>xxxxxxxxxxx</ScalingGroupId> 
-            <NotificationTypes>
-                <NotificationType>AUTOSCALING:SCALE_IN_SUCCESS</NotificationType>
-                <NotificationType>AUTOSCALING:SCALE_IN_ERROR</NotificationType> 
-            </NotificationTypes> 
-        </NotificationConfigurationModel>
-        <NotificationConfigurationModel>
-            <NotificationArn>xxxxxxxxx</NotificationArn>
-            <ScalingGroupId>xxxxxxxxxxx</ScalingGroupId>
-            <NotificationTypes>
-                <NotificationType>AUTOSCALING:SCALE_IN_SUCCESS</NotificationType>
-                <NotificationType>AUTOSCALING:SCALE_IN_ERROR</NotificationType>
-            </NotificationTypes> 
-        </NotificationConfigurationModel>
-    </NotificationConfigurationModels> 
+``` {#xml_return_success_demo}
+<DescribeNotificationConfigurationsResponse>
+  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId> 
+  <NotificationConfigurationModels>
+    <NotificationConfigurationModel>
+      <NotificationArn>xxxxxxxxx</NotificationArn>
+      <ScalingGroupId>xxxxxxxxxxx</ScalingGroupId>
+      <NotificationTypes>
+        <NotificationType>AUTOSCALING:SCALE_IN_SUCCESS</NotificationType>
+        <NotificationType>AUTOSCALING:SCALE_IN_ERROR</NotificationType>
+      </NotificationTypes>
+    </NotificationConfigurationModel>
+    <NotificationConfigurationModel>
+      <NotificationArn>xxxxxxxxx</NotificationArn>
+      <ScalingGroupId>xxxxxxxxxx</ScalingGroupId>
+      <NotificationTypes>
+        <NotificationType>AUTOSCALING:SCALE_IN_SUCCESS</NotificationType>
+        <NotificationType>AUTOSCALING:SCALE_IN_ERROR</NotificationType>
+      </NotificationTypes>
+    </NotificationConfigurationModel>
+  </NotificationConfigurationModels>
 </DescribeNotificationConfigurationsResponse>
+
 ```
 
 `JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-    "notificationConfigurationModels": [
-    {
-      "notificationArn": "xxxxxxxxxx",
-      "notificationTypes": [
-        "AUTOSCALING:SCALE_OUT_SUCCESS",
-        "AUTOSCALING:SCALE_OUT_ERROR",
-        "AUTOSCALING:SCALE_IN_SUCCESS",
-        "AUTOSCALING:SCALE_IN_ERROR",
-        "AUTOSCALING:SCALE_REJECT"
-      ],
-      "scalingGroupId": "xxxxxxxxxx"
-    },
-    {
-      "notificationArn": "xxxxxxxxxx",
-      "notificationTypes": [
-        "AUTOSCALING:SCALE_OUT_SUCCESS",
-        "AUTOSCALING:SCALE_OUT_ERROR",
-        "AUTOSCALING:SCALE_IN_SUCCESS",
-        "AUTOSCALING:SCALE_IN_ERROR",
-        "AUTOSCALING:SCALE_REJECT"
-      ],
-      "scalingGroupId": "xxxxxxxxxx"
-    }
-  ],
-  "requestId": "EEAB83FF-318A-41CA-8EB6-BB9614256BA9"
+	"requestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E",
+	"notificationConfigurationModels":[
+		{
+			"notificationArn":"xxxxxxxxxx",
+			"notificationTypes":[
+				"AUTOSCALING:SCALE_OUT_SUCCESS",
+				"AUTOSCALING:SCALE_OUT_ERROR",
+				"AUTOSCALING:SCALE_IN_SUCCESS",
+				"AUTOSCALING:SCALE_IN_ERROR",
+				"AUTOSCALING:SCALE_REJECT"
+			],
+			"scalingGroupId":"xxxxxxxxxx"
+		},
+		{
+			"notificationArn":"xxxxxxxxxx",
+			"notificationTypes":[
+				"AUTOSCALING:SCALE_OUT_SUCCESS",
+				"AUTOSCALING:SCALE_OUT_ERROR",
+				"AUTOSCALING:SCALE_IN_SUCCESS",
+				"AUTOSCALING:SCALE_IN_ERROR",
+				"AUTOSCALING:SCALE_REJECT"
+			],
+			"scalingGroupId":"xxxxxxxxxx"
+		}
+	]
 }
 ```
 
 ## Error codes { .section}
 
-|HttpCode|Error code|Error message|Description|
-|--------|:---------|:------------|:----------|
-|404|InvalidScalingGroupId.NotFound|The specified scaling group does not exist.|The error message returned when the specified scaling group does not exist.|
+[View error codes](https://error-center.aliyun.com/status/product/Ess)
+
+|HTTP status code
+
+|Error code
+
+|Error message
+
+|Description
+
+|
+|------------------|------------|---------------|-------------|
+|404
+
+|InvalidScalingGroupId.NotFound
+
+|The specified scaling group does not exist.
+
+|The error message returned when the specified scaling group does not exist.
+
+|
 

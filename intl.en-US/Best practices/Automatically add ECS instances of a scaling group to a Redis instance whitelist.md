@@ -10,7 +10,7 @@ In this case, you can create a lifecycle hook in a scaling group. During a scale
 
 ## Preparations {#section_uxw_szb_kgb .section}
 
-Before you start, ensure that you have activated [ApsaraDB for Redis](https://www.alibabacloud.com/product/apsaradb-for-redis), [Message Service](https://www.alibabacloud.com/product/message-service), [Auto Scaling](https://www.alibabacloud.com/product/auto-scaling), and [Function Compute](https://www.alibabacloud.com/product/function-compute).
+Before you start, ensure that you have activated [ApsaraDB for Redis](https://partners-intl.aliyun.com/vodafone/product/apsaradb-for-redis), [Message Service](https://partners-intl.aliyun.com/vodafone/product/message-service), [Auto Scaling](https://partners-intl.aliyun.com/vodafone/product/auto-scaling), and [Function Compute](https://partners-intl.aliyun.com/vodafone/product/function-compute).
 
 ## Notes {#section_tnv_m1j_kgb .section}
 
@@ -19,21 +19,21 @@ Before you start, ensure that you have activated [ApsaraDB for Redis](https://ww
 
 ## 1. Procedure in ApsaraDB for Redis {#section_bbr_n1j_kgb .section}
 
-1.  Log on to the [ApsaraDB for Redis console](https://kvstorenext.console.aliyun.com/).
-2.  [Create a Redis instance](../../../../intl.en-US/.md#) that serves as the database for automatically created ECS instances.
+1.  Log on to the [ApsaraDB for Redis console](https://partners-intl.console.aliyun.com/#/kvstore).
+2.  [Create a Redis instance](../../../../reseller.en-US/.md#) that serves as the database for automatically created ECS instances.
 3.  View the Redis instance whitelist to check the whitelist status before code execution.
 
 ## 2. Procedure in Message Service {#section_vsx_p1j_kgb .section}
 
-1.  Log on to the [Message Service console](https://mns.console.aliyun.com/).
-2.  [Create an MNS topic](https://www.alibabacloud.com/help/doc-detail/51756.htm) that will be used as a function trigger. Set the topic name to `fc-trigger`.
-3.  [Create an MNS queue](https://www.alibabacloud.com/help/doc-detail/34065.htm) that will be used to receive function execution results. Set the queue name to `fc-callback`. In the [sample code](#section_pzf_ymj_kgb), QUEUE\_NAME is set to this queue name to send function execution results.
+1.  Log on to the [Message Service console](https://partners-intl.console.aliyun.com/#/mns).
+2.  Create an MNS topic that will be used as a function trigger. Set the topic name to `fc-trigger`.
+3.  Create an MNS queue that will be used to receive function execution results. Set the queue name to `fc-callback`. In the [sample code](#section_pzf_ymj_kgb), QUEUE\_NAME is set to this queue name to send function execution results.
 
 ## 3. Procedure in Auto Scaling {#section_zhc_r1j_kgb .section}
 
-1.  Log on to the [Auto Scaling console](https://essnew.console.aliyun.com/).
-2.  Create a scaling group. For more information, see [Use custom scaling configurations to create scaling groups](../../../../intl.en-US/User Guide/Use custom scaling configurations to create scaling groups.md#) or [Use launch templates to create scaling groups](../../../../intl.en-US/User Guide/Use launch templates to create scaling groups.md#).
-3.  [Create a lifecycle hook](../../../../intl.en-US/User Guide/Realize Auto Scaling/Create a lifecycle hook.md#).
+1.  Log on to the [Auto Scaling console](https://partners-intl.console.aliyun.com/#/ess).
+2.  Create a scaling group. For more information, see [Use custom scaling configurations to create scaling groups](../../../../reseller.en-US/User Guide/Realize Auto Scaling/Use custom scaling configurations to create scaling groups.md#) or [Use launch templates to create scaling groups](../../../../reseller.en-US/User Guide/Realize Auto Scaling/Use launch templates to create scaling groups.md#).
+3.  [Create a lifecycle hook](../../../../reseller.en-US/User Guide/Realize Auto Scaling/Create a lifecycle hook.md#).
     1.  Set **Scaling Activity Type** to **Scale-Out** to notify of scale-out activities.
     2.  Set **Notification Method** to **MNS Topic**. Compared with the **MNS Queue** method, the MNS Topic method can be used to notify multiple subscribers and execute various operations.
     3.  Set **MNS Topic** to `fc-trigger`. When automatically created ECS instances enter the **Adding: Wait** state, this topic is used to execute code to add the instances to the whitelist of a Redis instance.
@@ -41,9 +41,9 @@ Before you start, ensure that you have activated [ApsaraDB for Redis](https://ww
 
 ## 4. Procedure in Function Compute {#section_qdb_s1j_kgb .section}
 
-1.  Log on to the [Function Compute](https://fc.console.aliyun.com/) console.
-2.  [Create a service](https://www.alibabacloud.com/help/doc-detail/73337.htm) for functions to be executed. Set the service name to `as-hook-mns-fc-redis`.
-3.  Under the created service, create a function to subscribe to the MNS topic, and upload the code. For more information, see [Create a function](https://www.alibabacloud.com/help/doc-detail/52077.htm).
+1.  Log on to the [Function Compute](https://partners-intl.console.aliyun.com/#/fc) console.
+2.  [Create a service](https://partners-intl.aliyun.com/help/doc-detail/73337.htm) for functions to be executed. Set the service name to `as-hook-mns-fc-redis`.
+3.  Under the created service, create a function to subscribe to the MNS topic, and upload the code. For more information, see [Create a function](https://partners-intl.aliyun.com/help/doc-detail/52077.htm).
     1.  On the Function Template page, select **Empty Function**.
     2.  On the Trigger Configuration page, select **MNS Topic Trigger** from the Trigger Type drop-down list and configure other parameters as required.
     3.  On the Configure Function Settings page, set **Service Name** to `as-hook-mns-fc-redis` and **Function Handler** to `fc.Example::handleRequest`, and configure other parameters as required.
@@ -51,7 +51,7 @@ Before you start, ensure that you have activated [ApsaraDB for Redis](https://ww
         **Note:** 
 
         -   **Function Handler** varies with code. Set this parameter based on the actual conditions.
-        -   In the examples provided in this topic, a JAR package is uploaded to add automatically created ECS instances to the whitelist of a Redis instance. For more information about Java programming descriptions, see [Java programming in Function Compute](https://www.alibabacloud.com/help/doc-detail/58887.htm).
+        -   In the examples provided in this topic, a JAR package is uploaded to add automatically created ECS instances to the whitelist of a Redis instance. For more information about Java programming descriptions, see [Java programming in Function Compute](https://partners-intl.aliyun.com/help/doc-detail/58887.htm).
     4.  On the Permission Configuration page, grant permissions on necessary resources to the function and allow Message Service to call functions.
 
         **Note:** We recommend that you follow the principle of least privilege and only grant necessary permissions to prevent potential risks.
@@ -66,7 +66,7 @@ After the configurations are completed, the expected results are as follows:
 2.  The lifecycle hook suspends the scaling activity and sends a message to the MNS topic.
 3.  In Function Compute, the MNS topic trigger triggers the function, fills in the Java code with the message content \(such as ECS IDs\), and executes the code.
 4.  When the code is being executed, the private IP addresses of the ECS instances are obtained and then added to the default group of the Redis instance whitelist.
-5.  The result of the executed code is sent to MNS queue `fc-callback`. You can view the result details in the [Message Service console](https://mns.console.aliyun.com/). If success in the message content is true as shown in the following figure, the ECS instances have been added to the whitelist of the Redis instance.
+5.  The result of the executed code is sent to MNS queue `fc-callback`. You can view the result details in the [Message Service console](https://partners-intl.console.aliyun.com/#/mns). If success in the message content is true as shown in the following figure, the ECS instances have been added to the whitelist of the Redis instance.
 
 You can also continue to consume messages in the MNS queue, such as obtaining the success, LifecycleHookId, and LifecycleActionToken parameters. With these parameters, you can stop a lifecycle hook in advance.
 
@@ -78,7 +78,7 @@ The sample code is for reference only. Use and test the code based on your actua
 
 Maven dependencies:
 
-```
+``` {#codeblock_4fz_ehh_5vt}
 <? xml version="1.0" encoding="UTF-8"? > 
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -174,7 +174,7 @@ Maven dependencies:
 
 Example of Example. java:
 
-```
+``` {#codeblock_961_y1g_v90}
 package fc;
 
 import com.alibaba.fastjson.JSON;
@@ -503,7 +503,7 @@ public class Example implements StreamRequestHandler {
 
 Example of FCResult. java:
 
-```
+``` {#codeblock_d8s_6d4_80v}
 package model;
 
 import com.alibaba.fastjson.JSON;
@@ -559,7 +559,7 @@ public class FCResult {
 
 Example of HookModel. java:
 
-```
+``` {#codeblock_p4x_n2o_ve7}
 package model;
 
 import java.util.List;
@@ -670,7 +670,7 @@ public class HookModel {
 
 Example of MnsMessageModel. java:
 
-```
+``` {#codeblock_tp7_bia_gsl}
 package model;
 
 public class MnsMessageModel {

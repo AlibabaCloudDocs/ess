@@ -1,60 +1,113 @@
-# DeleteLifecycleHook {#concept_73841_zh .concept}
+# DeleteLifecycleHook {#doc_api_Ess_DeleteLifecycleHook .reference}
 
-Delete a lifecycle hook \(`DeleteLifecycleHook`\).
+You can call this operation to delete a lifecycle hook.
 
-The wait state will be terminated once the corresponding lifecycle hook is deleted. You can delete a lifecycle hook using either of the following methods:
+## Description {#description .section}
 
--   Specify the parameter `LifecycleHookId`. `ScalingGroupId` and `LifecycleHookName` are ignored.
--   Specify the parameters `ScalingGroupId` and `LifecycleHookName`.
+The wait state is terminated if the corresponding lifecycle hook is deleted. You can use either of the following methods to delete a lifecycle hook:
 
-## Request parameters { .section}
+-   Specify the lifecycle hook ID \(`LifecycleHookId`\). This way, you do not need to specify the `ScalingGroupId` or `LifecycleHookName` parameter.
+-   Specify the `ScalingGroupId` and `LifecycleHookName` parameters at the same time.
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: DeleteLifecycleHook.|
-|LifecycleHookId|String|No|The ID of the lifecycle hook|
-|ScalingGroupId|String|No|The ID of the scaling group|
-|LifecycleHookName|String|No|The name of the lifecycle hook|
+## Debugging {#apiExplorer .section}
 
-## Response parameters { .section}
+[OpenAPI Explorer](https://api.aliyun.com/#product=Ess&api=DeleteLifecycleHook) simplifies API usage. You can use OpenAPI Explorer to perform debugging operations, such as retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|RequestId|String|The request ID|
+## Request parameters {#parameters .section}
 
-## Request example { .section}
+|Parameter|Type|Required|Example|Description|
+|---------|----|--------|-------|-----------|
+|Action|String|No|DeleteLifecycleHook|The operation that you want to perform. Set the value to DeleteLifecycleHook.
+
+ |
+|LifecycleHookId|String|No|ash-\*\*\*\*|The ID of the lifecycle hook.
+
+ |
+|LifecycleHookName|String|No|hook\_name\_test|The name of the lifecycle hook.
+
+ |
+|ScalingGroupId|String|No|dP8VqSd9ENXPc0ciVmbc\*\*\*\*|The ID of the scaling group.
+
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Parameter|Type|Example|Description|
+|---------|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|The ID of the request. This parameter is returned regardless of whether the operation is successful.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
+
+http://ess.aliyuncs.com/?Action=DeleteLifecycleHook
+&LifecycleHookId=ash-****
+&<Common request parameters>
 
 ```
-Http://ess.aliyuncs.com /? Action = fig
-&LifecycleHookId=ash-xxxxxxxxxxx
-&<Public request parameter>
-```
 
-## Response example { .section}
+Successful response examples
 
-XML format:
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 <DeleteLifecycleHookResponse>
-    <RequestId>04F0F334-1335-436C-A1D7-6C044FE73368</RequestId>
+  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId> 
 </DeleteLifecycleHookResponse>
-```
-
-JSON format:
 
 ```
+
+`JSON` format
+
+``` {#json_return_success_demo}
 {
-    "RequestId": "04F0F334-1335-436C-A1D7-6C044FE73368"
+	"RequestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E"
 }
 ```
 
 ## Error codes { .section}
 
-Error codes that are specific to this interface are as follows. Error codes that are specific to this interface are as follows. For common errors, see [client errors](reseller.en-US/API-Reference/Error codes/Client errors.md#) or [server errors](reseller.en-US/API-Reference/Error codes/Server errors.md#).
+[View error codes](https://error-center.aliyun.com/status/product/Ess)
 
-|Error code|Error message|HTTP status code|Description|
-|:---------|:------------|:---------------|:----------|
-|InvalidParamter|The specified value of parameter is invalid.|400|The specified value of the parameter is invalid.|
-|InvalidLifecycleHookId.NotExist|The specified lifecycleHookId does not exist.|400|The specified lifecycle hook ID does not exist.|
-|InvalidLifecycleHookName.NotExist|The specified lifecycleHookName you provided does not exist.|400|The specified lifecycle hook name does not exist.|
+|HTTP status code
+
+|Error code
+
+|Error message
+
+|Description
+
+|
+|------------------|------------|---------------|-------------|
+|400
+
+|InvalidParamter
+
+|The specified value of parameter is invalid.
+
+|The error message returned when the value of the parameter is invalid.
+
+|
+|400
+
+|InvalidLifecycleHookId.NotExist
+
+|The specified lifecycleHookId does not exist.
+
+|The error message returned when the specified lifecycle hook ID does not exist.
+
+|
+|400
+
+|InvalidLifecycleHookName.NotExist
+
+|The specified lifecycleHookName you provided does not exist.
+
+|The error message returned when the specified lifecycle hook name does not exist.
+
+|
 

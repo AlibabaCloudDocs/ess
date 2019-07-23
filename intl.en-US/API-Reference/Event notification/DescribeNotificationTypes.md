@@ -1,73 +1,75 @@
-# DescribeNotificationTypes {#concept_71117_zh .concept}
+# DescribeNotificationTypes {#doc_api_1163770 .reference}
 
-You can call this operation to query scaling events and notification types of resource changes \(`DescribeNotificationTypes`\).
+You can call this operation to query the types of notifications for scaling events and resource changes.
 
-## Request parameters { .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The operation that you want to perform. Set the value to DescribeNotificationTypes.|
+[OpenAPI Explorer](https://api.aliyun.com/#product=Ess&api=DescribeNotificationTypes) simplifies API usage. You can use OpenAPI Explorer to perform debugging operations, such as retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-## Response parameters { .section}
+## Request parameters {#parameters .section}
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|RequestId|String|The request ID|
-|NotificationTypes|Array of [NotificationTypeSet](#hxfour)|The list of scaling events and notification types of resource changes.|
+|Parameter|Type|Required|Example|Description|
+|---------|----|--------|-------|-----------|
+|Action|String|No|DescribeNotificationTypes|The operation that you want to perform. Set the value to DescribeNotificationTypes.
 
-## NotificationTypeSet {#hxfour .section}
+ |
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|NotificationType|String|Scaling events and notification types of resource changes. Valid values:-   AUTOSCALING:SCALE\_OUT\_SUCCESS: indicates that a scale-out activity is successful.
--   AUTOSCALING:SCALE\_IN\_SUCCESS: indicates that a scale-in activity is successful.
--   AUTOSCALING:SCALE\_OUT\_ERROR: indicates that a scale-out activity has failed.
--   AUTOSCALING:SCALE\_IN\_ERROR: indicates that a scale-in activity has failed.
--   AUTOSCALING:SCALE\_REJECT: indicates that a scaling activity is rejected.
--   AUTOSCALING:SCALE\_OUT\_START: indicates that a scale-out activity starts.
--   AUTOSCALING:SCALE\_IN\_START: indicates that a scale-in activity starts.
--   AUTOSCALING:SCHEDULE\_TASK\_EXPIRING: indicates that a scheduled task expires.
+## Response parameters {#resultMapping .section}
 
-|
+|Parameter|Type|Example|Description|
+|---------|----|-------|-----------|
+|NotificationTypes| |AUTOSCALING:SCALE\_OUT\_SUCCESS|The list of different types of notifications for scaling events and resource changes.
 
-## Examples { .section}
+ |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|The ID of the request. This parameter is returned regardless of whether the operation is successful.
+
+ |
+
+## Examples {#demo .section}
 
 Sample requests
 
-```
+``` {#request_demo}
+
 http://ess.aliyuncs.com/?Action=DescribeNotificationTypes
-& <Common request parameters>
+&<Common request parameters>
+
 ```
 
 Successful response examples
 
 `XML` format
 
-```
+``` {#xml_return_success_demo}
 <DescribeNotificationTypesResponse>
-    <RequestId>21F638C3-7054-4C1E-A143-A74C20F507A3</RequestId>
-    <NotificationTypes> 
-        <NotificationType>AUTOSCALING:SCALE_OUT_SUCCESS</NotificationType> 
-        <NotificationType>AUTOSCALING:SCALE_IN_SUCCESS</NotificationType> 
-        <NotificationType>AUTOSCALING:SCALE_OUT_ERROR</NotificationType> 
-        <NotificationType>AUTOSCALING:SCALE_IN_ERROR</NotificationType> 
-        <NotificationType>AUTOSCALING:SCALE_REJECT</NotificationType>
-    </NotificationTypes>
-</DescribeNotificationTypesResponse> 
+  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId> 
+  <NotificationTypes>
+    <NotificationType>AUTOSCALING:SCALE_OUT_SUCCESS</NotificationType>
+    <NotificationType>AUTOSCALING:SCALE_IN_SUCCESS</NotificationType>
+    <NotificationType>AUTOSCALING:SCALE_OUT_ERROR</NotificationType>
+    <NotificationType>AUTOSCALING:SCALE_IN_ERROR</NotificationType>
+    <NotificationType>AUTOSCALING:SCALE_REJECT</NotificationType>
+  </NotificationTypes>
+</DescribeNotificationTypesResponse>
+
 ```
 
 `JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-    "notificationTypes": [
-        "AUTOSCALING:SCALE_OUT_SUCCESS",
-        "AUTOSCALING:SCALE_IN_SUCCESS",
-        "AUTOSCALING:SCALE_OUT_ERROR",
-        "AUTOSCALING:SCALE_IN_ERROR",
-        "AUTOSCALING:SCALE_REJECT"
-    ],
-    "requestId": "21F638C3-7054-4C1E-A143-A74C20F507A3"
+	"requestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E",
+	"notificationTypes":[
+		"AUTOSCALING:SCALE_OUT_SUCCESS",
+		"AUTOSCALING:SCALE_IN_SUCCESS",
+		"AUTOSCALING:SCALE_OUT_ERROR",
+		"AUTOSCALING:SCALE_IN_ERROR",
+		"AUTOSCALING:SCALE_REJECT"
+	]
 }
 ```
+
+## Error codes { .section}
+
+[View error codes](https://error-center.aliyun.com/status/product/Ess)
 

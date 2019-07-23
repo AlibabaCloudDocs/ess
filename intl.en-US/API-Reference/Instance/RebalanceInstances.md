@@ -1,68 +1,123 @@
-# RebalanceInstances {#concept_71516_zh .concept}
+# RebalanceInstances {#doc_api_Ess_RebalanceInstances .reference}
 
-You can call this operation to rebalance the distribution of ECS instances in a scaling group that is specified with multiple zones \(`RebalanceInstances`\).
+You can call this operation to rebalance the distribution of ECS instances in a multi-zone scaling group.
 
-## Description {#section_ab3_mml_lgb .section}
+## Description {#description .section}
 
-You can achieve the rebalance of zones by creating new ECS instances to replace the previous ECS instances. Newly created ECS instances are started first before stopping previous ECS instances. The rebalance operation will not affect the performance and availability of your applications.
+When rebalancing, Auto Scaling starts new instances before terminating the old ones. This ensures that the performance and availability of your application is not compromised by rebalancing instances.
 
--   You can perform the rebalance operation for ECS instances in a scaling group that is specified with multiple zones only when you set `MultiAZPolic=Balance`.
--   You can only perform the rebalance operation when the instances in the scaling group are significantly imbalanced.
--   A single rebalance operation can replace up to 20 ECS instances.
--   You are temporarily allowed to exceed 10% of the total capacity of the scaling group. This occurs during a rebalance operation when the number of ECS instances is approaching or reaches the maximum number \(specified in `MaxSize`\) of a scaling group and the operation is still running. The minimum number is one ECS instance. Generally, the duration of a rebalance operation from the status of exceeding the maximum capacity of a scaling group to the normal status is approximately one to six minutes.
+-   You can perform the rebalance operation for ECS instances in a multi-zone scaling group only when you set `MultiAZPolicy=Balance`.
+-   You can perform the rebalance operation only when the instances in the scaling group are significantly imbalanced.
+-   A single rebalance operation can redistribute up to 20 ECS instances.
+-   The system can temporarily exceed the maximum capacity of a scaling group specified by `MaxSize` by a 10% margin. The minimum number of ECS instances in a scaling group is 1. You can exceed the maximum capacity for as long as it takes for the rebalance operation to complete, typically one to six minutes.
 
-## Request parameters { .section}
+## Debugging {#apiExplorer .section}
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The operation that you want to perform. Set the value to RebalanceInstances.|
-|ScalingGroupId|String|Yes|The ID of the scaling group.|
+[OpenAPI Explorer](https://api.aliyun.com/#product=Ess&api=RebalanceInstances) simplifies API usage. You can use OpenAPI Explorer to perform debugging operations, such as retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-## Response parameters { .section}
+## Request parameters {#parameters .section}
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|RequestId|String|The request ID.|
-|ScalingActivityId|String|The ID of the scaling activity.|
+|Parameter|Type|Required|Example|Description|
+|---------|----|--------|-------|-----------|
+|ScalingGroupId|String|Yes|AG6CQdPU8OKdwLjgZcJ\*\*\*\*|The ID of the scaling group.
 
-## Examples { .section}
+ |
+|Action|String|No|RebalanceInstances|The operation that you want to perform. Set the value to RebalanceInstances.
+
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Parameter|Type|Example|Description|
+|---------|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|The ID of the request. This parameter is returned regardless of whether the operation is successful.
+
+ |
+|ScalingActivityId|String|asa-kjgffgdfadah\*\*\*\*|The ID of the scaling activity.
+
+ |
+
+## Examples {#demo .section}
 
 Sample requests
 
-```
+``` {#request_demo}
+
 http://ess.aliyuncs.com/?Action=RebalanceInstances
-&ScalingGroupId=AG6CQdPU8OKdwLjgZcJ2eaQ 
-& <Common request parameters>
+&ScalingGroupId=AG6CQdPU8OKdwLjgZcJ****
+&<Common request parameters>
+
 ```
 
 Successful response examples
 
 `XML` format
 
-```
-<RebalanceInstancesResponse> 
-    <RequestId>04F0F334-1335-436C-A1D7-6C044FE73368</RequestId>
-    <ScalingActivityId>asa-kjgffgdfadahghda</ScalingActivityId>
-</RebalanceInstancesResponse> 
+``` {#xml_return_success_demo}
+<RebalanceInstancesResponse>
+  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId> 
+  <ScalingActivityId>asa-kjgffgdfadah****</ScalingActivityId>
+</RebalanceInstancesResponse>
+
 ```
 
 `JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-    "RequestId": "04F0F334-1335-436C-A1D7-6C044FE73368",
-    "ScalingActivityId": "asa-kjgffgdfadahghda"
+	"RequestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E",
+	"ScalingActivityId":"asa-kjgffgdfadah****"
 }
 ```
 
 ## Error codes { .section}
 
-The following table lists the error codes that the `RebalanceInstances` operation can return. For more information, see [Client errors](reseller.en-US/API-Reference/Error codes/Client errors.md#) and [Server errors](reseller.en-US/API-Reference/Error codes/Server errors.md#).
+[View error codes](https://error-center.aliyun.com/status/product/Ess)
 
-|HttpCode|Error code|Error message|Description|
-|--------|:---------|:------------|:----------|
-|400|IncorrectScalingGroupStatus|The current status of the specified scaling group does not support this action.|The error message returned when you have not [enabled a scaling group](reseller.en-US/API-Reference/Scaling group/Enable a scaling group.md#).|
-|400|OperationDenied|This operation is denied because the specified scaling group does not support this action.|The error message returned when you have not set the `MultiAZPolic=Balance` policy in the specified scaling group or the great imbalance issue of the distribution of ECS instances does not occur.|
-|403|Forbidden.Unauthorized|A required authorization for the specified action is not supplied.|The error message returned when you have not been authorized to use the `RebalanceInstances` operation.|
-|404|InvalidScalingGroupId.NotFound|The specified scaling group does not exist.|The error message returned when the specified scaling group does not exist in this account.|
+|HTTP status code
+
+|Error code
+
+|Error message
+
+|Description
+
+|
+|------------------|------------|---------------|-------------|
+|400
+
+|IncorrectScalingGroupStatus
+
+|The current status of the specified scaling group does not support this action.
+
+|The error message returned when you have not enabled the specified scaling group.
+
+|
+|400
+
+|OperationDenied
+
+|This operation is denied because the specified scaling group does not support this action.
+
+|The error message returned when the MultiAZPolicy parameter of the specified scaling group is not set to Balance, or when the distribution of ECS instances is not sufficiently imbalanced to perform this operation.
+
+|
+|403
+
+|Forbidden.Unauthorized
+
+|A required authorization for the specified action is not supplied.
+
+|The error message returned when you are not authorized to use the RebalanceInstances operation.
+
+|
+|404
+
+|InvalidScalingGroupId.NotFound
+
+|The specified scaling group does not exist.
+
+|The error message returned when the specified scaling group does not exist in the current account.
+
+|
 

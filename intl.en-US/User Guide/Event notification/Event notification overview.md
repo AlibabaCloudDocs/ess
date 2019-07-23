@@ -6,9 +6,9 @@ The event notification feature is a monitoring method that can automatically sen
 
 Event notification methods include sending messages to CloudMonitor system events, MNS topics, and MNS queues.
 
-In CloudMonitor, you can query and view statistics on system events of various cloud services, such as Auto Scaling. You can also obtain up-to-date information about scaling groups For more information about the event monitoring feature of CloudMonitor, see [Cloud service system event monitoring](../../../../reseller.en-US/User Guide/Event monitoring/Cloud product events/Cloud product system event monitoring.md#).
+In CloudMonitor, you can query and view statistics on system events of various cloud services, such as Auto Scaling. You can also obtain up-to-date information about scaling groups For more information about the event monitoring feature of CloudMonitor, see [Cloud service system event monitoring](../../../../reseller.en-US/User Guide/Event monitoring/Cloud product events/View cloud service events.md#).
 
-There are two service models in Message Service: MNS topic and MNS queue. Message Service is a distributed message service that helps you easily transfer data and notification messages among distributed components, and build loosely coupled systems. For more information about the functions of MNS topics and MNS queues, see [Message Service overview](https://partners-intl.aliyun.com/help/doc-detail/34061.htm).
+There are two service models in Message Service: MNS topic and MNS queue. Message Service is a distributed message service that helps you easily transfer data and notification messages among distributed components, and build loosely coupled systems. For more information about the functions of MNS topics and MNS queues, see [Message Service overview](https://partners-intl.aliyun.com/help/doc-detail/27414.htm).
 
 -   The queue model supports point-to-point sending and receiving of messages. It is designed to deliver a highly reliable and concurrent consumption model in a point-to-point manner. Each message in a queue can only be consumed by a single consumer.
 -   The topic model supports one-to-many publishing and subscribing of messages. It is designed to provide publishing-subscribing and notification capabilities in a one-to-many manner. The model also allows you to publish messages in various ways.

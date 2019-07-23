@@ -1,62 +1,105 @@
-# DescribeLifecycleHooks {#concept_73843_zh .concept}
+# DescribeLifecycleHooks {#doc_api_1163758 .reference}
 
-This interface queries one or multiple lifecycle hooks that meet the specified conditions \(`DescribeLifecycleHooks`\).
+You can call this operation to query the list of lifecycle hooks that meet one or more specified conditions.
 
-You can query lifecycle hooks using the following methods:
+## Description {#description .section}
 
--   Specify the parameter `LifecycleHookId.N`. `ScalingGroupId` and `LifecycleHookName` are ignored.
--   Specify the parameter `ScalingGroupId`.
--   Specify the parameters `ScalingGroupId` and `LifecycleHookName`.
+You can use one of the following three methods to query lifecycle hooks:
 
-## Request parameters { .section}
+-   Specify the `LifecycleHookId.N` parameter. This way, you do not need to specify the `ScalingGroupId` or `LifecycleHookName` parameters.
+-   Specify the `ScalingGroupId` parameter.
+-   Specify the `ScalingGroupId` and `LifecycleHookName` parameters at the same time.
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|The name of this interface. Value: DescribeLifecycleHooks.|
-|LifecycleHookId.N|String|No|The list of lifecycle hook IDs. Replace `N` with the actual number to indicate a specific item lifecycle hook. The value range of N is \[1, 50\].|
-|ScalingGroupId|String|No|The ID of the scaling group|
-|LifecycleHookName|String|No|The name of the lifecycle hook|
-|PageNumber|Integer|No|Page numbers of the instance status list. Initial value: 1; Default value: 1.|
-|PageSize|Integer|No|Number of rows per page when performing a query. Maximum: 50. Default: 50.|
+## Debugging {#apiExplorer .section}
 
-## Response parameters { .section}
+[OpenAPI Explorer](https://api.aliyun.com/#product=Ess&api=DescribeLifecycleHooks) simplifies API usage. You can use OpenAPI Explorer to perform debugging operations, such as retrieve APIs, call APIs, and dynamically generate SDK example code.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|RequestId|String|The request ID|
-|PageNumber|Integer|The initial page number for query|
-|PageSize|String|The number of items returned per page when performing a query|
-|TotalCount|String|Total number of lifecycle hooks|
-|LifecycleHooks| [LifecycleHookModelSet](#) |The list of lifecycle hook data|
+## Request parameters {#parameters .section}
 
-## LifecycleHookModelSet {#hxone .section}
+|Parameter|Type|Required|Example|Description|
+|---------|----|--------|-------|-----------|
+|Action|String|No|DescribeLifecycleHooks|The operation that you want to perform. Set the value to DescribeLifecycleHooks.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|ScalingGroupId|String|The ID of the scaling group|
-|LifecycleHookId|String|The ID of the lifecycle hook|
-|LifecycleHookName|String|The name of the lifecycle hook|
-|DefaultResult|String|The action that the scaling group takes when the lifecycle hook times out|
-|HeartbeatTimeout|Integer|The time, in seconds, that can elapse before the lifecycle hook times out. When the lifecycle hook times out, the scaling group performs the default action.|
-|LifecycleTransition|String|The scaling activities to which lifecycle hooks apply|
-|NotificationMetadata|String|The fixed string that you want to include when Auto Scaling sends a message about the wait state of the scaling activity to the notification target.|
-|NotificationArn|String|The Alibaba Cloud Resource Name \(ARN\) of the notification target that Auto Scaling will use to notify you when an instance is in the transition state for the lifecycle hook.|
+ |
+|LifecycleHookId.N|RepeatList|No|ash-\*\*\*\*|The ID of the lifecycle hook.
 
-## Request example { .section}
+ |
+|LifecycleHookName|String|No|Test|The name of the lifecycle hook.
 
-```
+ |
+|PageNumber|Integer|No|1|The page number that you query in the instance status list. Starting value: 1. Default value: 1.
+
+ |
+|PageSize|Integer|No|50|The number of rows per page. Maximum value: 50. Default value: 50.
+
+ |
+|ScalingGroupId|String|No|asg-\*\*\*\*|The ID of the scaling group.
+
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Parameter|Type|Example|Description|
+|---------|----|-------|-----------|
+|LifecycleHooks| | |The list of lifecycle hook information.
+
+ |
+|└DefaultResult|String|CONTINUE|The action that the scaling group takes when the wait state terminates.
+
+ |
+|└HeartbeatTimeout|Integer|60|The time that can elapse before the lifecycle hook times out. If the lifecycle hook times out, the scaling group performs the default action \(DefaultResult\).
+
+ |
+|└LifecycleHookId|String|ash-\*\*\*\*|The ID of the lifecycle hook.
+
+ |
+|└LifecycleHookName|String|Test|The name of the lifecycle hook.
+
+ |
+|└LifecycleTransition|String|SCALE\_OUT|The type of the scaling activity to which the lifecycle hook corresponds.
+
+ |
+|└NotificationArn|String|acs:ess:cn-hangzhou:1111111111:queue/queue1|The Alibaba Cloud Resource Name \(ARN\) of the notification object that Auto Scaling uses to notify you when an instance is in the transition state for the lifecycle hook.
+
+ |
+|└NotificationMetadata|String|Test|The fixed string that is included in the message that is sent by Auto Scaling about the wait state of a scaling activity to the notification object.
+
+ |
+|└ScalingGroupId|String|asg-\*\*\*\*|The ID of the scaling group.
+
+ |
+|PageNumber|Integer|1|The initial page number for the query.
+
+ |
+|PageSize|Integer|50|The number of rows returned per page when you perform the query.
+
+ |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|The ID of the request. This parameter is returned regardless of whether the operation is successful.
+
+ |
+|TotalCount|Integer|1|The total count of lifecycle hooks.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
+
 http://ess.aliyuncs.com/?Action=DescribeLifecycleHooks
-&ScalingGroupId=asg-xxxxx
-&<Public request parameter>
-```
-
-## Response example { .section}
-
-XML format:
+&ScalingGroupId=asg-****
+&<Common request parameters>
 
 ```
+
+Successful response examples
+
+`XML` format
+
+``` {#xml_return_success_demo}
 <DescribeLifecycleHooksResponse>
-  <RequestId>04F0F334-1335-436C-A1D7-6C044FE73368</RequestId>
+  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId> 
   <PageNumber>1</PageNumber>
   <PageSize>50</PageSize>
   <TotalCount>1</TotalCount>
@@ -69,40 +112,57 @@ XML format:
       <HeartbeatTimeout>60</HeartbeatTimeout>
       <LifecycleTransition>SCALE_OUT</LifecycleTransition>
       <NotificationMetadata>Test</NotificationMetadata>
-      <NotificationArn>acs:ess:cn-hangzhou:1111111111:queue/queue1</NotificationArn>
+      <NotificationArn>acs:ess:cn-hangzhou:1111111111:queue/queue1</NotificationArn> 
     </LifecycleHook>
   </LifecycleHooks>
 </DescribeLifecycleHooksResponse>
-```
-
-JSON format:
 
 ```
+
+`JSON` format
+
+``` {#json_return_success_demo}
 {
-  "lifecycleHooks": [
-  {
-    "defaultResult": "CONTINUE",
-    "heartbeatTimeout": 600,
-    "lifecycleHookId": "ash-xxx",
-    "lifecycleHookName": "Test",
-    "lifecycleTransition": "SCALE_OUT",
-    "notificationArn": "acs:ess:cn-hangzhou:1111111111:queue/queue1",
-    "notificationMetadata": "Test",
-    "scalingGroupId": "asg-xxx"
-  }
-  ],
-  "pageNumber": 1,
-  "pageSize": 50,
-  "requestId": "04F0F334-1335-436C-A1D7-6C044FE73368",
-  "totalCount": 1
+	"lifecycleHooks":[
+		{
+			"notificationArn":"acs:ess:cn-hangzhou:1111111111:queue/queue1",
+			"lifecycleHookId":"ash-****",
+			"notificationMetadata":"Test",
+			"lifecycleTransition":"SCALE_OUT",
+			"defaultResult":"CONTINUE",
+			"lifecycleHookName":"Test",
+			"scalingGroupId":"asg-****",
+			"heartbeatTimeout":600
+		}
+	],
+	"totalCount":1,
+	"requestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E",
+	"pageSize":50,
+	"pageNumber":1
 }
 ```
 
-## Error code { .section}
+## Error codes { .section}
 
-Error code specific to this interface is as follows. For common errors, see [client errors](reseller.en-US/API-Reference/Error codes/Client errors.md#) or [server errors](reseller.en-US/API-Reference/Error codes/Server errors.md#).
+[View error codes](https://error-center.aliyun.com/status/product/Ess)
 
-|Error code|Error message|HTTP status code|Description|
-|:---------|:------------|:---------------|:----------|
-|InvalidParamter|The specified value of parameter is not valid.|400|The specified value of the parameter is invalid.|
+|HTTP status code
+
+|Error code
+
+|Error message
+
+|Description
+
+|
+|------------------|------------|---------------|-------------|
+|400
+
+|InvalidParamter
+
+|The specified value of parameter is not valid.
+
+|The error message returned when the value of the parameter is invalid.
+
+|
 

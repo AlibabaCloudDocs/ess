@@ -8,11 +8,11 @@
 
 针对这种情况，您可以在伸缩组中创建生命周期挂钩，生命周期挂钩在弹性扩张时会自动向指定的MNS主题发送消息，然后通过函数计算中的MNS主题触发器，触发执行上传的代码，自动将ECS实例添加到Redis实例的白名单。
 
-![自动化管理实践-添加ECS实例到Redis白名单流程](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/154816736037006_zh-CN.png)
+![自动化管理实践-添加ECS实例到Redis白名单流程](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/156394552237006_zh-CN.png)
 
 ## 准备工作 {#section_uxw_szb_kgb .section}
 
-在操作前，请确保您已经开通[云数据库Redis](https://www.aliyun.com/product/kvstore)、[消息服务](https://www.aliyun.com/product/mns)、[弹性伸缩](https://www.aliyun.com/product/ess)和[函数计算](https://www.aliyun.com/product/fc)。
+在操作前，请确保您已经开通[云数据库Redis](https://www.alibabacloud.com/product/apsaradb-for-redis)、[消息服务](https://www.alibabacloud.com/product/message-service)、[弹性伸缩](https://www.alibabacloud.com/product/auto-scaling)和[函数计算](https://www.alibabacloud.com/product/function-compute)。
 
 ## 注意事项 {#section_tnv_m1j_kgb .section}
 
@@ -22,31 +22,31 @@
 ## 一、云数据库Redis操作步骤 {#section_bbr_n1j_kgb .section}
 
 1.  登录[云数据库Redis控制台](https://kvstorenext.console.aliyun.com/)。
-2.  [创建一台Redis实例](../../../../../cn.zh-CN/快速入门/创建实例.md#)，用于为自动创建的ECS实例提供数据库服务。
+2.  [创建一台Redis实例](../../../../intl.zh-CN/快速入门/步骤1：创建实例.md#)，用于为自动创建的ECS实例提供数据库服务。
 3.  查看Redis实例的白名单，确定执行代码前的白名单状态。
 
-    ![自动化管理实践-查看Redis实例白名单](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/154816736036915_zh-CN.png)
+    ![自动化管理实践-查看Redis实例白名单](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/156394552236915_zh-CN.png)
 
 
 ## 二、消息服务操作步骤 {#section_vsx_p1j_kgb .section}
 
 1.  登录[消息服务控制台](https://mns.console.aliyun.com/)。
-2.  [创建一个MNS主题](https://help.aliyun.com/document_detail/34424.html)，用作执行函数的触发器。示例主题的名称为`fc-trigger`。
+2.  创建一个MNS主题，用作执行函数的触发器。示例主题的名称为`fc-trigger`。
 
-    ![自动化管理实践-创建MNS主题消息](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/154816736036961_zh-CN.png)
+    ![自动化管理实践-创建MNS主题消息](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/156394552236961_zh-CN.png)
 
-3.  [创建一个MNS队列](https://help.aliyun.com/document_detail/34417.html)，用作函数执行结果的接收器。示例队列的名称为`fc-callback`，[示例代码](#section_pzf_ymj_kgb)中通过QUEUE\_NAME指定该队列，发送包含函数执行结果的消息。
+3.  创建一个MNS队列，用作函数执行结果的接收器。示例队列的名称为`fc-callback`，[示例代码](#section_pzf_ymj_kgb)中通过QUEUE\_NAME指定该队列，发送包含函数执行结果的消息。
 
-    ![自动化管理实践-创建MNS队列消息](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/154816736137004_zh-CN.png)
+    ![自动化管理实践-创建MNS队列消息](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/156394552337004_zh-CN.png)
 
 
 ## 三、弹性伸缩操作步骤 {#section_zhc_r1j_kgb .section}
 
 1.  登录[弹性伸缩控制台](https://essnew.console.aliyun.com/)。
-2.  创建一个伸缩组，详细步骤请参阅[使用自定义伸缩配置创建伸缩组](../../../../../cn.zh-CN/用户指南/管理伸缩组的伸缩活动/使用自定义伸缩配置创建伸缩组.md#)或者[使用实例启动模板创建伸缩组](../../../../../cn.zh-CN/用户指南/管理伸缩组的伸缩活动/使用实例启动模板创建伸缩组.md#)。
-3.  [创建一个生命周期挂钩](../../../../../cn.zh-CN/用户指南/管理伸缩组的伸缩活动/实现自动伸缩/创建生命周期挂钩.md#)。
+2.  创建一个伸缩组，详细步骤请参见[使用自定义伸缩配置创建伸缩组](../../../../intl.zh-CN/用户指南/实现自动伸缩/使用自定义伸缩配置创建伸缩组.md#)或者[使用实例启动模板创建伸缩组](../../../../intl.zh-CN/用户指南/实现自动伸缩/使用实例启动模板创建伸缩组.md#)。
+3.  [创建一个生命周期挂钩](../../../../intl.zh-CN/用户指南/实现自动伸缩/创建生命周期挂钩.md#)。
 
-    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/154816736136960_zh-CN.png)
+    ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/156394552336960_zh-CN.png)
 
     1.  **适用的伸缩活动类型**配置为**弹性扩张活动**，用于通知弹性扩张事件。
     2.  **通知方式**配置为**MNS主题**，与**MNS队列**相比，主题可以通知多个订阅者，执行多种操作。
@@ -56,33 +56,33 @@
 ## 四、函数计算操作步骤 {#section_qdb_s1j_kgb .section}
 
 1.  登录[函数计算控制台](https://fc.console.aliyun.com/)。
-2.  [新建一个服务](https://help.aliyun.com/document_detail/73337.html)，用于承载需要执行的函数。示例服务的名称为`as-hook-mns-fc-redis`。
+2.  [新建一个服务](https://www.alibabacloud.com/help/doc-detail/73337.htm)，用于承载需要执行的函数。示例服务的名称为`as-hook-mns-fc-redis`。
 
-    ![自动化管理实践-创建函数计算服务](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/154816736136962_zh-CN.png)
+    ![自动化管理实践-创建函数计算服务](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/156394552336962_zh-CN.png)
 
-3.  在服务下[新建函数](https://help.aliyun.com/document_detail/73338.html)，订阅MNS主题并上传代码。
+3.  在服务下[新建函数](https://www.alibabacloud.com/help/doc-detail/52077.htm)，订阅MNS主题并上传代码。
     1.  在函数模板页面中，选择**空白函数**。
     2.  在触发器配置页面中，选择**MNS 主题触发器**，然后根据需要配置其它选项。
 
-        ![自动化管理实践-配置函数触发器](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/154816736136966_zh-CN.png)
+        ![自动化管理实践-配置函数触发器](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/156394552336966_zh-CN.png)
 
     3.  在基础管理配置页面中，**所在服务**配置为`as-hook-mns-fc-redis`，**函数入口**配置为`fc.Example::handleRequest`，然后根据需要配置其它选项。
 
         **说明：** 
 
         -   **函数入口**由代码决定，请根据实际情况配置。
-        -   本文示例采用上传jar包，实现将自动创建的ECS实例添加到云数据库Redis的白名单。有关编程语言说明，请参考[函数计算Java编程说明](https://help.aliyun.com/document_detail/58887.html)。
-        ![自动化管理实践-配置函数基础信息](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/154816736136969_zh-CN.png)
+        -   本文示例采用上传jar包，实现将自动创建的ECS实例添加到云数据库Redis的白名单。有关编程语言说明，请参见[函数计算Java编程说明](https://www.alibabacloud.com/help/doc-detail/58887.htm)。
+        ![自动化管理实践-配置函数基础信息](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/156394552436969_zh-CN.png)
 
-        ![自动化管理实践-配置函数基础信息-函数入口](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/154816736136975_zh-CN.png)
+        ![自动化管理实践-配置函数基础信息-函数入口](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/156394552436975_zh-CN.png)
 
     4.  在权限配置页面中，根据需要授予函数访问其它资源的权限，并授予消息服务调用函数的权限。
 
         **说明：** 建议遵循权限最小化原则，仅授予必需的权限，防范潜在风险。
 
-        ![自动化管理实践-配置权限-函数计算操作其它资源](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/154816736136976_zh-CN.png)
+        ![自动化管理实践-配置权限-函数计算操作其它资源](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/156394552436976_zh-CN.png)
 
-        ![自动化管理实践-配置权限-调用函数](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/154816736136977_zh-CN.png)
+        ![自动化管理实践-配置权限-调用函数](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/156394552436977_zh-CN.png)
 
     5.  在信息核对页面中，核对**函数信息**和**触发器信息**，然后单击**创建**。
 
@@ -94,9 +94,9 @@
 2.  生命周期挂钩挂起伸缩活动，同时发送消息到MNS主题。
 3.  函数计算中，MNS主题触发器触发函数执行过程，并将消息内容作为输入信息（包括ECS实例的ID等信息），执行Java代码。
 4.  代码执行时，会通过接口获取ECS实例的私网IP，然后将私网IP添加到Redis实例的白名单（default 分组）。
-5.  代码执行结果会发送到MNS队列`fc-callback`，您可以在[消息服务控制台](https://mns.console.aliyun.com/)查看结果详情。下图消息中success为true，表明ECS实例成功添加到了Redis实例的白名单。![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/154816736136983_zh-CN.png)
+5.  代码执行结果会发送到MNS队列`fc-callback`，您可以在[消息服务控制台](https://mns.console.aliyun.com/)查看结果详情。下图消息中success为true，表明ECS实例成功添加到了Redis实例的白名单。![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/156394552436983_zh-CN.png)
 
-    ![自动化管理实践-查看执行效果](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/154816736137014_zh-CN.png)
+    ![自动化管理实践-查看执行效果](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/156394552537014_zh-CN.png)
 
 
 您还可以继续消费MNS队列中的消息，比如获取success、LifecycleHookId和LifecycleActionToken，编程提前结束生命周期挂钩。
@@ -107,11 +107,11 @@
 
 示例代码仅供参考，请结合具体业务进行测试改造。主要功能涉及四个java文件，通过Maven管理，目录结构如下：
 
-![自动化管理实践-Jar包结构](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/154816736137010_zh-CN.png)
+![自动化管理实践-Jar包结构](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/92948/156394552537010_zh-CN.png)
 
 Maven依赖如下：
 
-```
+``` {#codeblock_2cj_5yo_vd8}
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -179,12 +179,12 @@ Maven依赖如下：
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-                    <appendAssemblyId>false</appendAssemblyId> <!-- this is used for not append id to the jar name -->
+                    <appendAssemblyId>false</appendAssemblyId> <!-- 设置jar文件的文件名中不包含Assembly Id -->
                 </configuration>
                 <executions>
                     <execution>
-                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <id>make-assembly</id> <!-- 用于匹配需要合并的执行目标 -->
+                        <phase>package</phase> <!-- 设置在打包阶段执行jar文件合并操作 -->
                         <goals>
                             <goal>single</goal>
                         </goals>
@@ -207,7 +207,7 @@ Maven依赖如下：
 
 Example.java代码如下：
 
-```
+``` {#codeblock_21j_lvg_c8u}
 package fc;
 
 import com.alibaba.fastjson.JSON;
@@ -536,7 +536,7 @@ public class Example implements StreamRequestHandler {
 
 FCResult.java代码如下：
 
-```
+``` {#codeblock_cdu_wh1_glx}
 package model;
 
 import com.alibaba.fastjson.JSON;
@@ -592,7 +592,7 @@ public class FCResult {
 
 HookModel.java代码如下：
 
-```
+``` {#codeblock_6j8_wsk_gsk}
 package model;
 
 import java.util.List;
@@ -703,7 +703,7 @@ public class HookModel {
 
 MnsMessageModel.java代码如下：
 
-```
+``` {#codeblock_cof_apa_mh7}
 package model;
 
 public class MnsMessageModel {

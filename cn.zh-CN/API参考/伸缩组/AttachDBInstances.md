@@ -1,47 +1,47 @@
-# AttachDBInstances {#doc_api_1163790 .reference}
+# AttachDBInstances {#doc_api_Ess_AttachDBInstances .reference}
 
-添加一个或多个 RDS 实例。
+调用AttachDBInstances添加一个或多个RDS实例。
 
-## 描述 {#description .section}
+## 接口说明 {#description .section}
 
-由于存在使用限制，向伸缩组添加 RDS 实例时需要满足以下条件：
+由于存在使用限制，向伸缩组添加RDS实例时需要满足以下条件：
 
--   RDS 实例与伸缩组必须属于同一账号。
--   RDS 实例必须处于 **未锁定** 状态，关于锁定策略，请参考 [RDS使用须知](~~41872~~)。
--   RDS 实例必须处于 **运行中** 状态。
--   添加 RDS 实例后，RDS IP 白名单的 default 分组中包含的 IP 不能超过 1000 条，关于 IP 白名单，请参考 [设置白名单](~~26198~~)。
+-   RDS实例与伸缩组必须属于同一账号。
+-   RDS实例必须处于未锁定状态，关于锁定策略，请参见[RDS使用须知](~~41872~~)。
+-   RDS实例必须处于运行中状态。
+-   添加RDS实例后，RDS IP白名单的default分组中包含的IP不能超过1000条，关于IP白名单，请参见[设置白名单](~~26198~~)。
 
-## 调试 {#apiExplorer .section}
+## 调试 {#api_explorer .section}
 
-前往【[API Explorer](https://api.aliyun.com/#product=Ess&api=AttachDBInstances)】在线调试，API Explorer 提供在线调用 API、动态生成 SDK Example 代码和快速检索接口等能力，能显著降低使用云 API 的难度，强烈推荐使用。
+[您可以在OpenAPI Explorer中直接运行该接口，免去您计算签名的困扰。运行成功后，OpenAPI Explorer可以自动生成SDK代码示例。](https://api.aliyun.com/#product=Ess&api=AttachDBInstances&type=RPC&version=2014-08-28)
 
 ## 请求参数 {#parameters .section}
 
 |名称|类型|是否必选|示例值|描述|
 |--|--|----|---|--|
-|DBInstance.N|RepeatList|是|rm-bp12cy3\*\*\*\*|RDS 实例 ID，单次最多支持添加 5 个 RDS 实例。
+|DBInstance.N|RepeatList|是|rm-bp12cy3\*\*\*\*|RDS实例的ID，单次最多支持添加5个RDS实例。
 
  |
-|ScalingGroupId|String|是|AG6CQdPU8OKdwLjgZcJ\*\*\*\*|伸缩组 ID。
+|ScalingGroupId|String|是|AG6CQdPU8OKdwLjgZcJ\*\*\*\*|伸缩组的ID。
 
  |
-|Action|String|否|AttachDBInstances|操作接口名，系统规定参数，取值：AttachDBInstances。
+|Action|String|否|AttachDBInstances|系统规定参数，取值：AttachDBInstances。
 
  |
-|ForceAttach|Boolean|否|false|是否把当前伸缩组内实例的私网 IP 全部添加到 RDS 实例 IP 白名单中：
+|ForceAttach|Boolean|否|false|是否把当前伸缩组内实例的私网IP全部添加到RDS实例IP白名单中：
 
  -   true：添加
 -   false：不添加
 
- 默认值：false
+ 默认值：false。
 
  |
 
-## 返回参数 {#resultMapping .section}
+## 返回数据 {#resultMapping .section}
 
 |名称|类型|示例值|描述|
 |--|--|---|--|
-|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求 ID。无论调用接口成功与否，我们都会返回请求 ID。
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求ID。
 
  |
 
@@ -64,9 +64,8 @@ http://ess.aliyuncs.com/?Action=AttachDBInstances
 
 ``` {#xml_return_success_demo}
 <AttachDBInstancesResponse>
-  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
+      <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
 </AttachDBInstancesResponse>
-
 ```
 
 `JSON` 格式
@@ -79,7 +78,7 @@ http://ess.aliyuncs.com/?Action=AttachDBInstances
 
 ## 错误码 { .section}
 
-[查看本产品错误码](https://error-center.aliyun.com/status/product/Ess)
+访问[错误中心](https://error-center.aliyun.com/status/product/Ess)查看更多错误码。
 
 |HttpCode
 
@@ -106,7 +105,7 @@ http://ess.aliyuncs.com/?Action=AttachDBInstances
 
 |"RDS" quota exceeded.
 
-|伸缩组中 RDS 实例超出配额限制。
+|伸缩组中RDS实例超出配额限制。
 
 |
 |400
@@ -115,7 +114,7 @@ http://ess.aliyuncs.com/?Action=AttachDBInstances
 
 |The specified value of parameter "%s" is not valid.
 
-|不存在指定的 RDS 实例。
+|不存在指定的RDS实例。
 
 |
 |400
@@ -124,7 +123,7 @@ http://ess.aliyuncs.com/?Action=AttachDBInstances
 
 |The current status of DB instance "%s" does not support this action.
 
-|当前 RDS 实例状态不支持该操作。
+|当前RDS实例状态不支持该操作。
 
 |
 |400
@@ -133,7 +132,7 @@ http://ess.aliyuncs.com/?Action=AttachDBInstances
 
 |Security IP quota exceeded in DB instance "%s".
 
-|RDS 实例后端 IP 白名单个数超出配额。
+|RDS实例后端IP白名单个数超出配额。
 
 |
 |400
@@ -142,7 +141,7 @@ http://ess.aliyuncs.com/?Action=AttachDBInstances
 
 |Can not find all private ips of instances in specific scaling group.
 
-|无法获取组内 RDS 实例的私网 IP。
+|无法获取组内RDS实例的私网IP。
 
 |
 

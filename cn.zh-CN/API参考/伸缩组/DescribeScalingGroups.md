@@ -2,9 +2,9 @@
 
 调用DescribeScalingGroups查询伸缩组。
 
-## 调试 {#apiExplorer .section}
+## 调试 {#api_explorer .section}
 
-前往【[API Explorer](https://api.aliyun.com/#product=Ess&api=DescribeScalingGroups)】在线调试，API Explorer 提供在线调用 API、动态生成 SDK Example 代码和快速检索接口等能力，能显著降低使用云 API 的难度，强烈推荐使用。
+[您可以在OpenAPI Explorer中直接运行该接口，免去您计算签名的困扰。运行成功后，OpenAPI Explorer可以自动生成SDK代码示例。](https://api.aliyun.com/#product=Ess&api=DescribeScalingGroups&type=RPC&version=2014-08-28)
 
 ## 请求参数 {#parameters .section}
 
@@ -211,40 +211,39 @@ http://ess.aliyuncs.com/?Action=DescribeScalingGroups
 
 ``` {#xml_return_success_demo}
 <DescribeScalingGroupsResponse>
-  <RequestId>6393C3A8-B611-42F2-AFA6-F080FC45D5D0</RequestId>
-  <TotalCount>1</TotalCount>
-  <PageNumber>1</PageNumber>
-  <PageSize>10</PageSize>
-  <ScalingGroups>
-    <ScalingGroup>
-      <ActiveCapacity>1</ActiveCapacity>
-      <ActiveScalingConfigurationId>dyo713cNYIB4ddEVlKbc****</ActiveScalingConfigurationId>
-      <DBInstanceIds>
-        <DBInstanceId>rdszzzyyuny****</DBInstanceId>
-      </DBInstanceIds>
-      <VSwitchId>vpc-25j4g****</VSwitchId>
-      <DefaultCooldown>20</DefaultCooldown>
-      <LifecycleState>Active</LifecycleState>
-      <LoadBalancerIds>
-        <LoadBalancerId>147b46d767c-cn-qingdao-cm5****</LoadBalancerId>
-      </LoadBalancerIds>
-      <MaxSize>1</MaxSize>
-      <MinSize>0</MinSize>
-      <PendingCapacity>0</PendingCapacity>
-      <RegionId>cn-qingdao</RegionId>
-      <RemovingCapacity>0</RemovingCapacity>
-      <ScalingGroupId>dyrSuvBOtO1dEdIlIbp****</ScalingGroupId>
-      <ScalingGroupName>dyrSuvBOtO1dEdIlIbp****</ScalingGroupName>
-      <RemovalPolicies>
-        <RemovalPolicy>OldestScalingConfiguration</RemovalPolicy>
-        <RemovalPolicy>OldestInstance</RemovalPolicy>
-      </RemovalPolicies>
-      <TotalCapacity>1</TotalCapacity>
-      <CreationTime>2014-08-14T10:58Z</CreationTime>
-    </ScalingGroup>
-  </ScalingGroups>
+      <RequestId>6393C3A8-B611-42F2-AFA6-F080FC45D5D0</RequestId>
+      <TotalCount>1</TotalCount>
+      <PageNumber>1</PageNumber>
+      <PageSize>10</PageSize>
+      <ScalingGroups> 
+            <ScalingGroup>
+                  <ActiveCapacity>1</ActiveCapacity>
+                  <ActiveScalingConfigurationId>dyo713cNYIB4ddEVlKbc****</ActiveScalingConfigurationId>
+                  <DBInstanceIds>
+                        <DBInstanceId>rdszzzyyuny****</DBInstanceId>
+                  </DBInstanceIds>
+                  <VSwitchId>vpc-25j4g****</VSwitchId>
+                  <DefaultCooldown>20</DefaultCooldown>
+                  <LifecycleState>Active</LifecycleState>
+                  <LoadBalancerIds>
+                        <LoadBalancerId>147b46d767c-cn-qingdao-cm5****</LoadBalancerId>
+                  </LoadBalancerIds>
+                  <MaxSize>1</MaxSize>
+                  <MinSize>0</MinSize>
+                  <PendingCapacity>0</PendingCapacity>
+                  <RegionId>cn-qingdao</RegionId>
+                  <RemovingCapacity>0</RemovingCapacity>
+                  <ScalingGroupId>dyrSuvBOtO1dEdIlIbp****</ScalingGroupId>
+                  <ScalingGroupName>dyrSuvBOtO1dEdIlIbp****</ScalingGroupName>
+                  <RemovalPolicies>
+                        <RemovalPolicy>OldestScalingConfiguration</RemovalPolicy>
+                        <RemovalPolicy>OldestInstance</RemovalPolicy>
+                  </RemovalPolicies>
+                  <TotalCapacity>1</TotalCapacity>
+                  <CreationTime>2014-08-14T10:58Z</CreationTime>
+            </ScalingGroup>
+      </ScalingGroups>
 </DescribeScalingGroupsResponse>
-
 ```
 
 `JSON` 格式

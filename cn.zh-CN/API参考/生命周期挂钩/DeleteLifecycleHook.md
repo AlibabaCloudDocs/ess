@@ -1,17 +1,17 @@
 # DeleteLifecycleHook {#doc_api_Ess_DeleteLifecycleHook .reference}
 
-删除一个生命周期挂钩（DeleteLifecycleHook）。
+调用DeleteLifecycleHook删除一个生命周期挂钩。
 
-## 描述 {#description .section}
+## 接口说明 {#description .section}
 
-如果生命周期挂钩已触发伸缩活动等待状态，删除生命周期挂钩时，则对应的等待状态会被提前结束。您可以通过以下两种方式删除生命周期挂钩：
+如果生命周期挂钩已触发伸缩活动等待状态，删除生命周期挂钩时，对应的等待状态会被提前结束。您可以通过以下两种方式删除生命周期挂钩：
 
--   指定生命周期挂钩 ID（`LifecycleHookId`），此时将忽略 `ScalingGroupId` 和 `LifecycleHookName` 参数。
--   同时指定伸缩组 ID（`ScalingGroupId`）与生命周期挂钩名称（`LifecycleHookName`）。
+-   指定生命周期挂钩ID（LifecycleHookId），此时将忽略ScalingGroupId和LifecycleHookName参数。
+-   同时指定伸缩组ID（ScalingGroupId）与生命周期挂钩名称（LifecycleHookName）。
 
-## 调试 {#apiExplorer .section}
+## 调试 {#api_explorer .section}
 
-前往【[API Explorer](https://api.aliyun.com/#product=Ess&api=DeleteLifecycleHook)】在线调试，API Explorer 提供在线调用 API、动态生成 SDK Example 代码和快速检索接口等能力，能显著降低使用云 API 的难度，强烈推荐使用。
+[您可以在OpenAPI Explorer中直接运行该接口，免去您计算签名的困扰。运行成功后，OpenAPI Explorer可以自动生成SDK代码示例。](https://api.aliyun.com/#product=Ess&api=DeleteLifecycleHook&type=RPC&version=2014-08-28)
 
 ## 请求参数 {#parameters .section}
 
@@ -20,21 +20,21 @@
 |Action|String|否|DeleteLifecycleHook|系统规定参数，取值：DeleteLifecycleHook。
 
  |
-|LifecycleHookId|String|否|ash-\*\*\*\*|生命周期挂钩 ID。
+|LifecycleHookId|String|否|ash-\*\*\*\*|生命周期挂钩的ID。
 
  |
-|LifecycleHookName|String|否|测试SCALE\_IN|生命周期挂钩名称。
+|LifecycleHookName|String|否|测试SCALE\_IN|生命周期挂钩的名称。
 
  |
-|ScalingGroupId|String|否|dP8VqSd9ENXPc0ciVmbc\*\*\*\*|伸缩组 ID。
+|ScalingGroupId|String|否|dP8VqSd9ENXPc0ciVmbc\*\*\*\*|伸缩组的ID。
 
  |
 
-## 返回参数 {#resultMapping .section}
+## 返回数据 {#resultMapping .section}
 
 |名称|类型|示例值|描述|
 |--|--|---|--|
-|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求 ID。无论调用接口成功与否，我们都会返回请求 ID。
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求ID。
 
  |
 
@@ -56,9 +56,8 @@ http://ess.aliyuncs.com/?Action=DeleteLifecycleHook
 
 ``` {#xml_return_success_demo}
 <DeleteLifecycleHookResponse>
-  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
+      <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
 </DeleteLifecycleHookResponse>
-
 ```
 
 `JSON` 格式
@@ -71,7 +70,7 @@ http://ess.aliyuncs.com/?Action=DeleteLifecycleHook
 
 ## 错误码 { .section}
 
-[查看本产品错误码](https://error-center.aliyun.com/status/product/Ess)
+访问[错误中心](https://error-center.aliyun.com/status/product/Ess)查看更多错误码。
 
 |HttpCode
 
@@ -98,7 +97,7 @@ http://ess.aliyuncs.com/?Action=DeleteLifecycleHook
 
 |The specified lifecycleHookId does not exist.
 
-|生命周期挂钩 ID 不存在。
+|生命周期挂钩ID不存在。
 
 |
 |400

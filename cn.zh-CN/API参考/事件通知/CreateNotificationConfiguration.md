@@ -1,41 +1,46 @@
 # CreateNotificationConfiguration {#doc_api_Ess_CreateNotificationConfiguration .reference}
 
-创建弹性伸缩事件及资源变化通知（CreateNotificationConfiguration）。
+调用CreateNotificationConfiguration创建弹性伸缩事件及资源变化通知。
 
-您可以设置由云监控系统事件、消息服务 MNS 队列或 MNS 主题接收消息通知。当伸缩组发生指定类型的伸缩事件或者资源变化时，弹性伸缩会发送消息通知云监控或 MNS。目前，有部分阿里云地域暂未部署 MNS 队列 和 MNS 主题服务，具体详情，请访问 MNS 管理控制台或者参阅 MNS 常见问题。
+## 接口说明 {#description .section}
 
-## 调试 {#apiExplorer .section}
+您可以设置由云监控系统事件、消息服务MNS队列或MNS主题接收消息通知。当伸缩组发生指定类型的伸缩事件或者资源变化时，弹性伸缩会发送消息通知云监控或消息。目前部分阿里云地域暂未部署MNS队列和MNS主题服务，详情请参见[MNS常见问题](~~27436~~)。
 
-前往【[API Explorer](https://api.aliyun.com/#product=Ess&api=CreateNotificationConfiguration)】在线调试，API Explorer 提供在线调用 API、动态生成 SDK Example 代码和快速检索接口等能力，能显著降低使用云 API 的难度，强烈推荐使用。
+## 调试 {#api_explorer .section}
+
+[您可以在OpenAPI Explorer中直接运行该接口，免去您计算签名的困扰。运行成功后，OpenAPI Explorer可以自动生成SDK代码示例。](https://api.aliyun.com/#product=Ess&api=CreateNotificationConfiguration&type=RPC&version=2014-08-28)
 
 ## 请求参数 {#parameters .section}
 
 |名称|类型|是否必选|示例值|描述|
 |--|--|----|---|--|
-|NotificationArn|String|是|acs:ess:cn-hangzhou:123456:cloudmonitor|通知对象标识符。格式为 `acs:ess:{region}:{account-id}:{resource-relative-id}`，其中：
+|NotificationArn|String|是|acs:ess:cn-hangzhou:123456:cloudmonitor|通知对象标识符。格式为`acs:ess:{region}:{account-id}:{resource-relative-id}`，其中：
 
- -   `region`：伸缩组所在地域 ID。更多详情，请参阅 [地域和可用区](~~40654~~)。
--   `account-id`：您的账号 ID。
--   `resource-relative-id` ：通知方式，可选值包括云监控 `cloudmonitor`，MNS 队列 `queue/{queuename}` 和 MNS 主题 `topic/{topicname}`。
-
- |
-|NotificationType.N|RepeatList|是|AUTOSCALING:SCALE\_OUT\_SUCCESS|一类或者多类弹性伸缩事件及资源变化通知。N 的取值范围为 1~8，多个取值使用重复列表的形式。
-
- 您可以通过接口 [DescribeNotificationTypes](~~71117~~) 查询参数取值。
+ -   region为伸缩组所在地域的ID。更多详情，请参见[地域和可用区](~~40654~~)。
+-   account-id为您账号的ID。
+-   resource-relative-id为通知方式，取值范围：
+    -   cloudmonitor：云监控
+    -   MNS队列：queue/\{queuename\}，其中topicname需要替换为具体的MNS队列名称。
+    -   MNS主题：topic/\{topicname\}，其中topicname需要替换为具体的MNS主题名称。
 
  |
-|ScalingGroupId|String|是|AG6CQdPU8OKdwLjgZcJ\*\*\*\*|伸缩组 ID。
+|NotificationType.N|RepeatList|是|AUTOSCALING:SCALE\_OUT\_SUCCESS|一类或者多类弹性伸缩事件及资源变化通知。N的取值范围：1~8，多个取值使用重复列表的形式。
+
+ 您可以调用接口[DescribeNotificationTypes](~~71117~~)查询参数取值。
+
+ |
+|ScalingGroupId|String|是|AG6CQdPU8OKdwLjgZcJ\*\*\*\*|伸缩组的ID。
 
  |
 |Action|String|否|CreateNotificationConfiguration|系统规定参数。取值：CreateNotificationConfiguration。
 
  |
 
-## 返回参数 {#resultMapping .section}
+## 返回数据 {#resultMapping .section}
 
 |名称|类型|示例值|描述|
 |--|--|---|--|
-|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求 ID。无论调用接口成功与否，我们都会返回请求 ID。
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求ID。
 
  |
 
@@ -63,9 +68,8 @@ http://ess.aliyuncs.com/?Action=CreateNotificationConfiguration
 
 ``` {#xml_return_success_demo}
 <CreateNotificationConfigurationResponse>
-  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
+      <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
 </CreateNotificationConfigurationResponse>
-
 ```
 
 `JSON` 格式
@@ -78,7 +82,7 @@ http://ess.aliyuncs.com/?Action=CreateNotificationConfiguration
 
 ## 错误码 { .section}
 
-[查看本产品错误码](https://error-center.aliyun.com/status/product/Ess)
+访问[错误中心](https://error-center.aliyun.com/status/product/Ess)查看更多错误码。
 
 |HttpCode
 
@@ -96,7 +100,7 @@ http://ess.aliyuncs.com/?Action=CreateNotificationConfiguration
 
 |The specified parameter notificationArn is invalid.
 
-|指定的 NotificationArn 不合法。
+|指定的NotificationArn不合法。
 
 |
 |400
@@ -105,7 +109,7 @@ http://ess.aliyuncs.com/?Action=CreateNotificationConfiguration
 
 |The specified notificationType is invalid.
 
-|指定的 NotificationType.N不合法。
+|指定的NotificationType.N不合法。
 
 |
 |400
@@ -132,7 +136,7 @@ http://ess.aliyuncs.com/?Action=CreateNotificationConfiguration
 
 |The specified queue queuename does not exist.
 
-|指定的 MNS 队列不存在。
+|指定的MNS队列不存在。
 
 |
 |400
@@ -141,7 +145,7 @@ http://ess.aliyuncs.com/?Action=CreateNotificationConfiguration
 
 |The specified topic topicname does not exist.
 
-|指定的 MNS 主题不存在。
+|指定的MNS主题不存在。
 
 |
 |400

@@ -1,29 +1,30 @@
-# DeleteScalingConfiguration {#doc_api_1163510 .reference}
+# DeleteScalingConfiguration {#doc_api_Ess_DeleteScalingConfiguration .reference}
 
-删除一个指定的伸缩配置。
+调用DeleteScalingConfiguration删除一个伸缩配置。
 
-## 描述 {#description .section}
+## 接口说明 {#description .section}
 
-伸缩配置在伸缩组中属于生效状态，则该伸缩配置不允许删除。
+以下情况不能删除伸缩配置：
 
-**某个伸缩配置创建的任意一个ECS实例仍存在于伸缩组中，则该伸缩配置不允许删除。**
+-   伸缩配置在伸缩组中处于生效状态。
+-   伸缩组中仍然存在使用该伸缩配置创建的ECS实例。
 
-## 调试 {#apiExplorer .section}
+## 调试 {#api_explorer .section}
 
-前往【[API Explorer](https://api.aliyun.com/#product=Ess&api=DeleteScalingConfiguration)】在线调试，API Explorer 提供在线调用 API、动态生成 SDK Example 代码和快速检索接口等能力，能显著降低使用云 API 的难度，强烈推荐使用。
+[您可以在OpenAPI Explorer中直接运行该接口，免去您计算签名的困扰。运行成功后，OpenAPI Explorer可以自动生成SDK代码示例。](https://api.aliyun.com/#product=Ess&api=DeleteScalingConfiguration&type=RPC&version=2014-08-28)
 
 ## 请求参数 {#parameters .section}
 
 |名称|类型|是否必选|示例值|描述|
 |--|--|----|---|--|
-|ScalingConfigurationId|String|是|eOs27Kb0oXvQcUYjEGel\*\*\*\*|伸缩配置 ID。
+|ScalingConfigurationId|String|是|eOs27Kb0oXvQcUYjEGel\*\*\*\*|待删除伸缩配置的ID。
 
  |
-|Action|String|否|DeleteScalingConfiguration|操作接口名，系统规定参数，取值：DeleteScalingConfiguration。
+|Action|String|否|DeleteScalingConfiguration|系统规定参数，取值：DeleteScalingConfiguration。
 
  |
 
-## 返回参数 {#resultMapping .section}
+## 返回数据 {#resultMapping .section}
 
 |名称|类型|示例值|描述|
 |--|--|---|--|
@@ -49,9 +50,8 @@ http://ess.aliyuncs.com/?Action=DeleteScalingConfiguration
 
 ``` {#xml_return_success_demo}
 <DeleteScalingConfigurationResponse>
-  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
+      <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
 </DeleteScalingConfigurationResponse>
-
 ```
 
 `JSON` 格式
@@ -64,7 +64,7 @@ http://ess.aliyuncs.com/?Action=DeleteScalingConfiguration
 
 ## 错误码 { .section}
 
-[查看本产品错误码](https://error-center.aliyun.com/status/product/Ess)
+访问[错误中心](https://error-center.aliyun.com/status/product/Ess)查看更多错误码。
 
 |HttpCode
 
@@ -91,7 +91,7 @@ http://ess.aliyuncs.com/?Action=DeleteScalingConfiguration
 
 |The current lifecycle state of specified scaling configuration does not support this action.
 
-|指定的伸缩配置为非inactive状态。
+|指定的伸缩配置未处于Inactive状态。
 
 |
 |400

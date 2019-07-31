@@ -1,39 +1,43 @@
-# DescribeNotificationConfigurations {#doc_api_1163768 .reference}
+# DescribeNotificationConfigurations {#doc_api_Ess_DescribeNotificationConfigurations .reference}
 
-查询您创建的弹性伸缩事件及资源变化通知（\`DescribeNotificationConfigurations\`）。
+调用DescribeNotificationConfigurations查询您创建的弹性伸缩事件及资源变化通知。
 
-## 调试 {#apiExplorer .section}
+## 调试 {#api_explorer .section}
 
-前往【[API Explorer](https://api.aliyun.com/#product=Ess&api=DescribeNotificationConfigurations)】在线调试，API Explorer 提供在线调用 API、动态生成 SDK Example 代码和快速检索接口等能力，能显著降低使用云 API 的难度，强烈推荐使用。
+[您可以在OpenAPI Explorer中直接运行该接口，免去您计算签名的困扰。运行成功后，OpenAPI Explorer可以自动生成SDK代码示例。](https://api.aliyun.com/#product=Ess&api=DescribeNotificationConfigurations&type=RPC&version=2014-08-28)
 
 ## 请求参数 {#parameters .section}
 
 |名称|类型|是否必选|示例值|描述|
 |--|--|----|---|--|
-|ScalingGroupId|String|是|AG6CQdPU8OKdwLjgZcJ\*\*\*\*|伸缩组 ID。
+|ScalingGroupId|String|是|AG6CQdPU8OKdwLjgZcJ\*\*\*\*|伸缩组的ID。
 
  |
 |Action|String|否|DescribeNotificationConfigurations|系统规定参数。取值：DescribeNotificationConfigurations。
 
  |
 
-## 返回参数 {#resultMapping .section}
+## 返回数据 {#resultMapping .section}
 
 |名称|类型|示例值|描述|
 |--|--|---|--|
-|NotificationConfigurationModels| | |事件及资源变化通知集合。
+|NotificationConfigurationModels| | |弹性伸缩事件及资源变化通知的集合。
 
  |
-|└NotificationArn|String|acs:ess:cn-hangzhou:1111111111:queue/queue1|事件及资源变化通知集合。
+|NotificationArn|String|acs:ess:cn-hangzhou:1111111111:queue/queue1|通知对象标识符。格式为`acs:ess:{region}:{account-id}:{resource-relative-id}`，其中：
+
+ -   region为伸缩组所在地域的ID。
+-   account-id为您账号的ID。
+-   resource-relative-id为通知方式。
 
  |
-|└NotificationTypes| |AUTOSCALING:SCALE\_IN\_SUCCESS|弹性伸缩事件及资源变化通知类型列表。
+|NotificationTypes| |AUTOSCALING:SCALE\_IN\_SUCCESS|弹性伸缩事件及资源变化通知类型列表。
 
  |
-|└ScalingGroupId|String|asg-\*\*\*\*|请求 ID。
+|ScalingGroupId|String|asg-\*\*\*\*|伸缩组的ID。
 
  |
-|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求 ID。无论调用接口成功与否，我们都会返回请求 ID。
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求ID。
 
  |
 
@@ -55,64 +59,63 @@ http://ess.aliyuncs.com/?Action=DescribeNotificationConfigurations
 
 ``` {#xml_return_success_demo}
 <DescribeNotificationConfigurationsResponse>
-  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
-  <NotificationConfigurationModels>
-    <NotificationConfigurationModel>
-      <NotificationArn>xxxxxxxxx</NotificationArn>
-      <ScalingGroupId>xxxxxxxxxxx</ScalingGroupId>
-      <NotificationTypes>
-        <NotificationType>AUTOSCALING:SCALE_IN_SUCCESS</NotificationType>
-        <NotificationType>AUTOSCALING:SCALE_IN_ERROR</NotificationType>
-      </NotificationTypes>
-    </NotificationConfigurationModel>
-    <NotificationConfigurationModel>
-      <NotificationArn>xxxxxxxxx</NotificationArn>
-      <ScalingGroupId>xxxxxxxxxx</ScalingGroupId>
-      <NotificationTypes>
-        <NotificationType>AUTOSCALING:SCALE_IN_SUCCESS</NotificationType>
-        <NotificationType>AUTOSCALING:SCALE_IN_ERROR</NotificationType>
-      </NotificationTypes>
-    </NotificationConfigurationModel>
-  </NotificationConfigurationModels>
+      <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
+      <NotificationConfigurationModels>
+            <NotificationConfigurationModel>
+                  <NotificationArn>acs:ess:cn-hangzhou:1111111111:queue/qu****</NotificationArn>
+                  <ScalingGroupId>asg-****</ScalingGroupId>
+                  <NotificationTypes>
+                        <NotificationType>AUTOSCALING:SCALE_IN_SUCCESS</NotificationType>
+                        <NotificationType>AUTOSCALING:SCALE_IN_ERROR</NotificationType>
+                  </NotificationTypes>
+            </NotificationConfigurationModel>
+            <NotificationConfigurationModel>
+                  <NotificationArn>acs:ess:cn-hangzhou:1111111111:queue/qu****</NotificationArn>
+                  <ScalingGroupId>asg-****</ScalingGroupId>
+                  <NotificationTypes>
+                        <NotificationType>AUTOSCALING:SCALE_IN_SUCCESS</NotificationType>
+                        <NotificationType>AUTOSCALING:SCALE_IN_ERROR</NotificationType>
+                  </NotificationTypes>
+            </NotificationConfigurationModel>
+      </NotificationConfigurationModels>
 </DescribeNotificationConfigurationsResponse>
-
 ```
 
 `JSON` 格式
 
 ``` {#json_return_success_demo}
 {
-	"requestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E",
-	"notificationConfigurationModels":[
-		{
-			"notificationArn":"xxxxxxxxxx",
-			"notificationTypes":[
-				"AUTOSCALING:SCALE_OUT_SUCCESS",
-				"AUTOSCALING:SCALE_OUT_ERROR",
-				"AUTOSCALING:SCALE_IN_SUCCESS",
-				"AUTOSCALING:SCALE_IN_ERROR",
-				"AUTOSCALING:SCALE_REJECT"
-			],
-			"scalingGroupId":"xxxxxxxxxx"
-		},
-		{
-			"notificationArn":"xxxxxxxxxx",
-			"notificationTypes":[
-				"AUTOSCALING:SCALE_OUT_SUCCESS",
-				"AUTOSCALING:SCALE_OUT_ERROR",
-				"AUTOSCALING:SCALE_IN_SUCCESS",
-				"AUTOSCALING:SCALE_IN_ERROR",
-				"AUTOSCALING:SCALE_REJECT"
-			],
-			"scalingGroupId":"xxxxxxxxxx"
-		}
-	]
+	"RequestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E",
+	"NotificationConfigurationModels":{
+		"NotificationConfigurationModel":[
+			{
+				"NotificationArn":"acs:ess:cn-hangzhou:1111111111:queue/qu****",
+				"ScalingGroupId":"asg-****",
+				"NotificationTypes":{
+					"NotificationType":[
+						"AUTOSCALING:SCALE_IN_SUCCESS",
+						"AUTOSCALING:SCALE_IN_ERROR"
+					]
+				}
+			},
+			{
+				"NotificationArn":"acs:ess:cn-hangzhou:1111111111:queue/qu****",
+				"ScalingGroupId":"asg-****",
+				"NotificationTypes":{
+					"NotificationType":[
+						"AUTOSCALING:SCALE_IN_SUCCESS",
+						"AUTOSCALING:SCALE_IN_ERROR"
+					]
+				}
+			}
+		]
+	}
 }
 ```
 
 ## 错误码 { .section}
 
-[查看本产品错误码](https://error-center.aliyun.com/status/product/Ess)
+访问[错误中心](https://error-center.aliyun.com/status/product/Ess)查看更多错误码。
 
 |HttpCode
 

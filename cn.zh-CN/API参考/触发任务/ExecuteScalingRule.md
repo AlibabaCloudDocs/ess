@@ -1,20 +1,27 @@
 # ExecuteScalingRule {#doc_api_Ess_ExecuteScalingRule .reference}
 
-执行一个指定的伸缩规则。
+调用ExecuteScalingRule执行一条伸缩规则。
 
-## 描述 {#description .section}
+## 接口说明 {#description .section}
 
--   当伸缩组为 **Active** 状态，才可以调用该接口。
--   当伸缩组没有伸缩活动正在执行，才可以调用该接口。
--   当伸缩组没有伸缩活动正在执行时，该接口可以绕过冷却时间（Cooldown）直接执行。
--   调用该接口返回成功，只是表示弹性伸缩服务接受了该接口的调用请求，伸缩活动可以执行，但不代表伸缩活动能够执行成功。用户需要通过返回的 ScalingActivityId 查看该伸缩活动的执行状态。
--   如果该伸缩规则需要增加的 ECS 实例数加上当前伸缩组的实例数（Total Capacity）大于 MaxSize 时，则按 Total Capacity = MaxSize 的规则进行执行。
--   如果当前伸缩组的实例数（Total Capacity）减去该伸缩规则需要减少的 ECS 实例数小于 MinSize 时，则按 Total Capacity = MinSize 的规则进行执行。
--   对于所有地域和所有伸缩组，一个用户最多能弹性伸缩 1000 台 ECS 实例。（此数量只包含自动创建的 ECS 实例，不包含手工添加的 ECS 实例。）
+调用该接口前请确保满足以下条件：
 
-## 调试 {#apiExplorer .section}
+-   伸缩组为Active状态。
+-   伸缩组没有伸缩活动正在执行。
 
-前往【[API Explorer](https://api.aliyun.com/#product=Ess&api=ExecuteScalingRule)】在线调试，API Explorer 提供在线调用 API、动态生成 SDK Example 代码和快速检索接口等能力，能显著降低使用云 API 的难度，强烈推荐使用。
+当伸缩组没有伸缩活动正在执行时，该接口可以绕过冷却时间（Cooldown）直接执行。
+
+调用该接口返回成功，只是表示弹性伸缩服务接受了该接口的调用请求，伸缩活动可以执行，但不代表伸缩活动能够执行成功。用户需要通过返回的ScalingActivityId查看该伸缩活动的执行状态。
+
+如果该伸缩规则需要增加的ECS实例数加上当前伸缩组的实例数（Total Capacity）大于MaxSize，则按Total Capacity = MaxSize的规则进行执行。
+
+如果当前伸缩组的实例数（Total Capacity）减去该伸缩规则需要减少的ECS实例数小于MinSize，则按Total Capacity = MinSize的规则进行执行。
+
+对于所有地域和所有伸缩组，一个用户最多能弹性伸缩1000台ECS实例。（此数量只包含自动创建的ECS实例，不包含手工添加的ECS实例。）
+
+## 调试 {#api_explorer .section}
+
+[您可以在OpenAPI Explorer中直接运行该接口，免去您计算签名的困扰。运行成功后，OpenAPI Explorer可以自动生成SDK代码示例。](https://api.aliyun.com/#product=Ess&api=ExecuteScalingRule&type=RPC&version=2014-08-28)
 
 ## 请求参数 {#parameters .section}
 
@@ -23,27 +30,27 @@
 |ScalingRuleAri|String|是|ari:acs:ess:cn-qingdao:1344371:scalingRule/cCBpdYdQuBe2cUxOdu6\*\*\*\*|伸缩规则唯一标识符。
 
  |
-|Action|String|否|ExecuteScalingRule|操作接口名，系统规定参数，取值：ExecuteScalingRule。
+|Action|String|否|ExecuteScalingRule|系统规定参数，取值：ExecuteScalingRule。
 
  |
-|BreachThreshold|Float|否|1.0|执行步进伸缩规则时指定的当前阈值，取值范围-9.999999E18~9.999999E18。
+|BreachThreshold|Float|否|1.0|执行步进伸缩规则时指定的当前阈值，取值范围：-9.999999E18~9.999999E18。
 
  |
-|ClientToken|String|否|123e4567-e89b-12d3-a456-426655440000|用于保证请求的幂等性。由客户端生成该参数值，要保证在不同请求间唯一，最大不超过 64 个 ASCII 字符。具体请参见附录 [如何保证幂等性](~~25965~~)。
+|ClientToken|String|否|123e4567-e89b-12d3-a456-426655440000|用于保证请求的幂等性。由客户端生成该参数值，要保证在不同请求间唯一，最大不超过64个ASCII字符。详情请参见[如何保证幂等性](~~25965~~)。
 
  |
-|MetricValue|Float|否|1.0|执行步进伸缩规则时指定的当前指标值，取值范围-9.999999E18~9.999999E18。
+|MetricValue|Float|否|1.0|执行步进伸缩规则时指定的当前指标值，取值范围：-9.999999E18~9.999999E18。
 
  |
 
-## 返回参数 {#resultMapping .section}
+## 返回数据 {#resultMapping .section}
 
 |名称|类型|示例值|描述|
 |--|--|---|--|
-|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求 ID。无论调用接口成功与否，我们都会返回请求 ID。
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求ID。
 
  |
-|ScalingActivityId|String|ebta5WbUzC8gcwUWvfch\*\*\*\*|伸缩活动的 ID。
+|ScalingActivityId|String|ebta5WbUzC8gcwUWvfch\*\*\*\*|伸缩活动的ID。
 
  |
 
@@ -65,10 +72,9 @@ http://ess.aliyuncs.com/?Action=ExecuteScalingRule
 
 ``` {#xml_return_success_demo}
 <ExecuteScalingRuleResponse>
-  <ScalingActivityId>ebta5WbUzC8gcwUWvfchyT4U</ScalingActivityId>
-  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3****</RequestId>
+      <ScalingActivityId>ebta5WbUzC8gcwUWvfchyT4U</ScalingActivityId>
+      <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3****</RequestId>
 </ExecuteScalingRuleResponse>
-
 ```
 
 `JSON` 格式
@@ -82,7 +88,7 @@ http://ess.aliyuncs.com/?Action=ExecuteScalingRule
 
 ## 错误码 { .section}
 
-[查看本产品错误码](https://error-center.aliyun.com/status/product/Ess)
+访问[错误中心](https://error-center.aliyun.com/status/product/Ess)查看更多错误码。
 
 |HttpCode
 
@@ -118,7 +124,7 @@ http://ess.aliyuncs.com/?Action=ExecuteScalingRule
 
 |The current status of the specified scaling group does not support this action.
 
-|指定伸缩规则所属的伸缩组为非active状态。
+|指定伸缩规则所属的伸缩组未处于active状态。
 
 |
 |400
@@ -154,7 +160,7 @@ http://ess.aliyuncs.com/?Action=ExecuteScalingRule
 
 |The current status of the specified load balancer does not support this action.
 
-|指定伸缩规则所属的伸缩组的负载均衡实例为非active状态。
+|指定伸缩规则所属的伸缩组的负载均衡实例未处于active状态。
 
 |
 |400
@@ -190,7 +196,7 @@ http://ess.aliyuncs.com/?Action=ExecuteScalingRule
 
 |The current status of DB instance “XXX” does not support this action.
 
-|指定伸缩规则所属的伸缩组的RDS实例为非running状态
+|指定伸缩规则所属的伸缩组的RDS实例未处于running状态
 
 |
 |400

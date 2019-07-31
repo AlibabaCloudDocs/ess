@@ -1,39 +1,39 @@
 # RebalanceInstances {#doc_api_Ess_RebalanceInstances .reference}
 
-重新平衡多可用区伸缩组内 ECS 实例分布（RebalanceInstances）。
+调用RebalanceInstances重新平衡多可用区伸缩组内ECS实例的分布。
 
-## 描述 {#description .section}
+## 接口说明 {#description .section}
 
-分布再平衡会通过新建 ECS 实例替换已有 ECS 实例补偿平衡可用区，终止已有 ECS 实例前会先启动新 ECS 实例，分布再平衡不会影响您的应用程序性能或可用性。
+分布再平衡会通过新建ECS实例替换已有ECS实例补偿平衡可用区，终止已有ECS实例前会先启动新ECS实例，分布再平衡不会影响您的应用程序性能或可用性。
 
--   只支持设置了 `MultiAZPolic=Balance` 的多可用区伸缩组内 ECS 实例分布不平衡时，可以重新平衡可用区。
+-   只支持设置了MultiAZPolicy为BALANCE的多可用区伸缩组，用于平衡多可用区间ECS实例的分布。
 -   只有伸缩组内实例分布严重不平衡时可以执行再平衡操作。
--   一次分布再平衡活动最多只替换 20 台 ECS 实例。
--   分布再平衡活动期间，当该组接近或达到指定的最大 ECS 实例台数（`MaxSize`）时，并需要继续分布再平衡时，我们允许可以暂时超出伸缩组的容量的 10 %，最低允许超出 1 台 ECS 实例。该超出状态持续重新平衡该伸缩组所需的时间，通常为 1 至 6 分钟。
+-   一次分布再平衡活动最多只替换20台ECS实例。
+-   分布再平衡活动期间，如果组内实例数量接近或达到指定的最大ECS实例台数（MaxSize），但需要继续分布再平衡，弹性伸缩允许暂时超出MaxSize的10%，最低允许超出1台ECS实例。该超出状态持续重新平衡该伸缩组所需的时间，通常为1至6分钟。
 
-## 调试 {#apiExplorer .section}
+## 调试 {#api_explorer .section}
 
-前往【[API Explorer](https://api.aliyun.com/#product=Ess&api=RebalanceInstances)】在线调试，API Explorer 提供在线调用 API、动态生成 SDK Example 代码和快速检索接口等能力，能显著降低使用云 API 的难度，强烈推荐使用。
+[您可以在OpenAPI Explorer中直接运行该接口，免去您计算签名的困扰。运行成功后，OpenAPI Explorer可以自动生成SDK代码示例。](https://api.aliyun.com/#product=Ess&api=RebalanceInstances&type=RPC&version=2014-08-28)
 
 ## 请求参数 {#parameters .section}
 
 |名称|类型|是否必选|示例值|描述|
 |--|--|----|---|--|
-|ScalingGroupId|String|是|AG6CQdPU8OKdwLjgZcJ\*\*\*\*|伸缩组 ID。
+|ScalingGroupId|String|是|AG6CQdPU8OKdwLjgZcJ\*\*\*\*|伸缩组的ID。
 
  |
-|Action|String|否|RebalanceInstances|系统规定参数。取值： RebalanceInstances。
+|Action|String|否|RebalanceInstances|系统规定参数，取值： RebalanceInstances。
 
  |
 
-## 返回参数 {#resultMapping .section}
+## 返回数据 {#resultMapping .section}
 
 |名称|类型|示例值|描述|
 |--|--|---|--|
-|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求 ID。无论调用接口成功与否，我们都会返回请求 ID。
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求ID。
 
  |
-|ScalingActivityId|String|asa-kjgffgdfadah\*\*\*\*|伸缩活动 ID。
+|ScalingActivityId|String|asa-kjgffgdfadah\*\*\*\*|伸缩活动的ID。
 
  |
 
@@ -55,10 +55,9 @@ http://ess.aliyuncs.com/?Action=RebalanceInstances
 
 ``` {#xml_return_success_demo}
 <RebalanceInstancesResponse>
-  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
-  <ScalingActivityId>asa-kjgffgdfadah****</ScalingActivityId>
+      <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
+      <ScalingActivityId>asa-kjgffgdfadah****</ScalingActivityId>
 </RebalanceInstancesResponse>
-
 ```
 
 `JSON` 格式
@@ -72,7 +71,7 @@ http://ess.aliyuncs.com/?Action=RebalanceInstances
 
 ## 错误码 { .section}
 
-[查看本产品错误码](https://error-center.aliyun.com/status/product/Ess)
+访问[错误中心](https://error-center.aliyun.com/status/product/Ess)查看更多错误码。
 
 |HttpCode
 
@@ -99,7 +98,7 @@ http://ess.aliyuncs.com/?Action=RebalanceInstances
 
 |This operation is denied because the specified scaling group does not support this action.
 
-|指定伸缩组的扩缩容策略 MultiAZPolicy 不是 Balance，或者 ECS 实例分布不存在严重不平衡的情况。
+|指定伸缩组的扩缩容策略MultiAZPolicy不是BALANCE，或者ECS实例分布不存在严重不平衡的情况。
 
 |
 |403
@@ -108,7 +107,7 @@ http://ess.aliyuncs.com/?Action=RebalanceInstances
 
 |A required authorization for the specified action is not supplied.
 
-|您还未被授权使用 RebalanceInstances 接口。
+|您还未被授权使用RebalanceInstances接口。
 
 |
 |404

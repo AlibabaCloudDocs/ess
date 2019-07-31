@@ -1,20 +1,16 @@
 # ModifyScalingRule {#doc_api_Ess_ModifyScalingRule .reference}
 
-调用ModifyScalingRule修改一条已有的伸缩规则，重新定义伸缩动作。
+调用ModifyScalingRule修改一条伸缩规则。
 
-## 描述 {#description .section}
+## 调试 {#api_explorer .section}
 
-修改一条已有伸缩规则的指定属性，应对新的场景。
-
-## 调试 {#apiExplorer .section}
-
-前往【[API Explorer](https://api.aliyun.com/#product=Ess&api=ModifyScalingRule)】在线调试，API Explorer 提供在线调用 API、动态生成 SDK Example 代码和快速检索接口等能力，能显著降低使用云 API 的难度，强烈推荐使用。
+[您可以在OpenAPI Explorer中直接运行该接口，免去您计算签名的困扰。运行成功后，OpenAPI Explorer可以自动生成SDK代码示例。](https://api.aliyun.com/#product=Ess&api=ModifyScalingRule&type=RPC&version=2014-08-28)
 
 ## 请求参数 {#parameters .section}
 
 |名称|类型|是否必选|示例值|描述|
 |--|--|----|---|--|
-|ScalingRuleId|String|是|eMKWG8SRNb9dBLAjweN\*\*\*\*|伸缩规则的 ID。
+|ScalingRuleId|String|是|eMKWG8SRNb9dBLAjweN\*\*\*\*|待修改伸缩规则的ID。
 
  |
 |Action|String|否|ModifyScalingRule|系统规定参数，取值：ModifyScalingRule。
@@ -27,7 +23,7 @@
 -   TotalCapacity： 将当前伸缩组的 ECS 实例数量调整到指定数量。
 
  |
-|AdjustmentValue|Integer|否|100|伸缩规则的调整值， 仅适用于简单伸缩规则。任何情况下，单次调整的 ECS 实例台数都不能超过 500。不同调整方式对应的取值范围：
+|AdjustmentValue|Integer|否|100|伸缩规则的调整值， 仅适用于简单伸缩规则。任何情况下，单次调整的ECS实例台数都不能超过500。不同调整方式对应的取值范围：
 
  -   QuantityChangeInCapacity：-500~500
 -   PercentChangeInCapacity：-100~10000
@@ -42,19 +38,19 @@
 |DisableScaleIn|Boolean|否|true|是否禁用缩容，仅适用于目标追踪伸缩规则。
 
  |
-|EstimatedInstanceWarmup|Integer|否|60|实例预热时间，适用于目标追踪伸缩规则和步进伸缩规则。处于预热状态的 ECS 实例将正常的加入伸缩组，但是期间将不会向云监控上报监控数据。
+|EstimatedInstanceWarmup|Integer|否|60|实例预热时间，适用于目标追踪伸缩规则和步进伸缩规则。处于预热状态的ECS实例将正常的加入伸缩组，但是期间将不会向云监控上报监控数据。
 
- **说明：** 动态计算需要扩缩容的 ECS 实例数量时，处于预热状态的实例不计入现有实例数量。
+ **说明：** 动态计算需要扩缩容的ECS实例数量时，处于预热状态的实例不计入现有实例数量。
 
  取值范围：0~86400，单位：秒。
 
  |
-|InitialMaxSize|Integer|否|100|伸缩组实例数上限，和PredictiveValueBehavior式结合使用。
+|InitialMaxSize|Integer|否|100|伸缩组实例数上限，和PredictiveValueBehavior结合使用。
 
  |
 |MetricName|String|否|CpuUtilization|预定义监控项，适用于目标追踪伸缩规则和预测规则，且此时该项必选。
 
- 目标追踪伸缩规则可选值：
+ 目标追踪伸缩规则取值范围：
 
  -   CpuUtilization：平均CPU使用率
 -   ClassicInternetRx：经典网络公网入流量平均值
@@ -64,7 +60,7 @@
 -   IntranetRx：内网入流量平均值
 -   IntranetTx ：内网出流量平均值
 
- 预测规则可选值：
+ 预测规则取值范围：
 
  -   CpuUtilization：平均CPU使用率
 -   IntranetRx：内网入流量平均值
@@ -93,27 +89,27 @@
 |PredictiveValueBuffer|Integer|否|50|PredictiveValueBehavior为PredictiveValueOverrideMaxWithBuffer时生效，预测值会按照该比例增加，当增加后的值大于初始最大值时，会采用增加后的值。取值范围：0~100。
 
  |
-|ScalingRuleName|String|否|测试sr|伸缩规则的显示名称，2~40 个英文或中文字符，以数字、大小字母或中文开头，可包含数字，"\_"、"-" 或 ”.”。同一用户账号同一地域同一伸缩组内唯一。
+|ScalingRuleName|String|否|测试sr|伸缩规则的显示名称，2~40 个英文或中文字符，以数字、大小字母或中文开头，可包含数字、下划线（\_）、连字符（-）或点号（.）。同一用户账号同一地域同一伸缩组内唯一。
 
  |
-|StepAdjustment.N.MetricIntervalLowerBound|Float|否|1.0|分步步骤的下边界，取值范围-9.999999E18~9.999999E18。
+|StepAdjustment.N.MetricIntervalLowerBound|Float|否|1.0|分步步骤的下边界，取值范围：-9.999999E18~9.999999E18。
 
  |
-|StepAdjustment.N.MetricIntervalUpperBound|Float|否|5.0|分步步骤的上边界，取值范围-9.999999E18~9.999999E18。
+|StepAdjustment.N.MetricIntervalUpperBound|Float|否|5.0|分步步骤的上边界，取值范围：-9.999999E18~9.999999E18。
 
  |
 |StepAdjustment.N.ScalingAdjustment|Integer|否|1|分步步骤对应的实例扩展数量。
 
  |
-|TargetValue|Float|否|0.125|目标值，适用于目标追踪伸缩规则和预测规则。TargetValue 最多保留小数点后三位，且必须大于 0。
+|TargetValue|Float|否|0.125|目标值，适用于目标追踪伸缩规则和预测规则。TargetValue最多保留小数点后三位，且必须大于0。
 
  |
 
-## 返回参数 {#resultMapping .section}
+## 返回数据 {#resultMapping .section}
 
 |名称|类型|示例值|描述|
 |--|--|---|--|
-|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求 ID。无论调用接口成功与否，我们都会返回请求 ID。
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求ID。
 
  |
 
@@ -137,18 +133,17 @@ http://ess.aliyuncs.com/?Action=ModifyScalingRule
 
 ``` {#xml_return_success_demo}
 <ModifyScalingRuleResponse>
-  <ScalingRuleAri>ari:acs:ess:cn-qingdao:1344371:scalingrule/eMKWG8SRNb9dBLAjweNI1Ik</ScalingRuleAri>
-  <ScalingRuleId>eMKWG8SRNb9dBLAjweN****</ScalingRuleId>
-  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
+      <ScalingRuleAri>ari:acs:ess:cn-qingdao:1344371:scalingrule/eMKWG8SRNb9dBLAjweN****</ScalingRuleAri>
+      <ScalingRuleId>eMKWG8SRNb9dBLAjweN****</ScalingRuleId>
+      <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
 </ModifyScalingRuleResponse>
-
 ```
 
 `JSON` 格式
 
 ``` {#json_return_success_demo}
 {
-	"ScalingRuleAri":"ari:acs:ess:cn-qingdao:1344371:scalingrule/eMKWG8SRNb9dBLAjweNI1Ik",
+	"ScalingRuleAri":"ari:acs:ess:cn-qingdao:1344371:scalingrule/eMKWG8SRNb9dBLAjweN****",
 	"RequestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E",
 	"ScalingRuleId":"eMKWG8SRNb9dBLAjweN****"
 }
@@ -156,7 +151,7 @@ http://ess.aliyuncs.com/?Action=ModifyScalingRule
 
 ## 错误码 { .section}
 
-[查看本产品错误码](https://error-center.aliyun.com/status/product/Ess)
+访问[错误中心](https://error-center.aliyun.com/status/product/Ess)查看更多错误码。
 
 |HttpCode
 

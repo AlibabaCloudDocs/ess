@@ -1,10 +1,10 @@
-# DescribeNotificationTypes {#doc_api_1163770 .reference}
+# DescribeNotificationTypes {#doc_api_Ess_DescribeNotificationTypes .reference}
 
-查询弹性伸缩事件及资源变化通知类型（\`DescribeNotificationTypes\`）。
+调用DescribeNotificationTypes查询弹性伸缩事件及资源变化通知的类型。
 
-## 调试 {#apiExplorer .section}
+## 调试 {#api_explorer .section}
 
-前往【[API Explorer](https://api.aliyun.com/#product=Ess&api=DescribeNotificationTypes)】在线调试，API Explorer 提供在线调用 API、动态生成 SDK Example 代码和快速检索接口等能力，能显著降低使用云 API 的难度，强烈推荐使用。
+[您可以在OpenAPI Explorer中直接运行该接口，免去您计算签名的困扰。运行成功后，OpenAPI Explorer可以自动生成SDK代码示例。](https://api.aliyun.com/#product=Ess&api=DescribeNotificationTypes&type=RPC&version=2014-08-28)
 
 ## 请求参数 {#parameters .section}
 
@@ -14,14 +14,14 @@
 
  |
 
-## 返回参数 {#resultMapping .section}
+## 返回数据 {#resultMapping .section}
 
 |名称|类型|示例值|描述|
 |--|--|---|--|
-|NotificationTypes| |AUTOSCALING:SCALE\_OUT\_SUCCESS|弹性伸缩事件及资源变化通知类型列表。
+|NotificationTypes| |AUTOSCALING:SCALE\_OUT\_SUCCESS|弹性伸缩事件及资源变化通知类型的列表。
 
  |
-|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求 ID。无论调用接口成功与否，我们都会返回请求 ID。
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|请求ID。
 
  |
 
@@ -42,34 +42,41 @@ http://ess.aliyuncs.com/?Action=DescribeNotificationTypes
 
 ``` {#xml_return_success_demo}
 <DescribeNotificationTypesResponse>
-  <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
-  <NotificationTypes>
-    <NotificationType>AUTOSCALING:SCALE_OUT_SUCCESS</NotificationType>
-    <NotificationType>AUTOSCALING:SCALE_IN_SUCCESS</NotificationType>
-    <NotificationType>AUTOSCALING:SCALE_OUT_ERROR</NotificationType>
-    <NotificationType>AUTOSCALING:SCALE_IN_ERROR</NotificationType>
-    <NotificationType>AUTOSCALING:SCALE_REJECT</NotificationType>
-  </NotificationTypes>
+    <RequestId>66046F31-AF8C-44B4-9992-453F33CF179E</RequestId>
+    <NotificationTypes>
+        <NotificationType>AUTOSCALING:SCALE_OUT_SUCCESS</NotificationType>
+        <NotificationType>AUTOSCALING:SCALE_IN_SUCCESS</NotificationType>
+        <NotificationType>AUTOSCALING:SCALE_OUT_ERROR</NotificationType>
+        <NotificationType>AUTOSCALING:SCALE_IN_ERROR</NotificationType>
+        <NotificationType>AUTOSCALING:SCALE_REJECT</NotificationType>
+        <NotificationType>AUTOSCALING:SCALE_OUT_START</NotificationType>
+        <NotificationType>AUTOSCALING:SCALE_IN_START</NotificationType>
+        <NotificationType>AUTOSCALING:SCHEDULE_TASK_EXPIRING</NotificationType>
+    </NotificationTypes>
 </DescribeNotificationTypesResponse>
-
 ```
 
 `JSON` 格式
 
 ``` {#json_return_success_demo}
 {
-	"requestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E",
-	"notificationTypes":[
-		"AUTOSCALING:SCALE_OUT_SUCCESS",
-		"AUTOSCALING:SCALE_IN_SUCCESS",
-		"AUTOSCALING:SCALE_OUT_ERROR",
-		"AUTOSCALING:SCALE_IN_ERROR",
-		"AUTOSCALING:SCALE_REJECT"
-	]
+	"RequestId":"66046F31-AF8C-44B4-9992-453F33CF179E",
+	"NotificationTypes":{
+		"NotificationType":[
+			"AUTOSCALING:SCALE_OUT_SUCCESS",
+			"AUTOSCALING:SCALE_IN_SUCCESS",
+			"AUTOSCALING:SCALE_OUT_ERROR",
+			"AUTOSCALING:SCALE_IN_ERROR",
+			"AUTOSCALING:SCALE_REJECT",
+			"AUTOSCALING:SCALE_OUT_START",
+			"AUTOSCALING:SCALE_IN_START",
+			"AUTOSCALING:SCHEDULE_TASK_EXPIRING"
+		]
+	}
 }
 ```
 
 ## 错误码 { .section}
 
-[查看本产品错误码](https://error-center.aliyun.com/status/product/Ess)
+访问[错误中心](https://error-center.aliyun.com/status/product/Ess)查看更多错误码。
 

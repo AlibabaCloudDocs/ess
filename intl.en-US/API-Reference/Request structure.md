@@ -16,7 +16,7 @@ The following table describes the access endpoints of Auto Scaling API service. 
 |China \(Hangzhou\)|ess.aliyuncs.com|
 |China \(Shanghai\)|ess.aliyuncs.com|
 |China \(Shenzhen\)|ess.aliyuncs.com|
-|Hong Kong|ess.aliyuncs.com|
+|China \(Hong Kong\)|ess.aliyuncs.com|
 |Singapore|ess.aliyuncs.com|
 |Australia \(Sydney\)|ess.ap-southeast-2.aliyuncs.com|
 |Malaysia \(Kuala Lumpur\)|ess.ap-southeast-3.aliyuncs.com|

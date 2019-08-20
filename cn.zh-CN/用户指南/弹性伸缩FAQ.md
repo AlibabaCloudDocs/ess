@@ -6,6 +6,7 @@
 -   [报警任务和定时任务之间有执行优先级吗？](#section_ch1_yys_xgb)
 -   [ECS实例是否可以加入到多个伸缩组中？](#section_pwr_yys_xgb)
 -   [伸缩组内ECS实例开启了释放保护，为什么仍然被自动释放了？](#section_ty9_oli_yc4)
+-   [如何保证手动添加的ECS实例不会被移出伸缩组？](#section_7ji_np8_vy4)
 
 ## 如何避免单实例规格库存不足导致扩容失败？ {#section_brg_xys_xgb .section}
 
@@ -26,6 +27,10 @@
 ## 伸缩组内ECS实例开启了释放保护，为什么仍然被自动释放了？ {#section_ty9_oli_yc4 .section}
 
 在弹性伸缩自动创建一台ECS实例后，如果您在ECS控制台的实例列表页面或者调用[ModifyInstanceAttribute](../../../../cn.zh-CN/API参考/实例/ModifyInstanceAttribute.md#)为ECS实例开启了释放保护，并不能阻止弹性伸缩自动释放实例。
+
+您可以将伸缩组内的ECS实例转为保护状态，避免被自动释放，具体操作请参见[实例转为保护状态](cn.zh-CN/用户指南/维护自动伸缩/实例转为保护状态.md#)。
+
+## 如何保证手动添加的ECS实例不会被移出伸缩组？ {#section_7ji_np8_vy4 .section}
 
 您可以将伸缩组内的ECS实例转为保护状态，避免被自动释放，具体操作请参见[实例转为保护状态](cn.zh-CN/用户指南/维护自动伸缩/实例转为保护状态.md#)。
 

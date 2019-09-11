@@ -1,101 +1,345 @@
-# EnableScalingGroup {#concept_25939_zh .concept}
+# EnableScalingGroup {#doc_api_Ess_EnableScalingGroup .reference}
 
-This topic introduces how to enable a scaling group using the API.
+You can call this operation to enable a scaling group.
 
-## Description {#section_gxd_1x2_sfb .section}
+## Description {#description .section}
 
--   Enables the specified scaling group.
-    -   After the scaling group is successfully enabled \(the group is active\), the ECS instances specified by the interface are attached to the group.
-    -   If the current number of ECS instances in the scaling group is still smaller than MinSize after the ECS instances specified by the interface are attached, the Auto Scaling service automatically creates ECS instances in Pay-As-You-Go mode to make odds even. For example, a scaling group is created with MinSize = 5. Two existing ECS instances are specified by the InstanceId.N parameter when the scaling group is enabled. Three additional ECS instances are automatically created after the two ECS instances are attached by the Auto Scaling service to the scaling group.
--   The interface can be called only when the scaling group is inactive.
--   If the scaling group has no active scaling configurations, you need to input scaling configurations when enabling the scaling group.
-    -   A single scaling group can have only one active scaling configuration at a time.
-    -   If an active scaling configuration has been created before the scaling group is enabled, input of a new active scaling configuration through the interface makes the previous scaling configuration inactive.
--   Restrictions on attaching ECS instances:
-    -   The attached ECS instance and the scaling group must be in the same region.
-    -   The attached ECS instance and the instance with active scaling configurations must be of the same type.
-    -   The attached ECS instance must in the **Running** state.
-    -   The attached ECS instance has not been attached to other scaling groups.
-    -   The attached ECS instance supports Subscription and Pay-As-You-Go payment methods.
-    -   If the VswitchID is specified for a scaling group, you cannot attach Classic ECS instances or ECS instances on other VPCs to the scaling group.
-    -   If the VswitchID is not specified for the scaling group, ECS instances of the VPC type cannot be attached to the scaling group.
--   The call fails if the number \(total capacity\) of instances specified by the interface plus instances in the scaling group is greater than MaxSize.
+You can call this operation to enable a specified scaling group.
 
-## Request parameters { .section}
+-   If the operation is successful, the scaling group becomes active and the specified ECS instances are added to the scaling group.
+-   If the number of ECS instances in the scaling group is smaller than the MinSize value after the ECS instances are added, additional ECS instances are automatically created to achieve the MinSize value. For example, a scaling group is created with the MinSize parameter set to 5. Two existing ECS instances are specified in the InstanceId.N parameter when the scaling group is enabled. Then, three additional ECS instances are automatically created after the two ECS instances are added by Auto Scaling to the scaling group.
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|Operation interface name, required parameter; value: EnableScalingGroup|
-|ScalingGroupId|String|Yes|Scaling group ID.|
-|ActiveScalingConfigurationId|String|No|ID of the scaling configuration to be activated in a scaling group.|
-|InstanceId.N|String|No|ID of the ECS instance to be attached to the scaling group after it is enabled. You can input up to 20 IDs.|
-|LaunchTemplateId|String|No|ID of the launch template. For the specified scaling group to obtain the startup configuration information from the template.|
-|LaunchTemplateVersion|String|No|Version of the launch template. Optional values:-   Fixed template version number
--   Default: The default template version is always used.
--   Latest: The latest template version is always used.
+    The operation can only be called when the scaling group is inactive.
 
-|
 
-## Response parameters { .section}
+If the scaling group has no active scaling configuration, you must specify a scaling configuration when enabling the scaling group.
 
-Public parameters.
+-   A single scaling group can only have one active scaling configuration at a time.
+-   If an active scaling configuration has been created before the scaling group is enabled, this configuration will become inactive after you specify a new active scaling configuration by calling the operation.
 
-## Error codes { .section}
+    The restrictions on ECS instances to be manually added are as follows:
 
-For common errors, see [client errors](reseller.en-US/API-Reference/Error codes/Client errors.md#) or [server errors](reseller.en-US/API-Reference/Error codes/Server errors.md#).
+-   The ECS instances and the scaling group must be in the same region.
+-   The ECS instances must have the same instance type as the active scaling configuration.
+-   The ECS instances must be running.
+-   The ECS instances have not been added to any scaling group.
+-   The ECS instances support subscription and pay-as-you-go billing methods.
+-   If the VSwitchId parameter is specified for a scaling group, ECS instances that belong to a classic network or in different VPCs cannot be added to the scaling group.
+-   If the VSwitchId parameter is not specified for a scaling group, ECS instances that belong to a VPC cannot be added to the scaling group.
 
-|Error message|Error code|Description|HTTP status code|
-|:------------|:---------|:----------|:---------------|
-|The specified scaling group does not exist in this account.|InvalidScalingGroupId.NotFound|The specified scaling group does not exist.|404|
-|API is not fully authorized to the Auto Scaling service.|Forbidden.Unauthorized|A required authorization for the specified action is not supplied.|403|
-|The specified scaling group is in the deleting state.|IncorrectScalingGroupStatus|The current status of the specified scaling group does not support this action.|400|
-|The specified scaling configuration does not exist in the scaling group.|InvalidScalingConfigurationId.NotFound|The specified scaling configuration does not exist.|404|
-|The instance types of the specified scaling configuration and the active scaling configuration do not match.|InvalidScalingConfigurationId.InstanceTypeMismatch|The specified scaling configuration and existing active scaling configuration have different instance type.|400|
-|No active scaling configuration is specified for the scaling group.|MissingActiveScalingConfiguration|An active scaling configuration for the specified scaling group is not supplied.|400|
-|The specified ECS instance does not exist in this account.|InvalidInstanceId.NotFound|Instance “XXX” does not exist.|404|
-|The specified ECS instance and the scaling group are not in the same region.|InvalidInstanceId. RegionMismatch|Instance “XXX” and the specified scaling group are not in the same Region.|400|
-|The instance types of the specified ECS instance and the scaling configuration do not match.|InvalidInstanceId. InstanceTypeMismatch|Instance “XXX” and existing active scaling configuration have different instance type.|400|
-|The specified ECS instance is not in the Running status.|IncorrectInstanceStatus|The current status of instance “XXX” does not support this action.|400|
-|The network types of the specified ECS instance and the scaling configuration do not match.|InvalidInstanceId. NetworkTypeMismatch|The network type of instance “XXX” does not support this action.|400|
-|The specified scaling group and the attached ECS instance are not in the same VPC.|InvalidInstanceId.VPCMismatch|Instance “XXX” and the specified scaling group are not in the same VPC.|400|
-|The specified ECS instance has been attached to another scaling group.|InvalidInstanceId.InUse|Instance "XXX" is already attached to another scaling group.|400|
-|The specified Server Load Balancer instance is not active.|IncorrectLoadBalancerStatus|The current status of the specified load balancer does not support this action.|400|
-|Health check is not enabled for the specified Server Load Balancer instance.|IncorrectLoadBalancerHealthCheck|The current health check type of specified load balancer does not support this action.|400|
-|The network type of the ECS instance contained in the specified Server Load Balancer is different from the network type of the scaling group.|InvalidLoadBalancerId.IncorrectInstanceNetworkType|The network type of the instance in specified Load Balancer does not support this action.|400|
-|The ECS instance contained in the specified Server Load Balancer and VSwitchId are not in the same VPC.|InvalidLoadBalancerId.VPCMismatch|The specified virtual switch and the instance in specified Load Balancer are not in the same VPC.|400|
-|The specified RDS instance is not running.|IncorrectDBInstanceStatus|The current status of DB instance “XXX” does not support this action.|400|
-|Total Capacity after the ECS instance is attached is greater than MaxSize.|IncorrectCapacity.MaxSize|To attach the instances, the total capacity will be greater than the max size.|400|
-|The specified version of the launch template does not exist.|LaunchTemplateVersionSet.NotFound|The specific version of launch template does not exist.|400|
-|The specified launch template does not exist.|LaunchTemplateSet.NotFound|The specified launch template set is not found.|400|
-|The required parameter ImageId is not supplied.|TemplateMissingParameter.ImageId|The input parameter "ImageId" that is mandatory for processing this request is not supplied.|400|
-|The required parameter InstanceTypes is not supplied.|TemplateMissingParameter.InstanceTypes|The input parameter "InstanceTypes" that is mandatory for processing this request is not supplied.|400|
-|The required parameter SecurityGroup is not supplied.|TemplateMissingParameter.SecurityGroup|The input parameter "SecurityGroup" that is mandatory for processing this request is not supplied.|400|
-|The fixed version number of the specified launch template must be numbers.|TemplateVersion.NotNumber|The input parameter "LaunchTemplateVersion" is supposed to be a string representing the version number.|400|
+    If the sum of the number of instances to be added specified by this operation and the number of ECS instances currently in the scaling group is greater than the MaxSize value, the call fails.
 
-## Request example { .section}
+
+## Debugging {#api_explorer .section}
+
+[OpenAPI Explorer automatically calculates the signature value. For your convenience, we recommend that you call this operation in OpenAPI Explorer. OpenAPI Explorer dynamically generates the sample code of the operation for different SDKs.](https://api.aliyun.com/#product=Ess&api=EnableScalingGroup&type=RPC&version=2014-08-28)
+
+## Request parameters {#parameters .section}
+
+|Parameter|Type|Required|Example|Description|
+|---------|----|--------|-------|-----------|
+|ScalingGroupId|String|Yes|dmIDKNcyWfzncX9MWX1\*\*\*\*|The ID of the scaling group.
+
+ |
+|Action|String|No|EnableScalingGroup|The operation that you want to perform. Set the value to EnableScalingGroup.
+
+ |
+|ActiveScalingConfigurationId|String|No|cGsGHrdMBa3DcDrrBVcc\*\*\*\*|The ID of the scaling configuration to be activated in the scaling group.
+
+ |
+|InstanceId.1|String|No|i-283vv\*\*\*\*|The ID of enabled ECS instance N to be added to the scaling group. Valid values of N: 1 to 20.
+
+ |
+|LaunchTemplateId|String|No|lt-m5e3ofjr1zn1aw7\*\*\*\*|The ID of the instance launch template, from which the specified scaling group can obtain launch configurations.
+
+ |
+|LaunchTemplateVersion|String|No|Default|The version number of the instance launch template. Valid values:
+
+ -   A fixed template version number.
+-   Default: always uses the default template version.
+-   Latest: always uses the latest template version.
+
+ |
+|LoadBalancerWeight.1|Integer|No|50|The weight of ECS backend server N. Valid values of N: 1 to 20. Valid values for this parameter: 0 to 100.
+
+ Default value: 50.
+
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Parameter|Type|Example|Description|
+|---------|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|The ID of the request.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
+
+http://ess.aliyuncs.com/?Action=EnableScalingGroup
+&ScalingGroupId=dmIDKNcyWfzncX9MWX1****
+&InstanceId.1=i-283vv****
+&<Common request parameters>
 
 ```
-http://ess.aliyuncs.com/?Action=EnableScalingGroup 
-&ScalingGroupId=dmIDKNcyWfzncX9MWX1bwFV
-&InstanceId. 1=i-283vvyytn
-&<Public Request Parameters>
-```
 
-## Response example { .section}
+Sample success responses
 
-XML format:
+`XML` format
 
-```
+``` {#xml_return_success_demo}
 < EnableScalingGroupResponse>
-    <RequestId>6469DCD0-13AC-487E-85A0-CE4922908FDE</RequestId>
+      <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
 </ EnableScalingGroupResponse>
 ```
 
-JSON format:
+`JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-    "RequestId": "6469DCD0-13AC-487E-85A0-CE4922908FDE"
+	"RequestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E"
 }
 ```
+
+## Error codes { .section}
+
+|HTTP status code
+
+|Error code
+
+|Error message
+
+|Description
+
+|
+|------------------|------------|---------------|-------------|
+|404
+
+|InvalidScalingGroupId.NotFound
+
+|The specified scaling group does not exist.
+
+|The error message returned because the specified scaling group does not exist in the current account.
+
+|
+|403
+
+|Forbidden.Unauthorized
+
+|A required authorization for the specified action is not supplied.
+
+|The error message returned because Auto Scaling is not authorized to call the specified operation.
+
+|
+|400
+
+|IncorrectScalingGroupStatus
+
+|The current status of the specified scaling group does not support this action.
+
+|The error message returned because the specified scaling group is currently being deleted.
+
+|
+|404
+
+|InvalidScalingConfigurationId.NotFound
+
+|The specified scaling configuration does not exist.
+
+|The error message returned because the specified scaling configuration does not exist in the specified scaling group.
+
+|
+|400
+
+|InvalidScalingConfigurationId.InstanceTypeMismatch
+
+|The specified scaling configuration and existing active scaling configuration have different instance type.
+
+|The error message returned because the instance type of the specified scaling configuration is different from that of the active scaling configuration.
+
+|
+|400
+
+|MissingActiveScalingConfiguration
+
+|An active scaling configuration for the specified scaling group is not supplied.
+
+|The error message returned because no active scaling configuration is specified for the scaling group.
+
+|
+|404
+
+|InvalidInstanceId.NotFound
+
+|Instance "XXX" does not exist.
+
+|The error message returned because the specified ECS instance does not exist in the current account.
+
+|
+|400
+
+|InvalidInstanceId. RegionMismatch
+
+|Instance "XXX" and the specified scaling group are not in the same Region.
+
+|The error message returned because the specified ECS instance and the scaling group are not in the same region.
+
+|
+|400
+
+|InvalidInstanceId. InstanceTypeMismatch
+
+|Instance "XXX" and existing active scaling configuration have different instance type.
+
+|The error message returned because the type of the specified ECS instance is different from that of the active scaling configuration.
+
+|
+|400
+
+|IncorrectInstanceStatus
+
+|The current status of instance "XXX" does not support this action.
+
+|The error message returned because the specified ECS instance is not running.
+
+|
+|400
+
+|InvalidInstanceId. NetworkTypeMismatch
+
+|The network type of instance "XXX" does not support this action.
+
+|The error message returned because the network type of the specified ECS instance is different from that of the scaling group.
+
+|
+|400
+
+|InvalidInstanceId.VPCMismatch
+
+|Instance "XXX" and the specified scaling group are not in the same VPC.
+
+|The error message returned because the added ECS instance and the specified scaling group are not in the same VPC.
+
+|
+|400
+
+|InvalidInstanceId.InUse
+
+|Instance "XXX" is already attached to another scaling group.
+
+|The error message returned because the specified ECS instance is already added to another scaling group.
+
+|
+|400
+
+|IncorrectLoadBalancerStatus
+
+|The current status of the specified load balancer does not support this action.
+
+|The error message returned because the specified SLB instance is not active.
+
+|
+|400
+
+|IncorrectLoadBalancerHealthCheck
+
+|The current health check type of specified load balancer does not support this action.
+
+|The error message returned because health check is not enabled for the specified SLB instance.
+
+|
+|400
+
+|InvalidLoadBalancerId.IncorrectInstanceNetworkType
+
+|The network type of the instance in specified load balancer does not support this action.
+
+|The error message returned because the network type of the ECS instance attached to the specified SLB instance is different from that of the scaling group.
+
+|
+|400
+
+|InvalidLoadBalancerId.VPCMismatch
+
+|The specified virtual switch and the instance in specified Load Balancer are not in the same VPC.
+
+|The error message returned because the ECS instance attached to the specified SLB instance is not in the same VPC as the VSwitch specified by VSwitchID.
+
+|
+|400
+
+|IncorrectDBInstanceStatus
+
+|The current status of DB instance "XXX" does not support this action.
+
+|The error message returned because the specified RDS instance is not running.
+
+|
+|400
+
+|IncorrectCapacity.MaxSize
+
+|To attach the instances, the total capacity will be greater than the max size.
+
+|The error message returned because the total number of ECS instances \(Total Capacity\) exceeds the specified value of MaxSize after instances are added to the specified scaling group.
+
+|
+|400
+
+|LaunchTemplateVersionSet.NotFound
+
+|The specific version of launch template is not exist.
+
+|The error message returned because the specified version of the instance launch template does not exist.
+
+|
+|400
+
+|LaunchTemplateSet.NotFound
+
+|The specified launch template set is not found.
+
+|The error message returned because the specified instance launch template does not exist.
+
+|
+|400
+
+|TemplateMissingParameter.ImageId
+
+|The input parameter "ImageId" that is mandatory for processing this request is not supplied.
+
+|The error message returned because the ImageId parameter required for the specified instance launch template is not specified.
+
+|
+|400
+
+|TemplateMissingParameter.InstanceTypes
+
+|The input parameter "InstanceTypes" that is mandatory for processing this request is not supplied.
+
+|The error message returned because the InstanceTypes parameter required for the specified instance launch template is not specified.
+
+|
+|400
+
+|TemplateMissingParameter.SecurityGroup
+
+|The input parameter "SecurityGroup" that is mandatory for processing this request is not supplied.
+
+|The error message returned because the SecurityGroup parameter required for the specified instance launch template is not specified.
+
+|
+|400
+
+|TemplateVersion.NotNumber
+
+|The input parameter "LaunchTemplateVersion" is supposed to be a string representing the version number.
+
+|The error message returned because the specified LaunchTemplateVersion parameter of the specified launch template is not in digits.
+
+|
 

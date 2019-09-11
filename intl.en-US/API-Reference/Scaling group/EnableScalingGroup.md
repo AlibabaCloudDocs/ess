@@ -38,29 +38,29 @@ If the scaling group has no active scaling configuration, you must specify a sca
 
 |Parameter|Type|Required|Example|Description|
 |---------|----|--------|-------|-----------|
-|ScalingGroupId|String|Yes|dmIDKNcyWfzncX9MWX1\*\*\*\*|The ID of the scaling group.
+|ScalingGroupId|String|Yes|dmIDKNcyWfzncX9MWX1\*\*\*\*| The ID of the scaling group.
 
  |
-|Action|String|No|EnableScalingGroup|The operation that you want to perform. Set the value to EnableScalingGroup.
+|Action|String|No|EnableScalingGroup| The operation that you want to perform. Set the value to EnableScalingGroup.
 
  |
-|ActiveScalingConfigurationId|String|No|cGsGHrdMBa3DcDrrBVcc\*\*\*\*|The ID of the scaling configuration to be activated in the scaling group.
+|ActiveScalingConfigurationId|String|No|cGsGHrdMBa3DcDrrBVcc\*\*\*\*| The ID of the scaling configuration to be activated in the scaling group.
 
  |
-|InstanceId.1|String|No|i-283vv\*\*\*\*|The ID of enabled ECS instance N to be added to the scaling group. Valid values of N: 1 to 20.
+|InstanceId.1|String|No|i-283vv\*\*\*\*| The ID of enabled ECS instance N to be added to the scaling group. Valid values of N: 1 to 20.
 
  |
-|LaunchTemplateId|String|No|lt-m5e3ofjr1zn1aw7\*\*\*\*|The ID of the instance launch template, from which the specified scaling group can obtain launch configurations.
+|LaunchTemplateId|String|No|lt-m5e3ofjr1zn1aw7\*\*\*\*| The ID of the instance launch template, from which the specified scaling group can obtain launch configurations.
 
  |
-|LaunchTemplateVersion|String|No|Default|The version number of the instance launch template. Valid values:
+|LaunchTemplateVersion|String|No|Default| The version number of the instance launch template. Valid values:
 
  -   A fixed template version number.
 -   Default: always uses the default template version.
 -   Latest: always uses the latest template version.
 
  |
-|LoadBalancerWeight.1|Integer|No|50|The weight of ECS backend server N. Valid values of N: 1 to 20. Valid values for this parameter: 0 to 100.
+|LoadBalancerWeight.1|Integer|No|50| The weight of ECS backend server N. Valid values of N: 1 to 20. Valid values for this parameter: 0 to 100.
 
  Default value: 50.
 
@@ -70,7 +70,7 @@ If the scaling group has no active scaling configuration, you must specify a sca
 
 |Parameter|Type|Example|Description|
 |---------|----|-------|-----------|
-|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|The ID of the request.
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request.
 
  |
 
@@ -94,7 +94,7 @@ Sample success responses
 ``` {#xml_return_success_demo}
 < EnableScalingGroupResponse>
       <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
-</ EnableScalingGroupResponse>
+</EnableScalingGroupResponse>
 ```
 
 `JSON` format
@@ -105,241 +105,241 @@ Sample success responses
 }
 ```
 
-## Error codes { .section}
+## Error codes {#section_0sb_5gi_ftc .section}
 
-|HTTP status code
+| HTTP status code
 
-|Error code
+ | Error code
 
-|Error message
+ | Error message
 
-|Description
+ | Description
 
-|
-|------------------|------------|---------------|-------------|
-|404
+ |
+|--------------------|--------------|-----------------|---------------|
+| 404
 
-|InvalidScalingGroupId.NotFound
+ | InvalidScalingGroupId.NotFound
 
-|The specified scaling group does not exist.
+ | The specified scaling group does not exist.
 
-|The error message returned because the specified scaling group does not exist in the current account.
+ | The error message returned because the specified scaling group does not exist in the current account.
 
-|
-|403
+ |
+| 403
 
-|Forbidden.Unauthorized
+ | Forbidden.Unauthorized
 
-|A required authorization for the specified action is not supplied.
+ | A required authorization for the specified action is not supplied.
 
-|The error message returned because Auto Scaling is not authorized to call the specified operation.
+ | The error message returned because Auto Scaling is not authorized to call the specified operation.
 
-|
-|400
+ |
+| 400
 
-|IncorrectScalingGroupStatus
+ | IncorrectScalingGroupStatus
 
-|The current status of the specified scaling group does not support this action.
+ | The current status of the specified scaling group does not support this action.
 
-|The error message returned because the specified scaling group is currently being deleted.
+ | The error message returned because the specified scaling group is currently being deleted.
 
-|
-|404
+ |
+| 404
 
-|InvalidScalingConfigurationId.NotFound
+ | InvalidScalingConfigurationId.NotFound
 
-|The specified scaling configuration does not exist.
+ | The specified scaling configuration does not exist.
 
-|The error message returned because the specified scaling configuration does not exist in the specified scaling group.
+ | The error message returned because the specified scaling configuration does not exist in the specified scaling group.
 
-|
-|400
+ |
+| 400
 
-|InvalidScalingConfigurationId.InstanceTypeMismatch
+ | InvalidScalingConfigurationId.InstanceTypeMismatch
 
-|The specified scaling configuration and existing active scaling configuration have different instance type.
+ | The specified scaling configuration and existing active scaling configuration have different instance type.
 
-|The error message returned because the instance type of the specified scaling configuration is different from that of the active scaling configuration.
+ | The error message returned because the instance type of the specified scaling configuration is different from that of the active scaling configuration.
 
-|
-|400
+ |
+| 400
 
-|MissingActiveScalingConfiguration
+ | MissingActiveScalingConfiguration
 
-|An active scaling configuration for the specified scaling group is not supplied.
+ | An active scaling configuration for the specified scaling group is not supplied.
 
-|The error message returned because no active scaling configuration is specified for the scaling group.
+ | The error message returned because no active scaling configuration is specified for the scaling group.
 
-|
-|404
+ |
+| 404
 
-|InvalidInstanceId.NotFound
+ | InvalidInstanceId.NotFound
 
-|Instance "XXX" does not exist.
+ | Instance "XXX" does not exist.
 
-|The error message returned because the specified ECS instance does not exist in the current account.
+ | The error message returned because the specified ECS instance does not exist in the current account.
 
-|
-|400
+ |
+| 400
 
-|InvalidInstanceId. RegionMismatch
+ | InvalidInstanceId. RegionMismatch
 
-|Instance "XXX" and the specified scaling group are not in the same Region.
+ | Instance "XXX" and the specified scaling group are not in the same Region.
 
-|The error message returned because the specified ECS instance and the scaling group are not in the same region.
+ | The error message returned because the specified ECS instance and the scaling group are not in the same region.
 
-|
-|400
+ |
+| 400
 
-|InvalidInstanceId. InstanceTypeMismatch
+ | InvalidInstanceId. InstanceTypeMismatch
 
-|Instance "XXX" and existing active scaling configuration have different instance type.
+ | Instance "XXX" and existing active scaling configuration have different instance type.
 
-|The error message returned because the type of the specified ECS instance is different from that of the active scaling configuration.
+ | The error message returned because the type of the specified ECS instance is different from that of the active scaling configuration.
 
-|
-|400
+ |
+| 400
 
-|IncorrectInstanceStatus
+ | IncorrectInstanceStatus
 
-|The current status of instance "XXX" does not support this action.
+ | The current status of instance "XXX" does not support this action.
 
-|The error message returned because the specified ECS instance is not running.
+ | The error message returned because the specified ECS instance is not running.
 
-|
-|400
+ |
+| 400
 
-|InvalidInstanceId. NetworkTypeMismatch
+ | InvalidInstanceId. NetworkTypeMismatch
 
-|The network type of instance "XXX" does not support this action.
+ | The network type of instance "XXX" does not support this action.
 
-|The error message returned because the network type of the specified ECS instance is different from that of the scaling group.
+ | The error message returned because the network type of the specified ECS instance is different from that of the scaling group.
 
-|
-|400
+ |
+| 400
 
-|InvalidInstanceId.VPCMismatch
+ | InvalidInstanceId.VPCMismatch
 
-|Instance "XXX" and the specified scaling group are not in the same VPC.
+ | Instance "XXX" and the specified scaling group are not in the same VPC.
 
-|The error message returned because the added ECS instance and the specified scaling group are not in the same VPC.
+ | The error message returned because the added ECS instance and the specified scaling group are not in the same VPC.
 
-|
-|400
+ |
+| 400
 
-|InvalidInstanceId.InUse
+ | InvalidInstanceId.InUse
 
-|Instance "XXX" is already attached to another scaling group.
+ | Instance "XXX" is already attached to another scaling group.
 
-|The error message returned because the specified ECS instance is already added to another scaling group.
+ | The error message returned because the specified ECS instance is already added to another scaling group.
 
-|
-|400
+ |
+| 400
 
-|IncorrectLoadBalancerStatus
+ | IncorrectLoadBalancerStatus
 
-|The current status of the specified load balancer does not support this action.
+ | The current status of the specified load balancer does not support this action.
 
-|The error message returned because the specified SLB instance is not active.
+ | The error message returned because the specified SLB instance is not active.
 
-|
-|400
+ |
+| 400
 
-|IncorrectLoadBalancerHealthCheck
+ | IncorrectLoadBalancerHealthCheck
 
-|The current health check type of specified load balancer does not support this action.
+ | The current health check type of specified load balancer does not support this action.
 
-|The error message returned because health check is not enabled for the specified SLB instance.
+ | The error message returned because health check is not enabled for the specified SLB instance.
 
-|
-|400
+ |
+| 400
 
-|InvalidLoadBalancerId.IncorrectInstanceNetworkType
+ | InvalidLoadBalancerId.IncorrectInstanceNetworkType
 
-|The network type of the instance in specified load balancer does not support this action.
+ | The network type of the instance in specified load balancer does not support this action.
 
-|The error message returned because the network type of the ECS instance attached to the specified SLB instance is different from that of the scaling group.
+ | The error message returned because the network type of the ECS instance attached to the specified SLB instance is different from that of the scaling group.
 
-|
-|400
+ |
+| 400
 
-|InvalidLoadBalancerId.VPCMismatch
+ | InvalidLoadBalancerId.VPCMismatch
 
-|The specified virtual switch and the instance in specified Load Balancer are not in the same VPC.
+ | The specified virtual switch and the instance in specified Load Balancer are not in the same VPC.
 
-|The error message returned because the ECS instance attached to the specified SLB instance is not in the same VPC as the VSwitch specified by VSwitchID.
+ | The error message returned because the ECS instance attached to the specified SLB instance is not in the same VPC as the VSwitch specified by VSwitchID.
 
-|
-|400
+ |
+| 400
 
-|IncorrectDBInstanceStatus
+ | IncorrectDBInstanceStatus
 
-|The current status of DB instance "XXX" does not support this action.
+ | The current status of DB instance "XXX" does not support this action.
 
-|The error message returned because the specified RDS instance is not running.
+ | The error message returned because the specified RDS instance is not running.
 
-|
-|400
+ |
+| 400
 
-|IncorrectCapacity.MaxSize
+ | IncorrectCapacity.MaxSize
 
-|To attach the instances, the total capacity will be greater than the max size.
+ | To attach the instances, the total capacity will be greater than the max size.
 
-|The error message returned because the total number of ECS instances \(Total Capacity\) exceeds the specified value of MaxSize after instances are added to the specified scaling group.
+ | The error message returned because the total number of ECS instances \(Total Capacity\) exceeds the specified value of MaxSize after instances are added to the specified scaling group.
 
-|
-|400
+ |
+| 400
 
-|LaunchTemplateVersionSet.NotFound
+ | LaunchTemplateVersionSet.NotFound
 
-|The specific version of launch template is not exist.
+ | The specific version of launch template is not exist.
 
-|The error message returned because the specified version of the instance launch template does not exist.
+ | The error message returned because the specified version of the instance launch template does not exist.
 
-|
-|400
+ |
+| 400
 
-|LaunchTemplateSet.NotFound
+ | LaunchTemplateSet.NotFound
 
-|The specified launch template set is not found.
+ | The specified launch template set is not found.
 
-|The error message returned because the specified instance launch template does not exist.
+ | The error message returned because the specified instance launch template does not exist.
 
-|
-|400
+ |
+| 400
 
-|TemplateMissingParameter.ImageId
+ | TemplateMissingParameter.ImageId
 
-|The input parameter "ImageId" that is mandatory for processing this request is not supplied.
+ | The input parameter "ImageId" that is mandatory for processing this request is not supplied.
 
-|The error message returned because the ImageId parameter required for the specified instance launch template is not specified.
+ | The error message returned because the ImageId parameter required for the specified instance launch template is not specified.
 
-|
-|400
+ |
+| 400
 
-|TemplateMissingParameter.InstanceTypes
+ | TemplateMissingParameter.InstanceTypes
 
-|The input parameter "InstanceTypes" that is mandatory for processing this request is not supplied.
+ | The input parameter "InstanceTypes" that is mandatory for processing this request is not supplied.
 
-|The error message returned because the InstanceTypes parameter required for the specified instance launch template is not specified.
+ | The error message returned because the InstanceTypes parameter required for the specified instance launch template is not specified.
 
-|
-|400
+ |
+| 400
 
-|TemplateMissingParameter.SecurityGroup
+ | TemplateMissingParameter.SecurityGroup
 
-|The input parameter "SecurityGroup" that is mandatory for processing this request is not supplied.
+ | The input parameter "SecurityGroup" that is mandatory for processing this request is not supplied.
 
-|The error message returned because the SecurityGroup parameter required for the specified instance launch template is not specified.
+ | The error message returned because the SecurityGroup parameter required for the specified instance launch template is not specified.
 
-|
-|400
+ |
+| 400
 
-|TemplateVersion.NotNumber
+ | TemplateVersion.NotNumber
 
-|The input parameter "LaunchTemplateVersion" is supposed to be a string representing the version number.
+ | The input parameter "LaunchTemplateVersion" is supposed to be a string representing the version number.
 
-|The error message returned because the specified LaunchTemplateVersion parameter of the specified launch template is not in digits.
+ | The error message returned because the specified LaunchTemplateVersion parameter of the specified launch template is not in digits.
 
-|
+ |
 

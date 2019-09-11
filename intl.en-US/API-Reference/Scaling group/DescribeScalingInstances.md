@@ -1,136 +1,192 @@
-# DescribeScalingInstances {#concept_25942_zh .concept}
+# DescribeScalingInstances {#doc_api_Ess_DescribeScalingInstances .reference}
 
-This topic introduces how to query the list of ECS instances in a scaling group using the API.
+You can call this operation to query the list of ECS instances in a scaling group and list details about the instances.
 
-## Description {#section_try_jbk_sfb .section}
+## Description {#description .section}
 
-Queries the list of ECS instances in a scaling group. You can query by scaling group ID, scaling configuration ID, health status, lifecycle status, and creation type.
+You can query the list of ECS instances in a scaling group by scaling group ID, scaling configuration ID, health status, lifecycle status, and how an ECS instance is created.
 
--   The ECS instances in a scaling group can be created automatically or attached manually.
-    -   ECS instances can be automatically created by the Auto Scaling service based on your scaling configurations and rules.
-    -   ECS instances can also be manually attached to a scaling group.
--   An ECS instance in a scaling group may be in the following states during its lifecycle:
-    -   Pending: The ECS instance is being attached to the scaling group, with operations such as instance creation, attaching to Server Load Balancer, and adding to the RDS access whitelist.
-    -   InService: The ECS instance is successfully added to the scaling group and provides services properly.
-    -   Removing: The ECS instance is being removed from the scaling group.
--   An ECS instance in a scaling group may be in the following health states:
-    -   Healthy: The ECS instance is healthy.
-    -   Unhealthy: The ECS instance is unhealthy if it is not in the **Running** \(`Running`\) status.
--   The Auto Scaling service automatically removes unhealthy ECS instances from scaling groups.
-    -   If the unhealthy ECS instances are automatically created, the Auto Scaling service disables and releases them.
-    -   If the unhealthy ECS instances are manually attached, the Auto Scaling service does not disable or release them.
+## Debugging {#api_explorer .section}
 
-## Request parameters { .section}
+[OpenAPI Explorer automatically calculates the signature value. For your convenience, we recommend that you call this operation in OpenAPI Explorer. OpenAPI Explorer dynamically generates the sample code of the operation for different SDKs.](https://api.aliyun.com/#product=Ess&api=DescribeScalingInstances&type=RPC&version=2014-08-28)
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|Operation interface name, required parameter. Value: DescribeScalingInstances.|
-|RegionId|String|Yes|ID of the region where the scaling group is located.|
-|ScalingGroupId|String|No|Scaling group ID.|
-|ScalingConfigurationId|String|No|ID of the associated scaling configuration.|
-|InstanceId.N|String|No|ECS instance ID. You can input up to 20 IDs. Invalid instance IDs are not displayed in query results, and no error is reported.|
-|HealthStatus|String|No|Health status of an ECS instance in the scaling group. Optional values: -   Healthy
--   Unhealthy
+## Request parameters {#parameters .section}
+
+|Parameter|Type|Required|Example|Description|
+|---------|----|--------|-------|-----------|
+|RegionId|String|Yes|cn-qingdao|The region ID of the scaling group.
 
  |
-|LifecycleState|String|No|Lifecycle status of an ECS instance in the scaling group. Optional values: -   InService: the ECS instance has been added to the scaling group and runs properly.
--   Pending: the ECS instance is being attached to the scaling group with relevant configurations not completed.
--   Removing: the ECS instance is being removed from the scaling group.
+|Action|String|No|DescribeScalingInstances|The operation that you want to perform. Set the value to DescribeScalingInstances.
 
  |
-|CreationType|String|No|ECS instance creation type. Optional values: -   AutoCreated: the ECS instance is automatically created by the Auto Scaling service in the scaling group.
--   Attached: the ECS instance is created outside the Auto Scaling service and manually attached to the scaling group.
+|CreationType|String|No|AutoCreated|Specifies how to create an ECS instance. Valid values:
+
+ -   AutoCreated: The ECS instance is automatically created by a scaling group based on scaling configurations and rules.
+-   Attached: The ECS instance is manually added to a scaling group.
 
  |
-|PageNumber|Integer|No|Page number of the ECS instance list, staring from 1. Default value: 1|
-|PageSize|Integer|No|When querying by page, this parameter indicates the number of lines per page. Maximum value: 50; default value: 10|
+|HealthStatus|String|No|Healthy|The health status of the ECS instance in the scaling group. The ECS instance is unhealthy if it is not in the Running state. Valid values:
 
-## Response parameters { .section}
+ -   Healthy: a healthy ECS instance.
+-   Unhealthy: an unhealthy ECS instance.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|TotalCount|Integer|Total number of ECS instances|
-|PageNumber|Integer|Current page number|
-|PageSize|Integer|Number of lines per page|
-|ScalingInstances|ScalingInstanceSetType|A set of ECS instance information|
+ Auto Scaling automatically removes unhealthy ECS instances from the scaling group. Auto Scaling stops and releases only automatically created ECS instances.
 
-ScalingInstanceSetType is a set of ScalingInstanceItemTypes.
+ |
+|InstanceId.1|String|No|i-281vv\*\*\*\*|The ID of ECS instance N. Valid values of N: 1 to 20. The IDs of inactive instances will not be displayed in the query result and no errors will be returned.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|ScalingInstance|ScalingInstanceItemType|ECS instance information|
+ |
+|LifecycleState|String|No|InService|The lifecycle status of the ECS instance in the scaling group. Valid values:
 
-The attributes of ScalingInstanceItemType are listed as follows.
+ -   InService: The ECS instance has been added to the scaling group and is providing services normally.
+-   Pending: The ECS instance is being added to the scaling group, but is still being configured. For example, the instance is being created, attached to an SLB instance, or added to an RDS whitelist.
+-   Removing: The ECS instance is being removed from the scaling group.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|InstanceId|String|ECS instance ID.|
-|ScalingGroupId|String|ID of the scaling group to which the ECS instance belongs.|
-|ScalingConfigurationId|String|ID of the associated scaling configuration.|
-|HealthStatus|String|Health status of the ECS instance in the scaling group.|
-|LifecycleState|String|Lifecycle status of the ECS instance in the scaling group.|
-|CreationTime|String|Time when the ECS instance is attached to the scaling group.|
-|CreationType|String|ECS instance creation type.|
+ |
+|PageNumber|Integer|No|1|The page number of the ECS instance list to return. Pages start from page 1.
 
-## Error code { .section}
+ Default value: 1.
 
-For common errors, see [client errors](reseller.en-US/API-Reference/Error codes/Client errors.md#) or [server errors](reseller.en-US/API-Reference/Error codes/Server errors.md#).
+ |
+|PageSize|Integer|No|10|The number of entries to return on each page. Maximum value: 50.
 
-## Request example { .section}
+ Default value: 10.
 
-```
-http://ess.aliyuncs.com/?Action=DescribeScalingInstances 
+ |
+|ScalingConfigurationId|String|No|asc-\*\*\*\*|The ID of the associated scaling configuration.
+
+ |
+|ScalingGroupId|String|No|asg-\*\*\*\*|The ID of the scaling group.
+
+ |
+
+## Response parameters {#resultMapping .section}
+
+|Parameter|Type|Example|Description|
+|---------|----|-------|-----------|
+|PageNumber|Integer|1|The current page number.
+
+ |
+|PageSize|Integer|10|The number of entries returned on each page.
+
+ |
+|RequestId|String|E481B3F5-F290-4F3E-AB40-F980FB8E098A|The ID of the request.
+
+ |
+|ScalingInstances| | |The set of ECS instances.
+
+ |
+|CreationTime|String|2019-03-06T08:06Z|The time when the ECS instance was added to the scaling group.
+
+ |
+|CreationType|String|AutoCreated|Indicates how the ECS instance was created. Valid values:
+
+ -   AutoCreated: The ECS instance is automatically created by a scaling group based on scaling configurations and rules.
+-   Attached: The ECS instance is manually added to a scaling group.
+
+ |
+|HealthStatus|String|Healthy|The health status of the ECS instance in the scaling group. Valid values:
+
+ -   Healthy: a healthy ECS instance.
+-   Unhealthy: an unhealthy ECS instance.
+
+ |
+|InstanceId|String|i-283vv\*\*\*\*|The ID of the ECS instance.
+
+ |
+|LaunchTemplateId|String|lt-m5e3ofjr1zn1aw7\*\*\*\*|The ID of the instance launch template.
+
+ |
+|LaunchTemplateVersion|String|1|The version number of the instance launch template.
+
+ |
+|LifecycleState|String|InService|The lifecycle status of the ECS instance in the scaling group. Valid values:
+
+ -   InService: The ECS instance has been added to the scaling group and is providing services normally.
+-   Pending: The ECS instance is being added to the scaling group, but is still being configured. For example, the instance is being created, attached to an SLB instance, or added to an RDS whitelist.
+-   Removing: The ECS instance is being removed from the scaling group.
+
+ |
+|LoadBalancerWeight|Integer|1|The weight of the SLB instance.
+
+ |
+|ScalingConfigurationId|String|asg-\*\*\*\*|The ID of the associated scaling configuration.
+
+ |
+|ScalingGroupId|String|asg-\*\*\*\*|The ID of the scaling group to which an ECS instance belongs.
+
+ |
+|WarmupState|String|NoNeedWarmup|The warmup state of the ECS instance. Valid values:
+
+ -   NoNeedWarmup: No warmup is required.
+-   WaitingForInstanceWarmup: You must wait for the instance to finish warmup.
+-   InstanceWarmupFinish: The warmup is completed.
+
+ |
+|TotalCount|Integer|1|The total number of ECS instances.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
+
+https://ess.aliyuncs.com/?Action=DescribeScalingInstances
 &RegionId=cn-qingdao
-&ScalingGroupId=dBCYxE26IHKcGq1xPcTNBwV
-&<Public Request Parameters>
-```
-
-## Response example { .section}
-
-XML format:
+&<Common request parameters>
 
 ```
+
+Sample success responses
+
+`XML` format
+
+``` {#xml_return_success_demo}
 <DescribeScalingInstancesResponse>
-    <RequestId>DFF8797F-5B73-4BD7-A7D0-03479C458F7A</RequestId>
-<TotalCount>1</TotalCount>
-    <PageNumber>1</PageNumber>
-    <PageSize>10</PageSize>
-    <ScalingInstances>
-        <ScalingInstance>
-            <CreationTime>2014-08-15T17:37Z</CreationTime>
-            <CreationType>AutoCreated</CreationType>
-            <HealthStatus>Healthy</HealthStatus>
-            <InstanceId>i-283vvyytn</InstanceId>
-            <LifecycleState>InService</LifecycleState>         <ScalingConfigurationId>
-cGsGHrdMBa3DcDrrBVcc4k2H
-</ScalingConfigurationId>
-            <ScalingGroupId>dBCYxE26IHKcGq1xPcTNBwV</ScalingGroupId>
-        </ScalingInstance>
-    </ScalingInstances>
+      <RequestId>DFF8797F-5B73-4BD7-A7D0-03479C458F7A</RequestId>
+  <TotalCount>1</TotalCount>
+      <PageNumber>1</PageNumber>
+      <PageSize>10</PageSize>
+      <ScalingInstances>
+            <ScalingInstance>
+                  <CreationTime>2014-08-15T17:37Z</CreationTime>
+                  <CreationType>AutoCreated</CreationType>
+                  <HealthStatus>Healthy</HealthStatus>
+                   <InstanceId>i-283vv****</InstanceId>
+                  <LifecycleState>InService</LifecycleState>
+                  <ScalingConfigurationId>cGsGHrdMBa3DcDrrBVcc****</ScalingConfigurationId>
+                  <ScalingGroupId>dBCYxE26IHKcGq1xPcT****</ScalingGroupId>
+             </ScalingInstance>
+      </ScalingInstances>
 </DescribeScalingInstancesResponse>
 ```
 
-JSON format:
+`JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-  "RequestId": "13305F2D-A4C2-4E6B-B7C7-0F2150842EA3",
-"TotalCount": 1,
-"PageNumber": 1,
-"PageSize": 50,
-  "ScalingInstances": {
-    "ScalingInstance": [
-      {
-        "ScalingConfigurationId": "bU5uZHcAgtzwcL4IeDeavqTS",
-        "CreationType": "AutoCreated",
-        "InstanceId": "i-28sov3exk",
-        "CreationTime": "2014-08-14T10:59Z",
-        "HealthStatus": "Healthy",
-        "LifecycleState": "InService",
-        "ScalingGroupId": "dE9YbOdCHqaFdFZHXVdDjQCB"
-      }
-    ]
-  }
+	"PageNumber":1,
+	"TotalCount":1,
+	"PageSize":50,
+	"RequestId":"13305F2D-A4C2-4E6B-B7C7-0F2150842EA3",
+	"ScalingInstances":{
+		 "ScalingInstance":[
+			{
+				"CreationTime":"2014-08-14T10:59Z",
+				"ScalingConfigurationId":"bU5uZHcAgtzwcL4IeDe****",
+				 "CreationType":"AutoCreated",
+				 "HealthStatus":"Healthy",
+				"ScalingGroupId":"dE9YbOdCHqaFdFZHXVdD****",
+				"InstanceId":"i-28sov****",
+				"LifecycleState":"InService"
+			}
+		]
+	}
 }
 ```
+
+## Error codes { .section}
 

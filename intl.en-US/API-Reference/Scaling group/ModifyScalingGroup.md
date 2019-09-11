@@ -1,96 +1,245 @@
-# ModifyScalingGroup {#concept_25937_zh .concept}
+# ModifyScalingGroup {#doc_api_Ess_ModifyScalingGroup .reference}
 
-This topic introduces how to modify a scaling group using the API.
+You can call this operation to modify a scaling group.
 
-## Description {#section_ld1_pv2_sfb .section}
+## Description {#description .section}
 
--   Modifies the attributes of a scaling group. However, the following attributes cannot be modified:
+-   The following parameters cannot be modified:
     -   RegionId
     -   LoadBalancerId
+
+**Note:** If you want to attach or detach an SLB instance to or from the scaling group, call the [AttachLoadBalancers](~~85125~~) or [DetachLoadBalancers](~~85141~~) operation.
+
     -   DBInstanceId
--   The interface can be called only when the scaling group is active or inactive.
--   When the scaling configuration specified for the scaling group needs to be modified, the instance type attribute of the modified scaling configuration must be consistent with that of the active scaling configuration.
 
-    After a new scaling configuration is added to the scaling group, the running ECS instances which are created based on the previous scaling configuration remain unchanged.
+**Note:** If you want to attach or detach an RDS instance to or from the scaling group, call the [AttachDBInstances](~~85379~~) or [DetachDBInstances](~~85380~~) operation.
 
--   When the number \(total capacity\) of ECS instances in the scaling group does not meet the modified MaxSize or MinSize specification, the Auto Scaling service automatically attaches or removes ECS instances to/from the group to make odds even.
+-   You can call this operation only when the scaling group is in the Active or Inactive state.
+-   New scaling configurations do not affect running ECS instances that are created based on the previous scaling configurations.
+-   If the MinSize or MaxSize parameter is modified, and the number of ECS instances in the scaling group falls outside this range, the scaling group automatically adds or removes instances to ensure that the number of instances are within the modified range.
 
-## Request parameters { .section}
+## Debugging {#api_explorer .section}
 
-|Name|Type|Required|Description|
-|----|----|--------|-----------|
-|Action|String|Yes|Operation interface name, required parameter. Value: ModifyScalingGroup|
-|ScalingGroupId|String|Yes|Scaling group ID|
-|ScalingGroupName|String|No|Name shown for the scaling group, which must contain 2-40 characters \(English or Chinese\). The name must begin with a number, an upper/lower-case letter or a Chinese character and may contain numbers, “\_”, “-“ or “.”. The account name is unique in the same region.|
-|ActiveScalingConfigurationId|String|No|ID of the active scaling configuration in the scaling group.|
-|MinSize|Integer|No|Minimum number of ECS instances in the scaling group. Value range: \[0, 100\].|
-|MaxSize|Integer|No|Maximum number of ECS instances in the scaling group. Value range: \[0, 100\].|
-|DefaultCooldown|Integer|No|Default cool-down time \(in seconds\) of the scaling group. Value range: \[0, 86400\].|
-|RemovalPolicy.N|String|No|Policy for removing ECS instances from the scaling group. Optional values: -   OldestInstance: removes the first ECS instance attached to the scaling group.
--   NewestInstance: removes the first ECS instance attached to the scaling group.
--   OldestScalingConfiguration: removes the ECS instance with the oldest scaling configuration.
+[OpenAPI Explorer automatically calculates the signature value. For your convenience, we recommend that you call this operation in OpenAPI Explorer. OpenAPI Explorer dynamically generates the sample code of the operation for different SDKs.](https://api.aliyun.com/#product=Ess&api=ModifyScalingGroup&type=RPC&version=2014-08-28)
 
- You can enter up to two removal policies.
+## Request parameters {#parameters .section}
+
+|Parameter|Type|Required|Example|Description|
+|---------|----|--------|-------|-----------|
+|ScalingGroupId|String|Yes|cqS5QbbhmvGLcJbWoDbW\*\*\*\*| The ID of the scaling group to be modified.
 
  |
-|LaunchTemplateId|String|No|ID of the launch template. For the specified scaling group to obtain startup configuration information from the launch template.|
-|LaunchTemplateVersion|String|No|Version of the launch template. Optional values: -   Fixed template version number
--   Default: The default template version is always used.
--   Latest: The latest template version is always used.
+|Action|String|No|ModifyScalingGroup| The operation that you want to perform. Set the value to ModifyScalingGroup.
 
  |
-|VSwitchIds.N|String|No| -   VSwitchIds.N takes effect only when the network type of scaling group is VPC.
--   VSwitchIds.N can be used for specifying VSwitchs from multiple zones, and the value range of N is \[1, 5\]. When modifying the scaling group, you can specify up to 5 VSwitchs in the same VPC.
--   The VSwitchs and scaling group must belong to the same VPC.
--   The priorities of VSwitchs are determined by their numbers, and 1 has the highest priority.
--   When an instance cannot be created in the zone where the VSwitch with higher priority belong, the VSwitch with the lower priority will be selected.
+|ActiveScalingConfigurationId|String|No|bU5uZHcAgtzwcL4IeDea\*\*\*\*| The ID of the active scaling configuration in the scaling group.
+
+ |
+|DefaultCooldown|Integer|No|600| The cooldown period after a scaling activity is executed. Valid values: 0 to 86400. Unit: seconds.
+
+ During the cooldown period, no other activities are executed in the scaling group. This parameter is only valid for scaling activities triggered by [CloudMonitor](~~35170~~) monitoring tasks.
+
+ |
+|HealthCheckType|String|No|tcp| The health check type of the TCP listener. Valid values:
+
+ -   tcp
+-   http
+
+ |
+|LaunchTemplateId|String|No|lt-m5e3ofjr1zn1aw7\*\*\*\*| The ID of the instance launch template, from which the specified scaling group can obtain launch configurations.
+
+ |
+|LaunchTemplateVersion|String|No|Default| The version number of the instance launch template. Valid values:
+
+ -   A fixed template version number.
+-   Default: always uses the default template version.
+-   Latest: always uses the latest template version.
+
+ |
+|MaxSize|Integer|No|99| The maximum number of ECS instances in the scaling group. Valid values: 0 to 1000. When the number of ECS instances in the scaling group exceeds the value of MaxSize, Auto Scaling removes the ECS instances from the scaling group until the number of instances is equal to the MaxSize value.
+
+ |
+|MinSize|Integer|No|1| The minimum number of ECS instances in the scaling group. Valid values: 0 to 1000. When the number of ECS instances in the scaling group is smaller than the value of MinSize, Auto Scaling automatically creates ECS instances until the number of instances is equal to the MinSize value.
+
+ |
+|OnDemandBaseCapacity|Integer|No|30| The minimum number of pay-as-you-go instances required in the scaling group. Valid values: 0 to 1000. When the number of pay-as-you-go instances is smaller than this value, the scaling group will attempt to create pay-as-you-go instances over other instances.
+
+ |
+|OnDemandPercentageAboveBaseCapacity|Integer|No|20| The percentage of pay-as-you-go instances to create when instances are added to the scaling group.This parameter takes effect after the number of instances reaches the OnDemandBaseCapacity value. Valid values: 0 to 100.
+
+ |
+|RemovalPolicy.1|String|No|OldestScalingConfiguration| Specifies policy N for removing ECS instances from the scaling group. Valid values of N: 1 to 2. For more information, see [Removal policies](~~25910~~). Valid values:
+
+ -   OldestInstance: removes the ECS instance that is added to the scaling group at the earliest point in time.
+-   NewestInstance: removes the ECS instance that is added to the scaling group at the latest point in time.
+-   OldestScalingConfiguration: removes the ECS instance that is created based on the earliest scaling configuration.
+
+ |
+|ScalingGroupName|String|No|Scaling\*\*\*\*| The name of the scaling group. The name of a scaling group must be unique in a region. The name must be 2 to 40 characters in length and can contain letters, digits, underscores \(\_\), hyphens \(-\), and periods \(.\). It must start with a letter or digit.
+
+ |
+|SpotInstancePools|Integer|No|5| Specifies the number of available instance types. The scaling group will create preemptible instances of multiple instance types available at the lowest cost. Valid values: 0 to 10.
+
+ |
+|SpotInstanceRemedy|Boolean|No|true| Specifies whether to supplement preemptible instances when the target capacity of preemptible instances is not fulfilled. When receiving a system message that a preemptible instance will be reclaimed, the scaling group will create a new instance to replace the instance to be reclaimed if this parameter is set to true.
+
+ |
+|VSwitchIds.N|RepeatList|No|vsw-\*\*\*\*| The IDs of one or more VSwitches. Valid values of N: 1 to 5.
+
+ This parameter is only valid when the network type of the scaling group is VPC. The specified VSwitch and the scaling group must be in the same VPC.
+
+ VSwitches can be from multiple zones. VSwitches are sorted in ascending order based on the value of N. 1 indicates the highest priority. When an ECS instance cannot be created in the zone where the VSwitch with the highest priority resides, the system automatically uses the VSwitch with the next highest priority to create the ECS instance.
 
  |
 
-## Response parameters { .section}
+## Response parameters {#resultMapping .section}
 
-Public parameters.
+|Parameter|Type|Example|Description|
+|---------|----|-------|-----------|
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E| The ID of the request.
 
-## Error codes { .section}
+ |
 
-For common errors, see [client errors](reseller.en-US/API-Reference/Error codes/Client errors.md#) or [server errors](reseller.en-US/API-Reference/Error codes/Server errors.md#).
+## Examples {#demo .section}
 
-|Error message|Error code|Description|HTTP status code|
-|:------------|:---------|:----------|:---------------|
-|The specified scaling group does not exist in this account.|InvalidScalingGroupId.NotFound|The specified scaling group does not exist.|404|
-|The scaling group name already exists.|InvalidScalingGroupName.Duplicate|The specified value of parameter `<parameter name>` is duplicated.|400|
-|The specified scaling configuration does not exist in the scaling group.|InvalidScalingConfigurationId.NotFound|The specified scaling configuration does not exist.|404|
-|The instance types of the specified scaling configuration and the active scaling configuration do not match.|InvalidScalingConfigurationId.InstanceTypeMismatch|The specified scaling configuration and existing active scaling configuration have different instance type.|400|
-|The specified MinSize is greater than MaxSize.|InvalidParameter.Conflict|The value of parameter `<parameter name>` and parameter `<parameter name>` are confilict.|400|
-|The specified launch template version does not exist.|LaunchTemplateVersionSet.NotFound|The specific version of launch template does not exist.|400|
-|The specified lauch template does not exist.|LaunchTemplateSet.NotFound|The specified launch template set is not found.|400|
-|The required parameter ImageId is not supplied.|TemplateMissingParameter.ImageId|The input parameter "ImageId" that is mandatory for processing this request is not supplied.|400|
-|The required parameter InstanceTypes is not supplied.|TemplateMissingParameter.InstanceTypes|The input parameter "InstanceTypes" that is mandatory for processing this request is not supplied.|400|
-|The required parameter SecurityGroup is not supplied.|TemplateMissingParameter.SecurityGroup|The input parameter "SecurityGroup" that is mandatory for processing this request is not supplied.|400|
-|The input parameter LaunchTemplateVersion must be a number.|TemplateVersion.NotNumber|The input parameter "LaunchTemplateVersion" is supposed to be a string representing the version number.|400|
+Sample requests
 
-## Request example { .section}
+``` {#request_demo}
 
-```
 http://ess.aliyuncs.com/?Action=ModifyScalingGroup
-&ScalingGroupId=cqS5QbbhmvGLcJbWoDbWLj2V
-&ScalingGroupName=ScalingGroup
-&<Public Request Parameters>
-```
-
-## Response example { .section}
-
-XML format:
+&ScalingGroupId=cqS5QbbhmvGLcJbWoDbW****
+&ScalingGroupName=Scaling****
+&<Common request parameters>
 
 ```
-< ModifyScalingGroupResponse>
-    <RequestId>6469DCD0-13AC-487E-85A0-CE4922908FDE</RequestId>
-</ ModifyScalingGroupResponse>
+
+Sample success responses
+
+`XML` format
+
+``` {#xml_return_success_demo}
+<ModifyScalingGroupResponse>
+      <RequestId>473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E</RequestId>
+</ModifyScalingGroupResponse>
 ```
 
-JSON format:
+`JSON` format
 
+``` {#json_return_success_demo}
+{
+	"RequestId":"473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E"
+}
 ```
-"RequestId": "6469DCD0-13AC-487E-85A0-CE4922908FDE"
-```
+
+## Error codes {#section_f8c_lxq_1oh .section}
+
+| HTTP status code
+
+ | Error code
+
+ | Error message
+
+ | Description
+
+ |
+|--------------------|--------------|-----------------|---------------|
+| 404
+
+ | InvalidScalingGroupId.NotFound
+
+ | The specified scaling group does not exist.
+
+ | The error message returned because the specified scaling group does not exist in the current account.
+
+ |
+| 400
+
+ | InvalidScalingGroupName.Duplicate
+
+ | The specified value of parameter <parameter name\> is duplicated.
+
+ | The error message returned because the specified scaling group name already exists.
+
+ |
+| 404
+
+ | InvalidScalingConfigurationId.NotFound
+
+ | The specified scaling configuration does not exist.
+
+ | The error message returned because the specified scaling configuration does not exist in the scaling group.
+
+ |
+| 400
+
+ | InvalidScalingConfigurationId.InstanceTypeMismatch
+
+ | The specified scaling configuration and existing active scaling configuration have different instance type.
+
+ | The error message returned because the instance type in the specified scaling configuration is different from that in the active scaling configuration.
+
+ |
+| 400
+
+ | InvalidParameter.Conflict
+
+ | The value of parameter <parameter name\> and parameter <parameter name\> are conflict.
+
+ | The error message returned because the specified MinSize value is greater than the MaxSize value.
+
+ |
+| 400
+
+ | LaunchTemplateVersionSet.NotFound
+
+ | The specific version of launch template is not exist.
+
+ | The error message returned because the specified instance launch template version does not exist.
+
+ |
+| 400
+
+ | LaunchTemplateSet.NotFound
+
+ | The specified launch template set is not found.
+
+ | The error message returned because the specified instance launch template does not exist.
+
+ |
+| 400
+
+ | TemplateMissingParameter.ImageId
+
+ | The input parameter "ImageId" that is mandatory for processing this request is not supplied.
+
+ | The error message returned because the ImageId parameter required for the specified instance launch template is not specified.
+
+ |
+| 400
+
+ | TemplateMissingParameter.InstanceTypes
+
+ | The input parameter "InstanceTypes" that is mandatory for processing this request is not supplied.
+
+ | The error message returned because the InstanceTypes parameter required for the specified instance launch template is not specified.
+
+ |
+| 400
+
+ | TemplateMissingParameter.SecurityGroup
+
+ | The input parameter "SecurityGroup" that is mandatory for processing this request is not supplied.
+
+ | The error message returned because the SecurityGroup parameter required for the specified instance launch template is not specified.
+
+ |
+| 400
+
+ | TemplateVersion.NotNumber
+
+ | The input parameter "LaunchTemplateVersion" is supposed to be a string representing the version number.
+
+ | The error message returned because the specified LaunchTemplateVersion parameter of the specified launch template is not in digits.
+
+ |
 

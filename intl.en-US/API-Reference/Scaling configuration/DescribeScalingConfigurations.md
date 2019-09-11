@@ -1,160 +1,342 @@
-# DescribeScalingConfigurations {#concept_25945_zh .concept}
+# DescribeScalingConfigurations {#doc_api_Ess_DescribeScalingConfigurations .reference}
 
-This operation queries scaling configuration information.
+You can call this operation to query scaling configurations.
 
-## Description {#section_qcc_fgk_sfb .section}
+## Debugging {#api_explorer .section}
 
-You can query all scaling configurations in a scaling group by specifying the scaling group ID.
+[OpenAPI Explorer automatically calculates the signature value. For your convenience, we recommend that you call this operation in OpenAPI Explorer. OpenAPI Explorer dynamically generates the sample code of the operation for different SDKs.](https://api.aliyun.com/#product=Ess&api=DescribeScalingConfigurations&type=RPC&version=2014-08-28)
 
-Scaling configuration states \(LifecycleState\) can be set to either of the following:
+## Request parameters {#parameters .section}
 
--   Active: Scaling groups use scaling configurations in the active status to automatically create ECS instances.
--   Inactive: The scaling configuration is inactive in a scaling group. The scaling group will not use scaling configurations in inactive state to automatically create ECS instances.
+|Parameter|Type|Required|Example|Description|
+|---------|----|--------|-------|-----------|
+|RegionId|String|Yes|cn-qingdao|The region ID of the scaling group to which a scaling configuration belongs.
 
-## Request parameters {#section_blm_ggk_sfb .section}
+ |
+|Action|String|No|DescribeScalingConfigurations|The operation that you want to perform. Set the value to DescribeScalingConfigurations.
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|Operation interface, required. The parameter value is `DescribeScalingConfigurations`.|
-|RegionId|String|Yes|Region ID of the scaling group of a scaling configuration.|
-|ScalingGroupId|String|No|Scaling group ID.|
-|Scalingconfigurationid. N|String|No|ID of a scaling configuration. A maximum of 10 values can be entered. IDs of active and inactive scaling configurations are displayed in the query result, and can be differentiated by `LifecycleState`.|
-|ScalingConfigurationName.N|String|No|Name of a scaling configuration. A maximum of 10 values can be entered. Invalid scaling configuration names are neglected in the query result and no error is reported.|
-|PageNumber|Integer|No|Page number of the scaling configuration list. The initial value and default value are both 1.|
-|PageSize|Integer|No|When querying by page, this parameter indicates the number of lines per page. Maximum value: 50; default value: 10.|
+ |
+|PageNumber|Integer|No|1|The number of the page to return. Pages start from page 1.
 
-## Response parameters {#section_dbx_3gk_sfb .section}
+ Default value: 1.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|TotalCount|Integer|Total number of scaling configurations|
-|PageNumber|Integer|Current page number|
-|PageSize|Integer|Number of lines per page|
-|ScalingConfigurations|ScalingConfigurationSetType|Scaling configuration information set|
+ |
+|PageSize|Integer|No|50|The number of entries to return on each page. Maximum value: 50.
 
-ScalingConfigurationSetType is a set of ScalingConfigurationItemTypes.
+ Default value: 10.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|ScalingConfiguration|ScalingConfigurationItemType|Scaling configuration information|
+ |
+|ScalingConfigurationId.1|String|No|bU5uZHcAgtzwcL4IeDea\*\*\*\*|The ID of scaling configuration N to be queried. Valid values of N: 1 to 10. The IDs of active and inactive scaling configurations are displayed in the query result, and can be differentiated by LifecycleState.
 
-Attributes of the ScalingConfigurationItemType are listed as follows.
+ |
+|ScalingConfigurationName.1|String|No|c1908dd1-690f-4c9b-ab73-350f1f06\*\*\*\*|The name of scaling configuration N to be queried. Valid values of N: 1 to 20. The names of inactive scaling configurations will not be displayed in the query result and no errors will be returned.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|ScalingConfigurationId|String|ID of a scaling configuration|
-|ScalingConfigurationName|String|Name shown for a scaling configuration|
-|ScalingGroupId|String|ID of the scaling group of a scaling configuration|
-|ImageId|String|ID of an image file|
-|InstanceType|String|Resource rule of an instance|
-|SecurityGroupId|String|ID of a security group|
-|InternetChargeType|String|Network billing type|
-|InternetMaxBandwidthIn|Integer|Maximum incoming bandwidth from the public network, measured in Mbps \(Mega bit per second\)|
-|InternetMaxBandwidthOut|Integer|Maximum outgoing bandwidth from the public network, measured in Mbps \(Mega bit per second\)|
-|SystemDisk.Category|String|Category of the system disk|
-|DataDisks|DataDiskSetType|Data disk information set|
-|LifecycleState|String|Scaling configuration status in a scaling group|
-|CreationTime|String|Time when a scaling configuration is created|
+ |
+|ScalingGroupId|String|No|dE9YbOdCHqaFdFZHXVdD\*\*\*\*|The ID of the scaling group. You can query all scaling configurations in the scaling group.
 
-DataDiskSetType is a set of DataDiskItemTypes.
+ |
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|DataDisk|DataDiskItemType|Data disk information|
+## Response parameters {#resultMapping .section}
 
-Attributes of the DataDiskItemType are listed as follows.
+|Parameter|Type|Example|Description|
+|---------|----|-------|-----------|
+|PageNumber|Integer|1|The current page number.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|Size|Integer|Disk capacity|
-|Category|String|Disk category|
-|SnapshotId|String|ID of the snapshot used for creating the data disk|
-|Device|String|Data disk attaching point|
+ |
+|PageSize|Integer|50|The number of entries returned on each page.
 
-## Request example {#section_mnz_tgk_sfb .section}
+ |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|The ID of the request.
 
-```
-http://ess.aliyuncs.com/?Action=CreateScalingConfiguration
+ |
+|ScalingConfigurations| | |The set of scaling configurations.
+
+ |
+|Cpu|Integer|2|The number of vCPUs.
+
+ You can specify the number of vCPUs and the amount of memory to define the range of instance types. For example, to specify instances that have 2 vCPUs and 16 GiB memory, set the value of Cpu to 2 and the value of Memory to 16. Auto Scaling uses factors such as I/O optimization and zone to determine a set of available instance types. Auto Scaling then creates instances of the type that is most cost-effective out of the available types.
+
+ **Note:** This instance type range takes effect only when cost optimization is enabled and you have not specified an instance type in the scaling configuration.
+
+ |
+|CreationTime|String|2014-08-14T10:58Z|The time when a scaling configuration was created.
+
+ |
+|DataDisks| | |The set of data disks.
+
+ |
+|Category|String|cloud|The disk type of a data disk. Valid values:
+
+ -   cloud: basic disk The DeleteWithInstance attribute of a basic disk created along with the instance is true.
+-   cloud\_efficiency: ultra disk
+-   cloud\_ssd: standard SSD
+-   ephemeral\_ssd: local SSD
+-   cloud\_essd: enhanced SSD
+
+ |
+|DeleteWithInstance|Boolean|true|Indicates whether the data disk will be released with the instance. Valid values:
+
+ -   true: releases the data disk when the instance is released.
+-   false: retains the data disk when the instance is released.
+
+ |
+|Description|String|FinanceDept|The description of the data disk.
+
+ |
+|Device|String|/dev/xvdb|The mount point of the data disk.
+
+ |
+|DiskName|String|cloud\_ssdData|The name of the data disk.
+
+ |
+|Encrypted|String|false|Indicates whether the data disk is encrypted. Valid values:
+
+ -   true: The disk is encrypted.
+-   false: The disk is not encrypted.
+
+ |
+|KMSKeyId|String|0e478b7a-4262-4802-b8cb-00d3fb40826X|The ID of the KMS key corresponding to the data disk.
+
+ |
+|Size|Integer|200|The size of the data disk. Unit: GiB Valid values:
+
+ -   cloud: 5 to 2000
+-   cloud\_efficiency: 20 to 32768
+-   cloud\_ssd: 20 to 32768
+-   ephemeral\_ssd: 5 to 800
+
+ |
+|SnapshotId|String|s-23f2i\*\*\*\*|The ID of the snapshot used to create data disks.
+
+ |
+|DeploymentSetId|String|ds-bp1frxuzdg87zh4p\*\*\*\*|The ID of the deployment set to which an ECS instance belongs.
+
+ |
+|HostName|String|LocalHost|The hostname of an ECS instance.
+
+ |
+|HpcClusterId|String|hpc-clusterid|The ID of the Elastic HPC cluster to which an ECS instance belongs.
+
+ |
+|ImageId|String|centos6u5\_64\_20G\_aliaegis\_20140703.vhd|The ID of the image file used to automatically create an instance.
+
+ |
+|ImageName|String|centos6u5\_64\_20G\_aliaegis\_20140703.vhd|The name of the image file.
+
+ |
+|InstanceDescription|String|FinaceDept|The description of an ECS instance.
+
+ |
+|InstanceGeneration|String|ecs-3|The generation of an ECS instance.
+
+ |
+|InstanceName|String|fortest|The name of an ECS instance.
+
+ |
+|InstanceType|String|ecs.t1.xsmall|The type of an ECS instance.
+
+ |
+|InstanceTypes| |ecs.t1.xsmall|The set of ECS instance types.
+
+ |
+|InternetChargeType|String|PayByTraffic|The bandwidth billing method of created instances. Valid values:
+
+ -   PayByTraffic: You pay for the actual traffic used. The InternetMaxBandwidthOut parameter only specifies the upper limit of available bandwidth when this parameter is specified.
+
+ |
+|InternetMaxBandwidthIn|Integer|200|The maximum inbound bandwidth from the public network. Unit: Mbit/s. Valid values: 1 to 200.
+
+ |
+|InternetMaxBandwidthOut|Integer|0|The maximum outbound bandwidth to the public network. Unit: Mbit/s. Valid values: 0 to 100.
+
+ -   If InternetChargeType is set to PayByTraffic and this parameter is not specified, an error is returned.
+
+ |
+|IoOptimized|String|none|Indicates whether the instance is I/O optimized.
+
+ |
+|KeyPairName|String|fortest|The name of the key pair used to log on to an ECS instance.
+
+ |
+|LifecycleState|String|Active|The state of the scaling configuration in a scaling group. Valid values:
+
+ -   Active: Active scaling configurations are used by a scaling group to automatically create ECS instances.
+-   Inactive: Inactive scaling configurations are still retained in a scaling group, but are not used by the group to create ECS instances.
+
+ |
+|LoadBalancerWeight|Integer|1|The weight of the backend server. Valid values: 0 to 100.
+
+ |
+|Memory|Integer|16|The size of memory.
+
+ You can specify the number of vCPUs and the amount of memory to define the range of instance types. For example, to specify instances that have 2 vCPUs and 16 GiB memory, set the value of Cpu to 2 and the value of Memory to 16. Auto Scaling uses factors such as I/O optimization and zone to determine a set of available instance types. Auto Scaling then creates instances of the type that is most cost-effective out of the available types.
+
+ **Note:** This instance type range takes effect only when cost optimization is enabled and you have not specified an instance type in the scaling configuration.
+
+ |
+|PasswordInherit|Boolean|true|Indicates whether the password predefined in the specified image is used.
+
+ |
+|RamRoleName|String|RamRoleTest|The name of the instance RAM role. This name is provided and maintained by RAM. You can call the [ListRoles](~~28713~~) operation to query the list of RAM role names. For more information about how to create a RAM role, see [CreateRole](~~28710~~).
+
+ |
+|ResourceGroupId|String|abcd1234abcd\*\*\*\*|The ID of the resource group to which an ECS instance belongs.
+
+ |
+|ScalingConfigurationId|String|bU5uZHcAgtzwcL4IeDea\*\*\*\*|The ID of the scaling configuration.
+
+ |
+|ScalingConfigurationName|String|c1908dd1-690f-4c9b-ab73-350f1f06\*\*\*\*|The name of the scaling configuration.
+
+ |
+|ScalingGroupId|String|sg-280ih\*\*\*\*|The ID of the scaling group to which the scaling configuration belongs.
+
+ |
+|SecurityEnhancementStrategy|String|Active|Indicates whether security hardening is enabled. Valid values:
+
+ -   Active: enables security hardening for public images.
+-   Deactive: disables security hardening for all images.
+
+ |
+|SecurityGroupId|String|sg-280ih\*\*\*\*|The ID of the security group to which an ECS instance belongs. ECS instances in the same security group can access each other.
+
+ |
+|SecurityGroupIds| |sg-bp18kz60mefs\*\*\*\*|The IDs of the security groups to which an ECS instance belongs. ECS instances in the same security group can access each other.
+
+ |
+|SpotPriceLimit| | |The set of the preemptible instances.
+
+ |
+|InstanceType|String|ecs.t1.xsmall|The type of a preemptible instance.
+
+ |
+|PriceLimit|Float|0.125|The price limit of the preemptible instance.
+
+ |
+|SpotStrategy|String|NoSpot|The preemption strategy for pay-as-you-go instances. Valid values:
+
+ -   NoSpot: a pay-as-you-go instance.
+-   SpotWithPriceLimit: a preemptible instance with a maximum hourly price.
+-   SpotAsPriceGo: an instance priced at the market price at the time of purchase.
+
+ |
+|SystemDiskCategory|String|cloud|The category of the system disk. Valid values:
+
+ -   cloud: basic disk
+-   cloud\_efficiency: ultra disk
+-   cloud\_ssd: standard SSD
+-   ephemeral\_ssd: local SSD
+-   cloud\_essd: enhanced SSD
+
+ |
+|SystemDiskDescription|String|FinanceDept|The description of the system disk.
+
+ |
+|SystemDiskName|String|cloud\_ssdSystem|The name of the system disk.
+
+ |
+|SystemDiskSize|Integer|100|The size of the system disk.
+
+ |
+|Tags| | |The set of tags.
+
+ |
+|Key|String|binary|The key of the tag.
+
+ |
+|Value|String|alterTable|The value of the tag.
+
+ |
+|UserData|String|echo hello ecs!|The user data of an ECS instance.
+
+ |
+|TotalCount|Integer|1|The total number of scaling configurations.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
+
+http(s)://[Endpoint]/? Action=DescribeScalingConfigurations
 &RegionId=cn-qingdao
-&PageSize=50
-&<Public Request Parameters>
-```
-
-## Response example { .section}
-
-XML format:
+&<Common request parameters>
 
 ```
+
+Sample success responses
+
+`XML` format
+
+``` {#xml_return_success_demo}
 <DescribeScalingConfigurationsResponse>
-    <RequestId>804F240A-8D3E-40A1-BD68-6B333DEA2CA8</RequestId>
-    <TotalCount>1</TotalCount>
-    <PageNumber>1</PageNumber>
-    <PageSize>50</PageSize>
-    <ScalingConfigurations>
-        <ScalingConfiguration>
-            <CreationTime>2014-08-14T10:58Z</CreationTime>
-            <ImageId>centos6u5_64_20G_aliaegis_20140703.vhd</ImageId>
-            <InstanceType>ecs.t1.xsmall</InstanceType>
-            <InternetChargeType>PayByBandwidth</InternetChargeType>
-            <InternetMaxBandwidthIn>200</InternetMaxBandwidthIn>
-            <InternetMaxBandwidthOut>0</InternetMaxBandwidthOut>
-            <LifecycleState>Active</LifecycleState>
-            <ScalingConfigurationId>bU5uZHcAgtzwcL4IeDeavqTS</ScalingConfigurationId>
-            <ScalingConfigurationName>c1908dd1-690f-4c9b-ab73-350f1f06e84f</ScalingConfigurationName>
-            <ScalingGroupId>dE9YbOdCHqaFdFZHXVdDjQCB</ScalingGroupId>
-            <SecurityGroupId>sg-280ih3w4b</SecurityGroupId>
-            <SystemDiskCategory>cloud</SystemDiskCategory>
-            <DataDisks>
-            <DataDisk>
-                <Size>200</Size>
-                <Category>cloud</Category>
-                <SnapshotId>s-280s7ngih</SnapshotId>
-                <Device>/dev/xvdb</Device>
-            </DataDisk>
-            </DataDisks>
-        </ScalingConfiguration>
-    </ScalingConfigurations>
+      <RequestId>804F240A-8D3E-40A1-BD68-6B333DEA2CA8</RequestId>
+      <TotalCount>1</TotalCount>
+      <PageNumber>1</PageNumber>
+      <PageSize>50</PageSize>
+      <ScalingConfigurations>
+            <ScalingConfiguration>
+                  <CreationTime>2014-08-14T10:58Z</CreationTime>
+                  <ImageId>centos6u5_64_20G_aliaegis_20140703.vhd</ImageId>
+                  <InstanceType>ecs.t1.xsmall</InstanceType>
+                  <InternetChargeType>PayByTraffic</InternetChargeType>
+                  <InternetMaxBandwidthIn>200</InternetMaxBandwidthIn>
+                  <InternetMaxBandwidthOut>0</InternetMaxBandwidthOut>
+                  <LifecycleState>Active</LifecycleState>
+                  <ScalingConfigurationId>bU5uZHcAgtzwcL4IeDea****</ScalingConfigurationId>
+                  <ScalingConfigurationName>c1908dd1-690f-4c9b-ab73-350f1f06****</ScalingConfigurationName>
+                  <ScalingGroupId>dE9YbOdCHqaFdFZHXVdD****</ScalingGroupId>
+                  <SecurityGroupId>sg-280ih****</SecurityGroupId>
+                  <SystemDiskCategory>cloud</SystemDiskCategory>
+                  <DataDisks>
+                    <DataDisk>
+                          <Size>200</Size>
+                          <Category>cloud</Category>
+                          <SnapshotId>s-280s7****</SnapshotId>
+                          <Device>/dev/xvdb</Device>
+                    </DataDisk>
+                  </DataDisks>
+            </ScalingConfiguration>
+      </ScalingConfigurations>
 </DescribeScalingConfigurationsResponse>
 ```
 
-JSON format:
+`JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-    "RequestId": "67E4324F-CE14-4C2C-9D60-5422641DB76F",
-    "TotalCount": 1,
-    "PageNumber": 1,
-    "PageSize": 1,
-    "ScalingConfigurations": {
-    "ScalingConfiguration": [
-      {
-        "ScalingConfigurationId": "eqkz17cfW3clcPExOtLNVlD",
-        "SecurityGroupId": "sg-28oewzxvg",
-        "CreationTime": "2014-08-18T21:07Z",
-        "SystemDiskCategory": "cloud",
-        "InternetMaxBandwidthIn": 200,
-        "InternetMaxBandwidthOut": 0,
-        "LifecycleState": "Inactive",
-        "InternetChargeType": "PayByBandwidth",
-        "ImageId": "rhel5u7_64_20G_aliaegis_20131231.vhd",
-        "InstanceType": "ecs.s2.small",
-        "ScalingConfigurationName": "LxVdcOqPBV",
-        "ScalingGroupId": "dRsEAGdvbjR5c4SVc2bqLubj",
-        “DataDisks”:{
-              “DataDisk”:[{
-                “Size”:200,
-                “Category”: cloud,
-                “SnapshotId”: s-280s7ngih,
-                “Device”:” /dev/xvdb”
-               }]
-         }
-      }
-    ]
-  }
+	"PageNumber":"1",
+	"TotalCount":"1",
+	"ScalingConfigurations":{
+		"ScalingConfiguration":{
+			"ImageId":"centos6u5_64_20G_aliaegis_20140703.vhd",
+			"SecurityGroupId":"sg-280ih****",
+			 "InternetMaxBandwidthIn":"200",
+			"DataDisks":{
+				"DataDisk":[]
+					"Category":"cloud",
+					"Device":"/dev/xvdb",
+					"SnapshotId":"s-280s7****",
+					"Size":"200"
+				}
+			},
+			"InternetChargeType":"PayByTraffic",
+			"InstanceType":"ecs.t1.xsmall",
+			"CreationTime":"2014-08-14T10:58Z",
+			"ScalingConfigurationId":"bU5uZHcAgtzwcL4IeDea****",
+			"InternetMaxBandwidthOut":"0",
+			"ScalingGroupId":"dE9YbOdCHqaFdFZHXVdD****",
+			"ScalingConfigurationName":"c1908dd1-690f-4c9b-ab73-350f1f06****",
+			"SystemDiskCategory":"cloud",
+			"LifecycleState":"Active"
+		}
+	},
+	"PageSize":"50",
+	"RequestId":"804F240A-8D3E-40A1-BD68-6B333DEA2CA8"
 }
 ```
 
-## Error code {#section_g4g_xgk_sfb .section}
-
-For common errors, see [client errors](reseller.en-US/API-Reference/Error codes/Client errors.md#) or [server errors](reseller.en-US/API-Reference/Error codes/Server errors.md#).
+## Error codes { .section}
 

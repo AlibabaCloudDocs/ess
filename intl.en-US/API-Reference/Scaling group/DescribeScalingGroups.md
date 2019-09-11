@@ -1,176 +1,298 @@
-# DescribeScalingGroups {#concept_25938_zh .concept}
+# DescribeScalingGroups {#doc_api_Ess_DescribeScalingGroups .reference}
 
-This topic introduces how to query a scaling group using the API.
+You can call this operation to query scaling groups.
 
-## Description {#section_wdv_5zj_sfb .section}
+## Debugging {#api_explorer .section}
 
-Queries the information of a scaling group. Scaling groups have the following life cycle states:
+[OpenAPI Explorer automatically calculates the signature value. For your convenience, we recommend that you call this operation in OpenAPI Explorer. OpenAPI Explorer dynamically generates the sample code of the operation for different SDKs.](https://api.aliyun.com/#product=Ess&api=DescribeScalingGroups&type=RPC&version=2014-08-28)
 
--   Active: In this state, the scaling group can receive scaling rule execution requests and trigger scaling activities.
--   Inactive: In this state, the scaling group does not receive scaling rule execution requests.
--   Deleting: The scaling group is being deleted and does not receive scaling rule execution requests.
+## Request parameters {#parameters .section}
 
-## Request parameters { .section}
+|Parameter|Type|Required|Example|Description|
+|---------|----|--------|-------|-----------|
+|RegionId|String|Yes|cn-qingdao|The ID of the region where a scaling group is located.
 
-|Name|Type|Required|Description|
-|:---|:---|:-------|:----------|
-|Action|String|Yes|Operation interface name, required parameter. Value: DescribeScalingGroups|
-|RegionId|String|Yes|ID of the region where the scaling group is located.|
-|ScalingGroupId.N|String|No|Scaling group ID. You can enter up to 20 IDs. Invalid scaling group IDs are not displayed in query results, and no error is reported.|
-|ScalingGroupName.N|String|No|Scaling group name. You can enter up to 20 names. Invalid scaling group names are not displayed in query results, and no error is reported.|
-|PageNumber|Integer|No|Page number of the scaling group list, staring from 1. Default value: 1.|
-|PageSize|Integer|No|When querying by page, this parameter indicates the number of lines per page. Maximum value: 50; default value: 10.|
+ |
+|Action|String|No|DescribeScalingGroups|The operation that you want to perform. Set the value to DescribeScalingGroups.
 
-## Response parameters { .section}
+ |
+|PageNumber|Integer|No|1|The page number of the scaling group list to return. Pages start from page 1.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|TotalCount|Integer|Total number of scaling groups|
-|PageNumber|Integer|Current page number|
-|PageSize|Integer|Number of lines per page|
-|ScalingGroups|ScalingGroupSetType|Scaling group information set|
+ Default value: 1.
 
-ScalingGroupSetType is a set of ScalingGroupItemTypes.
+ |
+|PageSize|Integer|No|10|The number of entries to return on each page. Maximum value: 100.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|ScalingGroup|ScalingGroupItemType|Scaling group information|
+ Default value: 10.
 
-The attributes of ScalingGroupItemType are listed as follows.
+ |
+|ScalingGroupId.1|String|No|dyrSuvBOtO1dEdIlIbp\*\*\*\*|The ID of scaling group N to be queried. Valid values of N: 1 to 20. The IDs of inactive scaling groups will not be displayed in the query result and no errors will be returned.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|ScalingGroupId|String|Scaling group ID.|
-|ScalingGroupName|String|Name shown for the scaling group.|
-|ActiveScalingConfigurationId|String|ID of the active scaling configuration in the scaling group.|
-|LaunchTemplateId|String|ID of the launch template used by the scaling group.|
-|LaunchTemplateVersion|String|Version of the launch template used by the scaling group.|
-|RegionId|String|ID of the region where the scaling group is located.|
-|MinSize|Integer|Minimum number of ECS instances in the scaling group.|
-|MaxSize|Integer|Maximum number of ECS instances in the scaling group.|
-|DefaultCooldown|Integer|Default cool-down time of the scaling group.|
-|RemovalPolicies|RemovalPolicySetType|A set of policies for removing ECS instances from the scaling group.|
-|LoadBalancerIds|List of LoadBalancerId|ID of the Server Load Balancer instance.|
-|DBInstanceIds|DBInstanceIdSetType|ID of the RDS instance.|
-|VSwitchId|String|ID of the virtual switch corresponding to the scaling group.|
-|LifecycleState|String|Status of the scaling group.|
-|TotalCapacity|Integer|Total number of ECS instances in the scaling group.|
-|ActiveCapacity|Integer|Number of ECS instances which have been attached to the scaling group and are running properly.|
-|PendingCapacity|Integer|Number of ECS instances which are being attached to the scaling group with relevant configurations not completed.|
-|RemovingCapacity|Integer|Number of ECS instances which are being removed from the scaling group .|
-|CreationTime|String|Time when the scaling group is created.|
+ |
+|ScalingGroupName.1|String|No|dyrSuvBOtO1dEdIlIbp\*\*\*\*|The name of scaling group N to be queried. Valid values of N: 1 to 20. The names of inactive scaling groups will not be displayed in the query result and no errors will be returned.
 
-RemovalPolicySetType is a set of String types.
+ |
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|RemovalPolicy|String|Policy for removing ECS instances from the scaling group.|
+## Response parameters {#resultMapping .section}
 
-DBInstanceIdSetType is a set of String types.
+|Parameter|Type|Example|Description|
+|---------|----|-------|-----------|
+|PageNumber|Integer|1|The current page number.
 
-|Name|Type|Description|
-|:---|:---|:----------|
-|DBInstanceId|String|ID of the RDS instance|
+ |
+|PageSize|Integer|50|The number of entries returned on each page.
 
-## Error code {#section_q3h_r1k_sfb .section}
+ |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|The ID of the request.
 
-For common errors, see [client errors](reseller.en-US/API-Reference/Error codes/Client errors.md#) or [server errors](reseller.en-US/API-Reference/Error codes/Server errors.md#).
+ |
+|ScalingGroups| | |The set of scaling groups.
 
-## Request example { .section}
+ |
+|ActiveCapacity|Integer|1|The number of ECS instances that have been added to the scaling group and are running properly.
 
-```
+ |
+|ActiveScalingConfigurationId|String|dyo713cNYIB4ddEVlKbc\*\*\*\*|The ID of the active scaling configuration in a scaling group.
+
+ |
+|CreationTime|String|2014-08-14T10:58Z|The time when a scaling group was created.
+
+ |
+|DBInstanceIds| |rdszzzyyuny\*\*\*\*|The IDs of RDS instances associated with a scaling group.
+
+ |
+|DefaultCooldown|Integer|60|The default cooldown period of a scaling group. During the cooldown period, no other activities are executed in the scaling group. This parameter is only valid for scaling activities trigger by [CloudMonitor](~~35170~~) monitoring tasks.
+
+ |
+|HealthCheckType|String|tcp|The health check type of the TCP listener. Valid values:
+
+ -   tcp
+-   http
+
+ |
+|LaunchTemplateId|String|lt-m5e3ofjr1zn1aw7\*\*\*\*|The ID of the instance launch template used by a scaling group.
+
+ |
+|LaunchTemplateVersion|String|true|The version number of the instance launch template used by a scaling group.
+
+ |
+|LifecycleState|String|Active|The status of a scaling group. Valid values:
+
+ -   Active: Active scaling groups can receive requests to execute scaling rules and trigger scaling activities.
+-   Inactive: Inactive scaling groups cannot receive any requests to execute scaling rules.
+-   Deleting: Scaling groups that are being deleted cannot receive any requests to execute scaling rules and their parameters cannot be modified.
+
+ |
+|LoadBalancerIds| |147b46d767c-cn-qingdao-cm5\*\*\*\*|The IDs of SLB instances associated with a scaling group.
+
+ |
+|MaxSize|Integer|2|The maximum number of ECS instances in a scaling group.
+
+ |
+|MinSize|Integer|1|The minimum number of ECS instances in a scaling group.
+
+ |
+|ModificationTime|String|2014-08-14T10:58Z|The time when a scaling group was modified.
+
+ |
+|MultiAZPolicy|String|PRIORITY|The ECS instance scaling policy for a multi-zone scaling group. Valid values:
+
+ -   PRIORITY: ECS instances are scaled based on the VSwitchIds.N parameter. When an ECS instance cannot be created in the zone where the VSwitch with the highest priority resides, the system automatically uses the VSwitch with the next highest priority to create the ECS instance.
+-   COST\_OPTIMIZED: ECS instances are created based on the unit price of vCPU, from low to high. Preemptible instances are created first when preemptible instance types are specified for the scaling configuration. Pay-as-you-go instances are created automatically when all types of preemptible instances are unavailable due to issues such as insufficient ECS resources.
+
+**Note:** COST\_OPTIMIZED takes effect only when multiple instance types are specified or at least one preemptible instance type is specified.
+
+-   BALANCE: ECS instances are distributed evenly in multiple zones specified in the scaling group. If ECS instances are unevenly distributed among the zones due to certain issues such as insufficient ECS resources, you can reallocate instances to make them evenly distributed by calling the [RebalanceInstance](~~71516~~) operation.
+
+ |
+|OnDemandBaseCapacity|Integer|30|The minimum number of pay-as-you-go instances required in a scaling group. Valid values: 0 to 1000. When the number of pay-as-you-go instances is smaller than this value, the scaling group will attempt to create pay-as-you-go instances over other instances.
+
+ |
+|OnDemandPercentageAboveBaseCapacity|Integer|20|The percentage of pay-as-you-go instances to create when instances are added to the scaling group.This parameter takes effect after the number of instances reaches the OnDemandBaseCapacity value. Valid values: 0 to 100.
+
+ |
+|PendingCapacity|Integer|0|The number of ECS instances that are being added to a scaling group, but are still being configured.
+
+ |
+|PendingWaitCapacity|Integer|1|The number of ECS instances that are in the pending state in a scaling group.
+
+ |
+|ProtectedCapacity|Integer|1|The number of ECS instances that are in the protected state in a scaling group.
+
+ |
+|RegionId|String|cn-qingdao|The ID of the region where a scaling group is located.
+
+ |
+|RemovalPolicies| |OldestScalingConfiguration|The set of policies for removing ECS instances from a scaling group.
+
+ |
+|RemovingCapacity|Integer|0|The number of ECS instances that are currently being removed from a scaling group.
+
+ |
+|RemovingWaitCapacity|Integer|1|The number of ECS instances that are pending to be removed from a scaling group.
+
+ |
+|ScalingGroupId|String|dyrSuvBOtO1dEdIlIbp\*\*\*\*|The ID of a scaling group.
+
+ |
+|ScalingGroupName|String|dyrSuvBOtO1dEdIlIbp\*\*\*\*|The name of a scaling group.
+
+ |
+|ScalingPolicy|String|recycle|Specifies the reclaim policy for the scaling group. Valid values:
+
+ -   recycle: The scaling group is set to the Shutdown and Reclaim Mode, which stops ECS instances and reclaims resources.
+-   release: The scaling group is set to the Release Mode, which removes or adds ECS instances.
+
+ For more information, see [RemoveInstances](~~25955~~).
+
+ |
+|SpotInstancePools|Integer|5|Specifies the number of available instance types. The scaling group will create preemptible instances of multiple instance types available at the lowest cost. Valid values: 0 to 10.
+
+ |
+|SpotInstanceRemedy|Boolean|true|Specifies whether to supplement preemptible instances when the target capacity of preemptible instances is not fulfilled. When receiving a system message that a preemptible instance will be reclaimed, the scaling group will create a new instance to replace the instance to be reclaimed if this parameter is set to true.
+
+ |
+|StandbyCapacity|Integer|1|The number of instances that are in the standby state in a scaling group.
+
+ |
+|StoppedCapacity|Integer|1|The number of instances that are in the stopped state in a scaling group.
+
+ |
+|TotalCapacity|Integer|1|The total number of ECS instances in a scaling group.
+
+ |
+|VServerGroups| | |The list of VServer groups.
+
+ |
+|LoadBalancerId|String|147b46d767c-cn-qingdao-cm5\*\*\*\*|The ID of the SLB instance with which a VServer group is associated.
+
+ |
+|VServerGroupAttributes| | |The attributes of a VServer group.
+
+ |
+|Port|Integer|22|The number of the port that is used by the SLB instance to provide public-facing services.
+
+ |
+|VServerGroupId|String|rsp-bp12bjrny\*\*\*\*|The ID of a VServer group.
+
+ |
+|Weight|Integer|1|The weight of a VServer group.
+
+ |
+|VSwitchId|String|vpc-25j4g\*\*\*\*|The ID of the VSwitch associated with a scaling group.
+
+ |
+|VSwitchIds| |vpc-25j4g\*\*\*\*|The set of IDs of the VSwitches associated with a scaling group. If you use the VSwitchIds parameter, the VSwitchId parameter is ignored.
+
+ |
+|VpcId|String|vpc-\*\*\*\*|The ID of the VPC to which a scaling group belongs.
+
+ |
+|TotalCount|Integer|1|The total number of scaling groups.
+
+ |
+
+## Examples {#demo .section}
+
+Sample requests
+
+``` {#request_demo}
+
 http://ess.aliyuncs.com/?Action=DescribeScalingGroups
 &RegionId=cn-qingdao
 &PageSize=50
-&<Public Request Parameters>
-```
-
-## Response example { .section}
-
-XML format:
+&<Common request parameters>
 
 ```
+
+Sample success responses
+
+`XML` format
+
+``` {#xml_return_success_demo}
 <DescribeScalingGroupsResponse>
-    <RequestId>6393C3A8-B611-42F2-AFA6-F080FC45D5D0</RequestId>
-    <TotalCount>1</TotalCount>
-    <PageNumber>1</PageNumber>
-    <PageSize>10</PageSize>
-    <ScalingGroups> 
-        <ScalingGroup>
-            <ActiveCapacity>1</ActiveCapacity>
-            <ActiveScalingConfigurationId>dyo713cNYIB4ddEVlKbcpOef</ActiveScalingConfigurationId>
-            <DBInstanceIds>
-                <DBInstanceId>rdszzzyyunybaeu</DBInstanceId>
-            </DBInstanceIds>
-            <VSwitchId>vpc-25j4god4l</VSwitchId>
-            <DefaultCooldown>20</DefaultCooldown>
-            <LifecycleState>Active</LifecycleState>
-            <LoadBalancerIds>
-                <LoadBalancerId>147b46d767c-cn-qingdao-cm5-a01</LoadBalancerId>
-            </LoadBalancerIds>
-            <MaxSize>1</MaxSize>
-            <MinSize>0</MinSize>
-            <PendingCapacity>0</PendingCapacity>
-            <RegionId>cn-qingdao</RegionId>
-            <RemovingCapacity>0</RemovingCapacity>
-            <ScalingGroupId>dyrSuvBOtO1dEdIlIbplQb8</ScalingGroupId>
-            <ScalingGroupName>dyrSuvBOtO1dEdIlIbplQb8</ScalingGroupName>
-            <RemovalPolicies>
-                <RemovalPolicy>OldestScalingConfiguration</RemovalPolicy>
-                <RemovalPolicy>OldestInstance</RemovalPolicy>
-            </RemovalPolicies>
-            <TotalCapacity>1</TotalCapacity>
-            <CreationTime>2014-08-14T10:58Z</CreationTime>
-        </ScalingGroup>
-    </ScalingGroups>
+      <RequestId>6393C3A8-B611-42F2-AFA6-F080FC45D5D0</RequestId>
+      <TotalCount>1</TotalCount>
+      <PageNumber>1</PageNumber>
+      <PageSize>10</PageSize>
+      <ScalingGroups> 
+            <ScalingGroup>
+                  <ActiveCapacity>1</ActiveCapacity>
+                  <ActiveScalingConfigurationId>dyo713cNYIB4ddEVlKbc****</ActiveScalingConfigurationId>
+                  <DBInstanceIds>
+                        <DBInstanceId>rdszzzyyuny****</DBInstanceId>
+                  </DBInstanceIds>
+                  <VSwitchId>vpc-25j4g****</VSwitchId>
+                  <DefaultCooldown>20</DefaultCooldown>
+                  <LifecycleState>Active</LifecycleState>
+                  <LoadBalancerIds>
+                        <LoadBalancerId>147b46d767c-cn-qingdao-cm5****</LoadBalancerId>
+                  </LoadBalancerIds>
+                  <MaxSize>1</MaxSize>
+                  <MinSize>0</MinSize>
+                  <PendingCapacity>0</PendingCapacity>
+                  <RegionId>cn-qingdao</RegionId>
+                  <RemovingCapacity>0</RemovingCapacity>
+                  <ScalingGroupId>dyrSuvBOtO1dEdIlIbp****</ScalingGroupId>
+                  <ScalingGroupName>dyrSuvBOtO1dEdIlIbp****</ScalingGroupName>
+                  <RemovalPolicies>
+                        <RemovalPolicy>OldestScalingConfiguration</RemovalPolicy>
+                        <RemovalPolicy>OldestInstance</RemovalPolicy>
+                  </RemovalPolicies>
+                  <TotalCapacity>1</TotalCapacity>
+                  <CreationTime>2014-08-14T10:58Z</CreationTime>
+            </ScalingGroup>
+      </ScalingGroups>
 </DescribeScalingGroupsResponse>
 ```
 
-JSON format:
+`JSON` format
 
-```
+``` {#json_return_success_demo}
 {
-"RequestId": "68386699-8B9E-4D5B-BC4C-75A28F6C2A00",
-"TotalCount": 1,
-"PageSize": 10,
-"PageNumber": 1,
-  "ScalingGroups": {
-    "ScalingGroup": [
-      {
-        "ScalingGroupId": "b8pYCVbIV5k9cz4PWpbe0k19",
-        "ScalingGroupName": "b8pYCVbIV5k9cz4PWpbe0k19",
-        "RegionId": "cn-qingdao",
-        "RemovingCapacity": 0,
-        "DefaultCooldown": 300,
-        "MinSize": 1,
-        "MaxSize": 2,
-        "LifecycleState": "Inactive",
-        "ActiveScalingConfigurationId": " dyo713cNYIB4ddEVlKbcpOef",
-        "LoadBalancerIds": {
-          "LoadBalancerId": [
-            "147b46d767c-cn-qingdao-cm5-a01"
-          ]
-        },
-        "PendingCapacity": 0,
-        "TotalCapacity": 0,
-        "ActiveCapacity": 0,
-        "CreationTime": "2014-08-14T10:58Z",
-        "DBInstanceIds": {
-          "DBInstanceId": [
-            "rdsia3u3yia3u3y",
-            "rdszzzyyunybaeu"
-          ]
-        },
-        "VSwitchId":"vpc-25j4god4l",
-        "RemovalPolicies": {
-          "RemovalPolicy": [
-            "OldestScalingConfiguration",
-            "OldestInstance"
-          ]
-        }
-      }
-    ]
-  }
- }
+	"PageNumber":1,
+	"TotalCount":1,
+	"PageSize":10,
+	"RequestId":"68386699-8B9E-4D5B-BC4C-75A28F6C2A00",
+	"ScalingGroups":{
+		"ScalingGroup":[
+			{
+				"DefaultCooldown":300,
+				"MaxSize":2,
+				"RemovalPolicies":{
+					"RemovalPolicy":[
+						"OldestScalingConfiguration",
+						"OldestInstance"
+					]
+				},
+				"PendingCapacity":0,
+				"RemovingCapacity":0,
+				"VSwitchId":"vpc-25j4g****",
+				"ScalingGroupName":"b8pYCVbIV5k9cz4PWpbe****",
+				"CreationTime":"2014-08-14T10:58Z",
+				"ActiveCapacity":0,
+				"ActiveScalingConfigurationId":" dyo713cNYIB4ddEVlKbc****",
+				"ScalingGroupId":"b8pYCVbIV5k9cz4PWpbe****",
+				"RegionId":"cn-qingdao",
+				"TotalCapacity":0,
+				"DBInstanceIds":{
+					"DBInstanceId":[
+						"rdsia3u3yia****",
+						"rdszzzyyuny****"
+					]
+				},
+				"LoadBalancerIds":{
+					"LoadBalancerId":[
+						"147b46d767c-cn-qingdao-cm5****"
+					]
+				},
+				"MinSize":1,
+				"LifecycleState":"Inactive"
+			}
+		]
+	}
+}
 ```
+
+## Error codes { .section}
 

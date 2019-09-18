@@ -4,34 +4,34 @@ You can call this operation to create a scaling group.
 
 ## Description {#description .section}
 
-A scaling group is a group of ECS instances that are dynamically scaled based on the configured scenario.
+A scaling group is a group of Elastic Compute Service \(ECS\) instances that are dynamically scaled based on the configured scenario.
 
--   You can create up to 50 scaling groups in a region.
--   The scaling group does not take effect immediately after being created. You must call the [EnableScalingGroup](~~25939~~) operation to enable the scaling group to trigger scaling rules and execute scaling activities.
--   Scaling groups must be in the same region as the SLB instance and RDS instance that are associated with each group. For more information, see [Regions and zones](~~40654~~).
--   If an SLB instance is specified for a scaling group, the scaling group automatically adds ECS instances to the backend server group of the specified SLB instance. The default weight of an ECS instance added to the backend server group is 50. The specified SLB instance must meet the following requirements:
-    -   The specified SLB instance must be in the Active state. You can call the [DescribeLoadBalancers](~~27582~~) operation to check the status of the specified SLB instance.
-    -   Health check must be enabled for all listener ports configured for the specified SLB instance. Otherwise, the scaling group fails to be created.
--   If an RDS instance is specified for the scaling group, the scaling group automatically adds the internal IP addresses of its ECS instances to the whitelist of the specified RDS instance. The specified RDS instance must meet the following requirements:
-    -   The specified RDS instance must be in the Running state. You can call the [DescribeDBInstances](~~26232~~) operation to check the status of the specified RDS instance.
+-   A single account can have up to 50 scaling groups in a region.
+-   A scaling group does not take effect immediately after being created. You must call the [EnableScalingGroup](~~25939~~) operation to enable the scaling group to trigger scaling rules and execute scaling activities.
+-   Each scaling group must be in the same region as the Server Load Balancer \(SLB\) instance and ApsaraDB for Relationship Database Service \(RDS\) instance that are associated with it. For more information, see [Regions and zones](~~40654~~).
+-   If an SLB instance is specified for a scaling group, the scaling group automatically adds ECS instances to the VServer group of the specified SLB instance. The default weight of an ECS instance added to the VServer group is 50. The specified SLB instance must meet the following requirements:
+    -   The SLB instance must be in the Active state. You can call the [DescribeLoadBalancers](~~27582~~) operation to query the status of the specified SLB instance.
+    -   Health check must be enabled on all listener ports configured for the SLB instance. Otherwise, the scaling group fails to be created.
+-   If an RDS instance is specified for a scaling group, the scaling group automatically adds the internal IP addresses of its ECS instances to the whitelist of the specified RDS instance. The specified RDS instance must meet the following requirements:
+    -   The RDS instance must be in the Running state. You can call the [DescribeDBInstances](~~26232~~) operation to query the status of the specified RDS instance.
     -   The number of IP addresses in the RDS instance whitelist cannot exceed the upper limit. For more information, see [Configure a whitelist](~~26198~~).
--   If the MultiAZPolicy parameter of the scaling group is set to COST\_OPTIMIZED:
+-   If the MultiAZPolicy parameter of a scaling group is set to COST\_OPTIMIZED \(the cost optimization policy\):
     -   When the OnDemandBaseCapacity, OnDemandPercentageAboveBaseCapacity, and SpotInstancePools parameters are specified,
 
         the scaling group will use the instance allocation method based on the cost optimization policy. This allocation method is prioritized during scaling activities.
 
-    -   When at least one of the OnDemandBaseCapacity, OnDemandPercentageAboveBaseCapacity, or SpotInstancePools parameters is not specified,
+    -   When at least one of the OnDemandBaseCapacity, OnDemandPercentageAboveBaseCapacity, and SpotInstancePools parameters is not specified,
 
         the instance types available at the lowest cost are selected to create instances based on the cost optimization policy.
 
 
 ## Debugging {#api_explorer .section}
 
-[OpenAPI Explorer automatically calculates the signature value. For your convenience, we recommend that you call this operation in OpenAPI Explorer. OpenAPI Explorer dynamically generates the sample code of the operation for different SDKs.](https://api.aliyun.com/#product=Ess&api=CreateScalingGroup&type=RPC&version=2014-08-28)
+[Alibaba Cloud provides OpenAPI Explorer to simplify API usage. You can use OpenAPI Explorer to search for APIs, call APIs, and dynamically generate SDK example code.](https://api.aliyun.com/#product=Ess&api=CreateScalingGroup&type=RPC&version=2014-08-28)
 
 ## Request parameters {#parameters .section}
 
-|Parameter|Type|Required|Example|Description|
+|parameter|Type|Required|Example|Description|
 |---------|----|--------|-------|-----------|
 |MaxSize|Integer|Yes|20|The maximum number of ECS instances in the scaling group. Valid values: 0 to 1000. When the number of ECS instances in the scaling group exceeds the value of MaxSize, Auto Scaling removes the ECS instances from the scaling group until the number of instances is equal to the MaxSize value.
 
@@ -39,7 +39,7 @@ A scaling group is a group of ECS instances that are dynamically scaled based on
 |MinSize|Integer|Yes|2|The minimum number of ECS instances in the scaling group. Valid values: 0 to 1000. When the number of ECS instances in the scaling group is smaller than the value of MinSize, Auto Scaling automatically creates ECS instances until the number of instances is equal to the MinSize value.
 
  |
-|RegionId|String|Yes|cn-qingdao|The region ID of the scaling group. For more information, see [Regions and zones](~~40654~~).
+|RegionId|String|Yes|cn-qingdao|The ID of the region where the scaling group resides. For more information, see [Regions and zones](~~40654~~).
 
  |
 |Action|String|No|CreateScalingGroup|The operation that you want to perform. Set the value to CreateScalingGroup.
@@ -51,27 +51,27 @@ A scaling group is a group of ECS instances that are dynamically scaled based on
 |DBInstanceIds|String|No|\["rm-idx", "rm-idy", "rm-idz"\]|The IDs of RDS instances. This value can be a JSON array which can contain up to eight RDS instance IDs. Separate multiple IDs with commas \(,\).
 
  |
-|DefaultCooldown|Integer|No|300|The cooldown period after a scaling activity is executed. Valid values: 0 to 86400. Unit: seconds.
+|DefaultCooldown|Integer|No|300|The cooldown period after a scaling activity \(adding or removing ECS instances\) is executed. Valid values: 0 to 86400. Unit: seconds.
 
  Default value: 300.
 
- During the cooldown period, no other activities are executed in the scaling group. This parameter is only valid for scaling activities triggered by [CloudMonitor](~~35170~~) monitoring tasks.
+ During the cooldown period calculated for a scaling activity, the scaling group does not execute any other scaling activities triggered by [CloudMonitor](~~35170~~) alarm tasks.
 
  |
-|HealthCheckType|String|No|tcp|The health check type of the TCP listener. Valid values:
+|HealthCheckType|String|No|ECS|The health check mode of the scaling group. Valid values:
 
- -   tcp
--   http
-
- |
-|LaunchTemplateId|String|No|lt-m5e3ofjr1zn1aw7\*\*\*\*|The ID of the instance launch template, from which the specified scaling group can obtain launch configurations.
+ -   NONE: The system performs no health check.
+-   ECS: The system performs the health check on ECS instances in the scaling group.
 
  |
-|LaunchTemplateVersion|String|No|Default|The version number of the instance launch template. Valid values:
+|LaunchTemplateId|String|No|lt-m5e3ofjr1zn1aw7\*\*\*\*|The ID of the instance launch template from which the scaling group obtains launch configurations.
 
- -   A fixed template version number.
--   Default: always uses the default template version.
--   Latest: always uses the latest template version.
+ |
+|LaunchTemplateVersion|String|No|Default|The version of the instance launch template. Valid values:
+
+ -   A fixed template version.
+-   Default: The default template version is always used.
+-   Latest: The latest template version is always used.
 
  |
 |LifecycleHook.N.DefaultResult|String|No|CONTINUE|The action that the scaling group takes when the lifecycle hook times out. Valid values:
@@ -79,12 +79,12 @@ A scaling group is a group of ECS instances that are dynamically scaled based on
  -   CONTINUE: The scaling group continues the scale-in or scale-out event.
 -   ABANDON: The scaling group releases the created ECS instances if the scaling activity type is scale-out or removes the ECS instances to be scaled-in if the scaling activity type is scale-in.
 
- Default value: CONTINUE
+ Default value: CONTINUE.
 
  If the scaling group has multiple lifecycle hooks and one of them is terminated when the DefaultResult parameter is set to ABANDON during a scale-in event, the remaining lifecycle hooks in the same scaling group are also terminated. Otherwise, the scaling activity will proceed normally after the wait period expires and continue with the action specified by the DefaultResult parameter.
 
  |
-|LifecycleHook.N.HeartbeatTimeout|Integer|No|600|The time that can elapse before the lifecycle hook times out. If the lifecycle hook times out, the scaling group performs the default action. Valid values: 30 to 21600. Unit: seconds.
+|LifecycleHook.N.HeartbeatTimeout|Integer|No|600|The wait period before the lifecycle hook times out. If the lifecycle hook times out, the scaling group performs the action specified in the DefaultResult parameter. Valid values: 30 to 21600. Unit: seconds.
 
  Default value: 600.
 
@@ -102,7 +102,7 @@ A scaling group is a group of ECS instances that are dynamically scaled based on
  |
 |LifecycleHook.N.NotificationArn|String|No|acs:ess:cn-hangzhou:1111111111:queue/queue2|The Alibaba Cloud Resource Name \(ARN\) of the notification object that Auto Scaling uses to notify you when an instance is in the transition state for the lifecycle hook. This object can be either an MNS queue or an MNS topic. The format of the parameter value is acs:ess:\{region\}:\{account-id\}:\{resource-relative-id\}.
 
- -   region: the region where the scaling group is located.
+ -   region: the region where the scaling group resides.
 -   account-id: the ID of the Alibaba Cloud account.
 
  Examples:
@@ -126,13 +126,13 @@ A scaling group is a group of ECS instances that are dynamically scaled based on
 
 -   BALANCE: ECS instances are distributed evenly in multiple zones specified in the scaling group. If ECS instances are unevenly distributed among the zones due to certain issues such as insufficient ECS resources, you can reallocate instances to make them evenly distributed by calling the [RebalanceInstance](~~71516~~) operation.
 
- Default value: PRIORITY
+ Default value: PRIORITY.
 
  |
 |OnDemandBaseCapacity|Integer|No|30|The minimum number of pay-as-you-go instances required in the scaling group. Valid values: 0 to 1000. When the number of pay-as-you-go instances is smaller than this value, the scaling group will attempt to create pay-as-you-go instances over other instances.
 
  |
-|OnDemandPercentageAboveBaseCapacity|Integer|No|20|The percentage of pay-as-you-go instances to create when instances are added to the scaling group. This parameter takes effect after the number of instances reaches the OnDemandBaseCapacity value. Valid values: 0 to 100.
+|OnDemandPercentageAboveBaseCapacity|Integer|No|20|The percentage of pay-as-you-go instances to be created when instances are added to the scaling group. This parameter takes effect after the number of instances reaches the OnDemandBaseCapacity value. Valid values: 0 to 100.
 
  |
 |RemovalPolicy.1|String|No|OldestScalingConfiguration|Specifies policy N for removing ECS instances from the scaling group. Valid values of N: 1 to 2. For more information, see [Removal policies](~~25910~~). Valid values:
@@ -141,9 +141,9 @@ A scaling group is a group of ECS instances that are dynamically scaled based on
 -   NewestInstance: removes the ECS instance that is added to the scaling group at the latest point in time.
 -   OldestScalingConfiguration: removes the ECS instance that is created based on the earliest scaling configuration.
 
- Default value of RemovalPolicy.1: OldestScalingConfiguration
+ Default value of RemovalPolicy.1: OldestScalingConfiguration.
 
- Default value of RemovalPolicy.2: OldestInstance
+ Default value of RemovalPolicy.2: OldestInstance.
 
  |
 |ScalingGroupName|String|No|Testsg|The name of the scaling group. The name of a scaling group must be unique in a region. The name must be 2 to 40 characters in length and can contain letters, digits, underscores \(\_\), hyphens \(-\), and periods \(.\). It must start with a letter or digit.
@@ -151,7 +151,7 @@ A scaling group is a group of ECS instances that are dynamically scaled based on
  The default value is the ID of the scaling group.
 
  |
-|ScalingPolicy|String|No|recycle|Specifies the reclaim policy for the scaling group. Valid values:
+|ScalingPolicy|String|No|recycle|The reclaim policy of the scaling group. Valid values:
 
  -   recycle: The scaling group is set to the Shutdown and Reclaim Mode, which stops ECS instances and reclaims resources.
 -   release: The scaling group is set to the Release Mode, which removes or adds ECS instances.
@@ -159,7 +159,7 @@ A scaling group is a group of ECS instances that are dynamically scaled based on
  For more information, see [RemoveInstances](~~25955~~).
 
  |
-|SpotInstancePools|Integer|No|5|Specifies the number of available instance types. The scaling group will create preemptible instances of multiple instance types available at the lowest cost. Valid values: 0 to 10.
+|SpotInstancePools|Integer|No|5|The number of available instance types. The scaling group will create preemptible instances of multiple instance types available at the lowest cost. Valid values: 0 to 10.
 
  |
 |SpotInstanceRemedy|Boolean|No|true|Specifies whether to supplement preemptible instances when the target capacity of preemptible instances is not fulfilled. When receiving a system message that a preemptible instance will be reclaimed, the scaling group will create a new instance to replace the instance to be reclaimed if this parameter is set to true.
@@ -194,7 +194,7 @@ A scaling group is a group of ECS instances that are dynamically scaled based on
 
  This parameter is only valid when the network type of the scaling group is VPC. The specified VSwitch and the scaling group must be in the same VPC.
 
- VSwitches can be from multiple zones. VSwitches are sorted in ascending order based on the value of N. 1 indicates the highest priority. When an ECS instance cannot be created in the zone where the VSwitch with the highest priority resides, the system automatically uses the VSwitch with the next highest priority to create the ECS instance.
+ VSwitches can be from multiple zones. VSwitches are sorted in ascending order based on the value of N. Value 1 indicates the highest priority. When an ECS instance cannot be created in the zone where the VSwitch with the highest priority resides, the system automatically uses the VSwitch with the next highest priority to create the ECS instance.
 
  |
 
@@ -211,7 +211,7 @@ A scaling group is a group of ECS instances that are dynamically scaled based on
 
 ## Examples {#demo .section}
 
-Sample requests
+Sample request
 
 ``` {#request_demo}
 
@@ -226,7 +226,7 @@ http://ess.aliyuncs.com/?Action=CreateScalingGroup
 
 ```
 
-Sample success responses
+Sample success response
 
 `XML` format
 
@@ -354,7 +354,7 @@ Sample success responses
 
 |The value of parameter <parameter name\> and parameter <parameter name\> are conflict.
 
-|The error message returned because the specified value of MinSize is greater than that of MaxSize.
+|The error message returned because the specified MinSize value is greater than the MaxSize value.
 
 |
 |400
@@ -442,7 +442,7 @@ Sample success responses
 
 |LaunchTemplateVersionSet.NotFound
 
-|The specific version of launch template is not exist.
+|The specific version of launch template does not exist.
 
 |The error message returned because the specified version of the instance launch template does not exist.
 
@@ -489,7 +489,7 @@ Sample success responses
 
 |The input parameter "LaunchTemplateVersion" is supposed to be a string representing the version number.
 
-|The error message returned because the specified LaunchTemplateVersion parameter of the specified launch template is not in digits.
+|The error message returned because the specified LaunchTemplateVersion parameter of the specified instance launch template is not in digits.
 
 |
 

@@ -58,10 +58,10 @@
  冷却时间内，该伸缩组不执行其它的伸缩活动，仅针对[云监控](~~35170~~)报警任务触发的伸缩活动有效。
 
  |
-|HealthCheckType|String|否|tcp|TCP协议监听的健康检查方式，取值范围：
+|HealthCheckType|String|否|ECS|伸缩组的健康检查方式，取值范围：
 
- -   tcp
--   http
+ -   NONE：不做健康检查。
+-   ECS：对伸缩组内的ECS实例做健康检查。
 
  |
 |LaunchTemplateId|String|否|lt-m5e3ofjr1zn1aw7\*\*\*\*|实例启动模板ID，用于指定伸缩组从实例启动模板获取启动配置信息。

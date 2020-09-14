@@ -1,39 +1,47 @@
-# What is Auto Scaling? {#concept_25857_zh .concept}
+---
+keyword: [elastic scaling, Auto Scaling, ESS, scale-out, scale-in]
+---
 
-Auto Scaling automatically adjusts the volume of your elastic computing resources to meet your changing business needs. Based on the scaling rules that you set, Auto Scaling automatically adds ECS instances as your business needs grow to ensure that you have sufficient computing capabilities. When your business needs fall, Auto Scaling automatically reduces the number of ECS instances to save on costs.
+# What is Auto Scaling?
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40535/155902351121244_en-US.png)
+Auto Scaling is a management service that automatically adjusts the number of elastic computing resources based on your business demands and policies. When business loads increase, Auto Scaling automatically adds ECS instances to ensure sufficient computing capabilities. When business loads decrease, Auto Scaling automatically removes ECS instances to save costs. It is suitable for applications with fluctuating business loads, as well as applications with stable business loads.
 
-## Scaling-out {#section_hmh_c2m_qfb .section}
+## Example of elastic scaling
 
-When you upgrade your business, Auto Scaling automatically upgrades the underlying resources for you to avoid access delays and excessive resource loads.
+You must specify the conditions that are used to trigger elastic scaling. The following figure shows that the monitoring metric is the average vCPU utilization of ECS instances in a scaling group, the threshold value to trigger scale-out events is 80%, and the threshold value to trigger scale-in events is 30%.
 
-You can set CloudMonitor to monitor your ECS instance usage in real time. For example, when CloudMonitor detects that ECS instance vCPU usage exceeds 80% in a scaling group, Auto Scaling elastically scales out your ECS resources based on the scaling rules that you set. This is done by automatically creating a suitable number of ECS instances and automatically adding these ECS instances to the Server Load Balancer instance and RDS instance whitelist. For more details, see [create a scaling group](../../../../reseller.en-US/Quick Start/Step 2. Create a scaling solution.md#) in Auto Scaling and [monitor Auto Scaling](../../../../reseller.en-US/User Guide/Cloud service monitoring/Auto Scaling.md#) in CloudMonitor.
+![What is ESS? - Diagram of ESS](https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/en-US/0627659951/p21244.png)
 
-**Note:** When Auto Scaling scales out your ECS resources, new ECS instances are automatically created and added to the scaling group by using the active scaling configuration as the template. You can log on to the ECS console to do operations on these ECS instances, such as starting, stopping, and connecting to them.
+## Scale-out
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40535/155902351121245_en-US.png)
+When business loads surge above normal loads, Auto Scaling automatically increases underlying resources. This helps maintain access speed and ensures that resources are not overloaded.
 
-## Scaling-in { .section}
+You can configure Cloud Monitor to monitor your ECS instance usage in real time. For example, when Cloud Monitor detects that the vCPU utilization of ECS instances in a scaling group exceeds 80%, Auto Scaling automatically scales out ECS resources based on the scaling rules that you configured. During the scale-out event, Auto Scaling automatically creates ECS instances and adds these ECS instances to the backend server groups of the associated SLB instances and the whitelists of the associated ApsaraDB for RDS instances.
 
-When your business needs fall, Auto Scaling automatically releases underlying resources for you to avoid wasting resources.
+During scale-out events, ECS instances are automatically created based on the instance configuration information of the scaling group. The instance configuration information includes the instance type, operating system, and user data. For more information, see [Overview of instance configuration sources](/intl.en-US/Scaling Group/Instance Configuration Source/Overview of instance configuration sources.md). You can log on to the ECS console to start or stop ECS instances. You can also connect to an ECS instance to modify its system configurations.
 
-You can set CloudMonitor to monitor your ECS instance usage in real time. For example, when CloudMonitor detects that ECS instance vCPU usage falls below 30% in a scaling group, Auto Scaling elastically scales in your ECS resources based on the scaling rules that you set. This is done by automatically releasing a suitable number of ECS instances and automatically removing these ECS instances from the Server Load Balancer instance and RDS instance whitelist. For more details, see [removal policy](../../../../reseller.en-US/User Guide/Maintain Auto Scaling/Removal policies.md#) in Auto Scaling and [monitor Auto Scaling](../../../../reseller.en-US/User Guide/Cloud service monitoring/Auto Scaling.md#) in CloudMonitor.
+![What is ESS? - Diagram of a scale-out event](https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/en-US/0627659951/p21245.png)
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40535/155902351121246_en-US.png)
+## Scale-in
 
-## Flexible recovery { .section}
+When business loads decrease, ESS automatically releases underlying resources to prevent resource wastage and reduce costs.
 
-Auto Scaling provides a health check function and automatically monitors the health of ECS instances within scaling groups, so the number of healthy ECS instances in a scaling group does not fall below the minimum value that you set.
+You can configure Cloud Monitor to monitor your ECS instance usage in real time. For example, when Cloud Monitor detects that the vCPU utilization of ECS instances in a scaling group is less than 30%, ESS automatically scales in ECS resources based on the scaling rules that you configured. During the scale-in event, ESS automatically releases ECS instances and removes these ECS instances from the backend server groups of the associated SLB instances and the whitelists of the associated ApsaraDB for RDS instances.
 
-When Auto Scaling detects that an ECS instance is not healthy, Auto Scaling automatically releases the unhealthy ECS instance, creates a new ECS instance, and adds the new instance to the Server Load Balancer instance and RDS instance whitelist. For more information, see [remove an unhealthy ECS instance](../../../../reseller.en-US/User Guide/Usage notes/Remove an unhealthy ECS instance.md#).
+![What is ESS? - Diagram of a scale-in event](https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/en-US/0627659951/p21246.png)
 
-![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/40535/155902351121247_en-US.png)
+## Elastic recovery
 
-## References { .section}
+ESS provides the health check feature and automatically monitors the health status of ECS instances in a scaling group, so that the number of healthy ECS instances in the scaling group does not fall below the minimum value that is specified for the scaling group.
 
--   [What is ECS](../../../../reseller.en-US/Product Introduction/What is ECS?.md#)
--   [What is RDS](../../../../reseller.en-US/Product Introduction/What is ApsaraDB for RDS.md#)
--   [What is Server Load Balancer](../../../../reseller.en-US/Product Introduction/What is Server Load Balancer?.md#)
--   [CloudMonitor overview](../../../../reseller.en-US/Product Introduction/Overview.md#)
+When ESS detects that an ECS instance is unhealthy, ESS automatically releases the unhealthy ECS instance, creates a new ECS instance, and then adds the new instance to the backend server groups of the associated SLB instances and the whitelists of the associated ApsaraDB for RDS instances.
+
+![What is ESS? - Diagram of elastic recovery](https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/en-US/0627659951/p21247.png)
+
+## References
+
+-   [What is ECS?](/intl.en-US/Product Introduction/What is ECS?.md)
+-   [What is ApsaraDB for RDS?](/intl.en-US/Product Introduction/What is ApsaraDB for RDS?.md)
+-   [What is SLB?](/intl.en-US/Product Introduction/What is SLB?.md)
+-   [What is Cloud Monitor?](/intl.en-US/Product Introduction/What is CloudMonitor?.md)
 

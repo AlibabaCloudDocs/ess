@@ -10,10 +10,10 @@ This topic describes the features and scenarios of Auto Scaling.
 
 ## Benefits
 
--   On demand: ESS scales resources on demand to respond to traffic spikes in real time without the need to predict demand changes.
--   Automatic: ESS automatically creates and releases ECS instances without manual intervention. It also automatically configures SLB instances and whitelists of ApsaraDB for RDS instances.
--   Flexible: ESS allows you to schedule, customize, and fix the minimum number of instances, as well as configure automatic replacement of unhealthy instances. It also provides API operations to allow you to monitor instances by using external monitoring systems.
--   Intelligent: ESS intelligently schedules cloud computing resources to respond to various complex scenarios.
+-   On demand: Auto Scaling scales resources on demand to respond to traffic spikes in real time without the need to predict demand changes.
+-   Automatic: Auto Scaling automatically creates and releases ECS instances without manual intervention. It also automatically configures SLB instances and whitelists of ApsaraDB for RDS instances.
+-   Flexible: Auto Scaling allows you to schedule, customize, and fix the minimum number of instances, as well as configure automatic replacement of unhealthy instances. It also provides API operations to allow you to monitor instances by using external monitoring systems.
+-   Intelligent: Auto Scaling intelligently schedules cloud computing resources to respond to various complex scenarios.
 
 ## Scenarios
 

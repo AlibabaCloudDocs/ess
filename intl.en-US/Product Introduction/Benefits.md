@@ -1,23 +1,24 @@
-# Benefits {#concept_evq_kfm_qfb .concept}
+# Benefits
 
-This article introduces the function, product features and scenarios of Auto Scaling.
+This topic describes the features and scenarios of Auto Scaling.
 
-## Overview {#section_zhg_bgm_qfb .section}
+## Features
 
--   Automatically add or remove ECS instances when demand on your application increases or decreases.
--   Automatically configure the ECS instances of Sever Load Balancer.
--   Supports configure the ApsaraDB for RDS whitelist.
+-   Automatically adds or removes ECS instances based on your business requirements.
+-   Automatically adds or removes ECS instances to or from the backend server groups of the associated SLB instances.
+-   Automatically adds or removes IP addresses of ECS instances to or from the whitelists of the associated ApsaraDB for RDS instances.
 
-## Features {#section_scg_cgm_qfb .section}
+## Benefits
 
--   On demand: Adjust resources to fit the demand curve in real time. You do not have to worry about your computing capacity when demand surges.
--   Automated: Automatically create and release ECS instances based on policies you specify. Configure the Server Load Balancer and RDS whitelists with no manual operation.
--   Flexible: You can setup scheduled scaling, dynamic scaling based on targets monitored, scaling fixed number of instances, and automated replacing of unhealthy instances. It also can use external monitoring systems through APIs.
--   Intelligent: Can be applied to complicated scenarios.
+-   On demand: ESS scales resources on demand to respond to traffic spikes in real time without the need to predict demand changes.
+-   Automatic: ESS automatically creates and releases ECS instances without manual intervention. It also automatically configures SLB instances and whitelists of ApsaraDB for RDS instances.
+-   Flexible: ESS allows you to schedule, customize, and fix the minimum number of instances, as well as configure automatic replacement of unhealthy instances. It also provides API operations to allow you to monitor instances by using external monitoring systems.
+-   Intelligent: ESS intelligently schedules cloud computing resources to respond to various complex scenarios.
 
-## Scenarios {#section_cdh_dgm_qfb .section}
+## Scenarios
 
--   Video sharing: Workload surges during holidays and festivals. Computing resources have to be scaled out automatically in real time.
--   Video streaming: Demand curve is difficult to predict manually. Computing resources have to be scaled out based on CPU usage, workload, or bandwidth.
--   Gaming: Demand increasing starts at 12:00 and lasts from 18:00 to 21:00, scheduled scaling is needed.
+-   Video streaming: Traffic loads surge during holidays and festivals. Cloud computing resources must be automatically scaled out to meet the increased demands.
+-   Live streaming and broadcast: Traffic loads are ever-changing and difficult to predict. Alibaba Cloud computing resources must be scaled based on CPU utilization, application load, and bandwidth usage.
+-   Gaming: Traffic loads increase at 12:00 and from 18:00 to 21:00. Cloud computing resources must be scaled out on a regular basis.
+-   E-commerce: Traffic loads surge during big promotions. A large number of ECS instances must be created and available within minutes.
 

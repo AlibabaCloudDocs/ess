@@ -22,11 +22,11 @@
  -   QuantityChangeInCapacity：增加或减少指定数量的 ECS 实例。
 -   PercentChangeInCapacity：增加或减少指定比例的 ECS 实例。
 -   TotalCapacity： 将当前伸缩组的 ECS 实例数量调整到指定数量。 |
-|AdjustmentValue|Integer|否|100|伸缩规则的调整值， 适用于简单规则和步进规则，且此时该项必选。任何情况下，单次调整的ECS实例台数都不能超过500。不同调整方式对应的取值范围：
+|AdjustmentValue|Integer|否|100|伸缩规则的调整值， 适用于简单规则和步进规则，且此时该项必选。任何情况下，单次调整的ECS实例台数都不能超过1000。不同调整方式对应的取值范围：
 
- -   QuantityChangeInCapacity：-500~500
+ -   QuantityChangeInCapacity：-1000~1000
 -   PercentChangeInCapacity：-100~10000
--   TotalCapacity：0~1000 |
+-   TotalCapacity：0~2000 |
 |EstimatedInstanceWarmup|Integer|否|60|实例预热时间，适用于目标追踪规则和步进规则。处于预热状态的ECS实例将正常的加入伸缩组，但是期间将不会向云监控上报监控数据。
 
  **说明：** 动态计算需要扩缩容的ECS实例数量时，处于预热状态的实例不计入现有实例数量。

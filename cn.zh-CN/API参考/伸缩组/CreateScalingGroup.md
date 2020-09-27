@@ -84,7 +84,9 @@
 |HealthCheckType|String|否|ECS|伸缩组的健康检查方式。取值范围：
 
  -   NONE：不做健康检查。
--   ECS：对伸缩组内的ECS实例做健康检查。 |
+-   ECS：对伸缩组内的ECS实例做健康检查。
+
+ 默认值：ECS |
 |LifecycleHook.N.LifecycleHookName|String|否|lifecyclehook\*\*\*\*|生命周期挂钩名称，用于指定生命周期挂钩，不支持修改。 |
 |LifecycleHook.N.LifecycleTransition|String|否|SCALE\_OUT|生命周期挂钩适用的伸缩活动类型，取值范围：
 

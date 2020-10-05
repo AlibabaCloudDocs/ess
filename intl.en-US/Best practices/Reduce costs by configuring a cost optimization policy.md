@@ -65,8 +65,6 @@ Assume that in the preceding procedure, you have specified a VSwitch in Qingdao 
 
 **Note:** The prices listed in this topic are only for reference. Refer to the buy page of ECS instances for actual prices.
 
-![Example of preemptible instance prices](../images/p37634.png)
-
 Based on the preceding settings of the instance types and billing method, you have four plans for creating instances. The following table lists the four plans by vCPU unit price in ascending order.
 
 |No.|Instance Type|Billing method|vCPU|Market price of instance \(RMB per hour\)|Unit price of vCPU \(RMB per hour\)|
@@ -79,6 +77,4 @@ Based on the preceding settings of the instance types and billing method, you ha
 Expected process for creating instances: During a scale-out event, Auto Scaling preferentially creates ECS instances based on Plan 1. If instances fails to be created in both Zone B and Zone C due to insufficient resources, Auto Scaling attempts to create ECS instances based on Plan 2, Plan 3, and Plan 4 in sequence.
 
 Execute the scaling rule to trigger a scale-out event during which an ECS instance is created and added to the scaling group. In the Auto Scaling console, go to the ECS Instances page of the scaling group and click the created ECS instance to view its instance type and billing method. In this example, the instance type is **ecs.sn1.xlarge** and the billing method is **Pay-As-You-Go-Preemptible Instance**. This indicates that costs are reduced.
-
-![Reduce costs by configuring a cost optimization policy - verification](../images/p37797.png)
 

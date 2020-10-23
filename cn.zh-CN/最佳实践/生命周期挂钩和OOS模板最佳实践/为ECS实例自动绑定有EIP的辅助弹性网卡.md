@@ -25,11 +25,11 @@ EIP是可以独立购买和持有的公网IP地址资源，用于长期持有某
 
 本教程以OOS公共模板ACS-ESS-LifeCycleCreateNetworkInterfaceAndEipAndAttachToInstance为例，实现在扩容时为ECS实例绑定一张辅助弹性网卡，并为辅助弹性网卡分配一个EIP。步骤如下：
 
--   [步骤一：对用户账号授予OOS服务权限](#section_onb_kyb_1xg)
+-   [步骤一：对RAM角色授予OOS服务权限](#section_onb_kyb_1xg)
 -   [步骤二：为扩容活动创建生命周期挂钩并触发扩容](#section_ixt_52h_nq5)
 -   [（可选）步骤三：查看OOS执行情况](#section_dvu_jn8_f76)
 
-## 步骤一：对用户账号授予OOS服务权限
+## 步骤一：对RAM角色授予OOS服务权限
 
 您需要拥有OOS的执行权限才能执行OOS的模板。执行ACS-ESS-LifeCycleCreateNetworkInterfaceAndEipAndAttachToInstance中定义的运维操作时涉及ECS、弹性伸缩、EIP的资源。
 
@@ -65,7 +65,7 @@ EIP是可以独立购买和持有的公网IP地址资源，用于长期持有某
     -   在**操作**区域，单击**查看详情**。
 5.  为扩容活动创建生命周期挂钩。
 
-    1.  在页面上方，单击**生命周期挂钩**。
+    1.  在页面上方，单击**生命周期挂钩**页签。
 
     2.  单击**创建生命周期挂钩**。
 
@@ -94,7 +94,7 @@ ACS-ESS-LifeCycleCreateNetworkInterfaceAndEipAndAttachToInstance的执行参数�
 
     **说明：** 手动执行伸缩规则触发扩缩容时，生命周期挂钩会生效，但手动添加或移出已有ECS实例时，生命周期挂钩不会生效。
 
-    1.  在页面上方，单击**伸缩规则**。
+    1.  在页面上方，单击**伸缩规则**页签。
 
     2.  单击**创建伸缩规则**。
 
@@ -120,7 +120,7 @@ ACS-ESS-LifeCycleCreateNetworkInterfaceAndEipAndAttachToInstance的执行参数�
 
 7.  查看自动创建的ECS实例是否符合预期。
 
-    1.  在页面上方，单击**实例列表**。
+    1.  在页面上方，单击**实例列表**页签。
 
     2.  找到自动创建的ECS实例，在**云服务器ID/名称**区域，单击实例ID。
 

@@ -19,11 +19,11 @@ NAS文件系统是文件存储的实例，将文件系统挂载到ECS实例后�
 
 本教程以OOS公共模板ACS-ESS-LifeCycleAttachNASFileSystemToInstance为例，实现在扩容时自动为Linux系统的ECS实例挂载NAS。步骤如下：
 
--   [步骤一：对用户账号授予OOS服务权限](#section_r1w_2zf_pd6)
+-   [步骤一：对RAM角色授予OOS服务权限](#section_r1w_2zf_pd6)
 -   [步骤二：为扩容活动创建生命周期挂钩并触发扩容](#section_aky_jt2_of9)
 -   [（可选）步骤三：查看OOS执行情况](#section_cpy_moq_zg8)
 
-## 步骤一：对用户账号授予OOS服务权限
+## 步骤一：对RAM角色授予OOS服务权限
 
 您需要拥有OOS的执行权限才能执行OOS的模板。执行ACS-ESS-LifeCycleAttachNASFileSystemToInstance中定义的运维操作时涉及云服务器ECS、弹性伸缩、NAS文件系统的资源。
 
@@ -100,7 +100,7 @@ NAS文件系统是文件存储的实例，将文件系统挂载到ECS实例后�
     -   在**操作**区域，单击**查看详情**。
 5.  为扩容活动创建生命周期挂钩。
 
-    1.  在页面上方，单击**生命周期挂钩**。
+    1.  在页面上方，单击**生命周期挂钩**页签。
 
     2.  单击**创建生命周期挂钩**。
 
@@ -130,7 +130,7 @@ ACS-ESS-LifeCycleAttachNASFileSystemToInstance的执行参数配置如下：
 
     **说明：** 手动执行伸缩规则触发扩缩容时，生命周期挂钩会生效，但手动添加或移出已有ECS实例时，生命周期挂钩不会生效。
 
-    1.  在页面上方，单击**伸缩规则**。
+    1.  在页面上方，单击**伸缩规则**页签。
 
     2.  单击**创建伸缩规则**。
 
@@ -152,7 +152,7 @@ ACS-ESS-LifeCycleAttachNASFileSystemToInstance的执行参数配置如下：
 
 7.  查看自动创建的ECS实例是否符合预期。
 
-    1.  在页面上方，单击**实例列表**。
+    1.  在页面上方，单击**实例列表**页签。
 
     2.  找到自动创建的ECS实例，在**云服务器ID/名称**区域，单击实例ID。
 

@@ -20,14 +20,14 @@ keyword: [弹性伸缩, 生命周期挂钩, Redis实例白名单, OOS]
 
 本教程以OOS公共模板ACS-ESS-LifeCycleModifyRedisIPWhitelist为例，实现在扩容时将ECS实例加入Redis实例白名单。步骤如下：
 
--   [步骤一：对用户账号授予OOS服务权限](#section_xm3_ezf_7ac)
+-   [步骤一：对RAM角色授予OOS服务权限](#section_xm3_ezf_7ac)
 -   [步骤二：为扩容活动创建生命周期挂钩并触发扩容](#section_d01_6z7_54c)
 -   [步骤三：查看Redis实例白名单](#section_4zh_mic_anv)
 -   [（可选）步骤四：查看OOS执行情况](#section_zqx_4mp_kce)
 
 **说明：** 如果需要在缩容时将ECS实例移出Redis实例白名单，创建适用于弹性收缩活动的生命周期挂钩并触发缩容即可。
 
-## 步骤一：对用户账号授予OOS服务权限
+## 步骤一：对RAM角色授予OOS服务权限
 
 您需要拥有OOS的执行权限才能执行OOS的模板。执行ACS-ESS-LifeCycleModifyRedisIPWhitelist中定义的运维操作时涉及云服务器ECS、弹性伸缩、云数据库Redis的资源。
 
@@ -112,7 +112,7 @@ keyword: [弹性伸缩, 生命周期挂钩, Redis实例白名单, OOS]
     -   在**操作**区域，单击**查看详情**。
 5.  为扩容活动创建生命周期挂钩。
 
-    1.  在页面上方，单击**生命周期挂钩**。
+    1.  在页面上方，单击**生命周期挂钩**页签。
 
     2.  单击**创建生命周期挂钩**。
 
@@ -141,7 +141,7 @@ ACS-ESS-LifeCycleModifyRedisIPWhitelist的执行参数配置如下：
 
     **说明：** 手动执行伸缩规则触发扩缩容时，生命周期挂钩会生效，但手动添加或移出已有ECS实例时，生命周期挂钩不会生效。
 
-    1.  在页面上方，单击**伸缩规则**。
+    1.  在页面上方，单击**伸缩规则**页签。
 
     2.  单击**创建伸缩规则**。
 

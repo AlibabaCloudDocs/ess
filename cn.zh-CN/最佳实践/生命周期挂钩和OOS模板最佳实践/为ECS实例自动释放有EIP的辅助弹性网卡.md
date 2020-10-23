@@ -20,11 +20,11 @@ keyword: [生命周期挂钩, OOS模板, 弹性网卡, 弹性公网IP]
 
 本教程以OOS公共模板ACS-ESS-LifeCycleDetachNetworkInterfaceAndDeleteEip为例，实现在缩容时为ECS实例同时释放辅助弹性网卡和EIP。步骤如下：
 
--   [步骤一：对用户账号授予OOS服务权限](#section_s7y_wbz_by1)
+-   [步骤一：对RAM角色授予OOS服务权限](#section_s7y_wbz_by1)
 -   [步骤二：为缩容活动创建生命周期挂钩并触发缩容](#section_kbq_cp1_w1i)
 -   [（可选）步骤三：查看OOS执行情况](#section_un5_wdx_sb8)
 
-## 步骤一：对用户账号授予OOS服务权限
+## 步骤一：对RAM角色授予OOS服务权限
 
 您需要拥有OOS的执行权限才能执行OOS的模板。执行ACS-ESS-LifeCycleDetachNetworkInterfaceAndDeleteEip中定义的运维操作时涉及ECS、弹性伸缩、EIP的资源。
 
@@ -60,7 +60,7 @@ keyword: [生命周期挂钩, OOS模板, 弹性网卡, 弹性公网IP]
     -   在**操作**区域，单击**查看详情**。
 5.  为缩容活动创建生命周期挂钩。
 
-    1.  在页面上方，单击**生命周期挂钩**。
+    1.  在页面上方，单击**生命周期挂钩**页签。
 
     2.  单击**创建生命周期挂钩**。
 
@@ -85,7 +85,7 @@ ACS-ESS-LifeCycleDetachNetworkInterfaceAndDeleteEip需要设置**执行使用到
 
     **说明：** 手动执行伸缩规则触发扩缩容时，生命周期挂钩会生效，但手动添加或移出已有ECS实例时，生命周期挂钩不会生效。
 
-    1.  在页面上方，单击**伸缩规则**。
+    1.  在页面上方，单击**伸缩规则**页签。
 
     2.  单击**创建伸缩规则**。
 

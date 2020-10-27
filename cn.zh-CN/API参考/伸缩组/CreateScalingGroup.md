@@ -6,7 +6,7 @@
 
 伸缩组是具有相同应用场景的ECS实例的集合。
 
-一个地域下支持创建的伸缩组数量存在限制，请参见[使用限制](~~25863~~)。
+一个地域下支持创建的伸缩组数量和弹性伸缩使用情况有关，请前往[配额中心](https://quotas.console.aliyun.com/products/ess/quotas)查看**伸缩组总数**对应的配额值。
 
 伸缩组创建成功后不会立即生效。您需要先调用[EnableScalingGroup](~~25939~~)接口启用伸缩组，伸缩组才能触发伸缩活动和执行伸缩规则。
 
@@ -36,8 +36,14 @@
 |名称|类型|是否必选|示例值|描述|
 |--|--|----|---|--|
 |Action|String|是|CreateScalingGroup|系统规定参数。取值：CreateScalingGroup |
-|MaxSize|Integer|是|20|伸缩组内ECS实例台数的最大值，取值范围：0~2000。 当伸缩组内ECS实例数大于MaxSize时，弹性伸缩会自动移出ECS实例。 |
-|MinSize|Integer|是|2|伸缩组内ECS实例台数的最小值，取值范围：0~1000 。当伸缩组内ECS实例数小于MinSize时，弹性伸缩会自动创建ECS实例。 |
+|MaxSize|Integer|是|20|伸缩组内ECS实例台数的最大值，当伸缩组内ECS实例数大于MaxSize时，弹性伸缩会自动移出ECS实例。
+
+ MaxSize的取值范围和弹性伸缩使用情况有关，请前往[配额中心](https://quotas.console.aliyun.com/products/ess/quotas)查看**单个伸缩组可以设置的组内最大实例数**对应的配额值。
+
+ 例如，如果**单个伸缩组可以设置的组内最大实例数**对应的配额值为2000，则MaxSize的取值范围为0~2000。 |
+|MinSize|Integer|是|2|伸缩组内ECS实例台数的最小值，当伸缩组内ECS实例数小于MinSize时，弹性伸缩会自动创建ECS实例。
+
+ **说明：** MinSize的值必须小于或等于MaxSize。 |
 |RegionId|String|是|cn-qingdao|伸缩组所属的地域ID。更多详情，请参见[地域与可用区](~~40654~~)。 |
 |ScalingGroupName|String|否|scalinggroup\*\*\*\*|伸缩组的名称，同一地域下伸缩组名称唯一。长度为2~64个英文或中文字符，以数字、大小英文字母或中文开头，可以包含数字、下划线（\_）、连字符（-）和小数点（.）。
 
@@ -54,8 +60,12 @@
  冷却时间内，该伸缩组不执行其它的伸缩活动，仅针对云监控报警任务触发的伸缩活动有效。
 
  默认值：300 |
-|LoadBalancerIds|String|否|\["lb-bp1u7etiogg38yvwz\*\*\*\*", "lb-bp168cqrux9ai9l7f\*\*\*\*", "lb-bp1jv3m9zvj22ufxp\*\*\*\*"\]|负载均衡实例ID。取值可以是由多台负载均衡实例ID组成一个JSON数组，最多支持5个ID，ID之间用半角逗号（,）隔开。 |
-|DBInstanceIds|String|否|\["rm-bp142f86de0t7\*\*\*\*", "rm-bp18l1z42ar4o\*\*\*\*", "rm-bp1lqr97h4aqk\*\*\*\*"\]|RDS实例ID。取值可以是由多台RDS实例ID组成一个JSON数组，最多支持8个ID，ID之间用半角逗号（,）隔开。 |
+|LoadBalancerIds|String|否|\["lb-bp1u7etiogg38yvwz\*\*\*\*", "lb-bp168cqrux9ai9l7f\*\*\*\*", "lb-bp1jv3m9zvj22ufxp\*\*\*\*"\]|负载均衡实例ID。取值可以是由多台负载均衡实例ID组成一个JSON数组，ID之间用半角逗号（,）隔开。
+
+ 单个伸缩组可以关联的负载均衡实例总数和弹性伸缩使用情况有关，请前往[配额中心](https://quotas.console.aliyun.com/products/ess/quotas)查看**单个伸缩组可以关联的负载均衡实例总数**对应的配额值。 |
+|DBInstanceIds|String|否|\["rm-bp142f86de0t7\*\*\*\*", "rm-bp18l1z42ar4o\*\*\*\*", "rm-bp1lqr97h4aqk\*\*\*\*"\]|RDS实例ID。取值可以是由多台RDS实例ID组成一个JSON数组，ID之间用半角逗号（,）隔开。
+
+ 单个伸缩组可以关联的RDS实例总数和弹性伸缩使用情况有关，请前往[配额中心](https://quotas.console.aliyun.com/products/ess/quotas)查看**单个伸缩组可以关联的RDS实例总数**对应的配额值。 |
 |RemovalPolicy.1|String|否|OldestScalingConfiguration|RemovalPolicy.N指定移出ECS实例的伸缩组策略，N的取值范围：1~2。取值范围：
 
  -   OldestInstance：移出最早加入伸缩组的ECS实例。

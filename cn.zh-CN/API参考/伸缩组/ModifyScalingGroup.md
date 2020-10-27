@@ -30,8 +30,14 @@
 |Action|String|是|ModifyScalingGroup|系统规定参数。取值：ModifyScalingGroup |
 |ScalingGroupId|String|是|asg-bp1ffogfdauy0jw0\*\*\*\*|待修改伸缩组的ID。 |
 |ScalingGroupName|String|否|scalinggroup\*\*\*\*|伸缩组的名称，同一地域下伸缩组名称唯一。长度为2~64个英文或中文字符，以数字、大小英文字母或中文开头，可以包含数字、下划线（\_）、连字符（-）和小数点（.）。 |
-|MinSize|Integer|否|1|伸缩组内ECS实例台数的最小值，取值范围：0~1000 。当伸缩组内ECS实例数小于MinSize时，弹性伸缩会自动创建ECS实例。 |
-|MaxSize|Integer|否|99|伸缩组内ECS实例台数的最大值，取值范围：0~2000。 当伸缩组内ECS实例数大于MaxSize时，弹性伸缩会自动移出ECS实例。 |
+|MinSize|Integer|否|1|伸缩组内ECS实例台数的最小值，当伸缩组内ECS实例数小于MinSize时，弹性伸缩会自动创建ECS实例。
+
+ **说明：** MinSize的值必须小于或等于MaxSize。 |
+|MaxSize|Integer|否|99|伸缩组内ECS实例台数的最大值，当伸缩组内ECS实例数大于MaxSize时，弹性伸缩会自动移出ECS实例。
+
+ MaxSize的取值范围和弹性伸缩使用情况有关，请前往[配额中心](https://quotas.console.aliyun.com/products/ess/quotas)查看**单个伸缩组可以设置的组内最大实例数**对应的配额值。
+
+ 例如，如果**单个伸缩组可以设置的组内最大实例数**对应的配额值为2000，则MaxSize的取值范围为0~2000。 |
 |VSwitchIds.N|RepeatList|否|vsw-bp1oo2a7isyrb8igf\*\*\*\*|一台或多台虚拟交换机的ID，N的取值范围：1~5。
 
  只有当伸缩组网络类型为VPC时，当前参数才生效。指定虚拟交换机所属的VPC必须和伸缩组所属的VPC相同。

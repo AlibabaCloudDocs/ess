@@ -67,7 +67,7 @@ For information about the limits related to Auto Scaling, see [Limits](/intl.en-
 
 Yes, you can add existing ECS instances to a scaling group. Make sure that the ECS instances meet the following conditions:
 
--   The ECS instances and the scaling group must be in the same region.For more information, see [Regions and zones](https://www.alibabacloud.com/help/doc-detail/40654.htm).
+-   The ECS instances and the scaling group must be in the same region. For more information, see [Regions and zones](https://www.alibabacloud.com/help/doc-detail/40654.htm).
 -   The ECS instances are in the **Running** state. For more information, see [ECS instance lifecycle](/intl.en-US/Instance/ECS instance lifecycle.md).
 -   The ECS instances are not added to other scaling groups.
 

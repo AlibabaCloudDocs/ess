@@ -98,13 +98,13 @@ https://ess.aliyuncs.com/?Action=DescribeScalingActivities
             <Description>Add "1" ECS instance</Description>
             <EndTime>2020-09-10T09:54Z</EndTime>
             <AttachedCapacity>0</AttachedCapacity>
-            <ScalingActivityId>asa-bp161xudmuxdzofeotcu</ScalingActivityId>
-            <ScalingGroupId>asg-bp18p2yfxow2dloqpl2s</ScalingGroupId>
+            <ScalingActivityId>asa-bp161xudmuxdzofe****</ScalingActivityId>
+            <ScalingGroupId>asg-bp18p2yfxow2dloq****</ScalingGroupId>
             <StartTime>2020-09-10T09:54Z</StartTime>
             <StatusCode>Successful</StatusCode>
             <AutoCreatedCapacity>2</AutoCreatedCapacity>
             <StatusMessage>"1" ECS instances are added</StatusMessage>
-            <Cause>A user requests to execute scaling rule "asr-bp12tcnol686y1ikmn91", changing the Total Capacity from "1" to "2".</Cause>
+            <Cause>A user requests to execute scaling rule "asr-bp12tcnol686y1ik****", changing the Total Capacity from "1" to "2".</Cause>
             <TotalCapacity>2</TotalCapacity>
         </ScalingActivity>
     </ScalingActivities>
@@ -127,13 +127,13 @@ https://ess.aliyuncs.com/?Action=DescribeScalingActivities
 				"Description": "Add \"1\" ECS instance",
 				"EndTime": "2020-09-10T09:54Z",
 				"AttachedCapacity": 0,
-				"ScalingActivityId": "asa-bp161xudmuxdzofeotcu",
-				"ScalingGroupId": "asg-bp18p2yfxow2dloqpl2s",
+				"ScalingActivityId": "asa-bp161xudmuxdzofe****",
+				"ScalingGroupId": "asg-bp18p2yfxow2dloq****",
 				"StartTime": "2020-09-10T09:54Z",
 				"StatusCode": "Successful",
 				"AutoCreatedCapacity": 2,
 				"StatusMessage": "\"1\" ECS instances are added",
-				"Cause": "A user requests to execute scaling rule \"asr-bp12tcnol686y1ikmn91\", changing the Total Capacity from \"1\" to \"2\".",
+				"Cause": "A user requests to execute scaling rule \"asr-bp12tcnol686y1ik****\", changing the Total Capacity from \"1\" to \"2\".",
 				"TotalCapacity": 2
 			}
 		]

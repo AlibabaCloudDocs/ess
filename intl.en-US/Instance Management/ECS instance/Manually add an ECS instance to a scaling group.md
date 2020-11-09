@@ -17,7 +17,7 @@ The following table describes the requirements that the ECS instances must meet 
 
 The active scaling configuration of a scaling group does not affect whether ECS instances can be manually added to the scaling group. You can manually add ECS instances without waiting for the cooldown period to expire. For more information, see [Cooldown time](/intl.en-US/Scaling Group/Scaling group/Cooldown time.md).
 
-Typically, Auto Scaling scales out sufficient ECS instances based on your configurations. However, if the instance inventory is insufficient or the sum of ECS instances to be added and existing ECS instances in the scaling group exceeds the maximum number of instances specified for the scaling group, the number of actually created instances may be less than what you specified. In these cases, check the configuration of the scaling group to troubleshoot the issue. If the issue persists,[submit a ticket](https://workorder-intl.console.aliyun.com/#/ticket/createIndex).
+Typically, Auto Scaling scales out sufficient ECS instances based on your configurations. However, if the instance inventory is insufficient or the sum of ECS instances to be added and existing ECS instances in the scaling group exceeds the maximum number of instances specified for the scaling group, the number of actually created instances may be less than what you specified. In these cases, check the configuration of the scaling group to troubleshoot the issue. If the issue persists, [submit a ticket](https://workorder-intl.console.aliyun.com/#/ticket/createIndex).
 
 1.  Log on to the [Auto Scaling console](https://essnew.console.aliyun.com/).
 

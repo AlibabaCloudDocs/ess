@@ -86,11 +86,11 @@
  同时指定CPU和Memory可以定义实例规格范围，例如，CPU=2且Memory=16可以定义配置为2 vCPU和16 GiB的所有实例规格。弹性伸缩会结合IO优化、可用区等因素确定可用实例规格集合，并根据价格排序为您创建价格最低的实例。
 
  **说明：** 该区间配置效果仅在成本优化模式下且伸缩配置未设置实例规格时生效。 |
-|InternetChargeType|String|否|PayByBandwidth|网络计费类型，取值范围：
+|InternetChargeType|String|否|PayByBandwidth|网络计费类型。取值范围：
 
  -   PayByBandwidth：按带宽计费。此时InternetMaxBandwidthOut即为所选的固定带宽值。
 -   PayByTraffic：按流量计费。此时InternetMaxBandwidthOut只是一个带宽上限，计费以实际产生的网络流量为依据。 |
-|InternetMaxBandwidthOut|Integer|否|50|公网出带宽最大值，单位为Mbps \(Mega bit per second\)，取值范围：
+|InternetMaxBandwidthOut|Integer|否|50|公网出带宽最大值，单位为Mbps（Mega bit per second）。取值范围：
 
  -   按带宽计费：0~100，如果您没有指定该参数，则出带宽将自动被设置为0Mbps。
 -   按流量计费：0~100，如果您没有指定该参数，则会出现报错。 |
@@ -154,6 +154,16 @@
 
  -   default：创建非专有宿主机实例。
 -   host：创建专有宿主机实例。若您不指定DedicatedHostId，则由阿里云自动选择专有宿主机放置实例。 |
+|PrivatePoolOptions.MatchCriteria|String|否|Open|实例启动的私有池容量选项。弹性保障服务或容量预定服务在生效后会生成私有池容量，供实例启动时选择。取值范围：
+
+ -   Open：开放模式。将自动匹配开放类型的私有池容量。如果没有符合条件的私有池容量，则使用公共池资源启动。该模式下无需设置PrivatePoolOptions.Id参数。
+-   Target：指定模式。使用指定的私有池容量启动实例，如果该私有池容量不可用，则实例会启动失败。该模式下必须指定私有池ID，即PrivatePoolOptions.Id参数为必填项。
+-   None：不使用模式。实例启动将不使用私有池容量。
+
+ **说明：** 该参数邀测中，详情请提交工单咨询。 |
+|PrivatePoolOptions.Id|String|否|eap-bp67acfmxazb4\*\*\*\*|私有池ID。即弹性保障服务ID或容量预定服务ID。
+
+ **说明：** 该参数邀测中，详情请提交工单咨询。 |
 
 ## 返回数据
 

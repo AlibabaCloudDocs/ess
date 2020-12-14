@@ -8,7 +8,7 @@ You can specify a scaling group ID to query all scaling activities in the scalin
 
 You can filter query results based on the status of scaling activities.
 
-Only scaling activities during the last 30 days can be returned.
+You can query scaling activities that are executed in the last 30 days.
 
 ## Debugging
 
@@ -22,16 +22,16 @@ Only scaling activities during the last 30 days can be returned.
 |RegionId|String|Yes|cn-hangzhou|The region ID of the scaling group to which the scaling activity belongs. |
 |PageNumber|Integer|No|1|The number of the page to return. Pages start from page 1.
 
-Default: 1 |
+ Default: 1 |
 |PageSize|Integer|No|10|The number of entries to return on each page. Maximum value: 50.
 
-Default value: 10 |
+ Default value: 10 |
 |ScalingGroupId|String|No|asg-bp18p2yfxow2dloq\*\*\*\*|The ID of the scaling group. |
 |StatusCode|String|No|Successful|The status of the scaling activity. Valid values:
 
--   Successful: The scaling activity is successful.
+ -   Successful: The scaling activity is successful.
 -   Warning: The scaling activity is partially successful.
--   Failed: The scaling activity failed.
+-   Failed: The scaling activity fails.
 -   InProgress: The scaling activity is in progress.
 -   Rejected: The scaling activity request is rejected. |
 |ScalingActivityId.1|String|No|asa-bp161xudmuxdzofe\*\*\*\*|The ID of scaling activity N to be queried. Valid values of N: 1 to 20. |
@@ -43,29 +43,29 @@ Default value: 10 |
 |PageNumber|Integer|1|The page number of the returned page. |
 |PageSize|Integer|10|The number of entries returned per page. |
 |RequestId|String|CC107349-57B7-4405-B1BF-9BF5AF7F2A46|The ID of the request. |
-|ScalingActivities|Array of ScalingActivity| |The collection of the scaling activity information. |
+|ScalingActivities|Array of ScalingActivity| |Details about the scaling activities. |
 |ScalingActivity| | | |
-|AttachedCapacity|String|0|The total number of instances that you manually add to the scaling group after the scaling activity is complete. |
-|AutoCreatedCapacity|String|2|The total number of instances that are automatically created by Auto Scaling after the scaling activity is complete. |
+|AttachedCapacity|String|0|The total number of instances that were manually added to the scaling group after the scaling activity was complete. |
+|AutoCreatedCapacity|String|2|The total number of instances that were automatically created by Auto Scaling after the scaling activity was complete. |
 |Cause|String|A user requests to execute scaling rule \\"asr-bp12tcnol686y1ik\*\*\*\*\\", changing the Total Capacity from \\"1\\" to \\"2\\".|The cause that triggered the scaling activity. |
 |Description|String|Add \\"1\\" ECS instance|The description of the scaling activity. |
 |EndTime|String|2020-09-10T09:54Z|The time when the scaling activity ended. |
 |Progress|Integer|100|The execution progress of the scaling activity. |
 |ScalingActivityId|String|asa-bp161xudmuxdzofe\*\*\*\*|The ID of the scaling activity. |
 |ScalingGroupId|String|asg-bp18p2yfxow2dloq\*\*\*\*|The ID of the scaling group. |
-|ScalingInstanceNumber|Integer|1|The number of instances that were created or restarted from the shutdown and reclaim mode during the scale-out event.
+|ScalingInstanceNumber|Integer|1|The number of instances that were created or restarted from the Stopped state during the scale-out event.
 
-The number of instances that were deleted or switched to the shutdown and reclaim mode during the scale-in event. |
+ The number of instances that were deleted or put into the Stopped state during the scale-in event. |
 |StartTime|String|2020-09-10T09:54Z|The time when the scaling activity started. |
 |StatusCode|String|Successful|The status of the scaling activity. Valid values:
 
--   Successful: The scaling activity is successful.
--   Warning: The scaling activity is partially successful.
+ -   Successful: The scaling activity was successful.
+-   Warning: The scaling activity was partially successful.
 -   Failed: The scaling activity failed.
--   InProgress: The scaling activity is in progress.
--   Rejected: The scaling activity request is rejected. |
-|StatusMessage|String|\\"1\\" ECS instances are added|The status information about the scaling activity. |
-|TotalCapacity|String|2|The total number of instances in the scaling group after the scaling activity is complete. |
+-   InProgress: The scaling activity was in progress.
+-   Rejected: The scaling activity request was rejected. |
+|StatusMessage|String|\\"1\\" ECS instances are added|The status about the scaling activity. |
+|TotalCapacity|String|2|The total number of instances in the scaling group after the scaling activity was complete. |
 |TotalCount|Integer|1|The total number of scaling activities. |
 
 ## Examples
@@ -115,29 +115,29 @@ Sample success responses
 
 ```
 {
-    "TotalCount": 1,
-    "PageSize": 10,
-    "RequestId": "CC107349-57B7-4405-B1BF-9BF5AF7F2A46",
-    "PageNumber": 1,
-    "ScalingActivities": {
-        "ScalingActivity": [
-            {
-                "ScalingInstanceNumber": 1,
-                "Progress": 100,
-                "Description": "Add \"1\" ECS instance",
-                "EndTime": "2020-09-10T09:54Z",
-                "AttachedCapacity": 0,
-                "ScalingActivityId": "asa-bp161xudmuxdzofe****",
-                "ScalingGroupId": "asg-bp18p2yfxow2dloq****",
-                "StartTime": "2020-09-10T09:54Z",
-                "StatusCode": "Successful",
-                "AutoCreatedCapacity": 2,
-                "StatusMessage": "\"1\" ECS instances are added",
-                "Cause": "A user requests to execute scaling rule \"asr-bp12tcnol686y1ik****\", changing the Total Capacity from \"1\" to \"2\".",
-                "TotalCapacity": 2
-            }
-        ]
-    }
+	"TotalCount": 1,
+	"PageSize": 10,
+	"RequestId": "CC107349-57B7-4405-B1BF-9BF5AF7F2A46",
+	"PageNumber": 1,
+	"ScalingActivities": {
+		"ScalingActivity": [
+			{
+				"ScalingInstanceNumber": 1,
+				"Progress": 100,
+				"Description": "Add \"1\" ECS instance",
+				"EndTime": "2020-09-10T09:54Z",
+				"AttachedCapacity": 0,
+				"ScalingActivityId": "asa-bp161xudmuxdzofe****",
+				"ScalingGroupId": "asg-bp18p2yfxow2dloq****",
+				"StartTime": "2020-09-10T09:54Z",
+				"StatusCode": "Successful",
+				"AutoCreatedCapacity": 2,
+				"StatusMessage": "\"1\" ECS instances are added",
+				"Cause": "A user requests to execute scaling rule \"asr-bp12tcnol686y1ik****\", changing the Total Capacity from \"1\" to \"2\".",
+				"TotalCapacity": 2
+			}
+		]
+	}
 }
 ```
 

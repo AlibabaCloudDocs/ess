@@ -6,7 +6,6 @@ keyword: [弹性伸缩, 生命周期挂钩, AnalyticDB集群白名单, OOS]
 
 本教程介绍如何使用弹性伸缩生命周期挂钩挂起ECS实例，并结合运维编排服务OOS的模板，实现将ECS实例自动加入和移出AnalyticDB集群白名单。
 
--   使用本教程进行操作前，请确保您已经注册了阿里云账号。如还未注册，请先完成[账号注册](https://account.aliyun.com/register/register.htm?)。
 -   已创建伸缩组，且伸缩组处于启用状态。
 -   已创建AnalyticDB集群。
 -   已为OOS服务创建RAM角色，具体操作请参见[为OOS服务设置RAM权限](https://help.aliyun.com/document_detail/120810.html)。
@@ -108,7 +107,7 @@ keyword: [弹性伸缩, 生命周期挂钩, AnalyticDB集群白名单, OOS]
     -   在**操作**区域，单击**查看详情**。
 5.  为扩容活动创建生命周期挂钩。
 
-    1.  在页面上方，单击**生命周期挂钩**。
+    1.  在页面上方，单击**生命周期挂钩**页签。
 
     2.  单击**创建生命周期挂钩**。
 
@@ -137,7 +136,7 @@ ACS-ESS-LifeCycleModifyAnalyticDBIPWhitelist的执行参数配置如下：
 
     **说明：** 手动执行伸缩规则触发扩缩容时，生命周期挂钩会生效，但手动添加或移出已有ECS实例时，生命周期挂钩不会生效。
 
-    1.  在页面上方，单击**伸缩规则**。
+    1.  在页面上方，单击**伸缩规则**页签。
 
     2.  单击**创建伸缩规则**。
 
@@ -164,13 +163,13 @@ ACS-ESS-LifeCycleModifyAnalyticDBIPWhitelist的执行参数配置如下：
 
 2.  在左侧导航栏，单击**集群列表**。
 
-3.  找到Analytic集群，在**集群ID/名称**区域，单击集群ID。
+3.  找到Analytic集群，在**集群ID/集群描述**区域，单击集群ID。
 
 4.  在左侧导航栏，单击**数据安全**。
 
     如下图所示，Analytic集群白名单中加入了新建ECS实例的私有IP，符合使用公共模板ACS-ESS-LifeCycleModifyAnalyticDBIPWhitelist的预期。
 
-    ![adb-whitelist](https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/zh-CN/0454852061/p172067.png)
+    ![adb-whitelist](https://static-aliyun-doc.oss-accelerate.aliyuncs.com/assets/img/zh-CN/0454852061/p172067.png)
 
     如果成功创建了ECS实例，但是新建ECS实例的私有IP并没有加入AnalyticDB集群白名单，请前往OOS控制台查看运维任务执行情况，具体步骤请参见[（可选）步骤四：查看OOS执行情况](#section_9f8_zar_vjg)。
 
@@ -187,11 +186,11 @@ ACS-ESS-LifeCycleModifyAnalyticDBIPWhitelist的执行参数配置如下：
 
     -   如果执行成功，显示相关的结果输出等信息。
 
-        ![exec-success](https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/zh-CN/5854562061/p172069.png)
+        ![exec-success](https://static-aliyun-doc.oss-accelerate.aliyuncs.com/assets/img/zh-CN/5854562061/p172069.png)
 
     -   如果执行失败，显示相关的报错等信息。
 
-        ![exec-failed](https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/zh-CN/5854562061/p172078.png)
+        ![exec-failed](https://static-aliyun-doc.oss-accelerate.aliyuncs.com/assets/img/zh-CN/5854562061/p172078.png)
 
 
 ## 常见问题

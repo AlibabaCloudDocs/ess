@@ -2,8 +2,6 @@
 
 调用DescribeScalingGroups查询伸缩组。
 
-****
-
 ## 调试
 
 [您可以在OpenAPI Explorer中直接运行该接口，免去您计算签名的困扰。运行成功后，OpenAPI Explorer可以自动生成SDK代码示例。](https://api.aliyun.com/#product=Ess&api=DescribeScalingGroups&type=RPC&version=2014-08-28)
@@ -51,6 +49,10 @@
  -   NONE：不做健康检查。
 -   ECS：对伸缩组内的ECS实例做健康检查。 |
 |LaunchTemplateId|String|lt-m5e3ofjr1zn1aw7\*\*\*\*|伸缩组使用的实例启动模板的ID。 |
+|LaunchTemplateOverrides|Array of LaunchTemplateOverride| |扩展启动模板的实例规格信息。 |
+|LaunchTemplateOverride| | | |
+|InstanceType|String|ecs.c5.xlarge|指定的实例规格，会覆盖启动模板中的实例规格。 |
+|WeightedCapacity|Integer|4|指定实例规格的权重，即实例规格的单台实例在伸缩组中表示的容量大小。权重越大，满足期望容量所需的本实例规格的实例数量越少。 |
 |LaunchTemplateVersion|String|Default|伸缩组使用的实例启动模板的版本。 |
 |LifecycleState|String|Active|伸缩组的状态信息。取值范围：
 
@@ -128,7 +130,7 @@ https://ess.aliyuncs.com/?Action=DescribeScalingGroups
 
 正常返回示例
 
-`XML` 格式
+`XML`格式
 
 ```
 <DescribeScalingGroupsResponse>
@@ -168,7 +170,7 @@ https://ess.aliyuncs.com/?Action=DescribeScalingGroups
 </DescribeScalingGroupsResponse>
 ```
 
-`JSON` 格式
+`JSON`格式
 
 ```
 {

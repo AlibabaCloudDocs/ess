@@ -75,6 +75,32 @@
 
  -   true：开启伸缩组删除保护，此时不能删除该伸缩组。
 -   false：关闭伸缩组删除保护。 |
+|LaunchTemplateOverride.N.InstanceType|String|否|ecs.c5.xlarge|当您需要伸缩组按照实例规格容量进行伸缩时，请同时指定本参数和LaunchTemplateOverride.N.WeightedCapacity。
+
+ 本参数用于指定实例规格，会覆盖启动模板中的实例规格。您可以指定N个本参数，扩展启动模板支持N个实例规格。N的取值范围：1~10。
+
+ **说明：** 仅当LaunchTemplateId参数指定了启动模板时，本参数生效。
+
+ InstanceType的取值范围：在售的ECS实例规格，请参见[实例规格族](~~25378~~)。 |
+|LaunchTemplateOverride.N.WeightedCapacity|Integer|否|4|当您需要伸缩组按照实例规格容量进行伸缩时，在指定LaunchTemplateOverride.N.InstanceType后，再指定本参数。两个参数一一对应，N需要保持一致。
+
+ 本参数用于指定实例规格的权重，即实例规格的单台实例在伸缩组中表示的容量大小。
+
+ 权重越大，满足期望容量所需的本实例规格的实例数量越少。
+
+ 由于每个实例规格的vCPU个数、内存大小等性能指标会有差异，您可以根据自身需求，给不同的实例规格配置不同的权重。
+
+ 例如：
+
+ -   当前容量：0
+-   期望容量：6
+-   ecs.c5.xlarge规格容量：4
+
+ 为满足期望容量，伸缩组将为用户扩容2台ecs.c5.xlarge实例。
+
+ **说明：** 扩容时伸缩组的容量不得超过最大容量（MaxSize）与实例规格的最大权重之和。
+
+ WeightedCapacity的取值范围：1~500。 |
 
 ## 返回数据
 
@@ -95,7 +121,7 @@ https://ess.aliyuncs.com/?Action=ModifyScalingGroup
 
 正常返回示例
 
-`XML` 格式
+`XML`格式
 
 ```
 <ModifyScalingGroupResponse>
@@ -103,7 +129,7 @@ https://ess.aliyuncs.com/?Action=ModifyScalingGroup
 </ModifyScalingGroupResponse>
 ```
 
-`JSON` 格式
+`JSON`格式
 
 ```
 {

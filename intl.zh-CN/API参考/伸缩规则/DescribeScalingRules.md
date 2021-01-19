@@ -73,6 +73,10 @@
 |DimensionValue|String|asg-bp18p2yfxow2dloq\*\*\*\*|监控项关联的维度信息属性值。 |
 |EvaluationCount|Integer|3|伸缩规则关联的报警任务到达报警状态需要连续满足阈值表达式的次数。 |
 |MetricName|String|CpuUtilization|伸缩规则关联的报警任务监控项名称。 |
+|MetricType|String|system|伸缩规则关联的报警任务的类型。取值范围：
+
+ -   system：系统监控报警任务。
+-   custom：自定义监控报警任务。 |
 |Statistics|String|Average|伸缩规则关联的报警任务的统计方式。取值范围：
 
  -   Average：统计平均值。
@@ -151,7 +155,7 @@ https://ess.aliyuncs.com/?Action=DescribeScalingRules
 
 正常返回示例
 
-`XML` 格式
+`XML`格式
 
 ```
 <DescribeScalingRulesResponse>
@@ -173,7 +177,7 @@ https://ess.aliyuncs.com/?Action=DescribeScalingRules
 </DescribeScalingRulesResponse>
 ```
 
-`JSON` 格式
+`JSON`格式
 
 ```
 {

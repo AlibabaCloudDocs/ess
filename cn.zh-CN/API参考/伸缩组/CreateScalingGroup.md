@@ -107,7 +107,7 @@
  -   CONTINUE：继续响应弹性扩张活动或者继续响应弹性收缩活动。
 -   ABANDON：直接释放弹性扩张活动创建出来的ECS实例或者直接将弹性收缩活动中的ECS实例从伸缩组移除。
 
- 当伸缩组发生弹性收缩活动（SCALE\_IN）并触发多个生命周期挂钩时，DefaultResult取值为ABANDON的生命周期挂钩触发的等待状态结束时，会提前将其它对应的等待状态提前结束。其他情况下，下一步动作均以最后一个结束等待状态的下一步动作为准。
+ 当伸缩组发生弹性收缩活动（SCALE\_IN）并触发多个生命周期挂钩时，DefaultResult取值为ABANDON的生命周期挂钩触发的等待状态结束时，会提前结束其它对应的等待状态。其他情况下，下一步动作均以最后一个结束等待状态的下一步动作为准。
 
  默认值：CONTINUE |
 |LifecycleHook.N.HeartbeatTimeout|Integer|否|600|生命周期挂钩为伸缩组活动设置的等待时间，等待状态超时后会执行下一步动作。取值范围：30~21600，单位：秒。
@@ -165,6 +165,30 @@
  默认值：false |
 |Tag.N.Key|String|否|Department|伸缩组的标签键。 |
 |Tag.N.Value|String|否|Finance|伸缩组的标签值。 |
+|LaunchTemplateOverride.N.InstanceType|String|否|ecs.c5.xlarge|当您需要伸缩组按照实例规格容量进行伸缩时，请同时指定本参数和LaunchTemplateOverride.N.WeightedCapacity。
+
+ 本参数用于指定实例规格，会覆盖启动模板中的实例规格。您可以指定N个本参数，扩展启动模板支持N个实例规格。N的取值范围：1~10。
+
+ **说明：** 仅当LaunchTemplateId参数指定了启动模板时，本参数生效。
+
+ InstanceType的取值范围：在售的ECS实例规格，请参见[实例规格族](~~25378~~)。 |
+|LaunchTemplateOverride.N.WeightedCapacity|Integer|否|4|当您需要伸缩组按照实例规格容量进行伸缩时，在指定LaunchTemplateOverride.N.InstanceType后，再指定本参数。两个参数一一对应，N需要保持一致。
+
+ 本参数用于指定实例规格的权重，即实例规格的单台实例在伸缩组中表示的容量大小。权重越大，满足期望容量所需的本实例规格的实例数量越少。
+
+ 由于每个实例规格的vCPU个数、内存大小等性能指标会有差异，您可以根据自身需求，给不同的实例规格配置不同的权重。
+
+ 例如：
+
+ -   当前容量：0
+-   期望容量：6
+-   ecs.c5.xlarge规格容量：4
+
+ 为满足期望容量，伸缩组将为用户扩容2台ecs.c5.xlarge实例。
+
+ **说明：** 扩容时伸缩组的容量不得超过最大容量（MaxSize）与实例规格的最大权重之和。
+
+ WeightedCapacity的取值范围：1~500。 |
 
 ## 返回数据
 
@@ -189,7 +213,7 @@ https://ess.aliyuncs.com/?Action=CreateScalingGroup
 
 正常返回示例
 
-`XML` 格式
+`XML`格式
 
 ```
 <CreateScalingGroupResponse>
@@ -198,7 +222,7 @@ https://ess.aliyuncs.com/?Action=CreateScalingGroup
 </CreateScalingGroupResponse>
 ```
 
-`JSON` 格式
+`JSON`格式
 
 ```
 {

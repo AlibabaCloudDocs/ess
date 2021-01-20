@@ -1,200 +1,200 @@
 # CreateAlarm
 
-调用CreateAlarm创建一个报警任务。
+You can call this operation to create an event-triggered task.
 
-## 接口说明
+## Description
 
-报警任务支持的系统监控项的数据由云监控采集，您需要配合维度信息确定监控数据的聚合范围。例如，指定user\_id和 scaling\_group即确定聚合该用户、该伸缩组下所有ECS实例的监控项数据。
+Cloud Monitor collects monitoring data based on the metrics specified in event-triggered tasks. You must use dimensions to specify the scope for collecting monitoring data. For example, you can specify the user\_id and scaling\_group dimensions for an event-triggered task to collect monitoring data about Elastic Compute Service \(ECS\) instances in the specified scaling group of the specified user account.
 
-监控项和维度信息的配合关系如下：
+The following table describes the dimensions that can be specified for each metric.
 
-|监控项
+|Metric
 
-|描述
+|Description
 
-|维度信息 |
-|-----|----|------|
+|Dimension |
+|--------|-------------|-----------|
 |CpuUtilization
 
-|CPU使用率（%）
+|The CPU utilization in percentage.
 
-|user\_id、scaling\_group |
+|user\_id and scaling\_group |
 |ClassicInternetRx
 
-|经典网络外网入流量（KB/min）
+|The inbound traffic over the public network to the classic network. Unit: KB/min.
 
-|user\_id、scaling\_group |
+|user\_id and scaling\_group |
 |ClassicInternetTx
 
-|经典网络外网出流量（KB/min）
+|The outbound traffic over the public network from the classic network. Unit: KB/min.
 
-|user\_id、scaling\_group |
+|user\_id and scaling\_group |
 |VpcInternetRx
 
-|VPC网络外网入流量（KB/min）
+|The inbound traffic over the public network to the Virtual Private Cloud \(VPC\). Unit: KB/min.
 
-|user\_id、scaling\_group |
+|user\_id and scaling\_group |
 |VpcInternetTx
 
-|VPC网络外网出流量（KB/min）
+|The outbound traffic over the public network from the VPC. Unit: KB/min.
 
-|user\_id、scaling\_group |
+|user\_id and scaling\_group |
 |IntranetRx
 
-|内网入流量（KB/min）
+|The inbound traffic over the internal network. Unit: KB/min.
 
-|user\_id、scaling\_group |
+|user\_id and scaling\_group |
 |IntranetTx
 
-|内网出流量（KB/min）
+|The outbound traffic over the internal network. Unit: KB/min.
 
-|user\_id、scaling\_group |
+|user\_id and scaling\_group |
 |LoadAverage
 
-|系统平均负载
+|The average system load.
 
-|user\_id、scaling\_group |
+|user\_id and scaling\_group |
 |MemoryUtilization
 
-|内存使用率（%）
+|The memory usage in percentage.
 
-|user\_id、scaling\_group |
+|user\_id and scaling\_group |
 |SystemDiskReadBps
 
-|系统盘读BPS（Byte/s）
+|The number of bytes read from the system disk per second.
 
-|user\_id、scaling\_group |
+|user\_id and scaling\_group |
 |SystemDiskWriteBps
 
-|系统盘写BPS（Byte/s）
+|The number of bytes written to the system disk per second.
 
-|user\_id、scaling\_group |
+|user\_id and scaling\_group |
 |SystemDiskReadOps
 
-|系统盘读IOPS（次/s）
+|The number of times that the system disk is read per second.
 
-|user\_id、scaling\_group |
+|user\_id and scaling\_group |
 |SystemDiskWriteOps
 
-|系统盘写IOPS（次/s）
+|The number of times that the system disk is written per second.
 
-|user\_id、scaling\_group |
+|user\_id and scaling\_group |
 |PackagesNetIn
 
-|网卡收包数（个/s）
+|The number of packets that are received by the network interface controller \(NIC\) per second.
 
-|user\_id、scaling\_group、device |
+|user\_id, scaling\_group, and device |
 |PackagesNetOut
 
-|网卡发包数（个/s）
+|The number of packets that are sent by the NIC per second.
 
-|user\_id、scaling\_group、device |
+|user\_id, scaling\_group, and device |
 |TcpConnection
 
-|TCP连接数（个）
+|The number of TCP connections.
 
-|user\_id、scaling\_group、state |
+|user\_id, scaling\_group, and state |
 
-其中，user\_id和scaling\_group由系统自动填充，device、state需要您手动指定。更多说明请参见参数Dimension.N.DimensionKey和Dimension.N.DimensionValue。
+The values of user\_id and scaling\_group are set by the system, whereas the values of device and state must be manually set. For more information, see the Dimension.N.DimensionKey and Dimension.N.DimensionValue parameters in the "Request parameters" section of this topic.
 
-## 调试
+## Debugging
 
-[您可以在OpenAPI Explorer中直接运行该接口，免去您计算签名的困扰。运行成功后，OpenAPI Explorer可以自动生成SDK代码示例。](https://api.aliyun.com/#product=Ess&api=CreateAlarm&type=RPC&version=2014-08-28)
+[OpenAPI Explorer automatically calculates the signature value. For your convenience, we recommend that you call this operation in OpenAPI Explorer. OpenAPI Explorer dynamically generates the sample code of the operation for different SDKs.](https://api.aliyun.com/#product=Ess&api=CreateAlarm&type=RPC&version=2014-08-28)
 
-## 请求参数
+## Request parameters
 
-|名称|类型|是否必选|示例值|描述|
-|--|--|----|---|--|
-|Action|String|是|CreateAlarm|系统规定参数。取值：CreateAlarm |
-|MetricName|String|是|CpuUtilization|监控项名称。取值范围：
+|Parameter|Type|Required|Example|Description|
+|---------|----|--------|-------|-----------|
+|Action|String|Yes|CreateAlarm|The operation that you want to perform. Set the value to CreateAlarm. |
+|MetricName|String|Yes|CpuUtilization|The name of the metric. Valid values:
 
- -   CpuUtilization：CPU使用率（%）。
--   ClassicInternetRx：经典网络外网入流量（KB/min）。
--   ClassicInternetTx：经典网络外网出流量（KB/min）。
--   VpcInternetRx：VPC网络外网入流量（KB/min）。
--   VpcInternetTx：VPC网络外网出流量（KB/min）。
--   IntranetRx：内网入流量（KB/min）。
--   IntranetTx：内网出流量（KB/min）。
--   LoadAverage：系统平均负载。
--   MemoryUtilization：内存使用率（%）。
--   SystemDiskReadBps：系统盘读BPS（Byte/s）。
--   SystemDiskWriteBps：系统盘写BPS（Byte/s）。
--   SystemDiskReadOps：系统盘读IOPS（次/s）。
--   SystemDiskWriteOps：系统盘写IOPS（次/s）。
--   PackagesNetIn：网卡收包数（个/s）。
--   PackagesNetOut：网卡发包数（个/s）。
--   TcpConnection：TCP连接数（个）。
+-   CpuUtilization: the CPU utilization in percentage.
+-   ClassicInternetRx: the inbound traffic over the public network to the classic network. Unit: KB/min.
+-   ClassicInternetTx: the outbound traffic over the public network from the classic network. Unit: KB/min.
+-   VpcInternetRx: the inbound traffic over the public network to the VPC. Unit: KB/min.
+-   VpcInternetTx: the outbound traffic over the public network from the VPC. Unit: KB/min.
+-   IntranetRx: the inbound traffic over the internal network. Unit: KB/min.
+-   IntranetTx: the outbound traffic over the internal network. Unit: KB/min.
+-   LoadAverage: the average system load.
+-   MemoryUtilization: the memory usage in percentage.
+-   SystemDiskReadBps: the number of bytes read from the system disk per second.
+-   SystemDiskWriteBps: the number of bytes written to the system disk per second.
+-   SystemDiskReadOps: the number of times that the system disk is read per second.
+-   SystemDiskWriteOps: the number of times that the system disk is written per second.
+-   PackagesNetIn: the number of packets that are received by the NIC per second.
+-   PackagesNetOut: the number of packets that are sent by the NIC per second.
+-   TcpConnection: the number of TCP connections.
 
- 更多信息请参见接口说明。 |
-|RegionId|String|是|cn-qingdao|地域ID。 |
-|ScalingGroupId|String|是|asg-bp18p2yfxow2dloq\*\*\*\*|报警任务关联的伸缩组的ID。 |
-|Threshold|Float|是|80|监控指标的阈值，满足阈值表达式达到指定次数即触发执行伸缩规则。 |
-|Name|String|否|TestAlarmTask|报警任务的名称。 |
-|Description|String|否|Test alarm task.|报警任务的描述。 |
-|AlarmAction.N|RepeatList|否|ari:acs:ess:cn-hangzhou:1406926\*\*\*\*:scalingrule/asr-bp163l21e07uhn\*\*\*\*|报警任务关联伸缩规则的唯一标识符。 |
-|MetricType|String|否|system|监控项类型。取值范围：
+For more information, see the Description section of this topic. |
+|RegionId|String|Yes|cn-qingdao|The region ID of the event-triggered task. |
+|ScalingGroupId|String|Yes|asg-bp18p2yfxow2dloq\*\*\*\*|The ID of the scaling group to be monitored by the event-triggered task. |
+|Threshold|Float|Yes|80|The threshold of the metric. The alert condition of the event-triggered task specifies the relationship between the statistical value and the threshold of the metric. When the alert condition is met for the specified number of times, Auto Scaling triggers an alert and executes the scaling rules specified in the event-triggered task. |
+|Name|String|No|TestAlarmTask|The name of the event-triggered task. |
+|Description|String|No|Test alarm task.|The description of the event-triggered task. |
+|AlarmAction.N|RepeatList|No|ari:acs:ess:cn-hangzhou:1406926\*\*\*\*:scalingrule/asr-bp163l21e07uhn\*\*\*\*|The unique identifier of scaling rule N to be associated with the event-triggered task. |
+|MetricType|String|No|system|The type of the metric. Valid values:
 
- -   system：使用云监控系统指标。
--   custom：使用上报到云监控的自定义指标。 |
-|Period|Integer|否|300|统计监控项数据的周期，单位为秒。取值范围：
+-   system: the built-in metric of Cloud Monitor.
+-   custom: the custom metric that is used to report relevant data of ECS instances to Cloud Monitor. |
+|Period|Integer|No|300|The period for collecting the statistical value of the metric. Unit: seconds. Valid values:
 
- -   60
+-   60
 -   120
 -   300
 -   900
 
- 默认值：300 |
-|Statistics|String|否|Average|统计监控项数据的方法。取值范围：
+Default value: 300. |
+|Statistics|String|No|Average|The type of the statistical value that is collected for the metric. Valid values:
 
- -   Average：平均值。
--   Minimum：最小值。
--   Maximum：最大值。
+-   Average: the average value.
+-   Minimum: the minimum value.
+-   Maximum:the maximum value.
 
- 默认值：Average |
-|ComparisonOperator|String|否|\>=|监控项统计值与阈值的比较符，用于指定监控项统计值与阈值在什么关系下满足条件。取值范围：
+Default value: Average. |
+|ComparisonOperator|String|No|\>=|The operator for comparison between the collected metric value and the threshold. This parameter is used to specify the relationship between the metric value and the threshold that meets the alert condition. Valid values:
 
- -   监控项统计值大于等于阈值。取值：\>=
--   监控项统计值小于等于阈值。取值：<=
--   监控项统计值大于阈值。取值：\>
--   监控项统计值小于阈值。取值：<
+-   \>=: The metric value is greater than or equal to the threshold.
+-   <=: The metric value is less than or equal to the threshold.
+-   \>: The metric value is greater than the threshold.
+-   <: The metric value is less than the threshold.
 
- 默认值：\>= |
-|EvaluationCount|Integer|否|3|触发执行伸缩规则需要满足阈值表达式的次数，例如，CPU使用率平均值3次的统计结果均大于等于80%。
+Default value: \>=. |
+|EvaluationCount|Integer|No|3|The number of times that the alert condition must be met to trigger an alert and execute scaling rules. For example, if this parameter is set to 3, an alert is triggered when the average CPU utilization is greater than or equal to 80% for three times.
 
- 默认值：3 |
-|Dimension.N.DimensionKey|String|否|device|监控项关联的维度信息键。取值范围：
+Default value: 3. |
+|Dimension.N.DimensionKey|String|No|device|The key of dimension N to be associated with a metric. Valid values:
 
- -   user\_id：您的账号ID。
--   scaling\_group：被监控的伸缩组。
--   device：网卡设备的类型。
--   state：TCP连接的状态。 |
-|Dimension.N.DimensionValue|String|否|eth0|监控项关联的维度信息值，取值范围由维度信息键决定。
+-   user\_id: the ID of your account.
+-   scaling\_group: the scaling group to be monitored.
+-   device: the type of the NIC.
+-   state: specifies whether to count the total number of TCP connections or the number of TCP connections that have been established and are available. |
+|Dimension.N.DimensionValue|String|No|eth0|The value of dimension N to be associated with the metric. The value of this parameter depends on the Dimension.N.DimensionKey parameter.
 
- user\_id：由系统自动填充。
+When the value of Dimension.N.DimensionKey is user\_id, the value of this parameter is set by the system.
 
- scaling\_group：由系统自动填充。
+When the value of Dimension.N.DimensionKey is scaling\_group, this value is set by the system.
 
- device取值范围：
+When the value of Dimension.N.DimensionKey is device, the valid values of this parameter are:
 
- -   eth0：对于经典网络实例，eth0表示内网网卡。对于VPC实例，只存在eth0一张网卡。
--   eth1：对于经典网络实例，eth1代表外网网卡。
+-   eth0: the internal network NIC for classic network-type ECS instances, and the only NIC for VPC-type ECS instances.
+-   eth1: the public network NIC for classic network-type ECS instances.
 
- state取值范围：
+When the value of Dimension.N.DimensionKey is state, the valid values of this parameter are:
 
- -   TCP\_TOTAL：表示总的TCP连接数。
--   ESTABLISHED：表示已建立的TCP连接数。 |
-|GroupId|Integer|否|4055401|自定义监控项所属云监控应用分组的ID，仅在监控项类型为custom时需要指定该参数。 |
+-   TCP\_TOTAL: specifies to count the total number of TCP connections.
+-   ESTABLISHED: specifies to count the number of TCP connections that have been established and are available. |
+|GroupId|Integer|No|4055401|The ID of the application group to which the custom metric belongs. This parameter takes effect only when the MetricType parameter is set to custom. |
 
-## 返回数据
+## Response parameters
 
-|名称|类型|示例值|描述|
-|--|--|---|--|
-|AlarmTaskId|String|asg-bp1hvbnmkl10vll5\*\*\*\*\_f95ce797-dc2e-4bad-9618-14fee7d1\*\*\*\*|报警任务ID。 |
-|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3\*\*\*\*|请求ID。 |
+|Parameter|Type|Example|Description|
+|---------|----|-------|-----------|
+|AlarmTaskId|String|asg-bp1hvbnmkl10vll5\*\*\*\*\_f95ce797-dc2e-4bad-9618-14fee7d1\*\*\*\*|The ID of the event-triggered task. |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3\*\*\*\*|The ID of the request. |
 
-## 示例
+## Examples
 
-请求示例
+Sample requests
 
 ```
 https://ess.aliyuncs.com/?Action=CreateAlarm
@@ -203,12 +203,12 @@ https://ess.aliyuncs.com/?Action=CreateAlarm
 &MetricName=CpuUtilization
 &Threshold=80
 &AlarmAction.1=ari:acs:ess:cn-hangzhou:1406926****:scalingrule/asr-bp163l21e07uhn****
-&<公共请求参数>
+&<Common request parameters>
 ```
 
-正常返回示例
+Sample success responses
 
-`XML` 格式
+`XML` format
 
 ```
 <CreateAlarmResponse>
@@ -217,32 +217,32 @@ https://ess.aliyuncs.com/?Action=CreateAlarm
 </CreateAlarmResponse>
 ```
 
-`JSON` 格式
+`JSON` format
 
 ```
 {
-	"AlarmTaskId":"asg-bp1hvbnmkl10vll5****_f95ce797-dc2e-4bad-9618-14fee7d1****",
-	"RequestId":"ADD82C07-7A7C-4DD4-907F-1D114742****"
+    "AlarmTaskId":"asg-bp1hvbnmkl10vll5****_f95ce797-dc2e-4bad-9618-14fee7d1****",
+    "RequestId":"ADD82C07-7A7C-4DD4-907F-1D114742****"
 }
 ```
 
-## 错误码
+## Error codes
 
-访问[错误中心](https://error-center.alibabacloud.com/status/product/Ess)查看更多错误码。
+For a list of error codes, visit the [API Error Center](https://error-center.alibabacloud.com/status/product/Ess).
 
-|HttpCode
+|HTTP status code
 
-|错误码
+|Error code
 
-|错误信息
+|Error message
 
-|描述 |
-|----------|-----|------|----|
+|Description |
+|------------------|------------|---------------|-------------|
 |404
 
 |InvalidParameter
 
 |The specified value of parameter "%s" is not valid.
 
-|指定参数“%s”不合法。 |
+|The error message returned because the specified "%s" parameter is invalid. |
 

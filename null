@@ -1,168 +1,248 @@
----
-keyword: [lifecycle hook, OOS template, ENI, EIP]
----
+# CreateAlarm
 
-# Customize an ECS instance during a scaling activity
+调用CreateAlarm创建一个报警任务。
 
-If you want to execute operations and maintenance \(O&M\) tasks for newly created ECS instances during a scale-out event or for ECS instances that are to be released during a scale-in event, you can use lifecycle hooks of Auto Scaling to put the instances into the wait state. Then, you can use Operation Orchestration Service \(OOS\) templates to customize the configurations of ECS instances for more flexible management.
+## 接口说明
 
--   Before you perform the operations provided in the tutorial, you must have registered an Alibaba Cloud account. To create an Alibaba Cloud account, click [Create a new Alibaba Cloud account](https://account.alibabacloud.com/register/intl_register.htm).
--   A scaling group is created and enabled.
--   The OOSServiceRole RAM role is created for OOS. For more information, see [Grant RAM permission for OOS](https://www.alibabacloud.com/help/doc-detail/120810.htm).
+报警任务支持的系统监控项的数据由云监控采集，您需要配合维度信息确定监控数据的聚合范围。例如，指定user\_id和 scaling\_group即确定聚合该用户、该伸缩组下所有ECS实例的监控项数据。
 
-OOS is an automated O&M service provided by Alibaba Cloud, which helps you manage and execute O&M tasks. You can define execution tasks, the order in which to execute the tasks, input parameters, and output parameters in templates and use these templates to automate O&M tasks. For more information, see [Introduction to OOS](https://www.alibabacloud.com/help/doc-detail/120556.htm).
+监控项和维度信息的配合关系如下：
 
-You can set the notification method to OOS Template and specify an OOS template when you create a lifecycle hook in a scaling group. During scaling activities, ECS instances in the scaling group are put into the wait state and then OOS performs the customized O&M operations specified in the template on the ECS instances. For more information, see [Create a lifecycle hook](/intl.en-US/Scaling Group/Lifecycle hooks/Create a lifecycle hook.md).
+|监控项
 
-We recommend that you use lifecycle hooks and OOS templates to automatically execute O&M tasks for the following scenarios:
+|描述
 
--   If a scaling group is used to automatically respond to traffic spikes during peak hours, applications on ECS instances that are scaled out must be first started. Then, the instances are automatically registered with the resource management center to process business traffic.
--   A scaling group needs to be associated with PolarDB instances. After the scaling group is associated with PolarDB instances, the IP addresses of ECS instances in the scaling group are added to the whitelists of the PolarDB instances during scale-out events and are removed from the whitelists of the PolarDB instances during scale-in events.
--   During scale-in events, you need to copy some logs that are stored on the ECS instances to be deleted.
+|维度信息 |
+|-----|----|------|
+|CpuUtilization
 
-## Procedure
+|CPU使用率（%）
 
-The following example uses the ACS-ESS-LifeCycleCreateNetworkInterfaceAndEipAndAttachToInstance OOS public template to demonstrate how to bind a secondary elastic network interface \(ENI\) to and associate an elastic IP address \(EIP\) with all the created ECS instances during scale-out events. Perform the following steps:
+|user\_id、scaling\_group |
+|ClassicInternetRx
 
--   [Step 1: Grant OOS permissions to the RAM user](#section_onb_kyb_1xg)
--   [Step 2: Create a lifecycle hook for scale-out events and trigger scale-out events](#section_ixt_52h_nq5)
--   [Step 3 \(optional\): View the execution status of the OOS template](#section_dvu_jn8_f76)
+|经典网络外网入流量（KB/min）
 
-## Step 1: Grant OOS permissions to the RAM user
+|user\_id、scaling\_group |
+|ClassicInternetTx
 
-You must be granted the permissions to execute OOS templates. Resources of ECS, Auto Scaling, and Elastic IP Address are involved when the O&M operations that are specified in the ACS-ESS-LifeCycleCreateNetworkInterfaceAndEipAndAttachToInstance template are performed.
+|经典网络外网出流量（KB/min）
 
-1.  Log on to the [RAM console](https://ram.console.aliyun.com/).
+|user\_id、scaling\_group |
+|VpcInternetRx
 
-2.  In the left-side navigation pane, click **RAM Roles**.
+|VPC网络外网入流量（KB/min）
 
-3.  Find the OOSServiceRole RAM role and click **Add Permissions** in the **Actions** column.
+|user\_id、scaling\_group |
+|VpcInternetTx
 
-    Attach policies to the OOSServiceRole RAM role that is assumed by OOS to complete the authorization.
+|VPC网络外网出流量（KB/min）
 
-4.  In the **Add Permissions** pane, configure the parameters and click **OK**.
+|user\_id、scaling\_group |
+|IntranetRx
 
-    The following table describes the parameters used in this example. Use the default values for parameters that are not mentioned in the table.
+|内网入流量（KB/min）
 
-    |Parameter|Description|
-    |---------|-----------|
-    |**Authorization**|Select **Alibaba Cloud account all resources**.|
-    |**Select Policy**|Add the AliyunECSFullAccess, AliyunESSFullAccess, and AliyunEIPFullAccess system policies.|
+|user\_id、scaling\_group |
+|IntranetTx
 
+|内网出流量（KB/min）
 
-## Step 2: Create a lifecycle hook for scale-out events and trigger scale-out events
+|user\_id、scaling\_group |
+|LoadAverage
 
-1.  Log on to the [Auto Scaling console](https://essnew.console.aliyun.com/).
+|系统平均负载
 
-2.  In the left-side navigation pane, click **Scaling Groups**.
+|user\_id、scaling\_group |
+|MemoryUtilization
 
-3.  In the top navigation bar, select a region.
+|内存使用率（%）
 
-4.  Find the scaling group and use one of the following methods to open the details page of the scaling group:
+|user\_id、scaling\_group |
+|SystemDiskReadBps
 
-    -   Click the ID of the scaling group in the **Scaling Group Name/ID** column.
-    -   Click **Details** in the **Actions** column.
-5.  Create a lifecycle hook for scale-out events.
+|系统盘读BPS（Byte/s）
 
-    1.  In the left-side navigation pane, click **Lifecycle Hooks**.
+|user\_id、scaling\_group |
+|SystemDiskWriteBps
 
-    2.  Configure parameters for the lifecycle hook and click **OK**.
+|系统盘写BPS（Byte/s）
 
-        The following table describes the parameters used in this example. Use the default values for parameters that are not mentioned in the table.
+|user\_id、scaling\_group |
+|SystemDiskReadOps
 
-        |Parameter|Description|
-        |---------|-----------|
-        |**Name**|Enter ESSHookForAddNicEip.|
-        |**Applicable Scaling Activity Type**|Select **Scale-out Event**.|
-        |**Timeout Period**|Enter a proper value, such as 300.**Note:** The timeout period is the period of time during which to perform customized operations. If the period is short, the operations may fail to be performed. Estimate the time required to perform the operations and set a proper timeout period. |
-        |**Execution Policy**|Select **Continue**.|
-        |**Notification Method**|The following section describes the template configurations:        -   Notification method: Select **OOS Template**.
-        -   OOS template type: Select **Public Templates**.
-        -   Public template: Select ACS-ESS-LifeCycleCreateNetworkInterfaceAndEipAndAttachToInstance.
-The following section describes the parameters for the ACS-ESS-LifeCycleCreateNetworkInterfaceAndEipAndAttachToInstance template:
+|系统盘读IOPS（次/s）
 
-        -   **internetChargeType**: Select PayByBandwidth, which indicates that you are charged based on bandwidth when you use an EIP.
-        -   **bandwidth**: Enter 5, which indicates that the peak bandwidth of the EIP is 5 Mbit/s.
-        -   **Permissions**: Select OOSServiceRole. In Step 1, the OOSServiceRole RAM role is granted permissions to manage ECS, Auto Scaling, and Elastic IP Address resources. OSS owns the preceding permissions after it assumes the RAM role. |
+|user\_id、scaling\_group |
+|SystemDiskWriteOps
 
-6.  Trigger a scale-out event.
+|系统盘写IOPS（次/s）
 
-    A scale-out event is triggered in this example by manually executing a scaling rule. You can also trigger scale-out events by using scheduled or event-triggered tasks.
+|user\_id、scaling\_group |
+|PackagesNetIn
 
-    **Note:** ECS instances that are created or removed by manually executing a scaling rule are different from those that are manually added to or removed from a scaling group. ECS instances that are manually added to a scaling group are not put into the wait state by lifecycle hooks.
+|网卡收包数（个/s）
 
-    1.  In the left-side navigation pane, click **Scaling Rules**.
+|user\_id、scaling\_group、device |
+|PackagesNetOut
 
-    2.  In the upper-left corner of the Scaling Rules page, click **Create Scaling Rule**.
+|网卡发包数（个/s）
 
-    3.  In the Create Scaling Rule dialog box, configure required parameters and click **OK**.
+|user\_id、scaling\_group、device |
+|TcpConnection
 
-        The following table describes the parameters used in this example. Use the default values for parameters that are not mentioned in the table.
+|TCP连接数（个）
 
-        |Parameter|Description|
-        |---------|-----------|
-        |**Rule Name**|Enter Add1.|
-        |**Rule Type**|Select **Simple Scaling Rule**.|
-        |**Operation**|Set this parameter to Add 1 Instances.|
+|user\_id、scaling\_group、state |
 
-    4.  On the **Scaling Rules** page, find the created Add1 scaling rule and click **Execute** in the **Actions** column.
+其中，user\_id和scaling\_group由系统自动填充，device、state需要您手动指定。更多说明请参见参数Dimension.N.DimensionKey和Dimension.N.DimensionValue。
 
-    5.  In the **Execute Scaling Rule** message, click **OK**.
+## 调试
 
-    After the scaling rule is executed, an ECS instance is automatically created. The ECS instance is put into the wait state because the ESSHookForAddNicEip lifecycle hook is created in the scaling group. Additionally, Auto Scaling automatically notifies OOS to perform the customized O&M operations that are specified in the ACS-ESS-LifeCycleCreateNetworkInterfaceAndEipAndAttachToInstance template.
+[您可以在OpenAPI Explorer中直接运行该接口，免去您计算签名的困扰。运行成功后，OpenAPI Explorer可以自动生成SDK代码示例。](https://api.aliyun.com/#product=Ess&api=CreateAlarm&type=RPC&version=2014-08-28)
+
+## 请求参数
+
+|名称|类型|是否必选|示例值|描述|
+|--|--|----|---|--|
+|Action|String|是|CreateAlarm|系统规定参数。取值：CreateAlarm |
+|MetricName|String|是|CpuUtilization|监控项名称。取值范围：
+
+ -   CpuUtilization：CPU使用率（%）。
+-   ClassicInternetRx：经典网络外网入流量（KB/min）。
+-   ClassicInternetTx：经典网络外网出流量（KB/min）。
+-   VpcInternetRx：VPC网络外网入流量（KB/min）。
+-   VpcInternetTx：VPC网络外网出流量（KB/min）。
+-   IntranetRx：内网入流量（KB/min）。
+-   IntranetTx：内网出流量（KB/min）。
+-   LoadAverage：系统平均负载。
+-   MemoryUtilization：内存使用率（%）。
+-   SystemDiskReadBps：系统盘读BPS（Byte/s）。
+-   SystemDiskWriteBps：系统盘写BPS（Byte/s）。
+-   SystemDiskReadOps：系统盘读IOPS（次/s）。
+-   SystemDiskWriteOps：系统盘写IOPS（次/s）。
+-   PackagesNetIn：网卡收包数（个/s）。
+-   PackagesNetOut：网卡发包数（个/s）。
+-   TcpConnection：TCP连接数（个）。
+
+ 更多信息请参见接口说明。 |
+|RegionId|String|是|cn-qingdao|地域ID。 |
+|ScalingGroupId|String|是|asg-bp18p2yfxow2dloq\*\*\*\*|报警任务关联的伸缩组的ID。 |
+|Threshold|Float|是|80|监控指标的阈值，满足阈值表达式达到指定次数即触发执行伸缩规则。 |
+|Name|String|否|TestAlarmTask|报警任务的名称。 |
+|Description|String|否|Test alarm task.|报警任务的描述。 |
+|AlarmAction.N|RepeatList|否|ari:acs:ess:cn-hangzhou:1406926\*\*\*\*:scalingrule/asr-bp163l21e07uhn\*\*\*\*|报警任务关联伸缩规则的唯一标识符。 |
+|MetricType|String|否|system|监控项类型。取值范围：
 
-    If the scaling activity fails, the following error information appears. Go to the OOS console to view the execution result of O&M tasks. For more information, see [Step 3 \(optional\): View the execution status of the OOS template](#section_dvu_jn8_f76).
+ -   system：使用云监控系统指标。
+-   custom：使用上报到云监控的自定义指标。 |
+|Period|Integer|否|300|统计监控项数据的周期，单位为秒。取值范围：
 
-    ![Scaling activity failure](https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/en-US/5125821061/p133074.png)
+ -   60
+-   120
+-   300
+-   900
 
-7.  Check whether the automatically created ECS instance meets your requirements.
+ 默认值：300 |
+|Statistics|String|否|Average|统计监控项数据的方法。取值范围：
 
-    1.  In the left-side navigation pane, click **ECS Instances**.
+ -   Average：平均值。
+-   Minimum：最小值。
+-   Maximum：最大值。
 
-    2.  Find the automatically created instance and click its ID in the **ECS Instance ID/Name** column.
+ 默认值：Average |
+|ComparisonOperator|String|否|\>=|监控项统计值与阈值的比较符，用于指定监控项统计值与阈值在什么关系下满足条件。取值范围：
 
-    3.  In the left-side navigation pane, click **Elastic Network Interfaces**.
+ -   监控项统计值大于等于阈值。取值：\>=
+-   监控项统计值小于等于阈值。取值：<=
+-   监控项统计值大于阈值。取值：\>
+-   监控项统计值小于阈值。取值：<
 
-        In addition to the primary ENI, the ECS instance is bound with a secondary ENI and associated with an EIP, as shown in the following figure. The O&M tasks specified in the ACS-ESS-LifeCycleCreateNetworkInterfaceAndEipAndAttachToInstance template are performed and the execution result meets your expectations.
+ 默认值：\>= |
+|EvaluationCount|Integer|否|3|触发执行伸缩规则需要满足阈值表达式的次数，例如，CPU使用率平均值3次的统计结果均大于等于80%。
 
-        ![The automatically bound secondary ENI](https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/en-US/6125821061/p133063.png)
+ 默认值：3 |
+|Dimension.N.DimensionKey|String|否|device|监控项关联的维度信息键。取值范围：
 
-        If an ECS instance is created, but the instance is not bound with a secondary ENI or associated with an EIP, go to the OOS console to view the execution results of O&M tasks. For more information, see [Step 3 \(optional\): View the execution status of the OOS template](#section_dvu_jn8_f76).
+ -   user\_id：您的账号ID。
+-   scaling\_group：被监控的伸缩组。
+-   device：网卡设备的类型。
+-   state：TCP连接的状态。 |
+|Dimension.N.DimensionValue|String|否|eth0|监控项关联的维度信息值，取值范围由维度信息键决定。
 
+ user\_id：由系统自动填充。
 
-## Step 3 \(optional\): View the execution status of the OOS template
+ scaling\_group：由系统自动填充。
 
-1.  Log on to the [OOS console](https://oos.console.aliyun.com/).
+ device取值范围：
 
-2.  In the left-side navigation pane, click **Executions**.
+ -   eth0：对于经典网络实例，eth0表示内网网卡。对于VPC实例，只存在eth0一张网卡。
+-   eth1：对于经典网络实例，eth1代表外网网卡。
 
-3.  Find the corresponding execution task by time and click **Details** in the **Actions** column.
+ state取值范围：
 
-4.  Click the **Advanced View** tab.
+ -   TCP\_TOTAL：表示总的TCP连接数。
+-   ESTABLISHED：表示已建立的TCP连接数。 |
+|GroupId|Integer|否|4055401|自定义监控项所属云监控应用分组的ID，仅在监控项类型为custom时需要指定该参数。 |
 
-    The execution status appears on the **Execution Result** tab.
+## 返回数据
 
-    ![View the execution status](https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/en-US/6125821061/p132765.png)
+|名称|类型|示例值|描述|
+|--|--|---|--|
+|AlarmTaskId|String|asg-bp1hvbnmkl10vll5\*\*\*\*\_f95ce797-dc2e-4bad-9618-14fee7d1\*\*\*\*|报警任务ID。 |
+|RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3\*\*\*\*|请求ID。 |
 
-    If the execution fails, the error message appears on the **Execution Result** tab.
+## 示例
 
-    ![OOS execution result](https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/en-US/6125821061/p133032.png)
+请求示例
 
+```
+https://ess.aliyuncs.com/?Action=CreateAlarm
+&RegionId=cn-qingdao
+&ScalingGroupId=asg-bp18p2yfxow2dloq****
+&MetricName=CpuUtilization
+&Threshold=80
+&AlarmAction.1=ari:acs:ess:cn-hangzhou:1406926****:scalingrule/asr-bp163l21e07uhn****
+&<公共请求参数>
+```
 
-## FAQ
+正常返回示例
 
-If an O&M task fails to be executed, find the cause based on the error message in the execution result. The following section describes the common error messages and their solutions:
+`XML` 格式
 
--   Error message: Forbidden.Unauthorized message: A required authorization for the specified action is not supplied.
+```
+<CreateAlarmResponse>
+    <AlarmTaskId>asg-bp1hvbnmkl10vll5****_f95ce797-dc2e-4bad-9618-14fee7d1****</AlarmTaskId>
+    <RequestId>ADD82C07-7A7C-4DD4-907F-1D114742****</RequestId>
+</CreateAlarmResponse>
+```
 
-    Solution: Check whether you have granted the required permissions to the OOSServiceRole RAM role, such as the sample permissions in Step 1. You must grant required permissions to the OOSServiceRole RAM role to make sure that OOS can manage the resources that are involved in OOS templates.
+`JSON` 格式
 
--   Error message: Forbidden.RAM message: User not authorized to operate on the specified resource, or this API doesn't support RAM.
+```
+{
+	"AlarmTaskId":"asg-bp1hvbnmkl10vll5****_f95ce797-dc2e-4bad-9618-14fee7d1****",
+	"RequestId":"ADD82C07-7A7C-4DD4-907F-1D114742****"
+}
+```
 
-    Solution: Check whether you have granted the required permissions to the OOSServiceRole RAM role, such as the sample permissions in Step 1. You must grant required permissions to the OOSServiceRole RAM role to make sure that OOS can manage the resources that are involved in OOS templates.
+## 错误码
 
--   Error message: LifecycleHookIdAndLifecycleActionToken.Invalid message: The specified lifecycleActionToken and lifecycleActionId you provided does not match any in process lifecycle action.
+访问[错误中心](https://error-center.aliyun.com/status/product/Ess)查看更多错误码。
 
-    Solution: Estimate the timeout period of the lifecycle hook to make sure that the O&M task that is specified in the OOS template can be complete within the timeout period.
+|HttpCode
 
+|错误码
+
+|错误信息
+
+|描述 |
+|----------|-----|------|----|
+|404
+
+|InvalidParameter
+
+|The specified value of parameter "%s" is not valid.
+
+|指定参数“%s”不合法。 |
 

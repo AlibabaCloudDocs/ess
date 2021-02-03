@@ -67,6 +67,7 @@
  -   true：加密
 -   false：不加密 |
 |KMSKeyId|String|0e478b7a-4262-4802-b8cb-00d3fb40\*\*\*\*|数据盘对应的KMS密钥的ID。 |
+|PerformanceLevel|String|PL1|当数据盘为ESSD云盘时，ESSD云盘的性能等级。 |
 |Size|Integer|200|数据盘的磁盘大小，内存单位为GiB。取值范围：
 
  -   cloud：5~2000
@@ -138,6 +139,8 @@
 -   Deactive：不启用安全加固，对所有镜像类型生效。 |
 |SecurityGroupId|String|sg-bp18kz60mefs\*\*\*\*|ECS实例所属的安全组的ID，同一个安全组内的ECS实例可以互相访问。 |
 |SecurityGroupIds|List|sg-bp18kz60mefs\*\*\*\*|ECS实例所属的多个安全组的ID，同一个安全组内的ECS实例可以互相访问。 |
+|SpotDuration|Integer|1|抢占式实例的保留时长，单位为小时。 |
+|SpotInterruptionBehavior|String|Terminate|抢占实例中断模式。 |
 |SpotPriceLimit|Array of SpotPriceModel| |抢占式实例信息的集合。 |
 |SpotPriceModel| | | |
 |InstanceType|String|ecs.g6.large|抢占式实例的实例规格。 |
@@ -157,6 +160,7 @@
 -   cloud\_essd：ESSD云盘 |
 |SystemDiskDescription|String|Test system disk.|系统盘的描述。 |
 |SystemDiskName|String|cloud\_ssd\_Test|系统盘的名称。 |
+|SystemDiskPerformanceLevel|String|PL1|当系统盘为ESSD云盘时，ESSD云盘的性能等级。 |
 |SystemDiskSize|Integer|100|系统盘的磁盘大小。 |
 |Tags|Array of Tag| |标签信息的集合。 |
 |Tag| | | |
@@ -167,6 +171,7 @@
  -   default：创建非专有宿主机实例。
 -   host：创建专有宿主机实例。若您不指定DedicatedHostId，则由阿里云自动选择专有宿主机放置实例。 |
 |UserData|String|echo hello ecs!|ECS实例的自定义数据。 |
+|WeightedCapacities|List|4|对应指定实例规格的权重，即实例规格的单台实例在伸缩组中表示的容量大小。权重越大，满足期望容量所需的本实例规格的实例数量越少。 |
 |ZoneId|String|cn-hangzhou-g|实例所属的可用区ID，您可以调用[DescribeZones](~~25610~~)获取可用区列表。 |
 |TotalCount|Integer|1|伸缩配置的总数。 |
 
@@ -182,7 +187,7 @@ https://ess.aliyuncs.com/?Action=DescribeScalingConfigurations
 
 正常返回示例
 
-`XML` 格式
+`XML`格式
 
 ```
 <DescribeScalingConfigurationsResponse>
@@ -217,7 +222,7 @@ https://ess.aliyuncs.com/?Action=DescribeScalingConfigurations
 </DescribeScalingConfigurationsResponse>
 ```
 
-`JSON` 格式
+`JSON`格式
 
 ```
 {

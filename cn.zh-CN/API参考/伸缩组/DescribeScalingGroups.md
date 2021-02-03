@@ -103,7 +103,8 @@
 -   HealthCheck：健康检查。
 -   AlarmNotification：报警任务。
 -   ScheduledAction：定时任务。 |
-|TotalCapacity|Integer|1|伸缩组内所有ECS实例的数量。 |
+|TotalCapacity|Integer|1|当伸缩组设置了实例规格权重，表示伸缩组内所有ECS实例的加权容量总和。否则，表示伸缩组内所有ECS实例的数量。 |
+|TotalInstanceCount|Integer|1|伸缩组内所有ECS实例的数量。 |
 |VServerGroups|Array of VServerGroup| |后端服务器组列表。 |
 |VServerGroup| | | |
 |LoadBalancerId|String|147b46d767c-cn-qingdao-cm5\*\*\*\*|后端服务器组所属的负载均衡实例的ID。 |
@@ -148,6 +149,7 @@ https://ess.aliyuncs.com/?Action=DescribeScalingGroups
                   <MinSize>1</MinSize>
                   <MaxSize>2</MaxSize>
                   <LifecycleState>Inactive</LifecycleState>
+                  <TotalInstanceCount>0</TotalInstanceCount>
                   <ActiveScalingConfigurationId>asc-bp1et2qekq3ojr33****</ActiveScalingConfigurationId>
                   <LoadBalancerIds>
                         <LoadBalancerId>lb-bp19byhscefk3x0li****</LoadBalancerId>
@@ -189,6 +191,7 @@ https://ess.aliyuncs.com/?Action=DescribeScalingGroups
                 "MinSize": 1,
                 "MaxSize": 2,
                 "LifecycleState": "Inactive",
+                "TotalInstanceCount": 0,
                 "ActiveScalingConfigurationId": "asc-bp1et2qekq3ojr33****",
                 "LoadBalancerIds": {
                     "LoadBalancerId": [

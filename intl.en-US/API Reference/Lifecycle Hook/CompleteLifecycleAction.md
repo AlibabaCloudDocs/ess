@@ -4,7 +4,7 @@ You can call this operation to terminate the wait state of a specified scaling a
 
 ## Description
 
-You can set the action following the wait state to CONTINUE to complete this scaling activity or to ABANDON to terminate this scaling activity.
+You can set the action following the wait state of a scaling activity to CONTINUE to complete the scaling activity or to ABANDON to terminate the scaling activity.
 
 ## Debugging
 
@@ -15,17 +15,20 @@ You can set the action following the wait state to CONTINUE to complete this sca
 |Parameter|Type|Required|Example|Description|
 |---------|----|--------|-------|-----------|
 |Action|String|Yes|CompleteLifecycleAction|The operation that you want to perform. Set the value to CompleteLifecycleAction. |
-|LifecycleActionToken|String|Yes|aaaa-bbbbb-cccc-ddddd|The token that indicates a specific scaling activity. You can obtain this token by using an MNS queue or MNS topic specified for the lifecycle hook. |
+|LifecycleActionToken|String|Yes|aaaa-bbbbb-cccc-ddddd|The token that indicates the wait state of a specific scaling activity. You can obtain this token by using a Message Service \(MNS\) queue or MNS topic specified for the lifecycle hook. |
 |LifecycleHookId|String|Yes|ash-bp14g3ee6bt3sc98\*\*\*\*|The ID of the lifecycle hook. |
-|LifecycleActionResult|String|No|CONTINUE|The action that the scaling group takes when the lifecycle hook times out. Valid values:
+|LifecycleActionResult|String|No|CONTINUE|The action to be taken after the lifecycle hook times out. Valid values:
 
--   CONTINUE: The scaling group continues to respond to a scale-in or scale-out event.
--   ABANDON: The scaling group releases the created ECS instances if the scaling activity type is scale-out or removes the ECS instances to be scaled in if the scaling activity type is scale-in.
+-   CONTINUE: Auto Scaling continues to respond to a scale-out event and adds ECS instances to the scaling group or respond to a scale-in event and removes ECS instances from the scaling group.
+-   ABANDON: Auto Scaling terminates a scale-out event and releases the created ECS instances or continues to respond to a scale-in event and removes ECS instances from the scaling group.
 
-If a scaling group has multiple lifecycle hooks and one of them is terminated when the LifecycleActionResult parameter is set to ABANDON during a scale-in event, the remaining lifecycle hooks in the same scaling group are also terminated. Otherwise, the scaling activity will proceed normally after the lifecycle hook times out and continue with the action specified by the DefaultResult parameter.
+Default value: CONTINUE.
 
-Default value: CONTINUE. |
-|ClientToken|String|No|123e4567-e89b-12d3-a456-42665544\*\*\*\*|The client token that is used to ensure the idempotence of the request. You can use the client to generate the value, but you must ensure that it is unique among different requests. The token can only contain ASCII characters and cannot exceed 64 characters in length. For more information, see [How to ensure idempotence](~~25965~~). |
+If multiple lifecycle hooks exist in a scaling group and are triggered at the same time, the following results may occur:
+
+-   When a lifecycle hook of the ABANDON type that applies to scale-in events times out, the subsequent lifecycle hooks are terminated in advance. ECS instances are removed from the scaling group.
+-   When a lifecycle hook of the CONTINUE type that applies to scale-in events or a lifecycle hook that applies to scale-out events times out, the subsequent lifecycle hooks continue to put ECS instances into the wait state until the last lifecycle hook times out. The final action to take is determined by the type of the last lifecycle hook. |
+|ClientToken|String|No|123e4567-e89b-12d3-a456-42665544\*\*\*\*|The client token that is used to ensure the idempotence of the request. You can use the client to generate the value, but you must make sure that it is unique among different requests. The token can only contain ASCII characters and cannot exceed 64 characters in length. For more information, see [How to ensure idempotence](~~25965~~). |
 
 ## Response parameters
 
@@ -88,5 +91,5 @@ For a list of error codes, visit the [API Error Center](https://error-center.ali
 
 |The specified lifecycleActionToken and lifecycleHookId you provided does not match any in process lifecycle action.
 
-|The error message returned because the specified LifecycleActionToken parameter does not match any lifecycle hook IDs. |
+|The error message returned because the specified LifecycleActionToken parameter does not match the specified LifecycleHookId parameter. |
 

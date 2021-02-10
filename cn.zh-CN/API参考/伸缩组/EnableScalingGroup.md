@@ -38,8 +38,8 @@
 |Action|String|是|EnableScalingGroup|系统规定参数。取值：EnableScalingGroup |
 |ScalingGroupId|String|是|asg-bp14wlu85wrpchm0\*\*\*\*|伸缩组的ID。 |
 |ActiveScalingConfigurationId|String|否|asc-bp1ffogfdauy0nu5\*\*\*\*|需要在伸缩组内激活的伸缩配置的ID。 |
-|InstanceId.1|String|否|i-283vv\*\*\*\*|InstanceId.N为启用后需要加入伸缩组的ECS实例的ID，N的取值范围：1～20。 |
-|LoadBalancerWeight.1|Integer|否|50|LoadBalancerWeight.N为对应ECS实例后端服务器的权重，N的取值范围：1～20，该参数取值范围：1~100。
+|InstanceId.N|RepeatList|否|i-283vv\*\*\*\*|InstanceId.N为启用后需要加入伸缩组的ECS实例的ID，N的取值范围：1～20。 |
+|LoadBalancerWeight.N|RepeatList|否|50|LoadBalancerWeight.N为对应ECS实例后端服务器的权重，N的取值范围：1～20，该参数取值范围：1~100。
 
  默认值：50 |
 |LaunchTemplateId|String|否|lt-m5e3ofjr1zn1aw7\*\*\*\*|实例启动模板的ID，用于指定伸缩组从实例启动模板获取启动配置信息。 |

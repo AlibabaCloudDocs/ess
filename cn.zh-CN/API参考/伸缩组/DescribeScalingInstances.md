@@ -48,7 +48,7 @@
 |PageSize|Integer|否|10|分页查询时设置的每页行数，最大值：50。
 
  默认值：10 |
-|InstanceId.1|String|否|i-bp109k5j3dum1ce6\*\*\*\*|InstanceId.N为ECS实例的ID，N的取值范围：1～20。返回查询结果时忽略失效的InstanceId，并且不报错。 |
+|InstanceId.N|RepeatList|否|i-bp109k5j3dum1ce6\*\*\*\*|InstanceId.N为ECS实例的ID，N的取值范围：1～20。返回查询结果时忽略失效的InstanceId，并且不报错。 |
 
 ## 返回数据
 

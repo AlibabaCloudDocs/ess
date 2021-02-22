@@ -55,7 +55,7 @@ This topic provides answers to commonly asked questions about scaling groups.
 
 No, Auto Scaling is an open and flexible service and can be used alone without the need to combine Server Load Balancer \(SLB\), ApsaraDB RDS \(RDS\), or Cloud Monitor. We recommend that you use Auto Scaling with these Alibaba Cloud services to improve performance. You can deploy Auto Scaling with SLB or RDS and use Cloud Monitor to trigger scaling activities in Auto Scaling. For information about these Alibaba Cloud services, see the following topics:
 
--   SLB: [What is SLB?](/intl.en-US/Product Introduction/What is SLB?.md)
+-   SLB: [What is CLB?](/intl.en-US/Product Introduction/What is CLB?.md)
 -   RDS: [What is ApsaraDB for RDS?](/intl.en-US/Product Introduction/What is ApsaraDB for RDS?.md)
 -   Cloud Monitor: [Event-triggered task overview](/intl.en-US/Automatic Scaling/Alarm tasks/Event-triggered task overview.md)
 
@@ -67,7 +67,7 @@ For information about the limits related to Auto Scaling, see [Limits](/intl.en-
 
 Yes, you can add existing ECS instances to a scaling group. Make sure that the ECS instances meet the following conditions:
 
--   The ECS instances and the scaling group must be in the same region. For more information, see [Regions and zones](https://www.alibabacloud.com/help/doc-detail/40654.htm).
+-   The ECS instances and the scaling group must be in the same region. For more information, see [Regions and zones]().
 -   The ECS instances are in the **Running** state. For more information, see [ECS instance lifecycle](/intl.en-US/Instance/ECS instance lifecycle.md).
 -   The ECS instances are not added to other scaling groups.
 
@@ -119,7 +119,7 @@ If you specify an Alibaba Cloud Marketplace image that you have not purchased in
 Fail to create Instance into scaling group("The specified image is from the image market. You have not bought it or your quota has been exceeded.").
 ```
 
-Auto Scaling cannot create ECS instances by using Alibaba Cloud Marketplace images that you have not purchased. To use Alibaba Cloud Marketplace images to create ECS instances in Auto Scaling, you must purchase the images from[Alibaba Cloud Marketplace](https://marketplace.alibabacloud.com/) in advance.
+Auto Scaling cannot create ECS instances by using Alibaba Cloud Marketplace images that you have not purchased. To use Alibaba Cloud Marketplace images to create ECS instances in Auto Scaling, you must purchase the images from [Alibaba Cloud Marketplace](https://marketplace.alibabacloud.com/) in advance.
 
 ## Can images of different regions use the same product code?
 
@@ -186,7 +186,7 @@ No, Auto Scaling does not retain any data of ECS instances after the instances a
 
 ## How do I delete ECS instances that are automatically created by Auto Scaling in a scaling group?
 
-Log on to the Auto Scaling console, find the ECS instances that you want to delete, and then delete them. For more information, see [Manually remove an ECS instance from a scaling group](/intl.en-US/Instance Management/ECS instance/Manually remove an ECS instance from a scaling group.md).
+Log on to the Auto Scaling console, find the ECS instances that you want to delete, and then delete them. For more information, see [Manually remove or delete an ECS instance](/intl.en-US/Instance Management/ECS instance/Manually remove or delete an ECS instance.md).
 
 ## When Auto Scaling automatically creates multiple ECS instances, will Auto Scaling attempt to recreate instances that fail to be created?
 
@@ -194,7 +194,7 @@ No, Auto Scaling will not attempt to recreate instances that fail to be created.
 
 Assume that Auto Scaling attempts to automatically create 20 ECS instances. 19 instances are created, and one instance fails to be created. Then, Auto Scaling adds the 19 created instances to the scaling group but does not attempt to recreate the failed one. The scaling activity is complete but is in the **Warning** state.
 
-![](https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/en-US/8460881061/p64066.png)
+![](https://static-aliyun-doc.oss-accelerate.aliyuncs.com/assets/img/en-US/8460881061/p64066.png)
 
 ## For an ECS instance that is automatically created by Auto Scaling, how do I obtain its password and log on to it?
 
@@ -218,7 +218,7 @@ If you use a custom image where the /etc/hosts file is modified to create ECS in
 
 ## What does an SLB instance do after it is associated with a scaling group?
 
-The SLB instance forwards traffic to ECS instances in the scaling group based on the routing method. By associating an SLB instance with a scaling group, you can improve the performance and availability of your applications. For more information about SLB, see [What is SLB?](/intl.en-US/Product Introduction/What is SLB?.md).
+The SLB instance forwards traffic to ECS instances in the scaling group based on the routing method. By associating an SLB instance with a scaling group, you can improve the performance and availability of your applications. For more information about SLB, see [What is CLB?](/intl.en-US/Product Introduction/What is CLB?.md).
 
 ## How do SLB instances work with scaling groups?
 
@@ -252,7 +252,7 @@ The following error is returned if health check is disabled for the SLB instance
 The current health check type of load balancer "xxxx" does not support this action.
 ```
 
-Make sure that health check is enabled for SLB instances that are associated with scaling groups. For more information, see [Configure health check](/intl.en-US/User Guide/Health check/Configure health check.md).
+Make sure that health check is enabled for SLB instances that are associated with scaling groups. For more information, see [Configure health check](/intl.en-US/User Guide/Health check/Configure health checks.md).
 
 ## How does an SLB instance determine whether a newly created ECS instance can process requests?
 
@@ -274,5 +274,5 @@ RDS is a stable, reliable, and scalable online database service. By associating 
 
 ## How do RDS instances work with scaling groups?
 
-After an RDS instance is associated with a scaling group, Auto Scaling automatically adds the internal IP addresses of newly created ECS instances in the scaling group to the whitelist of the RDS instance. This allows the ECS instances to access the RDS instance over the internal network. You can associate multiple RDS instances with a scaling group. For more information about whitelists of RDS instances, see [Control access to an ApsaraDB RDS for MySQL instance](/intl.en-US/RDS MySQL Database/Quick start/Control access to an ApsaraDB RDS for MySQL instance.md).
+After an RDS instance is associated with a scaling group, Auto Scaling automatically adds the internal IP addresses of newly created ECS instances in the scaling group to the whitelist of the RDS instance. This allows the ECS instances to access the RDS instance over the internal network. You can associate multiple RDS instances with a scaling group. For more information about whitelists of RDS instances, see [Configure an IP address whitelist for an ApsaraDB RDS for MySQL instance](/intl.en-US/RDS MySQL Database/Quick start/Set the whitelist/Configure an IP address whitelist for an ApsaraDB RDS for MySQL instance.md).
 

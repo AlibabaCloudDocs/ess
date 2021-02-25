@@ -34,7 +34,7 @@
 -   Failed：执行失败的伸缩活动。
 -   InProgress：正在执行的伸缩活动。
 -   Rejected：执行伸缩活动请求被拒绝。 |
-|ScalingActivityId.1|String|否|asa-bp161xudmuxdzofe\*\*\*\*|ScalingActivityId.N为待查询伸缩活动的ID，N的取值范围：1～20。 |
+|ScalingActivityId.N|RepeatList|否|asa-bp161xudmuxdzofe\*\*\*\*|ScalingActivityId.N为待查询伸缩活动的ID，N的取值范围：1～20。 |
 
 ## 返回数据
 
@@ -83,7 +83,7 @@ https://ess.aliyuncs.com/?Action=DescribeScalingActivities
 
 正常返回示例
 
-`XML` 格式
+`XML`格式
 
 ```
 <DescribeScalingActivitiesResponse>
@@ -111,7 +111,7 @@ https://ess.aliyuncs.com/?Action=DescribeScalingActivities
 </DescribeScalingActivitiesResponse>
 ```
 
-`JSON` 格式
+`JSON`格式
 
 ```
 {

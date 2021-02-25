@@ -18,7 +18,7 @@
 |PageSize|Integer|否|10|分页查询时设置的每页行数。最大值：50。
 
  默认值：10 |
-|ScalingGroupId.1|String|否|asg-bp14wlu85wrpchm0\*\*\*\*|ScalingGroupId.N为待查询伸缩组的ID，N的取值范围：1～20。查询结果会忽略失效的伸缩组ID，并且不报错。 |
+|ScalingGroupId.N|RepeatList|否|asg-bp14wlu85wrpchm0\*\*\*\*|ScalingGroupId.N为待查询伸缩组的ID，N的取值范围：1～20。查询结果会忽略失效的伸缩组ID，并且不报错。 |
 |ScalingGroupName.1|String|否|scalinggroup\*\*\*\*|ScalingGroupName.N为待查询伸缩组的名称，N的取值范围：1～20。查询结果会忽略失效的伸缩组名称，并且不报错。 |
 
 ## 返回数据

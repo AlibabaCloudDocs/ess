@@ -35,9 +35,9 @@
 -   false：不返回伸缩规则关联的云监控报警任务。
 
  默认值：false |
-|ScalingRuleId.1|String|否|asr-bp1dvirgwkoowxk7\*\*\*\*|ScalingRuleId.N为待查询伸缩规则的ID，N的取值范围：1～10。 |
-|ScalingRuleName.1|String|否|scalingrule\*\*\*\*|ScalingRuleName.N为待查询伸缩规则的名称，N的取值范围：1～10。 |
-|ScalingRuleAri.1|String|否|ari:acs:ess:cn-hangzhou:140692647406\*\*\*\*:scalingrule/asr-bp1dvirgwkoowxk7\*\*\*\*|ScalingRuleAri.N为待查询伸缩规则的唯一标识符，N的取值范围：1～10。 |
+|ScalingRuleId.N|RepeatList|否|asr-bp1dvirgwkoowxk7\*\*\*\*|ScalingRuleId.N为待查询伸缩规则的ID，N的取值范围：1～10。 |
+|ScalingRuleName.N|RepeatList|否|scalingrule\*\*\*\*|ScalingRuleName.N为待查询伸缩规则的名称，N的取值范围：1～10。 |
+|ScalingRuleAri.N|RepeatList|否|ari:acs:ess:cn-hangzhou:140692647406\*\*\*\*:scalingrule/asr-bp1dvirgwkoowxk7\*\*\*\*|ScalingRuleAri.N为待查询伸缩规则的唯一标识符，N的取值范围：1～10。 |
 
 ## 返回数据
 

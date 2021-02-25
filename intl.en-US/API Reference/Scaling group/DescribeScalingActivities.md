@@ -22,19 +22,19 @@ You can query scaling activities that are executed in the last 30 days.
 |RegionId|String|Yes|cn-hangzhou|The region ID of the scaling group to which the scaling activity belongs. |
 |PageNumber|Integer|No|1|The number of the page to return. Pages start from page 1.
 
- Default: 1 |
+Default: 1 |
 |PageSize|Integer|No|10|The number of entries to return on each page. Maximum value: 50.
 
- Default value: 10 |
+Default value: 10 |
 |ScalingGroupId|String|No|asg-bp18p2yfxow2dloq\*\*\*\*|The ID of the scaling group. |
 |StatusCode|String|No|Successful|The status of the scaling activity. Valid values:
 
- -   Successful: The scaling activity is successful.
+-   Successful: The scaling activity is successful.
 -   Warning: The scaling activity is partially successful.
 -   Failed: The scaling activity fails.
 -   InProgress: The scaling activity is in progress.
 -   Rejected: The scaling activity request is rejected. |
-|ScalingActivityId.1|String|No|asa-bp161xudmuxdzofe\*\*\*\*|The ID of scaling activity N to be queried. Valid values of N: 1 to 20. |
+|ScalingActivityId.N|RepeatList|No|asa-bp161xudmuxdzofe\*\*\*\*|The ID of scaling activity N to be queried. Valid values of N: 1 to 20. |
 
 ## Response parameters
 
@@ -55,11 +55,11 @@ You can query scaling activities that are executed in the last 30 days.
 |ScalingGroupId|String|asg-bp18p2yfxow2dloq\*\*\*\*|The ID of the scaling group. |
 |ScalingInstanceNumber|Integer|1|The number of instances that were created or restarted from the Stopped state during the scale-out event.
 
- The number of instances that were deleted or put into the Stopped state during the scale-in event. |
+The number of instances that were deleted or put into the Stopped state during the scale-in event. |
 |StartTime|String|2020-09-10T09:54Z|The time when the scaling activity started. |
 |StatusCode|String|Successful|The status of the scaling activity. Valid values:
 
- -   Successful: The scaling activity was successful.
+-   Successful: The scaling activity was successful.
 -   Warning: The scaling activity was partially successful.
 -   Failed: The scaling activity failed.
 -   InProgress: The scaling activity was in progress.
@@ -115,29 +115,29 @@ Sample success responses
 
 ```
 {
-	"TotalCount": 1,
-	"PageSize": 10,
-	"RequestId": "CC107349-57B7-4405-B1BF-9BF5AF7F2A46",
-	"PageNumber": 1,
-	"ScalingActivities": {
-		"ScalingActivity": [
-			{
-				"ScalingInstanceNumber": 1,
-				"Progress": 100,
-				"Description": "Add \"1\" ECS instance",
-				"EndTime": "2020-09-10T09:54Z",
-				"AttachedCapacity": 0,
-				"ScalingActivityId": "asa-bp161xudmuxdzofe****",
-				"ScalingGroupId": "asg-bp18p2yfxow2dloq****",
-				"StartTime": "2020-09-10T09:54Z",
-				"StatusCode": "Successful",
-				"AutoCreatedCapacity": 2,
-				"StatusMessage": "\"1\" ECS instances are added",
-				"Cause": "A user requests to execute scaling rule \"asr-bp12tcnol686y1ik****\", changing the Total Capacity from \"1\" to \"2\".",
-				"TotalCapacity": 2
-			}
-		]
-	}
+    "TotalCount": 1,
+    "PageSize": 10,
+    "RequestId": "CC107349-57B7-4405-B1BF-9BF5AF7F2A46",
+    "PageNumber": 1,
+    "ScalingActivities": {
+        "ScalingActivity": [
+            {
+                "ScalingInstanceNumber": 1,
+                "Progress": 100,
+                "Description": "Add \"1\" ECS instance",
+                "EndTime": "2020-09-10T09:54Z",
+                "AttachedCapacity": 0,
+                "ScalingActivityId": "asa-bp161xudmuxdzofe****",
+                "ScalingGroupId": "asg-bp18p2yfxow2dloq****",
+                "StartTime": "2020-09-10T09:54Z",
+                "StatusCode": "Successful",
+                "AutoCreatedCapacity": 2,
+                "StatusMessage": "\"1\" ECS instances are added",
+                "Cause": "A user requests to execute scaling rule \"asr-bp12tcnol686y1ik****\", changing the Total Capacity from \"1\" to \"2\".",
+                "TotalCapacity": 2
+            }
+        ]
+    }
 }
 ```
 

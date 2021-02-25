@@ -22,9 +22,9 @@ Default: 1. |
 |PageSize|Integer|No|50|The number of entries to return on each page. Maximum value: 50.
 
 Default value: 10. |
-|ScheduledAction.N|String|No|ari:acs:ess:cn-hangzhou:1406926474\*\*\*\*:scalingrule/asr-bp1id5rhu8edp7kd\*\*\*\*|The operation to be performed when scheduled task N is triggered. Valid values of N: 1 to 20. |
-|ScheduledTaskId.N|String|No|edRtShc57WGXdt8TlPbr\*\*\*\*|The ID of scheduled task N to be queried. Valid values of N: 1 to 20. |
-|ScheduledTaskName.N|String|No|scheduled\*\*\*\*|The name of scheduled task N to be queried. Valid values of N: 1 to 20. |
+|ScheduledAction.N|RepeatList|No|ari:acs:ess:cn-hangzhou:1406926474\*\*\*\*:scalingrule/asr-bp1id5rhu8edp7kd\*\*\*\*|The operation to be performed when scheduled task N is triggered. Valid values of N: 1 to 20. |
+|ScheduledTaskId.N|RepeatList|No|edRtShc57WGXdt8TlPbr\*\*\*\*|The ID of scheduled task N to be queried. Valid values of N: 1 to 20. |
+|ScheduledTaskName.N|RepeatList|No|scheduled\*\*\*\*|The name of scheduled task N to be queried. Valid values of N: 1 to 20. |
 |ScalingGroupId|String|No|asg-bp1bo5tca4m56nap\*\*\*\*|The ID of the scaling group in which the scheduled task is to be executed. |
 
 ## Response parameters

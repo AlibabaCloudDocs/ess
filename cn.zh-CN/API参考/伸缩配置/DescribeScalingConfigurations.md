@@ -19,8 +19,8 @@
 
  默认值：10 |
 |ScalingGroupId|String|否|asg-bp17pelvl720x3v7\*\*\*\*|伸缩组的ID，您可以查询该伸缩组下所有的伸缩配置。 |
-|ScalingConfigurationId.1|String|否|asc-bp17pelvl720x5ub\*\*\*\*|ScalingConfigurationId.N为待查询伸缩配置的ID，N的取值范围：1～10。查询结果包括生效和未生效的伸缩配置，并通过返回参数LifecycleState进行标识。 |
-|ScalingConfigurationName.1|String|否|scalingcon\*\*\*\*|ScalingConfigurationName.N为待查询伸缩配置的名称，N的取值范围：1～10。查询结果会忽略失效的伸缩配置名称，并且不报错。 |
+|ScalingConfigurationId.N|RepeatList|否|asc-bp17pelvl720x5ub\*\*\*\*|ScalingConfigurationId.N为待查询伸缩配置的ID，N的取值范围：1～10。查询结果包括生效和未生效的伸缩配置，并通过返回参数LifecycleState进行标识。 |
+|ScalingConfigurationName.N|RepeatList|否|scalingcon\*\*\*\*|ScalingConfigurationName.N为待查询伸缩配置的名称，N的取值范围：1～10。查询结果会忽略失效的伸缩配置名称，并且不报错。 |
 
 ## 返回数据
 

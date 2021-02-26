@@ -9,7 +9,7 @@ Auto Scaling provides the following capabilities for applications:
 
 The following figure shows the general process of using Auto Scaling.
 
-![autoscaling-process](https://static-aliyun-doc.oss-accelerate.aliyuncs.com/assets/img/en-US/3861034161/p190444.png)
+![autoscaling-process](https://static-aliyun-doc.oss-accelerate.aliyuncs.com/assets/img/en-US/8122034161/p190444.png)
 
 The following section describes the process:
 

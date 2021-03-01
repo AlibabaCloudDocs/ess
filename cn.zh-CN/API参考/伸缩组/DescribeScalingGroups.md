@@ -57,7 +57,7 @@
 |LifecycleState|String|Active|伸缩组的状态信息。取值范围：
 
  -   Active：生效状态，处于生效状态的伸缩组才能接收执行伸缩规则的请求并触发伸缩活动。
--   Inacitve：失效状态，处于失效状态的伸缩组不接收任何执行伸缩规则的请求。
+-   Inactive：失效状态，处于失效状态的伸缩组不接收任何执行伸缩规则的请求。
 -   Deleting：伸缩组正在删除，处于删除中状态的伸缩组不接收任何执行伸缩规则的请求，并且不能修改伸缩组相关参数。 |
 |LoadBalancerIds|List|lb-bp19byhscefk3x0li\*\*\*\*|伸缩组关联的负载均衡实例的ID列表。 |
 |MaxSize|Integer|2|伸缩组内ECS实例台数的最大值。 |

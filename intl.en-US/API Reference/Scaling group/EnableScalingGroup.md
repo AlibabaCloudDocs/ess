@@ -4,17 +4,17 @@ You can call this operation to enable a scaling group.
 
 ## Description
 
-The operation can be called only when the scaling group is in the Inactive state.
+You can call this operation on a scaling group only when the scaling group is in the Enabled state.
 
 When you enable a scaling group, you obtain one or more of the following results:
 
--   If the operation is successful, the scaling group enters the Active state, and the ECS instances that you specified by using the InstanceID.N parameter are added to the scaling group.
--   If the number of ECS instances in the scaling group is less than the MinSize value after the ECS instances are added, additional ECS instances are automatically created to maintain the MinSize value. For example, a scaling group is created with the MinSize parameter set to 5. Two existing ECS instances are specified in the InstanceId.N parameter when the scaling group is enabled. Then, three additional ECS instances are automatically created after the two ECS instances are added by Auto Scaling to the scaling group.
+-   After a scaling group is enabled, the ECS instances that you specified by using the InstanceId.N parameter are added to the scaling group.
+-   If the number of existing ECS instances in a scaling group is less than the MinSize value after the specified ECS instances are added to the scaling group, additional ECS instances are automatically created to maintain the MinSize value. For example, a scaling group is created with the MinSize parameter set to 5. Two existing ECS instances are specified in the InstanceId.N parameter when the scaling group is enabled. Then, three additional ECS instances are automatically created after the two ECS instances are added by Auto Scaling to the scaling group.
 -   If the sum of the number of instances to be added specified for this operation and the number of existing ECS instances in the scaling group is greater than the MaxSize value, the call fails.
 
 If the scaling group has no active scaling configuration, you must specify a scaling configuration when you enable the scaling group. This operation must meet the following requirements:
 
--   A single scaling group can have only one active scaling configuration at the same time.
+-   A single scaling group can have only one active scaling configuration.
 -   If an active scaling configuration exists and you specify a new active scaling configuration when you call this operation, the original scaling configuration becomes inactive.
 
 The ECS instances to be added to the scaling group must meet the following requirements:
@@ -22,9 +22,9 @@ The ECS instances to be added to the scaling group must meet the following requi
 -   The instances are located in the same region as the scaling group.
 -   The instances have the same instance type as that of the active scaling configuration.
 -   The instances are in the Running state.
--   The instances are not added to any other scaling group.
+-   The instances are not added to other scaling groups.
 -   The instances use the subscription or pay-as-you-go billing method or are preemptible instances.
--   If the VSwitchId parameter is specified for a scaling group, ECS instances in the classic network or not in the same VPC as the specified VSwitch cannot be added to the scaling group.
+-   If the VSwitchId parameter is specified for a scaling group, ECS instances in the classic network or not in the same VPC as the specified vSwitch cannot be added to the scaling group.
 -   If the VSwitchId parameter is not specified for a scaling group, VPC-type ECS instances cannot be added to the scaling group.
 
 ## Debugging
@@ -37,17 +37,41 @@ The ECS instances to be added to the scaling group must meet the following requi
 |---------|----|--------|-------|-----------|
 |Action|String|Yes|EnableScalingGroup|The operation that you want to perform. Set the value to EnableScalingGroup. |
 |ScalingGroupId|String|Yes|asg-bp14wlu85wrpchm0\*\*\*\*|The ID of the scaling group. |
-|ActiveScalingConfigurationId|String|No|asc-bp1ffogfdauy0nu5\*\*\*\*|The ID of the scaling configuration to be activated in the scaling group. |
-|InstanceId.1|String|No|i-283vv\*\*\*\*|The ID of enabled ECS instance N to be added to the scaling group. Valid values of N: 1 to 20. |
-|LoadBalancerWeight.1|Integer|No|50|The weight of ECS instance N that acts as a backend server of the associated SLB instance. Valid values of N: 1 to 20. Valid values of this parameter: 1 to 100.
+|ActiveScalingConfigurationId|String|No|asc-bp1ffogfdauy0nu5\*\*\*\*|The ID of the scaling configuration to be enabled in the scaling group. |
+|InstanceId.N|RepeatList|No|i-283vv\*\*\*\*|The ID of ECS instance N to be added to the scaling group. Valid values of N: 1 to 20. |
+|LoadBalancerWeight.N|RepeatList|No|50|The weight of ECS instance N that acts as a backend server of the associated SLB instance. Valid values of N: 1 to 20. Valid values of this parameter: 1 to 100.
 
-Default value: 50 |
-|LaunchTemplateId|String|No|lt-m5e3ofjr1zn1aw7\*\*\*\*|The ID of the launch template, from which the specified scaling group can obtain launch configurations. |
+Default value: 50. |
+|LaunchTemplateId|String|No|lt-m5e3ofjr1zn1aw7\*\*\*\*|The ID of the launch template that is used by Auto Scaling to create ECS instances. |
 |LaunchTemplateVersion|String|No|Default|The version number of the launch template. Valid values:
 
 -   A fixed template version number.
 -   Default: The default template version is always used.
 -   Latest: The latest template version is always used. |
+|LaunchTemplateOverride.N.InstanceType|String|No|ecs.c5.xlarge|If you want to scale the scaling group based on the capacity, you must specify both the LaunchTemplateOverride.N.InstanceType and LaunchTemplateOverride.N.WeightedCapacity parameters at the same time.
+
+This parameter specifies instance type N to override the instance types specified in the launch template. You can specify N values for this parameter and N instance types for the extended configurations. Valid values of N: 1 to 10.
+
+**Note:** This parameter takes effect only when the LaunchTemplateId parameter is specified.
+
+Valid values of InstanceType: For information about available ECS instance types, see [Instance families](~~25378~~). |
+|LaunchTemplateOverride.N.WeightedCapacity|Integer|No|4|If you want to scale the scaling group based on the capacity, you must specify LaunchTemplateOverride.N.WeightedCapacity after LaunchTemplateOverride.N.InstanceType is specified. The two parameters have a one-to-one correspondence between them. The N value must be the same.
+
+This parameter specifies the weight of the instance type, which indicates the capacity of a single instance of the specified instance type in the scaling group. A greater weight indicates that a less number of instances of the specified instance type is required to meet the expected capacity.
+
+The performance metrics such as the number of vCPUs and the memory size of each instance type may vary. You can configure different weights for different instance types to meet your requirements.
+
+Example:
+
+-   Current capacity: 0
+-   Expected capacity: 6
+-   Capacity of ecs.c5.xlarge: 4
+
+To meet the expected capacity, Auto Scaling creates two ecs.c5.xlarge instances.
+
+**Note:** The capacity of the scaling group cannot exceed the sum of the maximum capacity \(MaxSize\) and the maximum weight of the instance type.
+
+Valid values: 1 to 500. |
 
 ## Response parameters
 
@@ -207,14 +231,14 @@ For a list of error codes, visit the [API Error Center](https://error-center.ali
 
 |The network type of the instance in specified Load Balancer does not support this action.
 
-|The error message returned because the network type of the ECS instance attached to the specified SLB instance is different from that of the scaling group. |
+|The error message returned because the network type of the ECS instance added to the specified SLB instance is different from that of the scaling group. |
 |400
 
 |InvalidLoadBalancerId.VPCMismatch
 
 |The specified virtual switch and the instance in specified Load Balancer are not in the same VPC.
 
-|The error message returned because the ECS instance attached to the specified SLB instance is not in the same VPC as the VSwitch specified by VSwitchID. |
+|The error message returned because the ECS instance added to the specified SLB instance is not in the same VPC as the vSwitch specified by VSwitchID. |
 |400
 
 |IncorrectDBInstanceStatus

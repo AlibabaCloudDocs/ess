@@ -1,4 +1,4 @@
-# Scaling modes {#concept_q24_3gm_qfb .concept}
+# Scaling modes
 
 This article introduces the scaling modes of Auto Scaling.
 

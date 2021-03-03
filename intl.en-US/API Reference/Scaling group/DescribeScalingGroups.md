@@ -16,10 +16,10 @@ You can call this operation to query scaling groups.
 |RegionId|String|Yes|cn-qingdao|The region ID of the scaling group. |
 |PageNumber|Integer|No|1|The number of the page to return. Pages start from page 1.
 
- Default value: 1 |
+Default value: 1 |
 |PageSize|Integer|No|10|The number of entries to return on each page. Maximum value: 50.
 
- Default value: 10 |
+Default value: 10 |
 |ScalingGroupId.1|String|No|asg-bp14wlu85wrpchm0\*\*\*\*|The ID of scaling group N to be queried. Valid values of N: 1 to 20. The IDs of inactive scaling groups will not be displayed in the query result and no errors will be returned. |
 |ScalingGroupName.1|String|No|scalinggroup\*\*\*\*|The name of scaling group N to be queried. Valid values of N: 1 to 20. The names of inactive scaling groups will not be displayed in the query result and no errors will be returned. |
 
@@ -36,7 +36,7 @@ You can call this operation to query scaling groups.
 |ActiveScalingConfigurationId|String|asc-bp1et2qekq3ojr33\*\*\*\*|The ID of the active scaling configuration in the scaling group. |
 |CompensateWithOnDemand|Boolean|true|Specifies whether to automatically create pay-as-you-go instances to meet the requirement for the number of ECS instances in the scaling group when the number of preemptible instances cannot be reached due to reasons such as cost or insufficient resources. This parameter takes effect when the MultiAZPolicy parameter is set to COST\_OPTIMIZED. Valid values:
 
- -   true: Pay-as -you-go instances can be created.
+-   true: Pay-as -you-go instances can be created.
 -   false: Pay-as -you-go instances cannot be created. |
 |CreationTime|String|2014-08-14T10:58Z|The time when the scaling group was created. |
 |DBInstanceIds|List|rm-bp15556qzebg1\*\*\*\*|The IDs of the ApsaraDB RDS instances that are associated with the scaling group. |
@@ -44,17 +44,17 @@ You can call this operation to query scaling groups.
 |DesiredCapacity|Integer|5|The expected number of ECS instances in the scaling group. Auto Scaling automatically keeps the ECS instances at this number. |
 |GroupDeletionProtection|Boolean|true|Indicates whether scaling group deletion protection is enabled. Valid values:
 
- -   true: Scaling group deletion protection is enabled. You cannot delete the scaling group.
+-   true: Scaling group deletion protection is enabled. You cannot delete the scaling group.
 -   false: Scaling group deletion protection is disabled. |
 |HealthCheckType|String|ECS|The health check mode of the scaling group. Valid values:
 
- -   NONE: The system performs no health check.
+-   NONE: The system performs no health check.
 -   ECS: The system performs a health check on ECS instances in the scaling group. |
 |LaunchTemplateId|String|lt-m5e3ofjr1zn1aw7\*\*\*\*|The ID of the launch template used by the scaling group. |
 |LaunchTemplateVersion|String|Default|The version of the launch template used by the scaling group. |
 |LifecycleState|String|Active|The lifecycle status of the scaling group. Valid values:
 
- -   Active: The scaling group is active. Active scaling groups can receive requests to execute scaling rules and trigger scaling activities.
+-   Active: The scaling group is active. Active scaling groups can receive requests to execute scaling rules and trigger scaling activities.
 -   Inactive: The scaling group is inactive. Inactive scaling groups cannot receive requests to execute scaling rules.
 -   Deleting: The scaling group is being deleted. Scaling groups that are being deleted cannot receive requests to execute scaling rules and their parameters cannot be modified. |
 |LoadBalancerIds|List|lb-bp19byhscefk3x0li\*\*\*\*|The IDs of the SLB instances that are associated with the scaling group. |
@@ -63,7 +63,7 @@ You can call this operation to query scaling groups.
 |ModificationTime|String|2014-08-14T10:58Z|The time when the scaling group was modified. |
 |MultiAZPolicy|String|PRIORITY|The ECS instance scaling policy for a multi-zone scaling group. Valid values:
 
- -   PRIORITY: ECS instances are scaled based on the VSwitchIds.N parameter. When an ECS instance cannot be created in the zone where the VSwitch with the highest priority resides, the system uses the VSwitch with the next highest priority to create the ECS instance.
+-   PRIORITY: ECS instances are scaled based on the VSwitchIds.N parameter. When an ECS instance cannot be created in the zone where the VSwitch with the highest priority resides, the system uses the VSwitch with the next highest priority to create the ECS instance.
 -   COST\_OPTIMIZED: ECS instances are created based on the unit prices of vCPUs in ascending order. Preemptible instances are preferentially created when preemptible instance types are specified for the scaling configuration. You can set the CompensateWithOnDemand parameter to specify whether to automatically create pay-as-you-go instances when preemptible instances cannot be created due to insufficient resources.
 
 **Note:** COST\_OPTIMIZED takes effect only when multiple instance types are specified or at least one preemptible instance type is specified.
@@ -77,7 +77,7 @@ You can call this operation to query scaling groups.
 |RegionId|String|cn-qingdao|The region ID of the scaling group. |
 |RemovalPolicies|List|OldestScalingConfiguration|Details about policies for removing ECS instances from the scaling group. Valid values:
 
- -   OldestInstance: removes the ECS instance that was created at the earliest point in time.
+-   OldestInstance: removes the ECS instance that was created at the earliest point in time.
 -   NewestInstance: removes the ECS instance that was created at the latest point in time.
 -   OldestScalingConfiguration: removes the ECS instance that was created based on the earliest scaling configuration. |
 |RemovingCapacity|Integer|0|The number of ECS instances that are being removed from the scaling group. |
@@ -86,17 +86,17 @@ You can call this operation to query scaling groups.
 |ScalingGroupName|String|dyrSuvBOtO1dEdIlIbp\*\*\*\*|The name of the scaling group. |
 |ScalingPolicy|String|recycle|Specifies the reclaim policy of the scaling group. Valid values:
 
- -   recycle: The scaling group is set to Shutdown and Reclaim Mode.
+-   recycle: The scaling group is set to Shutdown and Reclaim Mode.
 -   release: The scaling group is set to Release Mode.
 
- For more information, see [RemoveInstances](~~25955~~). |
+For more information, see [RemoveInstances](~~25955~~). |
 |SpotInstancePools|Integer|5|The number of available instance types. Auto Scaling will create preemptible instances of multiple instance types available at the lowest cost. Valid values: 0 to 10. |
 |SpotInstanceRemedy|Boolean|true|Specifies whether to supplement preemptible instances when the target capacity of preemptible instances is not fulfilled. When Auto Scaling receives a system message that a preemptible instance will be reclaimed, Auto Scaling will create a new instance to replace the instance to be reclaimed if this parameter is set to true. |
 |StandbyCapacity|Integer|1|The number of instances that are in the standby state in the scaling group. |
 |StoppedCapacity|Integer|1|The number of instances that are in the stopped state in the scaling group. |
 |SuspendedProcesses|List|ScaleIn|The scaling activity that is suspended. If no scaling activity is suspended, the returned value is null. Valid values:
 
- -   ScaleIn: removes ECS instances.
+-   ScaleIn: removes ECS instances.
 -   ScaleOut: adds ECS instances.
 -   HealthCheck: performs health check.
 -   AlarmNotification: sends alarm notifications.

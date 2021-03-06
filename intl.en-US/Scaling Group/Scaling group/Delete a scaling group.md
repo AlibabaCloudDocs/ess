@@ -2,7 +2,9 @@
 
 This topic describes how to delete a scaling group that is no longer needed.
 
-If you delete a scaling group, its scaling configurations and scaling rules are also deleted. If ECS instances in the scaling group are in the Running state, Auto Scaling first stops the ECS instances. Then, Auto Scaling removes all the manually added ECS instances and releases all the automatically added ECS instances.
+Deletion protection is disabled for the scaling group. If deletion protection is enabled for the scaling group, disable deletion protection before you delete the scaling group. For more information, see [t2041755.md\#]().
+
+If you delete a scaling group, its scaling configurations and scaling rules are also deleted. If ECS instances in the Running state exist in the scaling group, Auto Scaling stops the ECS instances first. Then, Auto Scaling removes all manually added ECS instances and releases all automatically added ECS instances.
 
 1.  Log on to the [Auto Scaling console](https://essnew.console.aliyun.com/).
 
@@ -16,4 +18,9 @@ If you delete a scaling group, its scaling configurations and scaling rules are 
 
 
 The scaling group enters the **Deleting** state. After the scaling group is deleted, it is no longer displayed on the Scaling Groups page.
+
+**Related topics**  
+
+
+[DeleteScalingGroup](/intl.en-US/API Reference/Scaling group/DeleteScalingGroup.md)
 

@@ -8,7 +8,7 @@ After deletion protection is enabled for a scaling group, the scaling group cann
 
 3.  In the top navigation bar, select a region.
 
-4.  Find the scaling group and choose ![menu](../images/p238359.png) \> **Set Deletion Protection** in the **Actions** column.
+4.  Find the scaling group and choose ![menu](https://static-aliyun-doc.oss-accelerate.aliyuncs.com/assets/img/en-US/4838105161/p238359.png) \> **Set Deletion Protection** in the **Actions** column.
 
 5.  In the dialog box that appears, set the deletion protection status for the scaling group.
 

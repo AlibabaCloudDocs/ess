@@ -40,7 +40,7 @@ If your business uses ECS instances on a regular basis, you can create a schedul
 
 ## Execute a scaling rule by using an event-triggered task
 
-If your business does not use ECS instances on a regular basis, you can create an event-triggered task to execute a scaling rule. When the specified condition is met, Auto Scaling automatically executes the scaling rule. For more information, see [Create event-triggered tasks](/intl.en-US/Automatic Scaling/Alarm tasks/Create a monitoring task.md). For more information about event-triggered tasks, see[Event-triggered task overview](/intl.en-US/Automatic Scaling/Alarm tasks/Event-triggered task overview.md).
+If your business does not use ECS instances on a regular basis, you can create an event-triggered task to execute a scaling rule. When the specified condition is met, Auto Scaling automatically executes the scaling rule. For more information, see [Create event-triggered tasks](/intl.en-US/Automatic Scaling/Alarm tasks/Create a monitoring task.md). For more information about event-triggered tasks, see [Event-triggered task overview](/intl.en-US/Automatic Scaling/Alarm tasks/Event-triggered task overview.md).
 
 **Note:** A target tracking scaling rule can be triggered only by the associated event-triggered task. For more information, see [Create a scaling rule](/intl.en-US/Scaling Group/Scaling rule/Create a scaling rule.md).
 

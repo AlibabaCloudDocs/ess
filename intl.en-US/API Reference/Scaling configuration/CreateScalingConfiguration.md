@@ -21,7 +21,7 @@ Alibaba Cloud Marketplace images cannot be specified by using the ImageName para
 
 You can specify the number of vCPUs and the amount of memory to define the range of instance types. For example, to specify instance types that have 2 vCPUs and 16 GiB of memory, set Cpu to 2 and Memory to 16. Auto Scaling uses factors such as I/O optimization and zone to determine a set of available instance types. Then, Auto Scaling creates instances based on the unit prices of instance types in ascending order.
 
-**Note:** This instance type range takes effect only when cost optimization is enabled and you have not specified an instance type in the scaling configuration. |
+**Note:** This instance type range takes effect only when cost optimization is enabled and the scaling configuration does not have a specified instance type. |
 |Memory|Integer|No|16|The amount of memory.
 
 You can specify the number of vCPUs and the amount of memory to define the range of instance types. For example, to specify instance types that have 2 vCPUs and 16 GiB of memory, set Cpu to 2 and Memory to 16. Auto Scaling uses factors such as I/O optimization and zone to determine a set of available instance types. Then, Auto Scaling creates instances based on the unit prices of instance types in ascending order.
@@ -30,15 +30,39 @@ You can specify the number of vCPUs and the amount of memory to define the range
 |DeploymentSetId|String|No|ds-bp1frxuzdg87zh4pz\*\*\*\*|The ID of the deployment set to which the ECS instance belongs. |
 |InstanceTypes.N|RepeatList|No|ecs.g6.large|Instance type N from which ECS instances can be created. If you specify this parameter, InstanceType is ignored. You can specify a maximum of 10 instance types for a scaling configuration. Valid values of N: 1 to 10.
 
-N represents the priority of an instance type in the scaling configuration. A lower value of N indicates a higher priority. Auto Scaling creates instances based on the priority of instance types. If Auto Scaling cannot create instances based on the instance type of the highest priority, the instance type of the next highest priority will be used. |
-|SecurityGroupId|String|No|sg-280ih\*\*\*\*|The ID of the security group to which the ECS instance belongs. ECS instances in the same security group can access each other. |
-|IoOptimized|String|No|optimized|Specifies whether the instance to be created is I/O optimized. For instances of retired instance types, the default value is none. For other instances, the default value is optimized. For more information, see [Retired instance types](~~55263~~). Valid values:
+N represents the priority of an instance type in the scaling configuration. A lower value of N indicates a higher priority. Auto Scaling creates instances based on the priority of instance types. If Auto Scaling cannot create instances based on the instance type of the highest priority, the instance type of the next highest priority is used. |
+|InstanceTypeOverride.N.InstanceType|String|No|ecs.c5.xlarge|If you want to specify the capacity of instance types in the scaling configuration, you must specify both the InstanceTypeOverride.N.InstanceType and InstanceTypeOverride.N.WeightedCapacity parameters at the same time.
+
+This parameter is used to specify the instance type. You can specify N values for this parameter. You can customize the weights of multiple instance types in combination with the InstanceTypeOverride.N.WeightedCapacity parameter. Valid values of N: 1 to 10.
+
+**Note:** When you specify InstanceTypeOverride.N.InstanceType, InstanceTypes cannot be specified.
+
+Valid values of InstanceType: For information about available ECS instance types, see [Instance families](~~25378~~). |
+|InstanceTypeOverride.N.WeightedCapacity|Integer|No|4|If you want to specify the capacity of instance types in the scaling configuration, you must specify InstanceTypeOverride.N.WeightedCapacity after InstanceTypeOverride.N.InstanceType is specified. The two parameters have a one-to-one correspondence between them. The N value must be the same.
+
+This parameter specifies the weight of the instance type, which indicates the capacity of a single instance of the specified instance type in the scaling group. A greater weight indicates that a less number of instances of the specified instance type is required to meet the expected capacity.
+
+The performance metrics such as the number of vCPUs and the memory size of each instance type may vary. You can configure different weights for different instance types to meet your requirements.
+
+Example:
+
+-   Current capacity: 0
+-   Expected capacity: 6
+-   Capacity of ecs.c5.xlarge: 4
+
+To meet the expected capacity, Auto Scaling creates two ecs.c5.xlarge instances.
+
+**Note:** The capacity of the scaling group cannot exceed the sum of the maximum capacity \(MaxSize\) and the maximum weight of the instance type.
+
+Valid values: 1 to 500. |
+|SecurityGroupId|String|No|sg-280ih\*\*\*\*|The ID of the security group to which an ECS instance belongs. ECS instances in the same security group can access each other. |
+|IoOptimized|String|No|optimized|Specifies whether the instance to be created is I/O optimized. For instances of retired instance types, the default value is none. For other instances, the default value is optimized. For more information, see [Phased-out instance types](~~55263~~). Valid values:
 
 -   none: The instance to be created is non-I/O optimized.
 -   optimized: The instance to be created is I/O optimized. |
-|InternetChargeType|String|No|PayByTraffic|The billing method for network usage. Valid values:
+|InternetChargeType|String|No|PayByTraffic|The billing method for network usage. Default value: PayByTraffic. Valid values:
 
--   PayByBandwidth: You must pay for the maximum available bandwidth specified by the InternetMaxBandwidthOut parameter.
+-   PayByBandwidth: You pay for the maximum available bandwidth specified by the InternetMaxBandwidthOut parameter.
 -   PayByTraffic: You pay for the actual traffic used. The InternetMaxBandwidthOut parameter specifies only the upper limit of available bandwidth when this parameter is specified.
 
 Default value: PayByBandwidth for classic networks or PayByTraffic for VPCs. |
@@ -55,7 +79,7 @@ Default value: 200. This parameter is not used for billing because inbound traff
 -   cloud\_efficiency: ultra disk
 -   cloud\_ssd: standard SSD
 -   ephemeral\_ssd: local SSD
--   cloud\_essd: enhanced SSD
+-   cloud\_essd: enhanced SSD \(ESSD\)
 
 For non-I/O optimized instances of Generation I instance types, the default value is cloud. In other cases, the default value is cloud\_eﬃciency. |
 |SystemDisk.Size|Integer|No|100|The size of the system disk. Unit: GiB. Valid values:
@@ -66,17 +90,27 @@ For non-I/O optimized instances of Generation I instance types, the default valu
 -   Valid values when SystemDisk.Category is set to cloud\_essd: 20 to 500
 -   Valid values when SystemDisk.Category is set to ephemeral\_ssd: 20 to 500
 
-The specified value must be greater than or equal to max\{20, ImageSize\}.
+If this parameter is specified, the system disk size must be greater than or equal to max\{20, ImageSize\}.
 
 Default value: 40 or the size of the image, whichever is greater. |
-|SystemDisk.DiskName|String|No|cloud\_ssdSystem|The name of the system disk. The name must be 2 to 128 characters in length, and can contain letters, digits, colons \(:\), underscores \(\_\), and hyphens \(-\). The name must start with a letter and cannot start with http:// or https://.
+|SystemDisk.DiskName|String|No|cloud\_ssdSystem|The name of the system disk. The name must be 2 to 128 characters in length and can contain letters, digits, colons \(:\), underscores \(\_\), and hyphens \(-\). It can contain letters, digits, colons \(:\), underscores \(\_\), and hyphens \(-\).
 
 This parameter is empty by default. |
 |SystemDisk.Description|String|No|Test system disk.|The description of the system disk. The description must be 2 to 256 characters in length and cannot start with http:// or https://. |
 |SystemDisk.AutoSnapshotPolicyId|String|No|sp-bp12m37ccmxvbmi5\*\*\*\*|The ID of the automatic snapshot policy that is applied to the system disk. |
+|SystemDisk.PerformanceLevel|String|No|PL0|Specifies the performance level of the system disk that is an ESSD. Valid values:
+
+-   PL0: A single ESSD can deliver up to 10,000 random read/write IOPS.
+-   PL1: A single ESSD can deliver up to 50,000 random read/write IOPS.
+-   PL2: A single ESSD can deliver up to 100,000 random read/write IOPS.
+-   PL3: A single ESSD can deliver up to 1,000,000 random read/write IOPS.
+
+Default value: PL0.
+
+**Note:** For more information about how to choose ESSD performance levels, see [ESSD](~~122389~~). |
 |ScalingConfigurationName|String|No|scalingconfig\*\*\*\*|The name of the scaling configuration. It must be 2 to 64 characters in length, and can contain letters, digits, underscores \(\_\), hyphens \(-\), and periods \(.\). It must start with a letter or a digit.
 
-The name of the scaling configuration must be unique within a scaling group in a specific region. If this parameter is not specified, the value of ScalingConfigurationId is used. |
+The name of the scaling configuration must be unique within a scaling group in a region. If this parameter is not specified, the value of ScalingConfigurationId is used. |
 |DataDisk.N.Size|Integer|No|100|The size of data disk N. Unit: GiB. Valid values of N: 1 to 16. Valid values:
 
 -   Valid values when DataDisk.N.Category is set to cloud: 5 to 2000
@@ -85,8 +119,8 @@ The name of the scaling configuration must be unique within a scaling group in a
 -   Valid values when DataDisk.N.Category is set to cloud\_essd: 20 to 32768
 -   Valid values when DataDisk.N.Category is set to ephemeral\_ssd: 5 to 800
 
-The value of this parameter must be greater than or equal to that of the snapshot specified by SnapshotId. |
-|DataDisk.N.SnapshotId|String|No|s-280s7\*\*\*\*|The ID of the snapshot used to create data disk N. Valid values of N: 1 to 16. When this parameter is specified, the DataDisk.N.Size parameter is ignored. The size of the disk will be the same as that of the specified snapshot.
+If this parameter is specified, the data disk size must be greater than or equal to that of the snapshot specified by SnapshotId. |
+|DataDisk.N.SnapshotId|String|No|s-280s7\*\*\*\*|The ID of the snapshot used to create data disk N. Valid values of N: 1 to 16. When this parameter is specified, the DataDisk.N.Size parameter is ignored. The size of the disk is the same as that of the specified snapshot.
 
 If you specify a snapshot that was created on or before July 15, 2013, the operation fails and the system returns InvalidSnapshot.TooOld. |
 |DataDisk.N.Category|String|No|cloud\_ssd|The category of data disk N. Valid values of N: 1 to 16. Valid values:
@@ -95,7 +129,7 @@ If you specify a snapshot that was created on or before July 15, 2013, the opera
 -   cloud\_efficiency: ultra disk.
 -   cloud\_ssd: standard SSD.
 -   ephemeral\_ssd: local SSD.
--   cloud\_essd: enhanced SSD.
+-   cloud\_essd: ESSD.
 
 For I/O optimized instances, the default value is cloud\_efficiency. For non-I/O optimized instances, the default value is cloud. |
 |DataDisk.N.Device|String|No|/dev/xvdb|The mount point of data disk N. Valid values of N: 1 to 16. If this parameter is not specified, the system automatically allocates a mount point to created ECS instances. The name of the mount point ranges from /dev/xvdb to /dev/xvdz in alphabetical order. |
@@ -104,24 +138,34 @@ For I/O optimized instances, the default value is cloud\_efficiency. For non-I/O
 -   true: releases data disk N when its attached instance is released.
 -   false: retains data disk N when its attached instance is released.
 
-This parameter is valid only for independently created disks, whose DataDisk.N.Category parameter is set to cloud, cloud\_efficiency, cloud\_ssd, or cloud\_essd. An error will be returned if you set this parameter for other disks.
+This parameter is valid only for independently created disks whose DataDisk.N.Category parameter is set to cloud, cloud\_efficiency, cloud\_ssd, or cloud\_essd. An error is returned if you set this parameter for other disks.
 
-Default value: true |
+Default value: true. |
 |DataDisk.N.Encrypted|String|No|false|Specifies whether to encrypt data disk N. Valid values of N: 1 to 16. Valid values:
 
 -   true: encrypts data disk N.
 -   false: does not encrypt data disk N.
 
-Default value: false |
+Default value: false. |
 |DataDisk.N.KMSKeyId|String|No|0e478b7a-4262-4802-b8cb-00d3fb40\*\*\*\*|The ID of the KMS key corresponding to data disk N. Valid values of N: 1 to 16. |
-|DataDisk.N.DiskName|String|No|cloud\_ssdData|The name of data disk N. Valid values of N: 1 to 16. The name must be 2 to 128 characters in length, and can contain letters, digits, colons \(:\), underscores \(\_\), and hyphens \(-\). The name must start with a letter and cannot start with http:// or https://.
+|DataDisk.N.DiskName|String|No|cloud\_ssdData|The name of data disk N. Valid values of N: 1 to 16. It must be 2 to 128 characters in length. and can contain letters, digits, colons \(:\), underscores \(\_\), and hyphens \(-\). The name must start with a letter and cannot start with http:// or https://.
 
 This parameter is empty by default. |
 |DataDisk.N.Description|String|No|Test data disk.|The description of data disk N. Valid values of N: 1 to 16. The description must be 2 to 256 characters in length. It cannot start with http:// or https://. |
 |DataDisk.N.AutoSnapshotPolicyId|String|No|sp-bp19nq9enxqkomib\*\*\*\*|The ID of the automatic snapshot policy that is applied to data disk N. Valid values of N: 1 to 16. |
+|DataDisk.N.PerformanceLevel|String|No|PL1|Specifies the performance level of the system disk that is an ESSD. The N value must be the same as that in DataDisk.N.Category when DataDisk.N.Category is set to cloud\_essd. Valid values:
+
+-   PL0: A single ESSD can deliver up to 10,000 random read/write IOPS.
+-   PL1: A single ESSD can deliver up to 50,000 random read/write IOPS.
+-   PL2: A single ESSD can deliver up to 100,000 random read/write IOPS.
+-   PL3: A single ESSD can deliver up to 1,000,000 random read/write IOPS.
+
+Default value: PL1.
+
+**Note:** For more information about how to choose ESSD performance levels, see [ESSD](~~122389~~). |
 |LoadBalancerWeight|Integer|No|50|The weight of the ECS instance as a backend server. Valid values: 1 to 100.
 
-Default value: 50 |
+Default value: 50. |
 |Tags|String|No|\{"key1":"value1","key2":"value2", ... "key5":"value5"\}|The tags of the ECS instance. Tags must be specified as key-value pairs. A maximum of five tags can be specified. The following limits apply to tag keys and values:
 
 -   A tag key can be up to 64 characters in length and cannot start with acs: or aliyun. It cannot contain http:// or https://. You cannot specify an empty string as a tag key.
@@ -135,20 +179,20 @@ Default value: 50 |
 |SecurityEnhancementStrategy|String|No|Active|Specifies whether to enable security hardening. Valid values:
 
 -   Active: enables security hardening. This value is applicable only to public images.
--   Deactive: disables security enhancement. This value is applicable to all image types. |
+-   Deactive: disables security hardening. This value is applicable to all image types. |
 |InstanceName|String|No|instance\*\*\*\*|The name of the instance to be automatically created based on the scaling configuration. |
-|HostName|String|No|host\*\*\*\*|The hostname of the instance. The hostname cannot start or end with a period \(.\) or a hyphen \(-\). It cannot contain consecutive periods \(.\) or hyphens \(-\). Naming conventions:
+|HostName|String|No|host\*\*\*\*|The name of the host where the created ECS instances reside. The name cannot start or end with a period \(.\) or hyphen \(-\). It cannot contain consecutive periods \(.\) or hyphens \(-\). Naming conventions:
 
 -   Windows instances: The name must be 2 to 15 characters in length, and can contain letters, digits, and hyphens \(-\). It cannot contain periods \(.\) or contain only digits.
 -   Other instances such as Linux instances: The name must be 2 to 64 characters in length. It can be segments separated by periods \(.\). Each segment can contain letters, digits, and hyphens \(-\). |
-|SpotStrategy|String|No|NoSpot|The preemption strategy to be applied to pay-as-you-go instances and preemptible instances. Valid values:
+|SpotStrategy|String|No|NoSpot|The preemption policy applied to pay-as-you-go instances and preemptible instances. Valid values:
 
 -   NoSpot: applies to regular pay-as-you-go instances.
--   SpotWithPriceLimit: applies to preemptible instances that have maximum hourly prices.
--   SpotAsPriceGo: applies to preemptible instances whose prices are based on the current market price.
+-   SpotWithPriceLimit: applies to preemptible instances with maximum hourly prices.
+-   SpotAsPriceGo: applies to preemptible instances that are of the market price at the time of purchase.
 
 Default value: NoSpot |
-|PasswordInherit|Boolean|No|false|Specifies whether to use the password preset in the image. To use this parameter, ensure that a password is configured for the specified image. Valid values:
+|PasswordInherit|Boolean|No|false|Specifies whether to use the password predefined in the image. To use this parameter, ensure that a password is configured for the specified image. Valid values:
 
 -   true: uses the password predefined in the image.
 -   false: does not use the password predefined in the image. |
@@ -157,24 +201,24 @@ Default value: NoSpot |
 |Password|String|No|123abc\*\*\*\*|The password that is used to access the ECS instance. The password must be 8 to 30 characters in length and contain at least three of the following character types: uppercase letters, lowercase letters, digits, and special characters. Special characters include
 
 ```
-( ) ` ~ ! @ # $ % ^ & * - _ + = \ | { } [ ] : ; ' < > , . ? /
+()` ~! @#$%^&*-_+=\|{}[]:;'<>,.? /
 ```
 
-For Windows instances, the password cannot start with a forward slash \(/\).
+The password of Windows-based instances cannot start with a forward slash \(/\).
 
 **Note:** For security reasons, we recommend that you use HTTPS to send requests if the Password parameter is specified. |
 |ResourceGroupId|String|No|rg-resource\*\*\*\*|The ID of the resource group to which the ECS instance belongs. |
-|SecurityGroupIds.N|RepeatList|No|sg-bp18kz60mefs\*\*\*\*|The ID of security group N to which to add the ECS instance. The valid values of N depend on the maximum number of security groups to which an instance can be added. For more information, see the "Security groups" section in [Limits](~~25412~~).
+|SecurityGroupIds.N|RepeatList|No|sg-bp18kz60mefs\*\*\*\*|The ID of security group N to which the ECS instance is added. The valid values of N depend on the maximum number of security groups to which an instance can be added. For more information, see the "Security groups" section in [Limits](~~25412~~).
 
-**Note:** You cannot specify SecurityGroupId and SecurityGroupIds.N at the same time. |
+**Note:** You cannot specify both SecurityGroupId and SecurityGroupIds.N at the same time. |
 |HpcClusterId|String|No|hpc-clusterid|The ID of the E-HPC cluster to which the ECS instance belongs. |
 |InstanceDescription|String|No|Test instance.|The description of the ECS instance. The description must be 2 to 256 characters in length. It cannot start with http:// or https://. |
-|ClientToken|String|No|123e4567-e89b-12d3-a456-42665544\*\*\*\*|The client token that is used to ensure the idempotence of the request. You can use the client to generate the value, but you must ensure that it is unique among different requests. The token can only contain ASCII characters and cannot exceed 64 characters in length. For more information, see [How to ensure idempotence](~~25693~~). |
+|ClientToken|String|No|123e4567-e89b-12d3-a456-42665544\*\*\*\*|The client token that is used to ensure the idempotence of the request. You can use the client to generate the value, but you must make sure that the value is unique among different requests. The token can only contain ASCII characters and cannot exceed 64 characters in length. For more information, see [How to ensure idempotence](~~25693~~). |
 |Ipv6AddressCount|Integer|No|1|The number of randomly generated IPv6 addresses to be assigned to the elastic network interface \(ENI\). |
 |CreditSpecification|String|No|Standard|The performance mode of the burstable instance. Valid values:
 
--   Standard: standard mode. For more information, see the "Standard mode" section in [Burstable instances](~~63440~~).
--   Unlimited: unlimited mode. For more information, see the "Unlimited mode" section in [Burstable instances](~~63440~~).
+-   Standard: the standard mode. For more information, see the "Standard mode" section in [Burstable instances](~~63440~~).
+-   Unlimited: the unlimited mode. For more information, see the "Unlimited mode" section in [Burstable instances](~~63440~~).
 
 This parameter is empty by default. |
 |ImageFamily|String|No|hangzhou-daily-update|The name of the image family. You can configure this parameter to obtain the latest available custom images within the specified image family. The images are used to create ECS instances. If you have set the ImageId parameter, you cannot set the ImageFamily parameter. |
@@ -184,20 +228,20 @@ You can call the [DescribeDedicatedHosts](~~134242~~) operation to query the ded
 |Affinity|String|No|default|Specifies whether to associate an instance on a dedicated host with the dedicated host. Valid values:
 
 -   default: does not associate the instance with the dedicated host. When an instance that is in the No Fees for Stopped Instances \(VPC-Connected\) state is restarted, the instance is automatically deployed to another dedicated host in the automatic deployment resource pool if resources of the original dedicated host are insufficient.
--   host: associates the instance with the dedicated host. When an instance that is in the No Fees for Stopped Instances \(VPC-Connected\) state is restarted, the instance still resides on the original dedicated host. If the resources of the original dedicated host are insufficient, the instance will fail to be restarted.
+-   host: associates the instance with the dedicated host. When an instance that is in the No Fees for Stopped Instances \(VPC-Connected\) state is restarted, the instance still resides on the original dedicated host. If the resources of the original dedicated host are insufficient, the instance fails to be restarted.
 
-Default value: default |
+Default value: default. |
 |Tenancy|String|No|default|Specifies whether to create the instance on a dedicated host. Valid values:
 
 -   default: creates the instance on a non-dedicated host.
 -   host: creates the instance on a dedicated host. If you do not specify the DedicatedHostId parameter, Alibaba Cloud automatically selects a dedicated host for the instance.
 
-Default value: default |
-|PrivatePoolOptions.MatchCriteria|String|No|Open|The type of the private pool. After an elasticity assurance or capacity reservation takes effect, a private pool is generated. You can select a private pool when you launch an instance. Valid values:
+Default value: default. |
+|PrivatePoolOptions.MatchCriteria|String|No|Open|The type of the private pool. After an elasticity assurance or a capacity reservation takes effect, a private pool is generated. You can select a private pool when you create an instance. Valid values:
 
--   Open: the open mode. In this mode, the system automatically selects a matching private pool of the open type to launch the instance. If no matching private pools exist, the public resource pool is used to launch the instance. If the parameter is set to Open, the PrivatePoolOptions.Id parameter can be empty.
--   Target: the specified mode. In this mode, a specified private pool is used to launch the instance. If the specified private pool is unavailable, the instance fails to be launched. If this parameter is set to Target, the PrivatePoolOptions.Id parameter must be specified.
--   None: the none mode. In this mode, no private pools are used to launch the instance.
+-   Open: the open mode. The system automatically matches a private pool of the Open type for the instance to start up. If no matching private pools exist, the instance takes up the capacity of public pool resources. If the parameter is set to Open, the PrivatePoolOptions.Id parameter can be empty.
+-   Target: the specified mode. The instance takes up the capacity of a specific private pool to start up. If the specified private pool is unavailable, the instance fails to start up. If this parameter is set to Target, the PrivatePoolOptions.Id parameter must be specified.
+-   None: the none mode. The instance does not take up the capacity of a private pool to start up.
 
 This parameter is empty by default.
 
@@ -205,6 +249,13 @@ This parameter is empty by default.
 |PrivatePoolOptions.Id|String|No|eap-bp67acfmxazb4\*\*\*\*|The ID of the private pool. Set the value to the ID of the elasticity assurance or capacity reservation that generates the private pool.
 
 **Note:** This parameter is in invitational preview. For more information, submit a ticket. |
+|SpotDuration|Integer|No|1|The retention period of the preemptible instance. Unit: hours. Valid values: 0 to 6.
+
+-   Protection periods of 2 to 6 hours are in invitational preview. If you want to set this parameter to one of these values, submit a ticket.
+-   If this parameter is set to 0, no protection period is configured for the preemptible instance.
+
+Default value: 1. |
+|SpotInterruptionBehavior|String|No|Terminate|The interruption mode of the preemptible instance. Set the value to Terminate, which specifies to release the instance. |
 
 ## Response parameters
 
@@ -278,7 +329,7 @@ For a list of error codes, visit the [API Error Center](https://error-center.ali
 
 |The capacity of snapshot “XXX” exceeds the size limit of the specified disk category.
 
-|The error message returned because the size of the specified snapshot exceeds the maximum size allowed for the specified disk category. |
+|The error message returned because the size of the specified snapshot has exceeded the maximum size of the specified disk category. |
 |403
 
 |InvalidDevice.InUse
@@ -355,7 +406,7 @@ For a list of error codes, visit the [API Error Center](https://error-center.ali
 
 |The network type of specified security Group does not support this action.
 
-|The error message returned because the network types of the specified security group and the scaling group are different. |
+|The error message returned because the network types of the specified security group and scaling group are different. |
 |404
 
 |InvalidSecurityGroupId.NotFound
@@ -369,7 +420,7 @@ For a list of error codes, visit the [API Error Center](https://error-center.ali
 
 |The specified security group and the specified virtual switch are not in the same VPC.
 
-|The error message returned because the specified security group and the VSwitch are not in the same VPC. |
+|The error message returned because the specified security group and vSwitch are not in the same VPC. |
 |403
 
 |InvalidSnapshot.TooOld
@@ -397,7 +448,7 @@ For a list of error codes, visit the [API Error Center](https://error-center.ali
 
 |The specified parameter UserData exceeds the size.
 
-|The error message returned because the maximum size of the user data has been reached. |
+|The error message returned because the user data size has exceeded the upper limit. |
 |403
 
 |QuotaExceeded.EphemeralDiskSize

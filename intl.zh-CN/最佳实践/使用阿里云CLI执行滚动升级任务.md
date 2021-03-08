@@ -80,7 +80,7 @@
 
     2.  按提示输入AccessKeyID、AccessKeySecret等信息。
 
-        ![cli-config](https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/zh-CN/3192839951/p160873.png)
+        ![cli-config](https://static-aliyun-doc.oss-accelerate.aliyuncs.com/assets/img/zh-CN/3192839951/p160873.png)
 
 3.  运行以下命令验证阿里云CLI是否可用。
 
@@ -90,7 +90,7 @@
 
     该命令用于查询支持的地域信息，返回地域信息表示命令执行成功，示例如下图所示。
 
-    ![cli-example](https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/zh-CN/3192839951/p160879.png)
+    ![cli-example](https://static-aliyun-doc.oss-accelerate.aliyuncs.com/assets/img/zh-CN/3192839951/p160879.png)
 
 
 ## 步骤三：通过阿里云CLI执行滚动升级任务
@@ -196,7 +196,7 @@
 
         执行ID示例如下图所示。
 
-        ![exec-id](https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/zh-CN/3192839951/p161172.png)
+        ![exec-id](https://static-aliyun-doc.oss-accelerate.aliyuncs.com/assets/img/zh-CN/3192839951/p161172.png)
 
     2.  运行以下阿里云CLI命令查看执行详情。
 
@@ -206,7 +206,7 @@
 
         执行详情示例如下图所示。
 
-        ![exec-outputs](https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/zh-CN/3192839951/p161174.png)
+        ![exec-outputs](https://static-aliyun-doc.oss-accelerate.aliyuncs.com/assets/img/zh-CN/3192839951/p161174.png)
 
 
 ## 执行回滚任务：滚动升级异常时的处理
@@ -217,7 +217,7 @@
 
     执行ID示例如下图所示。
 
-    ![exec-id](https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/zh-CN/3192839951/p161172.png)
+    ![exec-id](https://static-aliyun-doc.oss-accelerate.aliyuncs.com/assets/img/zh-CN/3192839951/p161172.png)
 
 2.  输入阿里云CLI命令执行回滚任务。
 
@@ -285,7 +285,7 @@
 -   rollback：回滚任务。 |
 |scalingGroupId|待执行任务的伸缩组的ID。|
 |scalingConfigurationId|伸缩组生效中的伸缩配置的ID。|
-|imageId|用于替换当前镜像的镜像的ID。|
+|imageId|替换当前镜像时使用的镜像的ID。|
 |sourceImageId|回滚操作时使用的镜像的ID。|
 |OOSAssumeRole|执行任务时使用的RAM角色，默认为OOSServiceRole。|
 |enterProcess|开始执行任务时暂停的伸缩组流程。|

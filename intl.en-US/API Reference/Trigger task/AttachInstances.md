@@ -35,9 +35,9 @@ ECS instances manually added by calling the AttachInstances operation are not as
 |Parameter|Type|Required|Example|Description|
 |---------|----|--------|-------|-----------|
 |Action|String|Yes|AttachInstances|The operation that you want to perform. Set the value to AttachInstances. |
-|InstanceId.1|String|Yes|i-28wt4\*\*\*\*|The ID of ECS instance N to be added. Valid values of N: 1 to 20. |
 |ScalingGroupId|String|Yes|asg-bp18p2yfxow2dloq\*\*\*\*|The ID of the scaling group. |
-|LoadBalancerWeight.1|Integer|No|50|The weight of ECS instance N as an SLB backend server. Valid values of N: 1 to 20. Valid values of this parameter: 1 to 100.
+|InstanceId.N|RepeatList|No|i-28wt4\*\*\*\*|The ID of ECS instance N to be added. Valid values of N: 1 to 20. |
+|LoadBalancerWeight.N|RepeatList|No|50|The weight of ECS instance N as an SLB backend server. Valid values of N: 1 to 20. Valid values of this parameter: 1 to 100.
 
  Default value: 50. |
 |Entrusted|Boolean|No|false|Specifies whether to enable Auto Scaling to manage the lifecycle of ECS instances when you manually add the ECS instances to a scaling group. Valid values:
@@ -85,6 +85,8 @@ Sample success responses
 ```
 
 ## Error codes
+
+访问[错误中心](https://error-center.aliyun.com/status/product/Ess)查看更多错误码。
 
 For a list of error codes, visit the [API Error Center](https://error-center.alibabacloud.com/status/product/Ess).
 

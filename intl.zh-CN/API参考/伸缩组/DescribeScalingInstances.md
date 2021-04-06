@@ -99,12 +99,13 @@
 
  -   SpotWithPriceLimit：设置上限价格的抢占式实例。
 -   SpotAsPriceGo：系统自动出价，跟随当前市场实际价格。 |
-|WarmupState|String|NoNeedWarmup|实例的预热状态，取值范围：
+|WarmupState|String|NoNeedWarmup|ECS实例的预热状态，取值范围：
 
  -   NoNeedWarmup：不需要预热。
 -   WaitingForInstanceWarmup：等待预热结束。
 -   InstanceWarmupFinish：预热结束。 |
 |WeightedCapacity|Integer|4|实例规格的权重，即实例规格的单台实例在伸缩组中表示的容量大小。权重越大，满足期望容量所需的本实例规格的实例数量越少。 |
+|ZoneId|String|cn-hangzhou-g|ECS实例所属的可用区ID。 |
 |TotalCount|Integer|1|ECS实例的总数。 |
 |TotalSpotCount|Integer|4|当前伸缩组中，运行状态的抢占式实例总数。 |
 
@@ -133,6 +134,7 @@ https://ess.aliyuncs.com/?Action=DescribeScalingInstances
                   <LoadBalancerWeight>50</LoadBalancerWeight>
                   <CreatedTime>2020-12-21T03:11:00Z</CreatedTime>
                   <WarmupState>NoNeedWarmup</WarmupState>
+                  <ZoneId>cn-hangzhou-g</ZoneId>
                   <InstanceId>i-m5e3z5l951fibnd9****</InstanceId>
                   <ScalingGroupId>asg-m5e8n5qw4atki7f6****</ScalingGroupId>
                   <HealthStatus>Healthy</HealthStatus>
@@ -161,6 +163,7 @@ https://ess.aliyuncs.com/?Action=DescribeScalingInstances
     "LoadBalancerWeight": 50,
     "CreatedTime": "2020-12-21T03:11:00Z",
     "WarmupState": "NoNeedWarmup",
+    "ZoneId": "cn-hangzhou-g",   
     "InstanceId": "i-m5e3z5l951fibnd9****",
     "ScalingGroupId": "asg-m5e8n5qw4atki7f6****",
     "HealthStatus": "Healthy",

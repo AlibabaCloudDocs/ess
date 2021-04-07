@@ -11,7 +11,7 @@ You can call this operation to query scaling configurations.
 |Parameter|Type|Required|Example|Description|
 |---------|----|--------|-------|-----------|
 |Action|String|Yes|DescribeScalingConfigurations|The operation that you want to perform. Set the value to DescribeScalingConfigurations. |
-|RegionId|String|Yes|cn-qingdao|The region ID of the scaling group to which a scaling configuration belongs. |
+|RegionId|String|Yes|cn-qingdao|The region ID of the scaling group to which the scaling configuration belongs. |
 |PageNumber|Integer|No|1|The number of the page to return. Pages start from page 1.
 
  Default value: 1. |
@@ -19,8 +19,8 @@ You can call this operation to query scaling configurations.
 
  Default value: 10. |
 |ScalingGroupId|String|No|asg-bp17pelvl720x3v7\*\*\*\*|The ID of the scaling group. You can query all scaling configurations in the scaling group. |
-|ScalingConfigurationId.1|String|No|asc-bp17pelvl720x5ub\*\*\*\*|The ID of scaling configuration N to be queried. Valid values of N: 1 to 10. The IDs of active and inactive scaling configurations are displayed in the response, and can be differentiated by LifecycleState. |
-|ScalingConfigurationName.1|String|No|scalingcon\*\*\*\*|The name of scaling configuration N to be queried. Valid values of N: 1 to 10. The names of inactive scaling configurations are not displayed in the response, and no errors are reported. |
+|ScalingConfigurationId.N|RepeatList|No|asc-bp17pelvl720x5ub\*\*\*\*|The ID of scaling configuration N to be queried. Valid values of N: 1 to 10. The IDs of active and inactive scaling configurations are displayed in the response, and can be differentiated by LifecycleState. |
+|ScalingConfigurationName.N|RepeatList|No|scalingcon\*\*\*\*|The name of scaling configuration N to be queried. Valid values of N: 1 to 10. The names of inactive scaling configurations are not displayed in the response, and no errors are reported. |
 
 ## Response parameters
 
@@ -39,7 +39,7 @@ You can call this operation to query scaling configurations.
 
  You can specify the number of vCPUs and the amount of memory to define the range of instance types. For example, you can set Cpu to 2 and Memory to 16 to specify instance types that have 2 vCPUs and 16 GiB of memory. Auto Scaling uses factors such as I/O optimization and zone to determine a set of available instance types. Then, Auto Scaling creates instances based on the unit prices of instance types in ascending order.
 
- **Note:** This instance type range takes effect only when cost optimization is enabled and you have not specified an instance type in the scaling configuration. |
+ **Note:** This instance type range takes effect only when cost optimization is enabled and the scaling configuration does not have a specified instance type. |
 |CreationTime|String|2014-08-14T10:58Z|The time when the scaling configuration was created. |
 |CreditSpecification|String|Standard|The performance mode of the burstable instance. Valid values:
 
@@ -89,8 +89,8 @@ You can call this operation to query scaling configurations.
 |InstanceGeneration|String|ecs-3|The generation of the ECS instance. |
 |InstanceName|String|instance\*\*\*\*|The name of the ECS instance. |
 |InstanceType|String|ecs.g6.large|The instance type of the ECS instance. |
-|InstanceTypes|List|ecs.g6.large|The collection of ECS instance types. |
-|InternetChargeType|String|PayByTraffic|The billing method for network usage. Default value: PayByTraffic. Valid values:
+|InstanceTypes|List|ecs.g6.large|The list of instance types. |
+|InternetChargeType|String|PayByTraffic|The billing method for network usage. Valid values:
 
  -   PayByBandwidth: You pay for the maximum available bandwidth specified by the InternetMaxBandwidthOut parameter.
 -   PayByTraffic: You pay for the actual traffic used. The InternetMaxBandwidthOut parameter specifies only the upper limit of available bandwidth when this parameter is specified. |
@@ -103,7 +103,7 @@ You can call this operation to query scaling configurations.
 
  -   none: The instance is non-I/O optimized.
 -   optimized: The instance is I/O optimized. |
-|Ipv6AddressCount|Integer|1|The number of randomly generated IPv6 addresses that were assigned to the elastic network interface \(ENI\). |
+|Ipv6AddressCount|Integer|1|The number of randomly generated IPv6 addresses to be assigned to the elastic network interface \(ENI\). |
 |KeyPairName|String|keypair\*\*\*\*|The name of the key pair used to log on to the ECS instance. |
 |LifecycleState|String|Active|The lifecycle status of the scaling configuration in the scaling group. Valid values:
 
@@ -114,7 +114,7 @@ You can call this operation to query scaling configurations.
 
  You can specify the number of vCPUs and the amount of memory to define the range of instance types. For example, you can set Cpu to 2 and Memory to 16 to specify instance types that have 2 vCPUs and 16 GiB of memory. Auto Scaling uses factors such as I/O optimization and zone to determine a set of available instance types. Then, Auto Scaling creates instances based on the unit prices of instance types in ascending order.
 
- **Note:** This instance type range takes effect only when cost optimization is enabled and you have not specified an instance type in the scaling configuration. |
+ **Note:** This instance type range takes effect only when cost optimization is enabled and the scaling configuration does not have a specified instance type. |
 |PasswordInherit|Boolean|true|Indicates whether the password preset in the specified image is used. |
 |PrivatePoolOptions.Id|String|eap-bp67acfmxazb4\*\*\*\*|The ID of the private pool. The ID of the private pool is that of the elasticity assurance or capacity reservation that generates the private pool.
 
@@ -128,7 +128,7 @@ You can call this operation to query scaling configurations.
  **Note:** This parameter is in invitational preview. For more information, submit a ticket. |
 |RamRoleName|String|ramrole\*\*\*\*|The name of the RAM role associated with the ECS instance. This name is provided and maintained by RAM. You can call the [ListRoles](~~28713~~) operation to query available RAM roles. For more information about how to create a RAM role, see [CreateRole](~~28710~~). |
 |ResourceGroupId|String|rg-aekzn2ou7xo\*\*\*\*|The ID of the resource group to which the ECS instance belongs. |
-|ScalingConfigurationId|String|asc-bp1ezrfgoyn5kijl\*\*\*\*|The ID of the scaling configuration |
+|ScalingConfigurationId|String|asc-bp1ezrfgoyn5kijl\*\*\*\*|The ID of the scaling configuration. |
 |ScalingConfigurationName|String|scalingconfi\*\*\*\*|The name of the scaling configuration. |
 |ScalingGroupId|String|asg-bp17pelvl720x3v7\*\*\*\*|The ID of the scaling group in which the scaling configuration was created. |
 |SchedulerOptions|Struct| |**Note:** This parameter is in invitational preview and unavailable. |

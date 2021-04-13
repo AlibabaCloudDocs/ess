@@ -26,7 +26,7 @@
 
     返回Python版本表明已安装Python，示例如下图所示。
 
-    ![python-version](https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/zh-CN/3202479951/p165119.png)
+    ![python-version](https://static-aliyun-doc.oss-accelerate.aliyuncs.com/assets/img/zh-CN/3202479951/p165119.png)
 
 2.  安装SDK核心库。
 
@@ -68,6 +68,9 @@
     # 模板名称根据所选升级方式替换
     request.set_TemplateName("ACS-ESS-RollingUpdateByRunCommandInScalingGroup")
     
+    # 关联滚动升级任务和伸缩组，用于在伸缩组中查询任务执行情况
+    request.set_Tags("{\"scaling_group\":\"asg-xxx\"}")
+    
     # 参数根据所选模板替换
     parameters = {"invokeType": "invoke",
                   "scalingGroupId": "asg-bp18p2yfxow2dloq****",
@@ -105,7 +108,7 @@
 
     **说明：** 执行回滚任务时需要填入源滚动升级任务的执行ID。
 
-    ![rollingupdate-py](https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/zh-CN/4202479951/p165127.png)
+    ![rollingupdate-py](https://static-aliyun-doc.oss-accelerate.aliyuncs.com/assets/img/zh-CN/4202479951/p165127.png)
 
 
 ## 执行回滚任务：滚动升级异常时的处理
@@ -135,6 +138,9 @@
     # 模板名称根据所选升级方式替换
     request.set_TemplateName("ACS-ESS-RollingUpdateByRunCommandInScalingGroup")
     
+    # 关联滚动升级任务和伸缩组，用于在伸缩组中查询任务执行情况
+    request.set_Tags("{\"scaling_group\":\"asg-xxx\"}")
+    
     # 回滚操作对应的参数
     parameters = {"invokeType": "rollback",
                   "scalingGroupId": "asg-bp18p2yfxow2dlo****",
@@ -156,7 +162,7 @@
 
     示例如下图所示。
 
-    ![rollingupdate-rollback-py](https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/zh-CN/3202479951/p165129.png)
+    ![rollingupdate-rollback-py](https://static-aliyun-doc.oss-accelerate.aliyuncs.com/assets/img/zh-CN/3202479951/p165129.png)
 
 
 ## 模板参数说明
@@ -183,5 +189,5 @@
 **相关文档**  
 
 
-[使用阿里云CLI执行滚动升级任务]()
+[使用阿里云CLI执行滚动升级任务](/intl.zh-CN/最佳实践/使用阿里云CLI执行滚动升级任务.md)
 

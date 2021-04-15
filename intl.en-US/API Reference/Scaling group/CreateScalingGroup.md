@@ -151,7 +151,7 @@ Default value: 50. |
 -   recycle: The scaling group is set to Shutdown and Reclaim Mode.
 -   release: The scaling group is set to Release Mode.
 
-ScalingPolicy specifies the reclaim modes of scaling groups, but the policy that is used to remove ECS instances from scaling groups is determined by the RemovePolicy parameter of the RemoveInstances operation. For more information, see[RemoveInstances](~~25955~~). |
+ScalingPolicy specifies the reclaim modes of scaling groups, but the policy that is used to remove ECS instances from scaling groups is determined by the RemovePolicy parameter of the RemoveInstances operation. For more information, see [RemoveInstances](~~25955~~). |
 |ClientToken|String|No|123e4567-e89b-12d3-a456-42665544\*\*\*\*|The client token that is used to ensure the idempotence of the request. You can use the client to generate the value, but you must make sure that it is unique among different requests. The token can only contain ASCII characters and cannot exceed 64 characters in length. For more information, see [How to ensure idempotence](~~25693~~). |
 |OnDemandBaseCapacity|Integer|No|30|The minimum number of pay-as-you-go instances required in the scaling group. Valid values: 0 to 1000. When the number of existing pay-as-you-go instances is less than this value, Auto Scaling preferentially creates pay-as-you-go instances. |
 |OnDemandPercentageAboveBaseCapacity|Integer|No|20|The percentage of pay-as-you-go instances to be created when instances are added to the scaling group.This parameter takes effect after the number of pay-as-you-go instances in the scaling group reaches the OnDemandBaseCapacity value. Valid values: 0 to 100. |

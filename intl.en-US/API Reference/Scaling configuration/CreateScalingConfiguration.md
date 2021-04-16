@@ -166,7 +166,7 @@ Default value: PL1.
 |LoadBalancerWeight|Integer|No|50|The weight of the ECS instance as a backend server. Valid values: 1 to 100.
 
 Default value: 50. |
-|Tags|String|No|\{"key1":"value1","key2":"value2", ... "key5":"value5"\}|The tags of the ECS instance. Tags must be specified as key-value pairs. A maximum of five tags can be specified. The following limits apply to tag keys and values:
+|Tags|String|No|\{"key1":"value1","key2":"value2", ... "key5":"value5"\}|The tags of the ECS instance. Tags must be specified as key-value pairs. A maximum of 20 tags can be specified. The following limits apply to tag keys and values:
 
 -   A tag key can be up to 64 characters in length and cannot start with acs: or aliyun. It cannot contain http:// or https://. You cannot specify an empty string as a tag key.
 -   A tag value can be up to 128 characters in length and cannot start with acs: or aliyun. It cannot contain http:// or https://. You can specify an empty string as a tag value. |

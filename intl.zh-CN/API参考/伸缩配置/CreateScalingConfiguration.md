@@ -31,6 +31,30 @@
 |InstanceTypes.N|RepeatList|否|ecs.g6.large|多实例规格参数。如果使用了InstanceTypes.N，InstanceType将被忽略，其中N的取值范围：1~10，即一个伸缩配置内最多可以设置10种实例规格。
 
  N代表当前伸缩配置中实例规格的优先级，编号为1的实例规格优先级最高，实例规格优先级随着编号的增大依次降低。当无法根据优先级较高的实例规格创建出实例时，弹性伸缩服务会自动选择下一优先级的实例规格来创建实例。 |
+|InstanceTypeOverride.N.InstanceType|String|否|ecs.c5.xlarge|当您需要指定伸缩配置中实例规格的容量时，请同时指定本参数和InstanceTypeOverride.N.WeightedCapacity。
+
+ 本参数用于指定实例规格。您可以指定N个本参数，结合InstanceTypeOverride.N.WeightedCapacity参数，扩展多实例规格支持自定义权重。N的取值范围：1~10。
+
+ **说明：** 指定本参数时，不允许同时指定instanceTypes。
+
+ InstanceType的取值范围：在售的ECS实例规格，请参见[实例规格族](~~25378~~)。 |
+|InstanceTypeOverride.N.WeightedCapacity|Integer|否|4|当您需要指定伸缩配置中实例规格的容量时，在指定InstanceTypeOverride.N.InstanceType后，再指定本参数。两个参数一一对应，N需要保持一致。
+
+ 本参数用于指定实例规格的权重，即实例规格的单台实例在伸缩组中表示的容量大小。权重越大，满足期望容量所需的本实例规格的实例数量越少。
+
+ 由于每个实例规格的vCPU个数、内存大小等性能指标会有差异，您可以根据自身需求，给不同的实例规格配置不同的权重。
+
+ 例如：
+
+ -   当前容量：0
+-   期望容量：6
+-   ecs.c5.xlarge规格容量：4
+
+ 为满足期望容量，伸缩组将为用户扩容2台ecs.c5.xlarge实例。
+
+ **说明：** 扩容时伸缩组的容量不得超过最大容量（MaxSize）与实例规格的最大权重之和。
+
+ WeightedCapacity的取值范围：1~500。 |
 |SecurityGroupId|String|否|sg-280ih\*\*\*\*|ECS实例所属的安全组的ID，同一个安全组内的ECS实例可以互相访问。 |
 |IoOptimized|String|否|optimized|是否为I/O优化实例。[已停售的实例规格](~~55263~~)实例默认值是none，其他实例规格默认值是optimized。取值范围：
 
@@ -74,6 +98,16 @@
  默认值：空 |
 |SystemDisk.Description|String|否|Test system disk.|系统盘的描述。长度为2~256个英文或中文字符，不能以http://和https://开头。 |
 |SystemDisk.AutoSnapshotPolicyId|String|否|sp-bp12m37ccmxvbmi5\*\*\*\*|系统盘使用的自动快照策略ID。 |
+|SystemDisk.PerformanceLevel|String|否|PL0|当系统盘为ESSD云盘时，设置云盘的性能等级。取值范围：
+
+ -   PL0：单盘最高随机读写IOPS 1万。
+-   PL1：单盘最高随机读写IOPS 5万。
+-   PL2：单盘最高随机读写IOPS 10万。
+-   PL3：单盘最高随机读写IOPS 100万。
+
+ 默认值：PL0
+
+ **说明：** 关于如何选择ESSD云盘性能等级，请参见[ESSD云盘](~~122389~~)。 |
 |ScalingConfigurationName|String|否|scalingconfig\*\*\*\*|伸缩配置的名称，2~64英文或中文字符，以数字、大小写字母或中文开头，可包含数字、下划线（\_）、连字符（-）或点号（.）。
 
  在同一地域下同一伸缩组内伸缩配置名称唯一。如果您没有指定该参数，则默认使用伸缩配置的ID。 |
@@ -119,10 +153,20 @@
  默认值：空 |
 |DataDisk.N.Description|String|否|Test data disk.|数据盘的描述，N的取值范围：1~16。长度为2~256个英文或中文字符，不能以 http:// 和 https:// 开头。 |
 |DataDisk.N.AutoSnapshotPolicyId|String|否|sp-bp19nq9enxqkomib\*\*\*\*|数据盘使用的自动快照策略ID，N的取值范围：1~16。 |
+|DataDisk.N.PerformanceLevel|String|否|PL1|当数据盘为ESSD云盘时，设置云盘的性能等级。N的取值必须和DataDisk.N.Category=cloud\_essd中的N保持一致。取值范围：
+
+ -   PL0：单盘最高随机读写IOPS 1万。
+-   PL1：单盘最高随机读写IOPS 5万。
+-   PL2：单盘最高随机读写IOPS 10万。
+-   PL3：单盘最高随机读写IOPS 100万。
+
+ 默认值：PL1
+
+ **说明：** 关于如何选择ESSD云盘性能等级，请参见[ESSD云盘](~~122389~~)。 |
 |LoadBalancerWeight|Integer|否|50|ECS实例作为负载均衡后端服务器时的权重，取值范围：1~100。
 
  默认值：50 |
-|Tags|String|否|\{"key1":"value1","key2":"value2", ... "key5":"value5"\}|ECS实例的标签。标签以键值对方式传入，最多可以使用5组标签。Key和Value的使用要求如下：
+|Tags|String|否|\{"key1":"value1","key2":"value2", ... "key5":"value5"\}|ECS实例的标签。标签以键值对方式传入，最多可以使用20组标签。Key和Value的使用要求如下：
 
  -   Key最多支持64个字符，不能以aliyun和acs:开头，不能包含 http:// 或者 https:// 。一旦使用标签，Key不允许为空字符串。
 -   Value最多支持128个字符，不能以aliyun和acs:开头，不能包含 http:// 或者 https:// 。Value可以为空字符串。 |
@@ -178,6 +222,7 @@
 
  默认值：无 |
 |ImageFamily|String|否|hangzhou-daily-update|镜像族系名称，通过设置该参数来获取当前镜像族系内最新可用的自定义镜像，用于创建实例。如果已经设置了参数ImageId，则不能设置该参数。 |
+|ZoneId|String|否|cn-hangzhou-g|ECS实例所属的可用区ID。 |
 |DedicatedHostId|String|否|dh-bp67acfmxazb4p\*\*\*\*|是否在专有宿主机上创建ECS实例。由于专有宿主机不支持创建抢占式实例，指定DedicatedHostId参数后，会自动忽略请求中的SpotStrategy和SpotPriceLimit设置。
 
  您可以调用[DescribeDedicatedHosts](~~134242~~)查询专有宿主机ID列表。 |
@@ -205,6 +250,13 @@
 |PrivatePoolOptions.Id|String|否|eap-bp67acfmxazb4\*\*\*\*|私有池ID。即弹性保障服务ID或容量预定服务ID。
 
  **说明：** 该参数邀测中，详情请提交工单咨询。 |
+|SpotDuration|Integer|否|1|抢占式实例的保留时长，单位为小时。取值范围：0~6。
+
+ -   保留时长2~6正在邀测中，如需开通请提交工单。
+-   保留时长为0，则为无保护期模式。
+
+ 默认值：1 |
+|SpotInterruptionBehavior|String|否|Terminate|抢占实例中断模式。目前仅支持Terminate（默认）直接释放实例。 |
 
 ## 返回数据
 
@@ -228,7 +280,7 @@ https://ess.aliyuncs.com/?Action=CreateScalingConfiguration
 
 正常返回示例
 
-`XML` 格式
+`XML`格式
 
 ```
 <CreateScalingConfigurationResponse>
@@ -237,7 +289,7 @@ https://ess.aliyuncs.com/?Action=CreateScalingConfiguration
 </CreateScalingConfigurationResponse>
 ```
 
-`JSON` 格式
+`JSON`格式
 
 ```
 {

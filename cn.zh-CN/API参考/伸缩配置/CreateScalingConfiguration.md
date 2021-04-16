@@ -166,7 +166,7 @@
 |LoadBalancerWeight|Integer|否|50|ECS实例作为负载均衡后端服务器时的权重，取值范围：1~100。
 
  默认值：50 |
-|Tags|String|否|\{"key1":"value1","key2":"value2", ... "key5":"value5"\}|ECS实例的标签。标签以键值对方式传入，最多可以使用5组标签。Key和Value的使用要求如下：
+|Tags|String|否|\{"key1":"value1","key2":"value2", ... "key5":"value5"\}|ECS实例的标签。标签以键值对方式传入，最多可以使用20组标签。Key和Value的使用要求如下：
 
  -   Key最多支持64个字符，不能以aliyun和acs:开头，不能包含 http:// 或者 https:// 。一旦使用标签，Key不允许为空字符串。
 -   Value最多支持128个字符，不能以aliyun和acs:开头，不能包含 http:// 或者 https:// 。Value可以为空字符串。 |
@@ -222,6 +222,7 @@
 
  默认值：无 |
 |ImageFamily|String|否|hangzhou-daily-update|镜像族系名称，通过设置该参数来获取当前镜像族系内最新可用的自定义镜像，用于创建实例。如果已经设置了参数ImageId，则不能设置该参数。 |
+|ZoneId|String|否|cn-hangzhou-g|ECS实例所属的可用区ID。 |
 |DedicatedHostId|String|否|dh-bp67acfmxazb4p\*\*\*\*|是否在专有宿主机上创建ECS实例。由于专有宿主机不支持创建抢占式实例，指定DedicatedHostId参数后，会自动忽略请求中的SpotStrategy和SpotPriceLimit设置。
 
  您可以调用[DescribeDedicatedHosts](~~134242~~)查询专有宿主机ID列表。 |

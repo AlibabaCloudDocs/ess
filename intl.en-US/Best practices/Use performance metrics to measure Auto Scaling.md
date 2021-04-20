@@ -21,7 +21,7 @@ You can specify the weights of instance types. Even if Auto Scaling creates mult
 -   When the total capacity of a scaling group is less than the expected capacity or the minimum capacity, scale-out events are triggered.
 -   When the total capacity of a scaling group is greater than or equal to the sum of the expected capacity and the maximum weight, scale-in events are triggered.
 
-**Note:** Auto Scaling performs automatic scaling based preferentially on the scaling policy specified for a scaling group. If you configure a cost optimization policy for a scaling group, Auto Scaling creates instances based on the weighted unit prices in ascending order. Auto Scaling releases instances based on the weighted unit prices in descending order. For information about how to calculate weighted unit prices, see[Calculation of weighted unit prices](#section_ldj_gae_z0y).
+**Note:** Auto Scaling performs automatic scaling based preferentially on the scaling policy specified for a scaling group. If you configure a cost optimization policy for a scaling group, Auto Scaling creates instances based on the weighted unit prices in ascending order. Auto Scaling releases instances based on the weighted unit prices in descending order. For information about how to calculate weighted unit prices, see [Calculation of weighted unit prices](#section_ldj_gae_z0y).
 
 ## Usage notes
 

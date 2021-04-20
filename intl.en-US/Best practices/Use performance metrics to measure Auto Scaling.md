@@ -91,7 +91,7 @@ If you set the multi-zone scaling policy to **Cost Optimization Policy** for a s
 
 The following table provides examples on how to calculate weighted unit prices of different instance types.
 
-**Note:** The market prices of instance types in the following table are for reference only. For information about the actual market prices, seethe [Pricing](https://www.alibabacloud.com/product/ecs) tab on the Elastic Compute Service page.
+**Note:** The market prices of instance types in the following table are for reference only. For information about the actual market prices, see the [Pricing](https://www.alibabacloud.com/product/ecs) tab on the Elastic Compute Service page.
 
 |Instance type|vCPU|Market price|Weight|Weighted unit price|
 |-------------|----|------------|------|-------------------|

@@ -1,14 +1,14 @@
 # Scaling modes
 
-This article introduces the scaling modes of Auto Scaling.
+This topic describes the scaling modes of Auto Scaling. A scaling mode is used to specify when to add or remove a specific number of ECS instances for a scaling group.
 
--   Scheduled scaling: You tell Auto Scaling to perform a scaling operation at specified times. For example, scaling up at 13:00 every day.
--   Dynamic scaling: Auto Scaling dynamically scales up and down by tracking targets. You select a metric and set a target value. Auto Scaling creates the CloudMonitor alarms that trigger the scaling policy. The scaling policy adds or removes capacity as required to keep the metric at, or close to, the specified target value.
--   Capacity maintaining: You setup the **MinSize** to maintain the minimum number of running healthy instances in the scaling group.
--   Customized target tracking: Uses API to manually scale based on metrics from your own monitoring system.
-    -   Manually run scaling policy.
-    -   Manually add or remove ECS instances.
-    -   Automatically adjust the number of your ECS instances to lie between the MinSize and MaxSize you setup.
--   Health check: Automatically release instances with status other than **Running** according to the policies you specify.
--   Multimode: Combine multiple scaling modes when demand of your application is hard to predict. For example, you setup to scale out 20 ECS instances during 13:00 ~ 14:00 everyday, but the actual demand may need more instances, then you can use this scheduled scaling together with other scaling modes to better follow the demand changes.
+-   Scheduled mode: You can create a scheduled task to execute a specific scaling rule at the specified point in time.
+-   Dynamic mode: You can create an event-triggered task based on a Cloud Monitor performance metric such as the CPU utilization. When the metric data of a scaling group meets the specified alert conditions, an alert is triggered to execute your specified scaling rule.
+-   Fixed-number mode:
+    -   If you have set **Minimum Number of Instances** when you create a scaling group, Auto Scaling automatically adds ECS instances to the scaling group to make the number of existing ECS instances equal to the minimum number of instances when the number of ECS instances in the scaling group is less than the minimum number.
+    -   If you have set **Maximum Number of Instances** when you create a scaling group, Auto Scaling automatically removes ECS instances from the scaling group to make the number of existing ECS instances equal to the maximum number of instances when the number of ECS instances in the scaling group is greater than the maximum number.
+    -   If you have set **Expected Number of Instances** when you create a scaling group, Auto Scaling automatically maintains the number of ECS instances in the scaling group at the expected number.
+-   Health mode: After you enable the health check feature when you create a scaling group, Auto Scaling checks the status of the ECS instances in the scaling group on a regular basis. If an ECS instance is not in the Running state, the instance is considered to be unhealthy and is removed from the scaling group.
+-   Custom mode: You can manually perform scaling, including manually executing scaling rules, or adding, removing, or deleting existing ECS instances.
+-   Multi-mode: You can combine the preceding modes to meet your business requirements. For example, if your business loads significantly increase starting from 12:00 every day, you can create a scheduled task to create 20 ECS instances at 12:00 every day. If the number of created ECS instances do not meet your requirements, you can combine the scheduled mode with other scaling modes such as the dynamic mode and custom mode.
 

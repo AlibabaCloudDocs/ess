@@ -83,12 +83,18 @@ ECS实例在加入负载均衡实例的后端服务器组后，权重默认为50
  RemovalPolicy.1的默认值：OldestScalingConfiguration
 
  RemovalPolicy.2的默认值：OldestInstance |
-|VSwitchId|String|否|vsw-bp14zolna43z266bq\*\*\*\*|创建VPC类型的伸缩组时，指定的虚拟交换机ID。 |
-|VSwitchIds.N|RepeatList|否|vsw-bp14zolna43z266bq\*\*\*\*|一台或多台虚拟交换机的ID，N的取值范围：1~5。如果您使用了VSwitchIds.N参数，VSwitchId参数将被忽略。
+|VSwitchId|String|否|vsw-bp14zolna43z266bq\*\*\*\*|虚拟交换机的ID。指定后，伸缩组的网络类型为专有网络。
 
- 只有当伸缩组网络类型为VPC时，当前参数才生效。指定虚拟交换机所属的VPC必须和伸缩组所属的VPC相同。
+ **说明：** 当伸缩组未指定VSwitchId或VSwitchIds.N参数时，伸缩组的网络类型默认为经典网络。 |
+|VSwitchIds.N|RepeatList|否|vsw-bp14zolna43z266bq\*\*\*\*|一台或多台虚拟交换机的ID，N的取值范围：1~5。如果您使用了VSwitchIds.N参数，VSwitchId参数将被忽略。指定后，伸缩组的网络类型为专有网络。
 
- 虚拟交换机可以来自多个可用区。虚拟交换机的优先级按照数字升序排序，1表示最高优先级。当优先级较高的虚拟交换机所在可用区无法创建ECS实例时，自动选择下一优先级的虚拟交换机创建ECS实例。 |
+ 指定多台虚拟交换机时：
+
+ -   所属的VPC必须相同。
+-   所属的可用区可以不同。
+-   虚拟交换机的优先级按照数字升序排序，1表示最高优先级。当优先级较高的虚拟交换机所在可用区无法创建ECS实例时，自动选择下一优先级的虚拟交换机创建ECS实例。
+
+ **说明：** 当伸缩组未指定VSwitchId或VSwitchIds.N参数时，伸缩组的网络类型默认为经典网络。 |
 |MultiAZPolicy|String|否|PRIORITY|多可用区伸缩组ECS实例扩缩容策略。取值范围：
 
  -   PRIORITY：根据您定义的虚拟交换机（VSwitchIds.N）扩缩容。当优先级较高的虚拟交换机所在可用区无法创建ECS实例时，自动使用下一优先级的虚拟交换机创建ECS实例。
@@ -105,11 +111,13 @@ ECS实例在加入负载均衡实例的后端服务器组后，权重默认为50
 -   ECS：对伸缩组内的ECS实例做健康检查。
 
  默认值：ECS |
-|LifecycleHook.N.LifecycleHookName|String|否|lifecyclehook\*\*\*\*|生命周期挂钩名称，用于指定生命周期挂钩，不支持修改。 |
+|LifecycleHook.N.LifecycleHookName|String|否|lifecyclehook\*\*\*\*|生命周期挂钩名称，指定后不支持修改，未指定时默认与生命周期挂钩ID相同。 |
 |LifecycleHook.N.LifecycleTransition|String|否|SCALE\_OUT|生命周期挂钩适用的伸缩活动类型，取值范围：
 
  -   SCALE\_OUT：伸缩组弹性扩张活动。
--   SCALE\_IN：伸缩组弹性收缩活动。 |
+-   SCALE\_IN：伸缩组弹性收缩活动。
+
+ **说明：** 若伸缩组指定生命周期挂钩，此参数必选，其他相关参数可选。 |
 |LifecycleHook.N.DefaultResult|String|否|CONTINUE|等待状态结束后的下一步动作。取值范围：
 
  -   CONTINUE：继续响应弹性扩张活动或者继续响应弹性收缩活动。

@@ -28,6 +28,6 @@ Auto Scaling does not create resources listed in the following table. Auto Scali
 
 |Service|Description|Reference|
 |-------|-----------|---------|
-|SLB|If you want to associate a scaling group with SLB instances, you must create and pay for the SLB instances in advance.|[Pay-as-you-go](/intl.en-US/CLB Pricing/Pay-as-you-go.md)|
+|SLB|If you want to associate a scaling group with SLB instances, you must create and pay for the SLB instances in advance.|[Pay-as-you-go](/intl.en-US/Classic Load Balancer/CLB Pricing/Pay-as-you-go.md)|
 |RDS|If you want to associate a scaling group with RDS instances, you must create and pay for the RDS instances in advance.|[Pricing, billable items, and billing methods](/intl.en-US/Purchase Guide/Pricing, billable items, and billing methods.md)|
 

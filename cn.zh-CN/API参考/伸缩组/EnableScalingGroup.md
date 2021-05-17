@@ -4,28 +4,14 @@
 
 ## 接口说明
 
-当伸缩组处于Inactive状态时，才可以调用该接口。
+当伸缩组处于Inactive状态，且伸缩组配置了组内实例的配置信息来源（伸缩配置、启动模板或者或者在创建伸缩组时指定的ECS实例）时，才可以调用该接口来启用伸缩组。否则，会调用失败。
 
-启用一个指定的伸缩组的效果如下：
+**说明：** 一个伸缩组在同一时刻有且只有一个生效的实例配置信息来源。在调用接口时，您可以为伸缩组指定伸缩配置或启动模板。如果调用该接口前您已经为伸缩组配置了实例配置信息来源，在调用时再指定伸缩配置或启动模板会覆盖原有的配置信息。
 
--   成功启用伸缩组后（Active状态），会先把通过InstanceId.N指定的ECS实例加入伸缩组。
--   指定的ECS实例成功加入伸缩组后，如果当前ECS实例数量仍小于MinSize，则弹性伸缩服务会自动创建差额的按量付费的ECS实例。例如：创建伸缩组时，指定MinSize为5，在启用伸缩组的InstanceId.N参数中指定2台已有ECS实例，则弹性伸缩在加入2台已有ECS实例之后，再自动创建3台ECS实例。
--   如果指定的ECS实例数加上当前伸缩组的ECS实例数（Total Capactiy）大于MaxSize，则调用失败。
+当该接口指定了加入伸缩组的ECS实例（InstanceId.N），调用该接口后，弹性伸缩会判断在加入ECS实例后伸缩组的ECS实例数量（Total Capactiy）是否在最小值（MinSize）和最大值（MaxSize）之间：
 
-当伸缩组没有生效的伸缩配置时，启动伸缩组时需要传入伸缩配置。限制条件如下：
-
--   一个伸缩组在同一时刻只能有一个生效的伸缩配置。
--   如果启动伸缩组之前已经有生效的伸缩配置，在此接口传入新的伸缩配置后，原有的伸缩配置会失效。
-
-指定加入伸缩组的ECS实例需要满足以下条件：
-
--   必须与伸缩组在同一个地域。
--   实例规格（InstanceType）必须与生效伸缩配置的实例规格完全一致。
--   必须处于Running状态。
--   不能已加入到其它伸缩组中。
--   付费方式为包年包月、按量付费或抢占式实例。
--   如果伸缩组指定VswitchID，则不支持Classic类型的ECS实例加入伸缩组，也不支持其他VPC的ECS实例加入伸缩组。
--   如果伸缩组没有指定VswitchID，则不支持VPC类型的ECS实例加入伸缩组。
+-   如果伸缩组的Total Capactiy小于MinSize，调用成功后，弹性伸缩服务会自动创建差额的按量付费的ECS实例。例如：创建伸缩组时，指定MinSize为5，在启用伸缩组的InstanceId.N参数中指定2台已有ECS实例，则弹性伸缩在加入2台已有ECS实例之后，再自动创建3台ECS实例。
+-   如果伸缩组的Total Capactiy大于MaxSize，则调用失败。
 
 ## 调试
 
@@ -38,7 +24,16 @@
 |Action|String|是|EnableScalingGroup|系统规定参数。取值：EnableScalingGroup |
 |ScalingGroupId|String|是|asg-bp14wlu85wrpchm0\*\*\*\*|伸缩组的ID。 |
 |ActiveScalingConfigurationId|String|否|asc-bp1ffogfdauy0nu5\*\*\*\*|需要在伸缩组内激活的伸缩配置的ID。 |
-|InstanceId.N|RepeatList|否|i-283vv\*\*\*\*|InstanceId.N为启用后需要加入伸缩组的ECS实例的ID，N的取值范围：1～20。 |
+|InstanceId.N|RepeatList|否|i-283vv\*\*\*\*|InstanceId.N为启用后需要加入伸缩组的ECS实例的ID，N的取值范围：1～20。
+
+ 指定加入伸缩组的ECS实例需要满足以下条件：
+
+ -   必须与伸缩组在同一个地域。
+-   必须处于Running状态。
+-   不能已加入到其它伸缩组中。
+-   付费方式为包年包月、按量付费或抢占式实例。
+-   如果伸缩组指定VswitchID，则不支持Classic类型的ECS实例加入伸缩组，也不支持其他VPC的ECS实例加入伸缩组。
+-   如果伸缩组没有指定VswitchID，则不支持VPC类型的ECS实例加入伸缩组。 |
 |LoadBalancerWeight.N|RepeatList|否|50|LoadBalancerWeight.N为对应ECS实例后端服务器的权重，N的取值范围：1～20，该参数取值范围：1~100。
 
  默认值：50 |

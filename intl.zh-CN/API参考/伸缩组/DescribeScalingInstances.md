@@ -4,7 +4,7 @@
 
 ## 接口说明
 
-您可以通过指定伸缩组ID查询该伸缩组内ECS实例的列表，查询时可以指定伸缩配置ID、健康状态、生命周期状态、创建类型进行过滤。
+您可以通过指定伸缩组ID查询该伸缩组内ECS实例的列表，也可以指定伸缩配置ID、健康状态、生命周期状态、创建类型等筛选符合要求的ECS实例。
 
 ## 调试
 
@@ -49,6 +49,7 @@
 
  默认值：10 |
 |InstanceId.N|RepeatList|否|i-bp109k5j3dum1ce6\*\*\*\*|InstanceId.N为ECS实例的ID，N的取值范围：1～20。返回查询结果时忽略失效的InstanceId，并且不报错。 |
+|ScalingActivityId|String|否|asa-bp1c9djwrgxjyk31\*\*\*\*|伸缩活动的ID。 |
 
 ## 返回数据
 
@@ -93,6 +94,7 @@
 -   Removing：移出中。ECS实例移出伸缩组时包括移出负载均衡实例的后端服务器、RDS实例的访问白名单等过程。
 -   Removing:Wait：移出挂起中。如果伸缩组内创建了适用于弹性收缩活动的生命周期挂钩，ECS实例在移出伸缩组时被挂起并等待挂钩超时时间结束。 |
 |LoadBalancerWeight|Integer|50|负载均衡实例权重。 |
+|ScalingActivityId|String|asa-bp1c9djwrgxjyk31\*\*\*\*|ECS实例加入伸缩组时，伸缩活动的ID。 |
 |ScalingConfigurationId|String|asc-bp1i65jd06v04vdh\*\*\*\*|关联伸缩配置的ID。 |
 |ScalingGroupId|String|asg-bp1igpak5ft1flyp\*\*\*\*|所属伸缩组的ID。 |
 |SpotStrategy|String|SpotWithPriceLimit|抢占式实例的抢占策略。取值范围：
@@ -136,6 +138,7 @@ https://ess.aliyuncs.com/?Action=DescribeScalingInstances
                   <WarmupState>NoNeedWarmup</WarmupState>
                   <ZoneId>cn-hangzhou-g</ZoneId>
                   <InstanceId>i-m5e3z5l951fibnd9****</InstanceId>
+                  <ScalingActivityId>asa-bp1c9djwrgxjyk31****</ScalingActivityId>
                   <ScalingGroupId>asg-m5e8n5qw4atki7f6****</ScalingGroupId>
                   <HealthStatus>Healthy</HealthStatus>
                   <CreationTime>2020-12-21T03:11Z</CreationTime>
@@ -165,6 +168,7 @@ https://ess.aliyuncs.com/?Action=DescribeScalingInstances
     "WarmupState": "NoNeedWarmup",
     "ZoneId": "cn-hangzhou-g",   
     "InstanceId": "i-m5e3z5l951fibnd9****",
+    "ScalingActivityId": "asa-bp1c9djwrgxjyk31****",
     "ScalingGroupId": "asg-m5e8n5qw4atki7f6****",
     "HealthStatus": "Healthy",
     "CreationTime": "2020-12-21T03:11Z",

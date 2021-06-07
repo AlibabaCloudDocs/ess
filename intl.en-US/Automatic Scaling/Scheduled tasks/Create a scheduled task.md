@@ -100,5 +100,4 @@ When you configure a cron expression for a scheduled task, take note of the foll
 |`15 10 L * ?`|Executes the scheduled task at 10:15 on the last day of every month.|
 |`15 10 ? * 6L`|Executes the scheduled task at 10:15 on the last Saturday of every month.|
 |`15 10 ? * 6#3`|Executes the scheduled task at 10:15 on the third Saturday of every month.|
-|`0 12 L-2 * ?`|Executes the scheduled task at 12:00 on the third-to-last day of every month.|
 

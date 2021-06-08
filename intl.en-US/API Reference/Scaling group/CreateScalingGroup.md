@@ -1,23 +1,24 @@
 # CreateScalingGroup
 
-You can call this operation to create a scaling group.
+Creates a scaling group.
 
 ## Description
 
-A scaling group is a group of ECS instances that are dynamically scaled based on the configured scenario.
+A scaling group is a group of Elastic Compute Service \(ECS\) instances that are dynamically scaled based on the configured scenario.
 
 The number of scaling groups that can be created in a region depends on your usage of Auto Scaling. You can go to the [Quota Center](https://quotas.console.aliyun.com/products/ess/quotas) to check the quota corresponding to the **Total Scaling Groups**.
 
-A scaling group does not take effect immediately after it is created. You must call the [EnableScalingGroup](~~25939~~) operation to enable the scaling group so that the scaling group can execute scaling rules to trigger scaling activities.
+A scaling group does not immediately take effect after it is created. You must call the [EnableScalingGroup](~~25939~~) operation to enable the scaling group so that the scaling group can execute scaling rules to trigger scaling activities.
 
 Each scaling group must be in the same region as the Server Load Balancer \(SLB\) instance and ApsaraDB RDS instance that are associated with the scaling group. For more information, see [Regions and zones](~~40654~~).
 
 If you specify an SLB instance when you create a scaling group, Auto Scaling automatically adds ECS instances in the scaling group to the backend server group of the specified SLB instance. You can specify a server group to which to add the ECS instances. ECS instances can be added to the following types of server groups:
 
--   Default server group: The group of ECS instances that are used to receive requests. If the listener is not configured with a VServer group or a primary/secondary server group, requests are forwarded to the ECS instances in the default server group.
--   VServer group: If you want to distribute different requests to different backend servers or configure domain name- or URL-based routing methods, you can use VServer groups.
+-   Default server group: The group of ECS instances that are used to receive requests. If the listener is not configured with a vServer group or a primary/secondary server group, requests are forwarded to the ECS instances in the default server group.
+-   vServer group: If you want to distribute different requests to different backend servers or configure domain name- or URL-based routing methods, you can use vServer groups.
 
-**Note:** If you specify the default server group and multiple VServer groups at the same time, ECS instances are added to all the specified server groups.
+**Note:** If you specify the default server group and multiple vServer groups at the same time, ECS instances are added to all the specified server groups.
+
 
 The default weight of an ECS instance added to the backend server group is 50. The specified SLB instance must meet the following requirements:
 
@@ -43,16 +44,16 @@ If the MultiAZPolicy parameter of a scaling group is set to COST\_OPTIMIZED:
 |Parameter|Type|Required|Example|Description|
 |---------|----|--------|-------|-----------|
 |Action|String|Yes|CreateScalingGroup|The operation that you want to perform. Set the value to CreateScalingGroup. |
-|MaxSize|Integer|Yes|20|The maximum number of ECS instances in the scaling group. When the number of existing ECS instances in the scaling group is greater than the value of MaxSize, Auto Scaling automatically removes ECS instances until the number of instances is equal to the value of MaxSize.
+|MaxSize|Integer|Yes|20|The maximum number of ECS instances in the scaling group. When the number of ECS instances in the scaling group is greater than the value of MaxSize, Auto Scaling automatically removes ECS instances until the number of instances is equal to the value of MaxSize.
 
 The value range of MaxSize depends on your usage of Auto Scaling. You can go to the [Quota Center](https://quotas.console.aliyun.com/products/ess/quotas) to check the quota corresponding to **Instances That Can Be Configured for a Scaling Group**.
 
 For example, if the quota corresponding to **Instances That Can Be Configured for a Scaling Group** is 2000, the value range of MaxSize is 0 to 2000. |
-|MinSize|Integer|Yes|2|The minimum number of ECS instances in the scaling group. When the number of existing ECS instances in the scaling group is less than the value of MinSize, Auto Scaling automatically creates ECS instances until the number of instances is equal to the value of MinSize.
+|MinSize|Integer|Yes|2|The minimum number of ECS instances in the scaling group. When the number of ECS instances in the scaling group is less than the value of MinSize, Auto Scaling automatically creates ECS instances until the number of instances is equal to the value of MinSize.
 
 **Note:** The value of MinSize must be less than or equal to that of MaxSize. |
 |RegionId|String|Yes|cn-qingdao|The region ID of the scaling group. For more information, see [Regions and zones](~~40654~~). |
-|ScalingGroupName|String|No|scalinggroup\*\*\*\*|The name of the scaling group. The name of a scaling group must be unique in a region. The name must be 2 to 64 characters in length and can contain letters, digits, underscores \(\_\), hyphens \(-\), and periods \(.\). It must start with a letter or a digit.
+|ScalingGroupName|String|No|scalinggroup\*\*\*\*|The name of the scaling group. The name of a scaling group must be unique in a region. The name must be 2 to 64 characters in length, and can contain letters, digits, underscores \(\_\), hyphens \(-\), and periods \(.\). It must start with a letter or digit.
 
 The default value is the value of ScalingGroupId. |
 |LaunchTemplateId|String|No|lt-m5e3ofjr1zn1aw7\*\*\*\*|The ID of the launch template that is used by Auto Scaling to create ECS instances. |
@@ -64,7 +65,7 @@ The default value is the value of ScalingGroupId. |
 |InstanceId|String|No|i-28wt4\*\*\*\*|The ID of the ECS instance from which Auto Scaling obtains configuration information. |
 |DefaultCooldown|Integer|No|300|The cooldown time after a scale-in or scale-out event is executed. Valid values: 0 to 86400. Unit: seconds.
 
-During the cooldown time, Auto Scaling executes only scaling activities that are triggered by Cloud Monitor event-triggered tasks.
+During the cooldown time, Auto Scaling executes only scaling activities that are triggered by CloudMonitor event-triggered tasks.
 
 Default value: 300. |
 |LoadBalancerIds|String|No|\["lb-bp1u7etiogg38yvwz\*\*\*\*", "lb-bp168cqrux9ai9l7f\*\*\*\*", "lb-bp1jv3m9zvj22ufxp\*\*\*\*"\]|The IDs of SLB instances. This value can be a JSON array that contains multiple SLB instance IDs. Separate multiple IDs with commas \(,\).
@@ -82,20 +83,26 @@ The number of ApsaraDB RDS instances that can be associated with a scaling group
 Default value of RemovalPolicy.1: OldestScalingConfiguration.
 
 Default value of RemovalPolicy.2: OldestInstance. |
-|VSwitchId|String|No|vsw-bp14zolna43z266bq\*\*\*\*|The ID of the vSwitch. This parameter is used to create a VPC-type scaling group. |
-|VSwitchIds.N|RepeatList|No|vsw-bp14zolna43z266bq\*\*\*\*|The ID of vSwitch N. Valid values of N: 1 to 5. If you use the VSwitchIds.N parameter, the VSwitchId parameter is ignored.
+|VSwitchId|String|No|vsw-bp14zolna43z266bq\*\*\*\*|The ID of the vSwitch. If VSwitchId is specified, the network type of the scaling group is VPC.
 
-This parameter takes effect only when the network type of the scaling group is VPC. The specified vSwitches and the scaling group must be in the same VPC.
+**Note:** If VSwitchId or VSwitchIds.N is not specified, the network type of the scaling group is classic network. |
+|VSwitchIds.N|RepeatList|No|vsw-bp14zolna43z266bq\*\*\*\*|The ID of vSwitch N. Valid values of N: 1 to 5. If you use the VSwitchIds.N parameter, the VSwitchId parameter is ignored. If VSwitchIds.N is specified, the network type of the scaling group is VPC.
 
-The vSwitches can reside in different zones. vSwitches are sorted in ascending order based on the value of N. 1 indicates the highest priority. When an ECS instance cannot be created in the zone where the vSwitch with the highest priority resides, the system automatically uses the vSwitch with the next highest priority to create the ECS instance. |
+When you specify multiple vSwitches, take note of the following items:
+
+-   The vSwitches must belong to the same VPC.
+-   The vSwitches can belong to different zones.
+-   vSwitches are sorted in ascending order. 1 indicates the highest priority. When an ECS instance cannot be created in the zone where the vSwitch with the highest priority resides, the system automatically uses the vSwitch with the next highest priority to create the ECS instance.
+
+**Note:** If VSwitchId or VSwitchIds.N is not specified, the network type of the scaling group is classic network. |
 |MultiAZPolicy|String|No|PRIORITY|The ECS instance scaling policy for a multi-zone scaling group. Valid values:
 
--   PRIORITY: ECS instances are scaled based on the VSwitchIds.N parameter. When an ECS instance cannot be created in the zone where the vSwitch with the highest priority resides, the system automatically uses the vSwitch with the next highest priority to create the ECS instance.
+-   PRIORITY: ECS instances are scaled based on the VSwitchIds.N parameter. When an ECS instance cannot be created in the zone where the vSwitch with the highest priority resides, the system uses the vSwitch with the next highest priority to create the ECS instance.
 -   COST\_OPTIMIZED: ECS instances are created based on the unit prices of vCPUs in ascending order. Preemptible instances are preferentially created when preemptible instance types are specified for the scaling configuration. You can set the CompensateWithOnDemand parameter to specify whether to automatically create pay-as-you-go instances when preemptible instances cannot be created due to insufficient resources.
 
-**Note:** COST\_OPTIMIZED takes effect only when multiple instance types are specified or at least one preemptible instance type is specified.
+**Note:** COST\_OPTIMIZED is valid only when multiple instance types are specified or at least one preemptible instance type is specified.
 
--   BALANCE: ECS instances are distributed evenly in multiple zones specified in the scaling group. If ECS instances are unevenly distributed among the zones due to issues such as insufficient ECS resources, you can reallocate instances to make them evenly distributed by calling the [RebalanceInstance](~~71516~~) operation.
+-   BALANCE: ECS instances are evenly distributed in multiple zones specified in the scaling group. If ECS instances are unevenly distributed among the zones due to issues such as insufficient ECS resources, you can reallocate instances to make them evenly distributed by calling the [RebalanceInstance](~~71516~~) operation.
 
 Default value: PRIORITY. |
 |HealthCheckType|String|No|ECS|The health check mode of the scaling group. Valid values:
@@ -104,11 +111,13 @@ Default value: PRIORITY. |
 -   ECS: The system performs a health check on ECS instances in the scaling group.
 
 Default value: ECS. |
-|LifecycleHook.N.LifecycleHookName|String|No|lifecyclehook\*\*\*\*|The name of the lifecycle hook. This parameter is used to specify a lifecycle hook and cannot be modified. |
+|LifecycleHook.N.LifecycleHookName|String|No|lifecyclehook\*\*\*\*|The name of lifecycle hook N. After this parameter is specified, you cannot modify the name of the lifecycle hook. If this parameter is not specified, the name of the lifecycle hook is the same as the ID of the lifecycle hook. |
 |LifecycleHook.N.LifecycleTransition|String|No|SCALE\_OUT|The type of scaling activities to which the lifecycle hook applies. Valid values:
 
 -   SCALE\_OUT: scale-out events
--   SCALE\_IN: scale-in events |
+-   SCALE\_IN: scale-in events
+
+**Note:** If lifecycle hooks are specified for the scaling group, LifecycleHook.N.LifecycleTransition is required and other related parameters are optional. |
 |LifecycleHook.N.DefaultResult|String|No|CONTINUE|The action that the scaling group takes when the lifecycle hook times out. Valid values:
 
 -   CONTINUE: Auto Scaling continues to respond to a scale-in or scale-out event.
@@ -122,13 +131,13 @@ Default value: CONTINUE. |
 You can prevent the lifecycle hook from timing out by calling the [RecordLifecycleActionHeartbeat](~~73846~~) operation. You can also call the [CompleteLifecycleAction](~~73847~~) operation to resume a suspended scaling activity before the corresponding lifecycle hook times out.
 
 Default value: 600. |
-|LifecycleHook.N.NotificationMetadata|String|No|Test|The fixed string to be included when Auto Scaling sends a notification about the wait state of a scaling activity. The parameter value cannot exceed 128 characters in length. Auto Scaling sends the specified NotificationMetadata parameter value along with the notification message so that you can categorize your notifications. The NotificationMetadata parameter takes effect only after you specify the NotificationArn parameter. |
-|LifecycleHook.N.NotificationArn|String|No|acs:ess:cn-hangzhou:1111111111:queue/queue2|The Alibaba Cloud Resource Name \(ARN\) of the notification object that Auto Scaling uses to notify you when an instance is in the transition state for the lifecycle hook. This object can be either a Message Service \(MNS\) queue or an MNS topic. The format of the parameter value is acs:ess:\{region\}:\{account-id\}:\{resource-relative-id\}.
+|LifecycleHook.N.NotificationMetadata|String|No|Test|The fixed string to be included when Auto Scaling sends a notification about the wait state of a scaling activity. The parameter value cannot exceed 128 characters in length. Auto Scaling sends the specified NotificationMetadata parameter value along with the notification message so that you can categorize your notifications. The NotificationMetadata parameter is valid only after you specify the NotificationArn parameter. |
+|LifecycleHook.N.NotificationArn|String|No|acs:ess:cn-hangzhou:1111111111:queue/queue2|The Alibaba Cloud Resource Name \(ARN\) of the notification object that Auto Scaling uses to notify you when an instance is in the transition state for the lifecycle hook. This object can be a Message Service \(MNS\) queue or an MNS topic. The parameter value is in the following format: acs:ess:\{region\}:\{account-id\}:\{resource-relative-id\}.
 
 -   region: the region where the scaling group resides
 -   account-id: the ID of the Alibaba Cloud account
 
-Examples:
+The following code provides an example:
 
 -   MNS queue: acs:ess:\{region\}:\{account-id\}:queue/\{queuename\}
 -   MNS topic: acs:ess:\{region\}:\{account-id\}:topic/\{topicname\} |
@@ -151,11 +160,11 @@ Default value: 50. |
 -   recycle: The scaling group is set to Shutdown and Reclaim Mode.
 -   release: The scaling group is set to Release Mode.
 
-ScalingPolicy specifies the reclaim modes of scaling groups, but the policy that is used to remove ECS instances from scaling groups is determined by the RemovePolicy parameter of the RemoveInstances operation. For more information, see [RemoveInstances](~~25955~~). |
-|ClientToken|String|No|123e4567-e89b-12d3-a456-42665544\*\*\*\*|The client token that is used to ensure the idempotence of the request. You can use the client to generate the value, but you must make sure that it is unique among different requests. The token can only contain ASCII characters and cannot exceed 64 characters in length. For more information, see [How to ensure idempotence](~~25693~~). |
-|OnDemandBaseCapacity|Integer|No|30|The minimum number of pay-as-you-go instances required in the scaling group. Valid values: 0 to 1000. When the number of existing pay-as-you-go instances is less than this value, Auto Scaling preferentially creates pay-as-you-go instances. |
-|OnDemandPercentageAboveBaseCapacity|Integer|No|20|The percentage of pay-as-you-go instances to be created when instances are added to the scaling group.This parameter takes effect after the number of pay-as-you-go instances in the scaling group reaches the OnDemandBaseCapacity value. Valid values: 0 to 100. |
-|SpotInstanceRemedy|Boolean|No|true|Specifies whether to supplement preemptible instances. When Auto Scaling receives a system message indicating that a preemptible instance is reclaimed, Auto Scaling attempts to create a new instance to replace the instance to be reclaimed if this parameter is set to true. |
+ScalingPolicy specifies the reclaim modes of scaling groups, but the policy that is used to remove ECS instances from scaling groups is determined by the RemovePolicy parameter of the RemoveInstances operation. For more information, see [RemoveInstances](~~25955~~) . |
+|ClientToken|String|No|123e4567-e89b-12d3-a456-42665544\*\*\*\*|The client token that is used to guarantee the idempotence of the request. You can use the client to generate the value, but you must make sure that the value is unique among different requests. The token can contain only ASCII characters and cannot exceed 64 characters in length. For more information, see [How to ensure idempotence](~~25693~~). |
+|OnDemandBaseCapacity|Integer|No|30|The minimum number of pay-as-you-go instances required in the scaling group. Valid values: 0 to 1000. When the number of pay-as-you-go instances is less than this value, Auto Scaling preferentially creates pay-as-you-go instances. |
+|OnDemandPercentageAboveBaseCapacity|Integer|No|20|The percentage of pay-as-you-go instances to be created when instances are added to the scaling group. This parameter is valid after the number of pay-as-you-go instances in the scaling group reaches the OnDemandBaseCapacity value. Valid values: 0 to 100. |
+|SpotInstanceRemedy|Boolean|No|true|Specifies whether to supplement preemptible instances. When Auto Scaling receives a system message indicating that a preemptible instance is reclaimed, Auto Scaling creates a new instance to replace the instance to be reclaimed if this parameter is set to true. |
 |CompensateWithOnDemand|Boolean|No|true|Specifies whether to automatically create pay-as-you-go instances to meet the required number of ECS instances when the expected capacity of preemptible instances cannot be fulfilled due to reasons such as cost or insufficient resources. This parameter takes effect when the MultiAZPolicy parameter is set to COST\_OPTIMIZED. Valid values:
 
 -   true: Pay-as-you-go instances can be created.
@@ -163,7 +172,7 @@ ScalingPolicy specifies the reclaim modes of scaling groups, but the policy that
 
 Default value: true. |
 |SpotInstancePools|Integer|No|5|The number of available instance types. Auto Scaling creates preemptible instances of multiple available instance types at the lowest cost. Valid values: 1 to 10. |
-|DesiredCapacity|Integer|No|5|The expected number of ECS instances in the scaling group. Auto Scaling automatically maintains the ECS instances at this number. The expected number must be between the MaxSize value and the MinSize value. |
+|DesiredCapacity|Integer|No|5|The expected number of ECS instances in the scaling group. Auto Scaling automatically maintains ECS instances at this number. The expected number must be between the value of MaxSize and the value of MinSize. |
 |GroupDeletionProtection|Boolean|No|true|Specifies whether to enable deletion protection for the scaling group. Valid values:
 
 -   true: enables deletion protection for the scaling group. In this case, you cannot delete the scaling group.
@@ -176,7 +185,7 @@ Default value: false. |
 
 This parameter specifies instance type N to override the instance types specified in the launch template. You can specify N values for this parameter and N instance types for the extended configurations. Valid values of N: 1 to 10.
 
-**Note:** This parameter takes effect only when the LaunchTemplateId parameter is specified.
+**Note:** This parameter is valid only when the LaunchTemplateId parameter is specified.
 
 Valid values of InstanceType: For information about available ECS instance types, see [Instance families](~~25378~~). |
 |LaunchTemplateOverride.N.WeightedCapacity|Integer|No|4|If you want to scale the scaling group based on the capacity, you must specify LaunchTemplateOverride.N.WeightedCapacity after LaunchTemplateOverride.N.InstanceType is specified. The two parameters have a one-to-one correspondence between them. The N value must be the same.
@@ -185,7 +194,7 @@ This parameter specifies the weight of the instance type, which indicates the ca
 
 The performance metrics such as the number of vCPUs and the memory size of each instance type may vary. You can configure different weights for different instance types to meet your requirements.
 
-Example:
+The following code provides an example:
 
 -   Current capacity: 0
 -   Expected capacity: 6

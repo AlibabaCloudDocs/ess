@@ -74,15 +74,28 @@ ECS实例在加入负载均衡实例的后端服务器组后，权重默认为50
 |DBInstanceIds|String|否|\["rm-bp142f86de0t7\*\*\*\*", "rm-bp18l1z42ar4o\*\*\*\*", "rm-bp1lqr97h4aqk\*\*\*\*"\]|RDS实例ID。取值可以是由多台RDS实例ID组成一个JSON数组，ID之间用半角逗号（,）隔开。
 
  单个伸缩组可以关联的RDS实例总数和弹性伸缩使用情况有关，请前往[配额中心](https://quotas.console.aliyun.com/products/ess/quotas)查看**单个伸缩组可以关联的RDS实例总数**对应的配额值。 |
-|RemovalPolicy.1|String|否|OldestScalingConfiguration|RemovalPolicy.N指定移出ECS实例的伸缩组策略，N的取值范围：1~2。取值范围：
+|RemovalPolicy.1|String|否|OldestScalingConfiguration|指定实例移出策略的第一段筛选策略。取值范围：
 
  -   OldestInstance：移出最早加入伸缩组的ECS实例。
 -   NewestInstance：移出最新加入伸缩组的ECS实例。
 -   OldestScalingConfiguration：移出最早伸缩配置创建的ECS实例。
 
- RemovalPolicy.1的默认值：OldestScalingConfiguration
+ **说明：** OldestScalingConfiguration中提到的伸缩配置泛指组内实例配置信息来源，包括伸缩配置和启动模板。
 
- RemovalPolicy.2的默认值：OldestInstance |
+ 启动模板的版本号低不代表添加时间早，例如在创建伸缩组时选择实例启动模板lt-foress的版本2，然后修改伸缩组，选择实例启动模板lt-foress的版本1，则对伸缩组来说，启动模板lt-foress的版本2是最早的。
+
+ 仅当RemovalPolicy.1和RemovalPolicy.2均未设置取值时，RemovalPolicy.1有默认值，默认为OldestScalingConfiguration。
+
+ **说明：** 伸缩组移出ECS实例还受伸缩组的扩缩容策略（MultiAZPolicy）影响。更多信息，请参见[设置移出实例的组合策略](~~254822~~)。 |
+|RemovalPolicy.2|String|否|OldestInstance|指定实例移出策略的第二段筛选策略，不允许与RemovalPolicy.1取值相同。取值范围：
+
+ -   OldestInstance：移出最早加入伸缩组的ECS实例。
+-   NewestInstance：移出最新加入伸缩组的ECS实例。
+-   OldestScalingConfiguration：移出最早伸缩配置创建的ECS实例。
+
+ 仅当RemovalPolicy.1和RemovalPolicy.2均未设置取值时，RemovalPolicy.2有默认值，默认为OldestInstance。
+
+ **说明：** 伸缩组移出ECS实例还受伸缩组的扩缩容策略（MultiAZPolicy）影响。更多信息，请参见[设置移出实例的组合策略](~~254822~~)。 |
 |VSwitchId|String|否|vsw-bp14zolna43z266bq\*\*\*\*|虚拟交换机的ID。指定后，伸缩组的网络类型为专有网络。
 
  **说明：** 当伸缩组未指定VSwitchId或VSwitchIds.N参数时，伸缩组的网络类型默认为经典网络。 |
@@ -97,8 +110,8 @@ ECS实例在加入负载均衡实例的后端服务器组后，权重默认为50
  **说明：** 当伸缩组未指定VSwitchId或VSwitchIds.N参数时，伸缩组的网络类型默认为经典网络。 |
 |MultiAZPolicy|String|否|PRIORITY|多可用区伸缩组ECS实例扩缩容策略。取值范围：
 
- -   PRIORITY：根据您定义的虚拟交换机（VSwitchIds.N）扩缩容。当优先级较高的虚拟交换机所在可用区无法创建ECS实例时，自动使用下一优先级的虚拟交换机创建ECS实例。
--   COST\_OPTIMIZED：按vCPU单价从低到高进行尝试创建。当伸缩配置设置了抢占式计费方式的多实例规格时，优先创建对应抢占式实例。您可以继续通过CompensateWithOnDemand参数指定当抢占式实例由于库存等原因无法创建时，是否自动尝试以按量付费的方式创建。
+ -   PRIORITY：先指定的虚拟交换机（VSwitchIds.N）优先级最高。弹性伸缩优先在优先级最高的交换机所在可用区尝试扩缩容，如果无法扩缩容，则自动在下一优先级的交换机所在可用区进行扩缩容。
+-   COST\_OPTIMIZED：扩容时弹性伸缩按vCPU单价从低到高尝试创建ECS实例，缩容时按vCPU单价从高到低尝试移出ECS实例。当伸缩配置设置了抢占式计费方式的多实例规格时，优先创建对应抢占式实例。您可以继续通过CompensateWithOnDemand参数指定当抢占式实例由于库存等原因无法创建时，是否自动尝试以按量付费的方式创建。
 
 **说明：** COST\_OPTIMIZED仅在伸缩配置设置了多实例规格或者选用了抢占式实例的情况下生效。
 

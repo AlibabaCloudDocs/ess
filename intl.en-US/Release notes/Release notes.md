@@ -2,12 +2,18 @@
 
 This topic describes the release notes of Auto Scaling.
 
+## March 2021
+
+|Feature|Description|Release date|Region|References|
+|-------|:----------|:-----------|------|:---------|
+|Vertical scaling|Vertical scaling can change instance types \(vCPUs and memory\) of pay-as-you-go instances.|2021-03-31|All|[Overview](/intl.en-US/Vertical scaling/Overview.md)|
+
 ## February 2021
 
 |Feature|Description|Release date|Region|References|
 |-------|:----------|:-----------|------|:---------|
 |Scaling configurations|Weights can be set for instance types.|2021-02-12|All|-   [Create a scaling configuration](/intl.en-US/Scaling Group/Instance Configuration Source/Create a scaling configuration.md)
--   [t2039652.md\#]()
+-   [Use performance metrics to measure Auto Scaling](/intl.en-US/Best practices/Use performance metrics to measure Auto Scaling.md)
 -   [CreateScalingConfiguration](/intl.en-US/API Reference/Scaling configuration/CreateScalingConfiguration.md) |
 
 ## January 2021
@@ -15,7 +21,7 @@ This topic describes the release notes of Auto Scaling.
 |Feature|Description|Release date|Region|References|
 |-------|:----------|:-----------|------|:---------|
 |Scaling configurations|Auto Scaling can automatically generate sequential and unique hostnames.|2021-01-15|All|-   [Create a scaling configuration](/intl.en-US/Scaling Group/Instance Configuration Source/Create a scaling configuration.md)
--   [t2043005.md\#]()
+-   [Set rules for generating sequential and unique hostnames](/intl.en-US/Best practices/Set rules for generating sequential and unique hostnames.md)
 -   [CreateScalingConfiguration](/intl.en-US/API Reference/Scaling configuration/CreateScalingConfiguration.md) |
 
 ## November 2020
@@ -29,7 +35,7 @@ This topic describes the release notes of Auto Scaling.
 
 |Feature|Description|Release date|Region|References|
 |-------|:----------|:-----------|------|:---------|
-|Event-triggered tasks|The statistical methods supported by custom monitoring event-triggered tasks are added.|2020-10-25|All|-   [Create event-triggered tasks](/intl.en-US/Automatic Scaling/Alarm tasks/Create a monitoring task.md)
+|Event-triggered tasks|The statistical methods supported by custom monitoring event-triggered tasks are added.|2020-10-25|All|-   [Create an event-triggered task](/intl.en-US/Automatic Scaling/Alarm tasks/Create an event-triggered task.md)
 -   [CreateAlarm](/intl.en-US/API Reference/Alarm tasks/CreateAlarm.md) |
 
 ## September 2020
@@ -84,13 +90,13 @@ This topic describes the release notes of Auto Scaling.
 |Feature|Description|Release date|Region|References|
 |-------|:----------|:-----------|------|:---------|
 |Support for ECS instance health status|An API operation can be called to set the health status of an ECS instance.|2019-10-25|All|[SetInstanceHealth](/intl.en-US/API Reference/Instance/SetInstanceHealth.md)|
-|Expected number of instances|The expected number of ECS instances in a scaling group can be set. This allows Auto Scaling to flexibly execute parallel scaling activities.|2019-10-22|All|[Expected number of instances](/intl.en-US/Scaling Group/Scaling group/Expected number of instances.md)|
+|Expected number of ECS instances|The expected number of ECS instances in a scaling group can be set. This allows Auto Scaling to flexibly execute parallel scaling activities.|2019-10-22|All|[Expected number of instances](/intl.en-US/Scaling Group/Scaling group/Expected number of instances.md)|
 
 ## September 2019
 
 |Feature|Description|Release date|Region|References|
 |-------|:----------|:-----------|------|:---------|
-|Support for creating a scaling configuration from an existing instance|An API operation can be called to specify an instance as the template when you create a scaling group. Auto Scaling obtains the configuration information of the instance and automatically creates a scaling configuration.|2019-09-24|All|[CreateScalingGroup](/intl.en-US/API Reference/Scaling group/CreateScalingGroup.md)|
+|Support for creating a scaling configuration from an existing instance|When you call an API operation to create a scaling group, you can specify an instance as the configuration source. Auto Scaling obtains the configuration information of the instance and automatically creates a scaling configuration.|2019-09-24|All|[CreateScalingGroup](/intl.en-US/API Reference/Scaling group/CreateScalingGroup.md)|
 
 ## August 2019
 
@@ -116,7 +122,7 @@ This topic describes the release notes of Auto Scaling.
 
 |Feature|Description|Release date|Region|References|
 |-------|:----------|:-----------|------|:---------|
-|Predictive scaling rules|Predictive scaling rules can be created. After a predictive scaling rule is created, Auto Scaling adjusts the minimum and maximum numbers of instances in a scaling group based on historical monitoring data.|2019-04-18|All|[t220151.md\#](/intl.en-US/Scaling Group/Scaling rule/Overview.md)|
+|Predictive scaling rules|Predictive scaling rules can be created. After a predictive scaling rule is created, Auto Scaling adjusts the minimum and maximum numbers of instances in a scaling group based on historical monitoring data.|2019-04-18|All|[Overview](/intl.en-US/Scaling Group/Scaling rule/Overview.md)|
 |Support for the DiskName, DiskDescription, and Encrypted parameters in scaling configurations|The disk name, disk description, and encryption can be set for a scaling configuration.|2019-04-04|All|[Create a scaling configuration](/intl.en-US/Scaling Group/Instance Configuration Source/Create a scaling configuration.md)|
 
 ## January 2019
@@ -182,7 +188,7 @@ This topic describes the release notes of Auto Scaling.
 
 |Feature|Description|Release date|Region|References|
 |-------|:----------|:-----------|------|:---------|
-|Scaling activity notifications|When a scaling activity of a specific type occurs in a scaling group, notifications can be sent to Cloud Monitor or Message Service.|2018-04-20|All|[Event notification overview](/intl.en-US/Monitoring/Event notification/Event notification overview.md)|
+|Scaling activity notifications|When a scaling activity of a specific type occurs in a scaling group, notifications can be sent to CloudMonitor or Message Service.|2018-04-20|All|[Event notification overview](/intl.en-US/Monitoring/Event notification/Event notification overview.md)|
 
 ## March 2018
 

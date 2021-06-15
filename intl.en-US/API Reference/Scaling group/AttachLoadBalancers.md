@@ -1,6 +1,6 @@
 # AttachLoadBalancers
 
-You can call this operation to associate one or more SLB instances with a scaling group.
+Associates one or more Server Load Balancer \(SLB\) instances with a scaling group.
 
 ## Description
 
@@ -10,7 +10,7 @@ Before you associate an SLB instance with a scaling group, make sure that the fo
 -   The SLB instance and the scaling group must be in the same region.
 -   The SLB instance must be in the Running state.
 -   The SLB instance must be configured with at least one listener. Health check is enabled for the SLB instance.
--   The SLB instance and the scaling group must be in the same VPC if the network type of both of them is VPC.
+-   The SLB instance and the scaling group must be in the same VPC if their network type is VPC.
 -   If the network type of the scaling group is VPC, the network type of the SLB instance is classic network, and the SLB backend server contains VPC-type instances, the instance and the scaling group must be in the same VPC.
 -   The number of SLB instances cannot exceed the quota for SLB instances that can be associated with the scaling group. For more information about the quota, see [Limits](~~25863~~).
 
@@ -27,17 +27,28 @@ Before you associate an SLB instance with a scaling group, make sure that the fo
 |ScalingGroupId|String|Yes|asg-bp1avr6ensitts3w\*\*\*\*|The ID of the scaling group. |
 |ForceAttach|Boolean|No|false|Specifies whether to add all instances in the specified scaling group as backend servers to the SLB instance. Valid values:
 
--   true: adds all instances
--   false: does not add all instances
+-   true: adds all instances.
+-   false: does not add all instances.
 
 Default value: false. |
-|ClientToken|String|No|123e4567-e89b-12d3-a456-42665544\*\*\*\*|The client token that is used to ensure the idempotence of the request. You can use the client to generate the value, but you must ensure that it is unique among different requests. The token can only contain ASCII characters and cannot exceed 64 characters in length. For more information, see [How to ensure idempotence](~~25965~~). |
+|ClientToken|String|No|123e4567-e89b-12d3-a456-42665544\*\*\*\*|The client token that is used to guarantee the idempotence of the request. You can use the client to generate the value, but you must make sure that the value is unique among different requests. The token can only contain ASCII characters and cannot exceed 64 characters in length. For more information, see [How to ensure idempotence](~~25965~~). |
+|Async|Boolean|No|false|Specifies whether to use asynchronous calls when you associate an SLB instance with the scaling group. Asynchronous calls ensure the transactional nature of operations, which means that all operations are successfully performed or the execution results do not take effect if some operations fail. We recommend that you use asynchronous calls.
+
+Valid values:
+
+-   true: asynchronous calls. The request returns the ID of the scaling activity.
+-   false: synchronous calls.
+
+Default value: false. |
 
 ## Response parameters
 
 |Parameter|Type|Example|Description|
 |---------|----|-------|-----------|
 |RequestId|String|473469C7-AA6F-4DC5-B3DB-A3DC0DE3C83E|The ID of the request. |
+|ScalingActivityId|String|asa-bp140qd7mak8k63f\*\*\*\*|The ID of the scaling activity.
+
+This parameter value is returned only when Async is set to true. You can call the [DescribeScalingActivities](~~25961~~) operation to query the IDs of returned scaling activities and view the execution status of the scaling activities. |
 
 ## Examples
 
@@ -93,7 +104,7 @@ For a list of error codes, visit the [API Error Center](https://error-center.ali
 
 |The specified scaling group does not exist.
 
-|The error message returned because the specified scaling group does not exist in the current account. |
+|The error message returned because the specified scaling group does not exist within the current account. |
 |400
 
 |QuotaExceeded.LoadBalancer

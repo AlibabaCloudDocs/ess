@@ -4,7 +4,7 @@
 
 ## 接口说明
 
-报警任务支持的系统监控项的数据由云监控采集，您需要配合维度信息确定监控数据的聚合范围。例如，指定user\_id和 scaling\_group即确定聚合该用户、该伸缩组下所有ECS实例的监控项数据。
+报警任务支持的系统监控项的数据由云监控采集，您需要配合维度信息确定监控数据的聚合范围。例如，指定user\_id和scaling\_group即确定聚合该用户、该伸缩组下所有ECS实例的监控项数据。
 
 监控项和维度信息的配合关系如下：
 
@@ -95,7 +95,7 @@
 
 |user\_id、scaling\_group、state |
 
-其中，user\_id和scaling\_group由系统自动填充，device、state需要您手动指定。更多说明请参见参数Dimension.N.DimensionKey和Dimension.N.DimensionValue。
+其中，user\_id和scaling\_group由系统自动填充，device、state需要您手动指定。更多信息，请参见参数Dimension.N.DimensionKey和Dimension.N.DimensionValue。
 
 ## 调试
 
@@ -130,7 +130,7 @@
 -   PackagesNetOut：网卡发包数（个/s）。
 -   TcpConnection：TCP连接数（个）。
 
- 更多信息请参见接口说明。 |
+ 更多信息，请参见接口说明。 |
 |MetricType|String|否|system|监控项类型。取值范围：
 
  -   system：使用云监控系统指标。
@@ -176,6 +176,20 @@
 
  -   TCP\_TOTAL：表示总的TCP连接数。
 -   ESTABLISHED：表示已建立的TCP连接数。 |
+|Effective|String|否|TZ=+00 \* \* 1-2 \* \* ?|指定报警任务的生效时间段。
+
+ 该参数遵循Cron表达式，默认格式为`X X X X X ?`，含义如下：
+
+ -   X：一个域的占位符，依次表示秒、分钟、小时、日期和月。X可以是确定的取值，也可以是具有逻辑意义的特殊字符。X的取值范围，请参见[Cron表达式](~~25907~~)。
+-   ？：表示不指定值。
+
+ **说明：** 该参数指定值**默认为UTC+8时区**，支持在Cron表达式之前添加时区信息`TZ=+yy`来指定时区，其中y表示时区的数值。例如，`TZ=+00 * * 1-2 * * ?`表示报警任务在UTC+0时区每天01:00~02:59之间生效。
+
+ 取值示例及含义如下：
+
+ -   `* * * * * ?`：所有时间都生效
+-   `* * 17-18 * * ?`：在UTC+8时区每天17:00~18:59之间生效
+-   `TZ=+00 * * 1-2 * * ?`：在UTC+0时区每天01:00~02:59之间生效 |
 
 ## 返回数据
 
@@ -198,7 +212,7 @@ https://ess.aliyuncs.com/?Action=ModifyAlarm
 
 正常返回示例
 
-`XML` 格式
+`XML`格式
 
 ```
 <ModifyAlarmResponse>
@@ -207,7 +221,7 @@ https://ess.aliyuncs.com/?Action=ModifyAlarm
 </ModifyAlarmResponse>
 ```
 
-`JSON` 格式
+`JSON`格式
 
 ```
 {

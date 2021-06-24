@@ -1,31 +1,17 @@
 # EnableScalingGroup
 
-You can call this operation to enable a scaling group.
+Enables a scaling group.
 
 ## Description
 
-You can call this operation on a scaling group only when the scaling group is in the Enabled state.
+You can call this operation on a scaling group only when the scaling group is in the Inactive state and has the instance configuration source configured. Instance configuration sources include scaling configurations, launch templates, and Elastic Compute Service \(ECS\) instances specified when scaling groups are created. Otherwise, the call fails.
 
-When you enable a scaling group, you obtain one or more of the following results:
+**Note:** A scaling group can have only one active instance configuration source at a time. When you call this operation on a scaling group, you can specify a scaling configuration or a launch template for the scaling group. If you have configured the instance configuration source for the scaling group before you call this operation, the specified scaling configuration or launch template in the request overwrites the original one.
 
--   After a scaling group is enabled, the ECS instances that you specified by using the InstanceId.N parameter are added to the scaling group.
--   If the number of existing ECS instances in a scaling group is less than the MinSize value after the specified ECS instances are added to the scaling group, additional ECS instances are automatically created to maintain the MinSize value. For example, a scaling group is created with the MinSize parameter set to 5. Two existing ECS instances are specified in the InstanceId.N parameter when the scaling group is enabled. Then, three additional ECS instances are automatically created after the two ECS instances are added by Auto Scaling to the scaling group.
--   If the sum of the number of instances to be added specified for this operation and the number of existing ECS instances in the scaling group is greater than the MaxSize value, the call fails.
+After you use the InstanceId.N parameter to specify ECS instances to be added to a scaling group when you call this operation, Auto Scaling determines whether the TotalCapactiy value is between the MinSize value and the MaxSize value after the specified instances are added to the scaling group:
 
-If the scaling group has no active scaling configuration, you must specify a scaling configuration when you enable the scaling group. This operation must meet the following requirements:
-
--   A single scaling group can have only one active scaling configuration.
--   If an active scaling configuration exists and you specify a new active scaling configuration when you call this operation, the original scaling configuration becomes inactive.
-
-The ECS instances to be added to the scaling group must meet the following requirements:
-
--   The instances are located in the same region as the scaling group.
--   The instances have the same instance type as that of the active scaling configuration.
--   The instances are in the Running state.
--   The instances are not added to other scaling groups.
--   The instances use the subscription or pay-as-you-go billing method or are preemptible instances.
--   If the VSwitchId parameter is specified for a scaling group, ECS instances in the classic network or not in the same VPC as the specified vSwitch cannot be added to the scaling group.
--   If the VSwitchId parameter is not specified for a scaling group, VPC-type ECS instances cannot be added to the scaling group.
+-   If the TotalCapactiy value is less than the MinSize value, Auto Scaling automatically creates pay-as-you-go ECS instances based on the difference between the Total Capactiy value and the MinSize value. For example, you create a scaling group whose MinSize is set to 5. You use the InstanceId.N parameter to specify two existing ECS instances when you enable the scaling group. Then, Auto Scaling automatically creates three ECS instances after the two ECS instances are added to the scaling group.
+-   If the TotalCapactiy value is greater than the MaxSize value, the call fails.
 
 ## Debugging
 
@@ -38,7 +24,16 @@ The ECS instances to be added to the scaling group must meet the following requi
 |Action|String|Yes|EnableScalingGroup|The operation that you want to perform. Set the value to EnableScalingGroup. |
 |ScalingGroupId|String|Yes|asg-bp14wlu85wrpchm0\*\*\*\*|The ID of the scaling group. |
 |ActiveScalingConfigurationId|String|No|asc-bp1ffogfdauy0nu5\*\*\*\*|The ID of the scaling configuration to be enabled in the scaling group. |
-|InstanceId.N|RepeatList|No|i-283vv\*\*\*\*|The ID of ECS instance N to be added to the scaling group. Valid values of N: 1 to 20. |
+|InstanceId.N|RepeatList|No|i-283vv\*\*\*\*|The ID of ECS instance N to be added to the scaling group. Valid values of N: 1 to 20.
+
+The ECS instances to be added to the scaling group must meet the following requirements:
+
+-   The instances are located in the same region as the scaling group.
+-   The instances are in the Running state.
+-   The instances are not added to other scaling groups.
+-   The instances use the subscription or pay-as-you-go billing method or are preemptible instances.
+-   If the VSwitchId parameter is specified for a scaling group, ECS instances in the classic network or not in the same VPC as the specified vSwitch cannot be added to the scaling group.
+-   If the VSwitchId parameter is not specified for a scaling group, VPC-type ECS instances cannot be added to the scaling group. |
 |LoadBalancerWeight.N|RepeatList|No|50|The weight of ECS instance N that acts as a backend server of the associated SLB instance. Valid values of N: 1 to 20. Valid values of this parameter: 1 to 100.
 
 Default value: 50. |
@@ -48,11 +43,11 @@ Default value: 50. |
 -   A fixed template version number.
 -   Default: The default template version is always used.
 -   Latest: The latest template version is always used. |
-|LaunchTemplateOverride.N.InstanceType|String|No|ecs.c5.xlarge|If you want to scale the scaling group based on the capacity, you must specify both the LaunchTemplateOverride.N.InstanceType and LaunchTemplateOverride.N.WeightedCapacity parameters at the same time.
+|LaunchTemplateOverride.N.InstanceType|String|No|ecs.c5.xlarge|If you want to scale the scaling group based on the capacity, you must specify both the LaunchTemplateOverride.N.InstanceType and LaunchTemplateOverride.N.WeightedCapacity parameters.
 
 This parameter specifies instance type N to override the instance types specified in the launch template. You can specify N values for this parameter and N instance types for the extended configurations. Valid values of N: 1 to 10.
 
-**Note:** This parameter takes effect only when the LaunchTemplateId parameter is specified.
+**Note:** This parameter is valid only when the LaunchTemplateId parameter is specified.
 
 Valid values of InstanceType: For information about available ECS instance types, see [Instance families](~~25378~~). |
 |LaunchTemplateOverride.N.WeightedCapacity|Integer|No|4|If you want to scale the scaling group based on the capacity, you must specify LaunchTemplateOverride.N.WeightedCapacity after LaunchTemplateOverride.N.InstanceType is specified. The two parameters have a one-to-one correspondence between them. The N value must be the same.
@@ -126,7 +121,7 @@ For a list of error codes, visit the [API Error Center](https://error-center.ali
 
 |The specified scaling group does not exist.
 
-|The error message returned because the specified scaling group does not exist in the current account. |
+|The error message returned because the specified scaling group does not exist within the current account. |
 |403
 
 |Forbidden.Unauthorized
@@ -168,7 +163,7 @@ For a list of error codes, visit the [API Error Center](https://error-center.ali
 
 |Instance “XXX” does not exist.
 
-|The error message returned because the specified ECS instance does not exist in the current account. |
+|The error message returned because the specified ECS instance does not exist within the current account. |
 |400
 
 |InvalidInstanceId. RegionMismatch

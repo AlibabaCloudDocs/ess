@@ -12,8 +12,8 @@ This topic describes how to create a scaling group. A scaling group is a group o
     -   At least one listener is configured on the SLB instance. For more information, see [Listener overview](/intl.en-US/Classic Load Balancer/User Guide/Listeners/Listener overview.md).
     -   Health check is enabled on the SLB instance. For more information, see [Configure health check](/intl.en-US/Classic Load Balancer/User Guide/Health check/Configure health checks.md).
 -   Before you associate a scaling group with ApsaraDB RDS instances, make sure that the following conditions are met:
-    -   You have at least one ApsaraDB RDS instance in the **Running** state. For more information, see [What is ApsaraDB RDS?](/intl.en-US/Product Introduction/What is ApsaraDB RDS?.md)
-    -   The ApsaraDB RDS instances and the scaling group reside in the same region.
+    -   You have at least one RDS instance in the **Running** state. For more information, see [What is ApsaraDB RDS?](/intl.en-US/Product Introduction/What is ApsaraDB RDS?.md)
+    -   The RDS instances and the scaling group reside in the same region.
 
 You can create only a limited number of scaling groups. For more information, see [Limits](/intl.en-US/Product Introduction/Limits.md).
 
@@ -33,7 +33,7 @@ You can create only a limited number of scaling groups. For more information, se
 
     |Parameter|Applicable network type|Description|
     |---------|-----------------------|-----------|
-    |**Scaling Group Name**|VPC and classic network|The name must be 2 to 64 characters in length, and can contain letters, digits, periods \(.\), underscores \(\_\), and hyphens \(-\). It must start with a letter or a digit.|
+    |**Scaling Group Name**|VPC and classic network|The name must be 2 to 64 characters in length and can contain letters, digits, periods \(.\), underscores \(\_\), and hyphens \(-\). It must start with a letter or a digit.|
     |**Instance Configuration Source**|VPC and classic network|You can specify one of the following configuration sources for the scaling group:    -   **Launch Templates**: uses a launch template to create ECS instances.
     -   **Select Existing Instance**: uses the configurations of an existing ECS instance as a template to create ECS instances. The configurations include the instance type, image, network type, security group, logon password, and tags.
     -   **Create from Scratch**: creates a scaling group without specifying a template. After the scaling group is created, it is in the Disabled state. You must create a scaling configuration or specify a launch template to create ECS instances before you can enable the scaling group.
@@ -86,14 +86,16 @@ If you select **Cost Optimization Policy**, you can continue to configure the fo
     -   **Percentage of Pay-as-you-go Instances**: the percentage of pay-as-you-go ECS instances among all automatically created instances. Default value: 70. The percentage is calculated based on the difference between the total number of instances and the minimum number of pay-as-you-go instances.
     -   **Lowest Cost Instance Types**: the number of instance types with the lowest cost. Default value: 1. This parameter is valid when multiple instance types are specified in the scaling configuration. When preemptible instances are created, Auto Scaling evenly creates ECS instances by using the lowest-cost instance types.
     -   **Enable Supplemental Preemptible Instances**: After the Supplemental Preemptible Instances feature is enabled, Auto Scaling automatically creates preemptible instances 5 minutes before the existing instances are reclaimed. |
-    |**Instance Reclaim Mode**|VPC|You can specify one of the following reclaim modes for a scaling group in a VPC:    -   **Release Mode**: When a scale-in event is triggered, Auto Scaling automatically releases a specific number of ECS instances. When a scale-out event is triggered, Auto Scaling automatically creates a specific number of ECS instances.
-    -   **Shutdown and Reclaim Mode**: This mode makes scaling more efficient.
-        -   When a scale-in event is triggered, the status of the removed ECS instances becomes No Fees for Stopped Instances \(VPC-Connected\), and their vCPUs, memory, and public IP addresses are reclaimed. You are no longer charged for these resources. However, you are still charged for other resources such as disks and elastic IP addresses \(EIPs\). These stopped ECS instances form a stopped instance pool.
+    |**Instance Reclaim Mode**|VPC|You can specify one of the instance reclaim modes for ECS instances in a scaling group of the VPC type when a scale-in event is triggered:    -   **Release Mode**: ECS instances that are removed from the scaling group are released. Resources of these ECS instances are not retained. When a scale-out event is triggered, Auto Scaling creates ECS instances and adds them to the scaling group.
+    -   **Stop and Reclaim Mode**: ECS instances that are removed from the scaling group are stopped and enter the No Fees for Stopped Instances \(VPC-Connected\) state. Some resources of these ECS instances are retained, and you are charged for these resources. When a scale-out event is triggered, Auto Scaling preferentially adds the stopped ECS instances to the scaling group and then determines whether to create ECS instances and add them to the scaling group based on the number of ECS instances to be created. This mode makes scaling more efficient.
 
-**Note:** If the ECS instances have public IP addresses before they enter the No Fees for Stopped Instances \(VPC-Connected\) state, the instances are reassigned public IP addresses when they are restarted. The IP addresses may be different from the previous ones.
+**Note:**
 
-        -   When a scale-out event is triggered, the ECS instances in the stopped instance pool preferentially enter the Running state. If these instances are still insufficient, Auto Scaling creates more ECS instances. The ECS instances in the stopped instance pool may or may not enter the Running state. If the ECS instances in the stopped instance pool cannot enter the running state due to insufficient resources, Auto Scaling releases these instances and creates a specific number of ECS instances.
-**Warning:** Make sure that you have sufficient balance in your account. If you have overdue payments in your account, pay-as-you-go and preemptible instances are stopped or released in some cases. For information about status changes of ECS instances in a scaling group due to overdue payments, see [Overdue payments](/intl.en-US/Pricing/Overdue payments.md). |
+        -   Your data stored in ECS instances may be lost when the instances are reclaimed. To avoid data loss, do not retain application data or logs in ECS instances.
+        -   Stopped ECS instances may be released due to the following reasons:
+            -   If the number of ECS instances in all states \(including the Stopped state\) in a scaling group is greater than the maximum number of instances in the scaling group after you manually reduce the maximum number, Auto Scaling preferentially releases the stopped ECS instances.
+            -   If stopped ECS instances fail to be added to a scaling group due to insufficient resources or overdue payments, the ECS instances are released.
+        -   This mode is subject to the No Fees for Stopped Instances \(VPC-Connected\) feature. For information about applicable conditions, billable resources, and subsequent impacts, see the "Prerequisites", "Applicable resources", and "Impacts" sections in [No Fees for Stopped Instances \(VPC-Connected\)](/intl.en-US/Pricing/Billing methods/No Fees for Stopped Instances (VPC-Connected).md). |
     |**VPC**|VPC|Select an existing VPC.|
     |**Select VSwitch**|VPC|You must select a vSwitch after you select a VPC. Each vSwitch can belong only to one zone. To deploy ECS instances across multiple zones, you must specify multiple vSwitches that belong to different zones. We recommend that you select multiple zones to mitigate the risk of insufficient resources and increase the success rate of creating ECS instances.|
     |**Add Existing Instance**|VPC and classic network|If **Instance Configuration Source** is set to **Launch Templates** or **Select Existing Instance**, you can add existing ECS instances to a scaling group when you create the scaling group. If you specify the expected number of instances and then add existing instances, the expected number of instances automatically increases. For example, when you create a scaling group, you set the expected number of instances in the scaling group to one and then add two existing instances. After the scaling group is created, two existing instances are added to the scaling group, and the expected number of instances becomes three.
@@ -108,7 +110,7 @@ You can select **Enable the scaling group to manage the instance lifecycle**.
 **Note:** If you specify the default server group and multiple vServer groups at the same time, ECS instances are added to all the specified server groups.
 
 You can associate only a limited number of SLB instances and vServer groups with a scaling group. For more information, see [Limits](/intl.en-US/Product Introduction/Limits.md). |
-    |**Associate RDS Instance**|VPC and classic network|After you associate ApsaraDB RDS instances with the scaling group, the internal IP addresses of ECS instances that are added to the scaling group are automatically added to the whitelists of the ApsaraDB RDS instances to allow internal communication. You can associate a limited number of ApsaraDB RDS instances with a scaling group. For more information, see [Limits](/intl.en-US/Product Introduction/Limits.md). |
+    |**Associate RDS Instance**|VPC and classic network|After you associate RDS instances with the scaling group, the internal IP addresses of ECS instances that are added to the scaling group are automatically added to the whitelists of the RDS instances to allow internal communication. You can associate a limited number of RDS instances with a scaling group. For more information, see [Limits](/intl.en-US/Product Introduction/Limits.md). |
 
 6.  In the **Create Scaling Group** dialog box, click **OK**.
 

@@ -1,10 +1,10 @@
 # DescribeScalingInstances
 
-Queries the Elastic Compute Service \(ECS\) instances in a scaling group and list details about the instances.
+Queries Elastic Compute Service \(ECS\) instances in a scaling group and lists details about the instances.
 
 ## Description
 
-You can query the ECS instances in a scaling group by specifying the scaling group ID, scaling configuration ID, health status, lifecycle status, and how an ECS instance is created.
+You can query ECS instances in a scaling group by specifying the scaling group ID, scaling configuration ID, health status, lifecycle status, and how an ECS instance is created.
 
 ## Debugging
 
@@ -23,7 +23,7 @@ You can query the ECS instances in a scaling group by specifying the scaling gro
  -   Healthy
 -   Unhealthy
 
- Auto Scaling automatically removes from the scaling group the unhealthy ECS instances that were automatically created and releases these instances.
+ Auto Scaling automatically removes unhealthy ECS instances from the scaling group and then releases automatically created ones among the unhealthy instances.
 
  Whether to release the unhealthy ECS instances that were manually added to the scaling group depends on the management mode of the instance lifecycle. If the lifecycle of the ECS instances is not managed by the scaling group, Auto Scaling removes the instances from the scaling group but does not release them. If the lifecycle of the ECS instances is managed by the scaling group, Auto Scaling removes the instances from the scaling group and releases them.
 
@@ -31,14 +31,14 @@ You can query the ECS instances in a scaling group by specifying the scaling gro
 |LifecycleState|String|No|InService|The lifecycle status of the ECS instance in the scaling group. Valid values:
 
  -   InService: The ECS instance is added to the scaling group and can provide services normally.
--   Pending: The ECS instance is being added to the scaling group. During this process, Auto Scaling adds the ECS instance to the backend server groups of the associated SLB instances and to the whitelists of the associated ApsaraDB RDS instances.
--   Pending:Wait: The ECS instance is being added to the scaling group and put into the wait state. If a lifecycle hook that applies to scale-out events is created for the scaling group, when the ECS instance is being added to the scaling group, the instance is put into the wait state until the lifecycle hook times out.
+-   Pending: The ECS instance is being added to the scaling group. During this process, Auto Scaling adds the ECS instance to the backend server groups of the associated Server Load Balancer \(SLB\) instances and to the whitelists of the associated ApsaraDB RDS instances.
+-   Pending:Wait: The ECS instance is being added to the scaling group and put into the wait state. If a lifecycle hook that applies to scale-out events is created for the scaling group, the ECS instance is put into the wait state and waits for the lifecycle hook to time out before the instance is added to the scaling group.
 -   Protected: The ECS instance is being protected. The ECS instance can provide services normally. However, Auto Scaling does not manage the lifecycle of the instance. You must manually manage it.
 -   Standby: The ECS instance is on standby. The ECS instance is put out of service. Its weight as an SLB backend server is set to zero. Auto Scaling does not manage the lifecycle of the instance. You must manually manage it.
 -   Stopped: The ECS instance is stopped. The ECS instance is stopped and put out of service.
 -   Removing: The ECS instance is being removed from the scaling group. During this process, Auto Scaling removes the instance from the backend server groups of the associated SLB instances and from the whitelists of the associated ApsaraDB RDS instances.
--   Removing:Wait: The ECS instance is being removed from the scaling group and put into the wait state. If a lifecycle hook that applies to scale-in events is created for the scaling group, when the ECS instance is being removed from the scaling group, the instance is put into the wait state until the lifecycle hook times out. |
-|CreationType|String|No|AutoCreated|Indicates how the ECS instance is created. Valid values:
+-   Removing:Wait: The ECS instance is being removed from the scaling group and put into the wait state. If a lifecycle hook that applies to scale-in events is created for the scaling group, the ECS instance is put into the wait state and waits for the lifecycle hook to time out before the instance is removed from the scaling group. |
+|CreationType|String|No|AutoCreated|Specifies how the ECS instance is created. Valid values:
 
  -   AutoCreated: The ECS instance is automatically created by Auto Scaling based on the instance configuration source of the scaling group.
 -   Attached: The ECS instance is manually added to the scaling group. |
@@ -47,15 +47,16 @@ You can query the ECS instances in a scaling group by specifying the scaling gro
  Default value: 1. |
 |PageSize|Integer|No|10|The number of entries to return on each page. Maximum value: 50.
 
- Default value: 10 |
-|InstanceId.N|RepeatList|No|i-bp109k5j3dum1ce6\*\*\*\*|The ID of ECS instance N. Valid values of N: 1 to 20. The IDs of inactive instances are not displayed in the query result and no errors are returned. |
+ Default value: 10. |
+|InstanceId.N|RepeatList|No|i-bp109k5j3dum1ce6\*\*\*\*|The ID of ECS instance N. Valid values of N: 1 to 20. The IDs of inactive instances are not displayed in the query result, and no errors are returned. |
+|ScalingActivityId|String|No|asa-bp1c9djwrgxjyk31\*\*\*\*|The ID of the scaling activity. |
 
 ## Response parameters
 
 |Parameter|Type|Example|Description|
 |---------|----|-------|-----------|
 |PageNumber|Integer|1|The page number of the returned page. |
-|PageSize|Integer|10|The number of entries per page. |
+|PageSize|Integer|10|The number of entries returned per page. |
 |RequestId|String|B13527BF-1FBD-4334-A512-20F5E9D3FB4D|The ID of the request. |
 |ScalingInstances|Array of ScalingInstance| |The collection of ECS instances. |
 |ScalingInstance| | | |
@@ -64,8 +65,8 @@ You can query the ECS instances in a scaling group by specifying the scaling gro
 |CreationType|String|AutoCreated|Indicates how the ECS instance is created. Valid values:
 
  -   AutoCreated: The ECS instance is automatically created by Auto Scaling based on the instance configuration source of the scaling group.
--   Attached: The ECS instance was manually added to the scaling group. |
-|Entrusted|Boolean|true|Indicates whether the scaling group is enabled to manage the instance lifecycle when you manually add the instance. When the manually added instance in managed mode is automatically removed from the scaling group, the instance is released. Valid values: 0 to 100.
+-   Attached: The ECS instance is manually added to the scaling group. |
+|Entrusted|Boolean|true|Indicates whether the scaling group is enabled to manage the instance lifecycle when you manually add the instance. When the manually added instance in managed mode is automatically removed from the scaling group, the instance is released. Valid values:
 
  -   true: The instance lifecycle is managed by the scaling group.
 -   false: The instance lifecycle is not managed by the scaling group. |
@@ -74,7 +75,7 @@ You can query the ECS instances in a scaling group by specifying the scaling gro
  -   Healthy
 -   Unhealthy
 
- Auto Scaling automatically removes from the scaling group the unhealthy ECS instances that were automatically created and releases these instances.
+ Auto Scaling automatically removes unhealthy ECS instances from the scaling group and then releases automatically created ones among the unhealthy instances.
 
  Whether to release the unhealthy ECS instances that were manually added to the scaling group depends on the management mode of the instance lifecycle. If the lifecycle of the ECS instances is not managed by the scaling group, Auto Scaling removes the instances from the scaling group but does not release them. If the lifecycle of the ECS instances is managed by the scaling group, Auto Scaling removes the instances from the scaling group and releases them.
 
@@ -86,13 +87,14 @@ You can query the ECS instances in a scaling group by specifying the scaling gro
 
  -   InService: The ECS instance is added to the scaling group and can provide services normally.
 -   Pending: The ECS instance is being added to the scaling group. During this process, Auto Scaling adds the ECS instance to the backend server groups of the associated SLB instances and to the whitelists of the associated ApsaraDB RDS instances.
--   Pending:Wait: The ECS instance is being added to the scaling group and put into the wait state. If a lifecycle hook that applies to scale-out events is created for the scaling group, when the ECS instance is being added to the scaling group, the instance is put into the wait state until the lifecycle hook times out.
+-   Pending:Wait: The ECS instance is being added to the scaling group and put into the wait state. If a lifecycle hook that applies to scale-out events is created for the scaling group, the ECS instance is put into the wait state and waits for the lifecycle hook to time out before the instance is added to the scaling group.
 -   Protected: The ECS instance is being protected. The ECS instance can provide services normally. However, Auto Scaling does not manage the lifecycle of the instance. You must manually manage it.
 -   Standby: The ECS instance is on standby. The ECS instance is put out of service. Its weight as an SLB backend server is set to zero. Auto Scaling does not manage the lifecycle of the instance. You must manually manage it.
 -   Stopped: The ECS instance is stopped. The ECS instance is stopped and put out of service.
 -   Removing: The ECS instance is being removed from the scaling group. During this process, Auto Scaling removes the instance from the backend server groups of the associated SLB instances and from the whitelists of the associated ApsaraDB RDS instances.
--   Removing:Wait: The ECS instance is being removed from the scaling group and put into the wait state. If a lifecycle hook that applies to scale-in events is created for the scaling group, when the ECS instance is being removed from the scaling group, the instance is put into the wait state until the lifecycle hook times out. |
+-   Removing:Wait: The ECS instance is being removed from the scaling group and put into the wait state. If a lifecycle hook that applies to scale-in events is created for the scaling group, the ECS instance is put into the wait state and waits for the lifecycle hook to time out before the instance is removed from the scaling group. |
 |LoadBalancerWeight|Integer|50|The weight of the ECS instance as an SLB backend server. |
+|ScalingActivityId|String|asa-bp1c9djwrgxjyk31\*\*\*\*|The ID of the scaling activity during which the ECS instance is added to the scaling group. |
 |ScalingConfigurationId|String|asc-bp1i65jd06v04vdh\*\*\*\*|The ID of the associated scaling configuration. |
 |ScalingGroupId|String|asg-bp1igpak5ft1flyp\*\*\*\*|The ID of the scaling group to which the instance belongs. |
 |SpotStrategy|String|SpotWithPriceLimit|The preemption policy for the pay-as-you-go instance. Valid values:
@@ -104,7 +106,7 @@ You can query the ECS instances in a scaling group by specifying the scaling gro
  -   NoNeedWarmup: No warmup is required.
 -   WaitingForInstanceWarmup: You must wait for the instance to complete warmup.
 -   InstanceWarmupFinish: The warmup is complete. |
-|WeightedCapacity|Integer|4|The weight of the instance type, which indicates the capacity of a single instance of the specified instance type in the scaling group. A greater weight indicates that a less number of instances of the specified instance type is required to meet the expected capacity. |
+|WeightedCapacity|Integer|4|The weight of the instance type, which indicates the capacity of a single instance of the specified instance type in the scaling group. A greater weight indicates that a smaller number of instances of the specified instance type is required to meet the expected capacity. |
 |ZoneId|String|cn-hangzhou-g|The zone ID of the ECS instance. |
 |TotalCount|Integer|1|The total number of ECS instances. |
 |TotalSpotCount|Integer|4|The total number of running preemptible instances in the scaling group. |
@@ -116,7 +118,7 @@ Sample requests
 ```
 https://ess.aliyuncs.com/?Action=DescribeScalingInstances
 &RegionId=cn-hangzhou
-&<Common request parameters>
+&<Common request parameters>|
 ```
 
 Sample success responses
@@ -136,6 +138,7 @@ Sample success responses
                   <WarmupState>NoNeedWarmup</WarmupState>
                   <ZoneId>cn-hangzhou-g</ZoneId>
                   <InstanceId>i-m5e3z5l951fibnd9****</InstanceId>
+                  <ScalingActivityId>asa-bp1c9djwrgxjyk31****</ScalingActivityId>
                   <ScalingGroupId>asg-m5e8n5qw4atki7f6****</ScalingGroupId>
                   <HealthStatus>Healthy</HealthStatus>
                   <CreationTime>2020-12-21T03:11Z</CreationTime>
@@ -165,6 +168,7 @@ Sample success responses
     "WarmupState": "NoNeedWarmup",
     "ZoneId": "cn-hangzhou-g",   
     "InstanceId": "i-m5e3z5l951fibnd9****",
+    "ScalingActivityId": "asa-bp1c9djwrgxjyk31****",
     "ScalingGroupId": "asg-m5e8n5qw4atki7f6****",
     "HealthStatus": "Healthy",
     "CreationTime": "2020-12-21T03:11Z",

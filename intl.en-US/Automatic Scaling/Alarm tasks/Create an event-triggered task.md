@@ -71,7 +71,7 @@ A cron expression is a string that represents a schedule. The string consists of
 |Second|Yes|0~59|, - / \*|
 |Minute|Yes|0~59|, - / \*|
 |Hour|Yes|0~23|, - / \*|
-|Day|Yes|1~31|, - / \* ? L W|
+|Day|Yes|1~31|, - / \* L W|
 |Month|Yes|1~12|, - / \*|
 
 |Special characters|Description|Example|
@@ -80,7 +80,6 @@ A cron expression is a string that represents a schedule. The string consists of
 |`,`|Lists enumerated values.|In the Minute field, `5,20` indicates the fifth minute and the twentieth minute.|
 |`-`|Indicates a range.|In the Minute field, `5-20` indicates that the task is triggered once every minute from the 5th to 20th minute.|
 |`/`|Indicates increments.|In the Minute field, `0/15` indicates every 15 minutes starting from the zeroth minute. `3/20` indicates every 20 minutes from the third minute.|
-|`?`|Indicates an unspecified value. Only the Day field supports this character.|In the Day field, `?` indicates that no date is specified. For example, `* * 17-18 ? *` indicates that the event-triggered task is effective between 17:00 and 18:59 on each day of each month.|
 |`L`|Indicates last. Only the Day field supports this character. **Note:** To avoid logic errors, do not specify a list or range when you use the `L` character.
 
 |In the Day field, `L` indicates the last day of a month.|
@@ -89,7 +88,6 @@ A cron expression is a string that represents a schedule. The string consists of
 |Example|Description|
 |-------|-----------|
 |`* * * * *`|Is effective all the time.|
-|`* * 1-2 ? *`|Is effective between 01:00 and 02:59 every day.|
 |`* 0-30 1-2 * *`|Is effective between 01:00 and 01:30 and between 02:00 and 02:30 every day.|
 |`* * 0,2 * *`|Is effective between 00:00 and 00:59 and between 02:00 and 02:59 every day.|
 |`* * 1 1/2 *`|Is effective between 01:00 and 01:59 every two days staring from the first day of each month. For example, the first two effective time ranges of each month are between 01:00 and 01:59 on the first day of each month and between 01:00 and 01:59 on the third day of each month.|

@@ -32,6 +32,11 @@
 |ScalingGroup| | | |
 |ActiveCapacity|Integer|1|已成功加入伸缩组，并正常运行的ECS实例数量。 |
 |ActiveScalingConfigurationId|String|asc-bp1et2qekq3ojr33\*\*\*\*|伸缩组内生效的伸缩配置的ID。 |
+|AlbServerGroups|Array of AlbServerGroup| |ALB服务器组的相关信息集合。 |
+|AlbServerGroup| | | |
+|AlbServerGroupId|String|sgp-ddwb0y0g6y9bjm\*\*\*\*|ALB服务器组的ID。 |
+|Port|Integer|80|弹性伸缩将ECS实例添加到ALB服务器组后，ECS实例使用的端口号。 |
+|Weight|Integer|100|弹性伸缩将ECS实例添加到ALB服务器组后，ECS实例作为后端服务器的权重。 |
 |CompensateWithOnDemand|Boolean|true|当MultiAZPolicy取值为COST\_OPTIMIZED时，如果因价格、库存等原因无法创建足够的抢占式实例，是否允许自动尝试创建按量实例满足ECS实例数量要求。取值范围：
 
  -   true：允许。
@@ -134,7 +139,7 @@ https://ess.aliyuncs.com/?Action=DescribeScalingGroups
 `XML`格式
 
 ```
-<DescribeScalingGroupsResponse>
+<DescribeScalingGroupsResponse> 
       <RequestId>68386699-8B9E-4D5B-BC4C-75A28F6C2A00</RequestId>
       <TotalCount>1</TotalCount>
       <PageSize>10</PageSize>
@@ -150,6 +155,13 @@ https://ess.aliyuncs.com/?Action=DescribeScalingGroups
                   <MaxSize>2</MaxSize>
                   <LifecycleState>Inactive</LifecycleState>
                   <TotalInstanceCount>0</TotalInstanceCount>
+                  <AlbServerGroups>
+                        <AlbServerGroup>
+                              <AlbServerGroupId>sgp-ddwb0y0g6y9bjm****</AlbServerGroupId>
+                              <Port>80</Port>
+                              <Weight>100</Weight>
+                        </AlbServerGroup>
+                  </AlbServerGroups>
                   <ActiveScalingConfigurationId>asc-bp1et2qekq3ojr33****</ActiveScalingConfigurationId>
                   <LoadBalancerIds>
                         <LoadBalancerId>lb-bp19byhscefk3x0li****</LoadBalancerId>
@@ -192,6 +204,15 @@ https://ess.aliyuncs.com/?Action=DescribeScalingGroups
                 "MaxSize": 2,
                 "LifecycleState": "Inactive",
                 "TotalInstanceCount": 0,
+                "AlbServerGroups": {
+                    "AlbServerGroup": [
+                        {
+                            "AlbServerGroupId": "sgp-ddwb0y0g6y9bjm****",
+                            "Port": 80,
+                            "Weight": 100
+                        }
+                    ]
+                },
                 "ActiveScalingConfigurationId": "asc-bp1et2qekq3ojr33****",
                 "LoadBalancerIds": {
                     "LoadBalancerId": [

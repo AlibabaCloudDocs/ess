@@ -10,9 +10,9 @@
 
 伸缩组创建成功后不会立即生效。您需要先调用[EnableScalingGroup](~~25939~~)接口启用伸缩组，伸缩组才能触发伸缩活动和执行伸缩规则。
 
-伸缩组、关联的负载均衡实例和关联的RDS实例必须在同一个地域。更多详情，请参见[地域与可用区](~~40654~~)。
+伸缩组、关联的传统型负载均衡CLB（原SLB）实例和关联的RDS实例必须在同一个地域。更多信息，请参见[地域与可用区](~~40654~~)。
 
-如果您为伸缩组关联了负载均衡实例，伸缩组会自动将加入伸缩组的ECS实例添加到负载均衡实例的后端服务器组。您可以指定ECS实例需要加入的服务器组，支持以下两种服务器组：
+如果您为伸缩组关联了CLB实例，伸缩组会自动将加入伸缩组的ECS实例添加到CLB实例的后端服务器组。您可以指定ECS实例需要加入的服务器组，支持以下两种服务器组：
 
 -   默认服务器组：用来接收前端请求的ECS实例，如果监听没有设置虚拟服务器组或主备服务器组，默认将请求转发至默认服务器组中的ECS实例。
 -   虚拟服务器组：当您需要将不同的请求转发到不同的后端服务器上时，或需要通过域名和URL进行请求转发时，可以选择使用虚拟服务器组。
@@ -20,15 +20,17 @@
 **说明：** 如果您同时指定了默认服务器组和多个虚拟服务器组，ECS实例会同时添加至这些服务器组中。
 
 
-ECS实例在加入负载均衡实例的后端服务器组后，权重默认为50。负载均衡实例需要满足以下条件：
+ECS实例在加入CLB实例的后端服务器组后，权重默认为50。CLB实例需要满足以下条件：
 
--   该负载均衡实例的状态必须是active，您可以调用[DescribeLoadBalancers](~~27582~~)接口查看指定负载均衡实例的状态。
--   该负载均衡实例配置的所有监听端口必须开启健康检查，否则伸缩组创建失败。
+-   该CLB实例的状态必须是active，您可以调用[DescribeLoadBalancers](~~27582~~)接口查看指定CLB实例的状态。
+-   该CLB实例配置的所有监听端口必须开启健康检查，否则伸缩组创建失败。
+
+如果您为伸缩组关联了应用型负载均衡ALB服务器组，伸缩组会自动将加入伸缩组的ECS实例添加为ALB服务器组的后端服务器，处理ALB实例分发的访问请求。您可以指定多个ALB服务器组，但服务器组必须与伸缩组属于同一个VPC。更多信息，请参见[AttachAlbServerGroups](~~266800~~)。
 
 如果您为伸缩组关联了RDS实例，伸缩组会自动将加入伸缩组的ECS实例的内网IP添加到RDS实例的访问白名单。RDS实例需要满足以下条件：
 
 -   该RDS实例的状态必须是Running，您可以调用[DescribeDBInstances](~~26232~~)接口查看指定RDS实例的状态。
--   该RDS实例访问白名单的IP数不能超过上限值。更多详情，请参见RDS文档[设置白名单](~~43185~~)。
+-   该RDS实例访问白名单的IP数不能超过上限值。更多信息，请参见RDS文档[设置白名单](~~43185~~)。
 
 如果伸缩组的MultiAZPolicy设置为COST\_OPTIMIZED：
 
@@ -44,6 +46,17 @@ ECS实例在加入负载均衡实例的后端服务器组后，权重默认为50
 |名称|类型|是否必选|示例值|描述|
 |--|--|----|---|--|
 |Action|String|是|CreateScalingGroup|系统规定参数。取值：CreateScalingGroup |
+|AlbServerGroup.N.AlbServerGroupId|String|是|sgp-ddwb0y0g6y9bjm\*\*\*\*|ALB服务器组ID。
+
+ N为ALB服务器组的编号。一个伸缩组支持关联的ALB服务器组数量有限，如需查看或手动申请提升配额值，请前往[配额中心](https://quotas.console.aliyun.com/products/ess/quotas)。 |
+|AlbServerGroup.N.Port|Integer|是|22|弹性伸缩将ECS实例添加到ALB服务器组后，ECS实例使用的端口号，取值范围：1~65535。
+
+ N为ALB服务器组的编号。
+
+ **说明：** 如果N相同，Port不同，系统会默认向伸缩组关联多个不同Port的该ALB服务器组。 |
+|AlbServerGroup.N.Weight|Integer|是|100|弹性伸缩将ECS实例添加到ALB服务器组后，ECS实例作为后端服务器的权重。权重越高，ECS实例将被分配到越多的访问请求。如果权重为0，则ECS实例不会收到访问请求。取值范围：0~100。
+
+ N为ALB服务器组的编号。 |
 |MaxSize|Integer|是|20|伸缩组内ECS实例台数的最大值，当伸缩组内ECS实例数大于MaxSize时，弹性伸缩会自动移出ECS实例。
 
  MaxSize的取值范围和弹性伸缩使用情况有关，请前往[配额中心](https://quotas.console.aliyun.com/products/ess/quotas)查看**单个伸缩组可以设置的组内最大实例数**对应的配额值。
@@ -68,9 +81,9 @@ ECS实例在加入负载均衡实例的后端服务器组后，权重默认为50
  冷却时间内，该伸缩组不执行其它的伸缩活动，仅针对云监控报警任务触发的伸缩活动有效。
 
  默认值：300 |
-|LoadBalancerIds|String|否|\["lb-bp1u7etiogg38yvwz\*\*\*\*", "lb-bp168cqrux9ai9l7f\*\*\*\*", "lb-bp1jv3m9zvj22ufxp\*\*\*\*"\]|负载均衡实例ID。取值可以是由多台负载均衡实例ID组成一个JSON数组，ID之间用半角逗号（,）隔开。
+|LoadBalancerIds|String|否|\["lb-bp1u7etiogg38yvwz\*\*\*\*", "lb-bp168cqrux9ai9l7f\*\*\*\*", "lb-bp1jv3m9zvj22ufxp\*\*\*\*"\]|传统型负载均衡CLB（原SLB）实例ID。取值可以是由多台CLB实例ID组成一个JSON数组，ID之间用半角逗号（,）隔开。
 
- 单个伸缩组可以关联的负载均衡实例总数和弹性伸缩使用情况有关，请前往[配额中心](https://quotas.console.aliyun.com/products/ess/quotas)查看**单个伸缩组可以关联的负载均衡实例总数**对应的配额值。 |
+ 单个伸缩组可以关联的CLB总数和弹性伸缩使用情况有关，请前往[配额中心](https://quotas.console.aliyun.com/products/ess/quotas)查看**单个伸缩组可以关联的负载均衡实例总数**对应的配额值。 |
 |DBInstanceIds|String|否|\["rm-bp142f86de0t7\*\*\*\*", "rm-bp18l1z42ar4o\*\*\*\*", "rm-bp1lqr97h4aqk\*\*\*\*"\]|RDS实例ID。取值可以是由多台RDS实例ID组成一个JSON数组，ID之间用半角逗号（,）隔开。
 
  单个伸缩组可以关联的RDS实例总数和弹性伸缩使用情况有关，请前往[配额中心](https://quotas.console.aliyun.com/products/ess/quotas)查看**单个伸缩组可以关联的RDS实例总数**对应的配额值。 |
@@ -154,20 +167,20 @@ ECS实例在加入负载均衡实例的后端服务器组后，权重默认为50
 
  -   MNS队列：acs:ess:\{region\}:\{account-id\}:queue/\{queuename\}
 -   MNS主题：acs:ess:\{region\}:\{account-id\}:topic/\{topicname\} |
-|VServerGroup.N.LoadBalancerId|String|否|lb-bp1u7etiogg38yvwz\*\*\*\*|虚拟服务器组所属负载均衡实例的ID。
+|VServerGroup.N.LoadBalancerId|String|否|lb-bp1u7etiogg38yvwz\*\*\*\*|虚拟服务器组所属传统型负载均衡CLB（原SLB）实例的ID。
 
  更多信息，请参见[AttachVServerGroups](~~98983~~)。 |
 |VServerGroup.N.VServerGroupAttribute.N.VServerGroupId|String|否|rsp-bp1443g77\*\*\*\*|虚拟服务器组ID。
 
  更多信息，请参见[AttachVServerGroups](~~98983~~)。 |
-|VServerGroup.N.VServerGroupAttribute.N.Port|Integer|否|22|弹性伸缩将ECS实例添加到虚拟服务器组时使用的端口号，取值范围：1~65535。
+|VServerGroup.N.VServerGroupAttribute.N.Port|Integer|否|22|弹性伸缩将ECS实例添加到虚拟服务器组后，ECS实例使用的端口号，取值范围：1~65535。
 
  更多信息，请参见[AttachVServerGroups](~~98983~~)。 |
-|VServerGroup.N.VServerGroupAttribute.N.Weight|Integer|否|100|弹性伸缩将ECS实例添加到虚拟服务器组时设置的权重，取值范围：0~100。
+|VServerGroup.N.VServerGroupAttribute.N.Weight|Integer|否|100|弹性伸缩将ECS实例添加到虚拟服务器组后，ECS实例作为后端服务器的权重。权重越高，ECS实例将被分配到越多的访问请求。如果权重为0，则ECS实例不会收到访问请求。取值范围：0~100。默认值：50。
 
- 更多信息，请参见[AttachVServerGroups](~~98983~~)。
+ N的取值范围：1~5。
 
- 默认值：50 |
+ 更多信息，请参见[AttachVServerGroups](~~98983~~)。 |
 |ScalingPolicy|String|否|recycle|指定伸缩组的回收模式。取值范围：
 
  -   recycle：伸缩组的回收模式为停机回收模式。
@@ -231,12 +244,13 @@ ECS实例在加入负载均衡实例的后端服务器组后，权重默认为50
 请求示例
 
 ```
-https://ess.aliyuncs.com/?Action=CreateScalingGroup
-&RegionId=cn-qingdao
+http(s)://ess.aliyuncs.com/?Action=CreateScalingGroup
+&AlbServerGroup.1.AlbServerGroupId=sgp-ddwb0y0g6y9bjm****
+&AlbServerGroup.1.Port=22
+&AlbServerGroup.1.Weight=100
 &MaxSize=20
 &MinSize=2
-&LoadBalancerIds=["lb-bp1u7etiogg38yvwz****", "lb-bp168cqrux9ai9l7f****", "lb-bp1jv3m9zvj22ufxp****"]
-&DBInstanceIds=["rm-bp142f86de0t7****", "rm-bp18l1z42ar4o****", "rm-bp1lqr97h4aqk****"]
+&RegionId=cn-qingdao
 &<公共请求参数>
 ```
 
@@ -285,14 +299,14 @@ https://ess.aliyuncs.com/?Action=CreateScalingGroup
 
 |The current health check type of specified load balancer does not support this action.
 
-|指定的负载均衡实例必须开启健康检查。 |
+|指定的CLB实例必须开启健康检查。 |
 |400
 
 |IncorrectLoadBalancerStatus
 
 |The current status of the specified load balancer does not support this action.
 
-|指定负载均衡实例的状态必须是active。 |
+|指定CLB实例的状态必须是active。 |
 |400
 
 |IncorrectVSwitchStatus
@@ -313,28 +327,28 @@ https://ess.aliyuncs.com/?Action=CreateScalingGroup
 
 |The current address type of specified load balancer does not support this action.
 
-|指定虚拟交换机后，负载均衡实例为私网类型。 |
+|指定虚拟交换机后，CLB实例为私网类型。 |
 |400
 
 |InvalidLoadBalancerId.IncorrectInstanceNetworkType
 
 |The network type of the instance in specified Load Balancer does not support this action.
 
-|指定的负载均衡实例内搭载的ECS实例的网络类型与伸缩组的网络类型必须一致。 |
+|指定的CLB实例内搭载的ECS实例的网络类型与伸缩组的网络类型必须一致。 |
 |400
 
 |InvalidLoadBalancerId.RegionMismatch
 
 |The specified Load Balancer and the specified scaling group are not in the same Region.
 
-|指定的负载均衡实例与伸缩组必须在同一地域。 |
+|指定的CLB实例与伸缩组必须在同一地域。 |
 |400
 
 |InvalidLoadBalancerId.VPCMismatch
 
 |The specified virtual switch and the instance in specified Load Balancer are not in the same VPC.
 
-|伸缩组内的负载均衡实例搭载的ECS实例与虚拟交换机应该在同一个VPC中。 |
+|伸缩组内的CLB实例搭载的ECS实例与虚拟交换机应该在同一个VPC中。 |
 |400
 
 |InvalidParameter
@@ -397,7 +411,7 @@ https://ess.aliyuncs.com/?Action=CreateScalingGroup
 
 |The specified Load Balancer does not exist.
 
-|指定的负载均衡实例不存在。 |
+|指定的CLB实例不存在。 |
 |404
 
 |InvalidRegionId.NotFound
@@ -454,4 +468,11 @@ https://ess.aliyuncs.com/?Action=CreateScalingGroup
 |The input parameter "LaunchTemplateVersion" is supposed to be a string representing the version number.
 
 |指定实例启动模板固定版本号为非数字。 |
+|400
+
+|AlbServerGroup.NotExist
+
+|The ServerGroup "%s" do\(es\) not exist.
+
+|账号下不存在指定的ALB服务器组。 |
 

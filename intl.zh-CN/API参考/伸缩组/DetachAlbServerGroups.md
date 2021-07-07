@@ -10,10 +10,8 @@
 
 |名称|类型|是否必选|示例值|描述|
 |--|--|----|---|--|
-|AlbServerGroup.N.AlbServerGroupId|String|是|sgp-ddwb0y0g6y9bjm\*\*\*\*|ALB服务器组的ID。N为ALB服务器组的编号，取值范围：1~30。 |
-|AlbServerGroup.N.Port|Integer|是|22|ALB服务器组中ECS实例使用的端口号，取值范围：1~65535。
-
- N为ALB服务器组的编号，取值范围：1~30。 |
+|AlbServerGroup.N.AlbServerGroupId|String|是|sgp-ddwb0y0g6y9bjm\*\*\*\*|ALB服务器组的ID。N为ALB服务器组的编号。 |
+|AlbServerGroup.N.Port|Integer|是|22|ALB服务器组中ECS实例使用的端口号。N为ALB服务器组的编号。 |
 |RegionId|String|是|cn-hangzhou|伸缩组所属地域的ID，如cn-hangzhou、cn-shanghai。更多信息，请参见[地域和可用区](~~40654~~)。 |
 |ScalingGroupId|String|是|asg-bp18p2yfxow2dloq\*\*\*\*|伸缩组的ID。 |
 |ClientToken|String|否|123e4567-e89b-12d3-a456-42665544\*\*\*\*|保证请求幂等性。从您的客户端生成一个参数值，确保不同请求间该参数值唯一。只支持ASCII字符，且不能超过64个字符。更多信息，请参见[如何保证幂等性](~~25965~~)。 |
